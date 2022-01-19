@@ -1,96 +1,36 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {ScreenViewContainer} from '../styles/GlobalStyle';
+import Strings from '../i18n/en';
+import {HomeViewStyle} from '../styles/GlobalStyle';
 
 const HomeScreen = () => {
-  const [btnStyle,setBtnStyle] = useState<string>("active")
+  const [status,SetStatus] = useState<string>("active")
   const [oooStatus,SetOOOStatus] = useState<boolean>(false)
-  const changeStatus = () => {
-    btnStyle==="active" ? setBtnStyle("idle"): setBtnStyle("active")
-  }
+  const changeStatus = () => status==="active" ? SetStatus("idle"): SetStatus("active")
   const changeoooStatus = () => oooStatus===false ? SetOOOStatus(true): SetOOOStatus(false)
   return (
-    <View style={styles.container}>
+    <View style={HomeViewStyle.container}>
       {oooStatus===false &&
       <View>
-      <Text style={styles.heading}>{btnStyle==="active" ? "I am doing a task": "I am Idle"}</Text>
+      <Text style={HomeViewStyle.heading}>{status==="active" ? Strings.Active_Text: Strings.Idle_Text}</Text>
       <TouchableOpacity
-        style={btnStyle==="idle"? styles.idleBtn: styles.activeButton}
+        style={status==="idle"? HomeViewStyle.idleBtn: HomeViewStyle.activeButton}
         onPress={changeStatus}
       >
-        <Text style={btnStyle==="idle" ? styles.idleBtnText: styles.activeBtnText}>{btnStyle==="active" ? "change status to idle": "change status to 'Active'"}</Text>
+        <Text style={status==="idle" ? HomeViewStyle.idleBtnText: HomeViewStyle.activeBtnText}>{status==="active" ? Strings.IdleBtn_Text: Strings.ActiveBtn_Text}</Text>
       </TouchableOpacity>
       </View>
       }
       {oooStatus===true &&
-        <Text style={styles.heading}>I am OOO</Text>
+        <Text style={HomeViewStyle.heading}>{Strings.OOOStatus_Text}</Text>
       }
       <TouchableOpacity
         onPress={changeoooStatus}
       >
-        <Text style={styles.oooBtn}>{oooStatus===false ? "Mark Yourself as OOO": "Mark Yourself as 'Active' again"}</Text>
+        <Text style={HomeViewStyle.oooBtn}>{oooStatus===false ? Strings.OOOBtn1_Text: Strings.OOOBtn2_Text}</Text>
       </TouchableOpacity>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 8,
-  },
-  heading: {
-    textAlign: "center",
-    color: "#0034a5",
-    fontSize: 35,
-    fontWeight:"bold",
-    marginBottom: 30,
-  },
-  activeButton: {
-    userSelect: "none",
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingRight: 40,
-    paddingLeft: 40,
-    textAlign: "center",
-    borderWidth:2,
-    borderRadius: 20,
-    marginTop: 20,
-    marginBottom:30,
-    marginRight:"auto",
-    marginLeft:"auto",
-    borderColor:"#e49504"
-  },
-  idleBtn: {
-    userSelect: "none",
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingRight: 40,
-    paddingLeft: 40,
-    textAlign: "center",
-    borderWidth: 2,
-    borderColor: "green",
-    color: "green",
-    borderRadius: 20,
-    marginTop: 20,
-    marginBottom:30,
-    justifyContent:"center",
-    marginRight:"auto",
-    marginLeft:"auto"
-  },
-  activeBtnText: {
-    color: "#e49504",
-    fontSize: 20,
-  },
-  idleBtnText: {
-    color: "green",
-    fontSize: 20,
-  },
-  oooBtn: {
-    textAlign: "center",
-    color: "#0034a5",
-    fontWeight: "500",
-    fontSize:20,
-  }
-})
+
 export default HomeScreen;
