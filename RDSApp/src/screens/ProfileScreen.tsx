@@ -4,15 +4,7 @@ import { ScreenViewContainer } from '../styles/GlobalStyle';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const ProfileScreen = () => {
-  type ResponseObj = {
-    fileName: string
-    fileSize: number
-    height: number
-    type: string
-    uri: string
-    width: number
-  }
-  type Response = null | { assets: ResponseObj[] }
+
   const [response, setResponse] = useState<any>(null);
 
   const uploadImage = () => launchImageLibrary({
