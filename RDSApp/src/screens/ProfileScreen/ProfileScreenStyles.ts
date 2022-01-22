@@ -21,15 +21,6 @@ export const profileScreenStyles = StyleSheet.create({
         width: 200,
         height: 200
     },
-    buttonGroup: {
-        flexDirection: "row"
-    },
-    button: {
-        padding: 15
-    }
-})
-
-export const modalStyles = StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: "center",
@@ -69,9 +60,6 @@ export const modalStyles = StyleSheet.create({
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
     }
-});
+})
+

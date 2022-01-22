@@ -3,7 +3,7 @@ import { View, Text, Image, PermissionsAndroid, Button, Modal, Pressable } from 
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-import { profileScreenStyles, modalStyles } from './ProfileScreenStyles';
+import { profileScreenStyles } from './ProfileScreenStyles';
 
 const ProfileScreen = () => {
 
@@ -63,32 +63,32 @@ const ProfileScreen = () => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={modalStyles.centeredView}>
-          <View style={modalStyles.modalView}>
+        <View style={profileScreenStyles.centeredView}>
+          <View style={profileScreenStyles.modalView}>
             <Pressable
-              style={[modalStyles.button, modalStyles.buttonOpen]}
+              style={[profileScreenStyles.button, profileScreenStyles.buttonOpen]}
               onPress={() => takePicture()}
             >
-              <Text style={modalStyles.textStyle}>Camera</Text>
+              <Text style={profileScreenStyles.textStyle}>Camera</Text>
             </Pressable>
             <Pressable
-              style={[modalStyles.button, modalStyles.buttonOpen]}
+              style={[profileScreenStyles.button, profileScreenStyles.buttonOpen]}
               onPress={() => uploadImage()}
             >
-              <Text style={modalStyles.textStyle}>Gallery</Text>
+              <Text style={profileScreenStyles.textStyle}>Gallery</Text>
             </Pressable>
             {response.hasOwnProperty('assets') &&
               <Pressable
-                style={[modalStyles.button, modalStyles.buttonOpen]}
+                style={[profileScreenStyles.button, profileScreenStyles.buttonOpen]}
                 onPress={() => removePicture()}>
-                <Text style={modalStyles.textStyle}>Remove</Text>
+                <Text style={profileScreenStyles.textStyle}>Remove</Text>
               </Pressable>
             }
             <Pressable
-              style={[modalStyles.button, modalStyles.buttonClose]}
+              style={[profileScreenStyles.button, profileScreenStyles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={modalStyles.textStyle}>Back</Text>
+              <Text style={profileScreenStyles.textStyle}>Back</Text>
             </Pressable>
           </View>
         </View>
@@ -119,10 +119,10 @@ const ProfileScreen = () => {
         }
 
         <Pressable
-          style={[modalStyles.button, modalStyles.buttonOpen]}
+          style={[profileScreenStyles.button, profileScreenStyles.buttonOpen]}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={modalStyles.textStyle}>{response.hasOwnProperty('assets') ? 'Change' : 'Upload'}</Text>
+          <Text style={profileScreenStyles.textStyle}>{response.hasOwnProperty('assets') ? 'Change' : 'Upload'}</Text>
         </Pressable>
       </View >
     </View >
