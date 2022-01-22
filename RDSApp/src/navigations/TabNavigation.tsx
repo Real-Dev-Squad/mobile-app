@@ -7,7 +7,7 @@ import Fonts from '../assets/fonts/TabFont';
 import Images from '../assets/images/Image';
 import Strings from '../i18n/en';
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import TaskScreen from '../screens/TaskScreen';
 import {TabViewStyle} from '../styles/GlobalStyle';
 
