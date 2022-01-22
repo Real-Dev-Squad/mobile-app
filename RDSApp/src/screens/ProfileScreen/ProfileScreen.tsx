@@ -53,8 +53,8 @@ const ProfileScreen = () => {
     setModalVisible(false)
   }
 
-  return (
-    <View style={ScreenViewContainer.container}>
+  const UploadImageModalView = () => {
+    return (
       <Modal
         animationType="fade"
         transparent={false}
@@ -77,7 +77,7 @@ const ProfileScreen = () => {
             >
               <Text style={modalStyles.textStyle}>Gallery</Text>
             </Pressable>
-            {response && response.assets &&
+            {response.hasOwnProperty('assets') &&
               <Pressable
                 style={[modalStyles.button, modalStyles.buttonOpen]}
                 onPress={() => removePicture()}>
@@ -93,6 +93,12 @@ const ProfileScreen = () => {
           </View>
         </View>
       </Modal >
+    )
+  }
+
+  return (
+    <View style={ScreenViewContainer.container}>
+      <UploadImageModalView />
       <View style={profileScreenStyles.mainview}>
 
         <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
@@ -111,11 +117,12 @@ const ProfileScreen = () => {
             </View>
           )))
         }
+
         <Pressable
           style={[modalStyles.button, modalStyles.buttonOpen]}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={modalStyles.textStyle}>{response && response.assets ? 'Change' : 'Upload'}</Text>
+          <Text style={modalStyles.textStyle}>{response.hasOwnProperty('assets') ? 'Change' : 'Upload'}</Text>
         </Pressable>
       </View >
     </View >
