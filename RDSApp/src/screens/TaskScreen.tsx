@@ -1,6 +1,7 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import {ScreenViewContainer} from '../styles/GlobalStyle';
+import React from "react";
+import {View, Text} from "react-native";
+import {ScreenViewContainer} from "../styles/GlobalStyle";
+import withHeader from "../helpers/withHeader";
 
 const TaskScreen = () => {
   return (
@@ -10,4 +11,4 @@ const TaskScreen = () => {
   );
 };
 
-export default TaskScreen;
+export default withHeader(TaskScreen);
