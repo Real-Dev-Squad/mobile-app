@@ -2,14 +2,14 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {Image, Text} from 'react-native';
-import Colors from '../assets/colors/Colors';
-import Fonts from '../assets/fonts/TabFont';
-import Images from '../assets/images/Image';
-import Strings from '../i18n/en';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
-import TaskScreen from '../screens/TaskScreen';
-import {TabViewStyle} from '../styles/GlobalStyle';
+import Colors from '../../constants/colors/Colors';
+import Fonts from '../../constants/fonts/TabFont';
+import Images from '../../constants/images/Image';
+import Strings from '../../i18n/en';
+import HomeScreen from '../../screens/HomeScreen/HomeScreen';
+import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
+import TaskScreen from '../../screens/TaskScreen/TaskScreen';
+import {TabViewStyle} from './style';
 
 const TabNavigation = () => {
   const tab = createBottomTabNavigator();

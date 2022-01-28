@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {ScreenViewContainer} from '../styles/GlobalStyle';
+import {ScreenViewContainer} from '../../styles/GlobalStyle';
 
 const TaskScreen = () => {
   return (
