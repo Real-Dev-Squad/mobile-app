@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import withHeader from '../../helpers/withHeader';
 import Strings from '../../i18n/en';
 import {HomeViewStyle} from './styles';
 
@@ -49,4 +50,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default withHeader(HomeScreen);

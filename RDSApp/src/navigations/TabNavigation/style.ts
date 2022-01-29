@@ -5,9 +5,10 @@ export const TabViewStyle = StyleSheet.create({
     paddingHorizontal: 5,
     padding: 10,
     // paddingTop: 0,
-    backgroundColor: '#C4C5C5',
+    backgroundColor: '#fff',
     // position: 'absolute',
-    borderTopWidth: 0,
+    borderTopWidth: 3,
+    borderColor: 'grey',
   },
   tab_icon: {
     height: 20,

@@ -43,7 +43,10 @@ const TabNavigation = () => {
             },
             tabBarIcon: ({focused, color}) => {
               return (
-                <Image style={TabViewStyle.tab_icon} source={Images.homeIcon} />
+                <Image
+                  style={TabViewStyle.tab_icon}
+                  source={focused ? Images.homeIcon : Images.homeIconUnF}
+                />
               );
             },
           }}
@@ -67,9 +70,12 @@ const TabNavigation = () => {
                 </Text>
               );
             },
-            tabBarIcon: () => {
+            tabBarIcon: ({focused, color}) => {
               return (
-                <Image style={TabViewStyle.tab_icon} source={Images.taskIcon} />
+                <Image
+                  style={TabViewStyle.tab_icon}
+                  source={focused ? Images.taskIcon : Images.taskIconUnF}
+                />
               );
             },
           }}
@@ -93,11 +99,11 @@ const TabNavigation = () => {
                 </Text>
               );
             },
-            tabBarIcon: () => {
+            tabBarIcon: ({focused}) => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
-                  source={Images.profileIcon}
+                  source={focused ? Images.profileIcon : Images.profileIconUnF}
                 />
               );
             },
