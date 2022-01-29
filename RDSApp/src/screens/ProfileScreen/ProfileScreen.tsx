@@ -7,12 +7,12 @@ import {
   Button,
   Modal,
   Pressable,
-} from "react-native";
-import {ScreenViewContainer} from "../../styles/GlobalStyle";
-import {launchCamera, launchImageLibrary} from "react-native-image-picker";
-import Strings from "../../i18n/en";
-import {profileScreenStyles} from "./styles";
-import withHeader from "../../helpers/withHeader";
+} from 'react-native';
+import {ScreenViewContainer} from '../../styles/GlobalStyle';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import Strings from '../../i18n/en';
+import {profileScreenStyles} from './styles';
+import withHeader from '../../helpers/withHeader';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
@@ -35,19 +35,19 @@ const ProfileScreen = () => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: "App Camera Permission",
-          message: "App needs access to your camera ",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK",
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("Camera permission given");
+        console.log('Camera permission given');
         launchCamera(
           {
             saveToPhotos: true,
-            mediaType: "photo",
+            mediaType: 'photo',
             includeBase64: false,
           },
           setResponse,
@@ -94,7 +94,7 @@ const ProfileScreen = () => {
               onPress={() => uploadImage()}>
               <Text style={profileScreenStyles.textStyle}>Gallery</Text>
             </Pressable>
-            {response.hasOwnProperty("assets") && (
+            {response.hasOwnProperty('assets') && (
               <Pressable
                 style={[
                   profileScreenStyles.button,
@@ -123,8 +123,8 @@ const ProfileScreen = () => {
       <UploadImageModalView />
       <View style={profileScreenStyles.mainview}>
         <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
-        {!response.hasOwnProperty("assets") && (
-          <Text style={profileScreenStyles.titleText}>
+        {!response.hasOwnProperty('assets') && (
+          <Text style={profileScreenStyles.subTitleText}>
             {Strings.Img_Upload_Text}
           </Text>
         )}
@@ -146,7 +146,7 @@ const ProfileScreen = () => {
           style={[profileScreenStyles.button, profileScreenStyles.buttonOpen]}
           onPress={() => setModalVisible(true)}>
           <Text style={profileScreenStyles.textStyle}>
-            {response.hasOwnProperty("assets") ? "Change" : "Upload"}
+            {response.hasOwnProperty('assets') ? 'Change' : 'Upload'}
           </Text>
         </Pressable>
       </View>

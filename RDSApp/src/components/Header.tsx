@@ -27,14 +27,13 @@ const statusBarHeight = () => StatusBar.currentHeight || 0;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === 'android' ? statusBarHeight() + 5 : 5,
-    paddingBottom: 5,
+    padding: 15,
     backgroundColor: Colors.Primary_Color,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   logo: {
-    width: 35,
-    height: 40,
+    width: 45,
+    height: 45,
   },
 });

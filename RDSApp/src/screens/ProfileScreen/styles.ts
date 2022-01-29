@@ -1,65 +1,71 @@
-
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const profileScreenStyles = StyleSheet.create({
-    mainview: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+  mainview: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    padding: 18,
+    color: 'black',
+  },
+  subTitleText: {
+    fontSize: 20,
+    paddingBottom: 10,
+    color: 'black',
+  },
+  imageView: {
+    marginVertical: 24,
+    alignItems: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    titleText: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: '#041484',
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 10,
+    marginTop: 4,
+    marginBottom: 4,
+    padding: 10,
+    width: 120,
+    elevation: 2,
+  },
 
-    },
-    imageView: {
-        marginVertical: 24,
-        alignItems: 'center',
-    },
-    image: {
-        width: 200,
-        height: 200
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-    button: {
-        borderRadius: 10,
-        marginTop: 4,
-        marginBottom: 4,
-        padding: 10,
-        width: 120,
-        elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    }
-})
-
+  buttonOpen: {
+    // backgroundColor: '#1D1283',
+    backgroundColor: '#E20062',
+  },
+  buttonClose: {
+    backgroundColor: '#1D1283',
+    // backgroundColor: '#E20062',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
