@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  Platform,
-} from 'react-native';
+import {View, Image, StyleSheet, SafeAreaView, StatusBar} from 'react-native';
 import Colors from '../constants/colors/Colors';
 import Images from '../constants/images/Image';
 
@@ -22,8 +15,6 @@ const Header = () => {
 };
 
 export default Header;
-
-const statusBarHeight = () => StatusBar.currentHeight || 0;
 
 const styles = StyleSheet.create({
   container: {

@@ -4,7 +4,6 @@ import {
   Text,
   Image,
   PermissionsAndroid,
-  Button,
   Modal,
   Pressable,
 } from 'react-native';

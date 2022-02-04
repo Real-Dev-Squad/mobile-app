@@ -26,7 +26,6 @@ const TabNavigation = () => {
           name={Strings.Tab_Home}
           component={HomeScreen}
           options={{
-            // title: 'Home',
             headerShown: false,
             tabBarLabel: ({focused, color}) => {
               return (

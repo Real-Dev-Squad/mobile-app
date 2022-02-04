@@ -56,12 +56,10 @@ export const profileScreenStyles = StyleSheet.create({
   },
 
   buttonOpen: {
-    // backgroundColor: '#1D1283',
     backgroundColor: '#E20062',
   },
   buttonClose: {
     backgroundColor: '#1D1283',
-    // backgroundColor: '#E20062',
   },
   textStyle: {
     color: 'white',
