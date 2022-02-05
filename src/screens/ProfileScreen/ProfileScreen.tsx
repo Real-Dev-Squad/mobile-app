@@ -13,6 +13,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
+import ProfileScreenButton from './components/ProfileScreenButton';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
@@ -71,7 +72,7 @@ const ProfileScreen = () => {
     return (
       <Modal
         animationType="fade"
-        transparent={false}
+        transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
@@ -122,13 +123,11 @@ const ProfileScreen = () => {
     <View style={ScreenViewContainer.container}>
       <UploadImageModalView />
       <View style={profileScreenStyles.mainview}>
-        <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
         {!response.hasOwnProperty('assets') && (
           <Text style={profileScreenStyles.subTitleText}>
             {Strings.Img_Upload_Text}
           </Text>
         )}
-
         {response &&
           response.assets &&
           response.assets.map(({uri}: {uri: any}) => (
@@ -141,14 +140,13 @@ const ProfileScreen = () => {
               />
             </View>
           ))}
-
-        <Pressable
-          style={[profileScreenStyles.button, profileScreenStyles.buttonOpen]}
-          onPress={() => setModalVisible(true)}>
-          <Text style={profileScreenStyles.textStyle}>
-            {response.hasOwnProperty('assets') ? 'Change' : 'Upload'}
-          </Text>
-        </Pressable>
+        <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
+        <ProfileScreenButton
+          title={response.hasOwnProperty('assets') ? 'Change' : 'Upload'}
+          textColor="white"
+          bgColor="pink"
+          onPress={() => setModalVisible(true)}
+        />
       </View>
     </View>
   );

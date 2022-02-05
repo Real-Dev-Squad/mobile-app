@@ -3,12 +3,13 @@ import {StyleSheet} from 'react-native';
 export const profileScreenStyles = StyleSheet.create({
   mainview: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 20,
+    width: '100%',
     alignItems: 'center',
   },
   titleText: {
-    fontSize: 25,
-    fontWeight: 'bold',
+    fontSize: 24,
+    // fontWeight: 'bold',
     padding: 18,
     color: 'black',
   },
@@ -18,20 +19,22 @@ export const profileScreenStyles = StyleSheet.create({
     color: 'black',
   },
   imageView: {
-    marginVertical: 24,
+    // marginTop: 24,
     alignItems: 'center',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    borderWidth: 3,
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
   },
-  modalView: {
+
+  modalViewOld: {
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -46,26 +49,46 @@ export const profileScreenStyles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  modalView: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    // elevation: 5,
+  },
   button: {
     borderRadius: 10,
     marginTop: 4,
     marginBottom: 4,
+    borderColor: 'black',
+    borderWidth: 0.5,
     padding: 10,
-    width: 120,
+    width: '60%',
     elevation: 2,
+    color: 'white',
   },
 
   buttonOpen: {
     // backgroundColor: '#1D1283',
-    backgroundColor: '#E20062',
+    color: 'white',
+    // backgroundColor: '#E20062',
+    // backgroundColor: 'white',
   },
   buttonClose: {
-    backgroundColor: '#1D1283',
+    // backgroundColor: '#1D1283',
     // backgroundColor: '#E20062',
+    backgroundColor: 'white',
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: 'black',
+    // fontWeight: 'bold',
     textAlign: 'center',
+  },
+  icon: {
+    backgroundColor: '#ccc',
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
 });
