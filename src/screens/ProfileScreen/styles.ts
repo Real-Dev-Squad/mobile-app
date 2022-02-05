@@ -68,7 +68,6 @@ export const profileScreenStyles = StyleSheet.create({
     elevation: 2,
     color: 'white',
   },
-
   buttonOpen: {
     // backgroundColor: '#1D1283',
     color: 'white',
