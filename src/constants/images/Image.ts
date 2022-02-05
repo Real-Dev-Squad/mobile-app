@@ -6,6 +6,7 @@ const Images = {
   homeIconUnF: require('../../../assets/home-g.png'),
   taskIconUnF: require('../../../assets/task-g.png'),
   profileIconUnF: require('../../../assets/profile-g.png'),
+  emptyTaskScreen: require('../../../assets/task-empty.png'),
 
   //LOGO
   rdsLogo: require('../../../assets/rdsLogo.png'),
