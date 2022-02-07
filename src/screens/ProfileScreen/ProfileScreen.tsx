@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
-  Image,
   PermissionsAndroid,
   Modal,
+  Platform,
   Pressable,
 } from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
@@ -12,11 +12,24 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
-import ProfileScreenButton from './components/ProfileScreenButton';
+import ButtonWidget from '../../components/ButtonWidget';
+import Avatar from '../../components/Avatar';
+
+const PLACEHOLDER_IMAGE =
+  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+// 'https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_960_720.png';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
   const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = useCallback(() => {
+    setModalVisible(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalVisible(false);
+  }, []);
 
   const uploadImage = () => {
     launchImageLibrary(
@@ -27,23 +40,12 @@ const ProfileScreen = () => {
       },
       setResponse,
     );
-    setModalVisible(false);
+    closeModal();
   };
 
   const takePicture = async () => {
     try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'App Camera Permission',
-          message: 'App needs access to your camera ',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('Camera permission given');
+      if (Platform.OS === 'ios') {
         launchCamera(
           {
             saveToPhotos: true,
@@ -52,19 +54,45 @@ const ProfileScreen = () => {
           },
           setResponse,
         );
-      } else {
-        console.log('Camera permission denied');
       }
-      setModalVisible(false);
+
+      let granted;
+      if (Platform.OS === 'android') {
+        granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'App Camera Permission',
+            message: 'App needs access to your camera ',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Camera permission given');
+          launchCamera(
+            {
+              saveToPhotos: true,
+              mediaType: 'photo',
+              includeBase64: false,
+            },
+            setResponse,
+          );
+        } else {
+          console.log('Camera permission denied');
+        }
+      }
+      closeModal();
     } catch (err) {
       console.warn(err);
-      setModalVisible(false);
+      closeModal();
     }
   };
 
   const removePicture = () => {
     setResponse({});
-    setModalVisible(false);
+    closeModal();
   };
 
   const UploadImageModalView = () => {
@@ -73,49 +101,25 @@ const ProfileScreen = () => {
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
+        onRequestClose={() => setModalVisible(false)}>
         <View style={profileScreenStyles.centeredView}>
-          <View style={profileScreenStyles.modalView}>
-            <Pressable
-              style={[
-                profileScreenStyles.button,
-                profileScreenStyles.buttonOpen,
-              ]}
-              onPress={() => takePicture()}>
-              <Text style={profileScreenStyles.textStyle}>Camera</Text>
-            </Pressable>
-            <Pressable
-              style={[
-                profileScreenStyles.button,
-                profileScreenStyles.buttonOpen,
-              ]}
-              onPress={() => uploadImage()}>
-              <Text style={profileScreenStyles.textStyle}>Gallery</Text>
-            </Pressable>
+          <Pressable onPress={closeModal} style={profileScreenStyles.modalView}>
+            <ButtonWidget title={'Camera'} onPress={takePicture} />
+            <ButtonWidget title={'Gallery'} onPress={uploadImage} />
             {response.hasOwnProperty('assets') && (
-              <Pressable
-                style={[
-                  profileScreenStyles.button,
-                  profileScreenStyles.buttonOpen,
-                ]}
-                onPress={() => removePicture()}>
-                <Text style={profileScreenStyles.textStyle}>Remove</Text>
-              </Pressable>
+              <ButtonWidget title={'Remove'} onPress={removePicture} />
             )}
-            <Pressable
-              style={[
-                profileScreenStyles.button,
-                profileScreenStyles.buttonClose,
-              ]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={profileScreenStyles.textStyle}>Back</Text>
-            </Pressable>
-          </View>
+          </Pressable>
         </View>
       </Modal>
     );
+  };
+
+  const showDefaultAvatar = () => {
+    if (response?.assets) {
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -127,24 +131,15 @@ const ProfileScreen = () => {
             {Strings.Img_Upload_Text}
           </Text>
         )}
-        {response &&
-          response.assets &&
-          response.assets.map(({uri}: {uri: any}) => (
-            <View key={uri} style={profileScreenStyles.imageView}>
-              <Image
-                resizeMode="cover"
-                resizeMethod="scale"
-                style={profileScreenStyles.image}
-                source={{uri: uri}}
-              />
-            </View>
+        {response?.assets &&
+          response.assets.map(({uri}: {uri: string}) => (
+            <Avatar key={uri} uri={uri} size={100} />
           ))}
+        {showDefaultAvatar() && <Avatar uri={PLACEHOLDER_IMAGE} size={100} />}
         <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
-        <ProfileScreenButton
-          title={response.hasOwnProperty('assets') ? 'Change' : 'Upload'}
-          textColor="white"
-          bgColor="pink"
-          onPress={() => setModalVisible(true)}
+        <ButtonWidget
+          title={response?.assets ? 'Change' : 'Upload'}
+          onPress={openModal}
         />
       </View>
     </View>
