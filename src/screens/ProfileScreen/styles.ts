@@ -53,7 +53,6 @@ export const profileScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
-
   buttonOpen: {
     backgroundColor: '#E20062',
   },
