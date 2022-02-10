@@ -136,6 +136,10 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+         manifestPlaceholders = [
+             // TODO get it from env file
+            appAuthRedirectScheme: "x-realdevsquad-rdsapp"
+    ]
     }
     splits {
         abi {
