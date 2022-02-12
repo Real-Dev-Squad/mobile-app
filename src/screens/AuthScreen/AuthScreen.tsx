@@ -1,7 +1,14 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {authorize} from 'react-native-app-auth';
-import {githubConfig} from '../../../config/config.sample';
+import {githubConfig} from '../../../config/config';
 import Strings from '../../i18n/en';
 import {AuthViewStyle} from './styles';
 
@@ -16,11 +23,30 @@ const AuthScreen = () => {
   };
 
   return (
-    <View style={AuthViewStyle.container}>
-      <TouchableOpacity onPress={handleSignIn}>
-        <Text style={AuthViewStyle.oooBtn}>{Strings.SIGN_IN_BUTTON_TEXT}</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView contentContainerStyle={AuthViewStyle.container}>
+      <View style={[AuthViewStyle.imageContainer]}>
+        <Image
+          source={require('../../../assets/rdsLogo.png')}
+          style={AuthViewStyle.logo}
+        />
+      </View>
+      <View style={[AuthViewStyle.constContainer]}>
+        <Text style={AuthViewStyle.welcomeMsg}>Welcome to</Text>
+        <Text style={AuthViewStyle.cmpnyName}>Real Dev Squad</Text>
+      </View>
+      <View style={AuthViewStyle.btnContainer}>
+        <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
+          <View style={AuthViewStyle.githubLogo}>
+            <Image source={require('../../../assets/github_logo.png')} />
+          </View>
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {Strings.SIGN_IN_BUTTON_TEXT}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
