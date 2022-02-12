@@ -12,8 +12,11 @@ const Strings = {
   OOOBtn1_Text: 'Mark Yourself as OOO',
   OOOBtn2_Text: 'Mark Yourself as Active again',
   // Profile Screen
-  Greet_User: "Hello User",
-  Img_Upload_Text: "Upload your Profile Image"
+  Greet_User: 'Hello User',
+  Img_Upload_Text: 'Upload your Profile Image',
+  //LOGIN Screen
+  SIGN_IN_BUTTON_TEXT: 'Sign In with Github',
+  SIGN_IN_ERROR: 'Unable to login at the moment',
 };
 
 export default Strings;
