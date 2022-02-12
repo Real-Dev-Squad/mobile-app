@@ -4,13 +4,68 @@ export const AuthViewStyle = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 8,
-    backgroundColor: '#',
+    padding: 0,
+    backgroundColor: '#2819b3',
   },
-  oooBtn: {
+  imageContainer: {
+    paddingTop: 0,
+    flex: 0.4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  constContainer: {
+    paddingTop: 20,
+    flex: 0.2,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+
+  btnContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0.4,
+  },
+
+  btnView: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flexDirection: 'row',
+    minHeight: 60,
+    minWidth: 200,
+    width: '55%',
+  },
+
+  logo: {
+    width: 180,
+    height: 180,
+  },
+  githubLogo: {
+    flex: 0.2,
+    justifyContent: 'center',
+    paddingStart: 5,
+  },
+  signInTxtView: {
+    flex: 0.8,
+    justifyContent: 'center',
+    paddingRight: 5,
+  },
+  welcomeMsg: {
+    fontSize: 35,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  cmpnyName: {
+    fontSize: 35,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  signInText: {
     textAlign: 'center',
-    color: '#0034a5',
-    fontWeight: '500',
+    color: '#000000',
     fontSize: 20,
+    fontWeight: 'bold',
   },
 });
