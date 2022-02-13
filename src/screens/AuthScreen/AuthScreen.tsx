@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   View,
@@ -9,14 +9,20 @@ import {
 } from 'react-native';
 import {authorize} from 'react-native-app-auth';
 import {githubConfig} from '../../../config/config';
+import AuthContext from '../../context/AuthContext';
+import RootContext from '../../context/RootContext';
 import Strings from '../../i18n/en';
 import {AuthViewStyle} from './styles';
 
 const AuthScreen = () => {
+  const {updateAuthStatus} = useContext(AuthContext);
+  const {updateLoggedInUserData} = useContext(RootContext);
+
   const handleSignIn = async () => {
     try {
       const authState = await authorize(githubConfig);
-      console.log(authState);
+      updateAuthStatus(true);
+      updateLoggedInUserData(authState);
     } catch (error) {
       Alert.alert(Strings.SIGN_IN_ERROR);
     }
@@ -31,8 +37,8 @@ const AuthScreen = () => {
         />
       </View>
       <View style={[AuthViewStyle.constContainer]}>
-        <Text style={AuthViewStyle.welcomeMsg}>Welcome to</Text>
-        <Text style={AuthViewStyle.cmpnyName}>Real Dev Squad</Text>
+        <Text style={AuthViewStyle.welcomeMsg}>{Strings.WELCOME_TO}</Text>
+        <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
         <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>

@@ -1,34 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import {useAsyncStorage} from '@react-native-community/async-storage';
+import * as Keychain from 'react-native-keychain';
 import TabNavigation from './src/navigations/TabNavigation/TabNavigation';
 import AuthScreen from './src/screens/AuthScreen/AuthScreen';
 
 import AuthContext from './src/context/AuthContext';
 import RootContext from './src/context/RootContext';
+import LoadingScreen from './src/components/LoadingScreen';
 const App = () => {
-  // ? Flow for Auth Logic
-  // get item from local storage
-  // if it's present and the access token is valid then
-  // redirect user to the home screen
-  // else redirect user to the auth screen
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loggedInUserData, setLoggedInUserData] = useState<any>(null);
   const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
-  const {getItem, setItem, removeItem} = useAsyncStorage('github_access-token');
 
   const writeItemToStorage = async (loginData: any) => {
     try {
-      const item = await getItem();
+      setIsLoading(true);
+      const githubLoginInfo = await Keychain.getGenericPassword();
 
-      if (item === null) {
-        setItem(JSON.stringify(loginData));
-      } else {
-        removeItem();
+      if (!githubLoginInfo) {
+        await Keychain.setGenericPassword(
+          'githubLoginData',
+          JSON.stringify(loginData),
+        );
       }
       setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       Alert.alert('Something went wrong');
     }
   };
@@ -40,14 +37,12 @@ const App = () => {
   const readItemFromStorage = async () => {
     try {
       setIsLoading(true);
-      const item = await getItem();
-      if (item === null) {
-        // no need to do anything
-        // will show login screen
-      } else {
-        setLoggedInUserData(JSON.parse(item));
+      const githubLoginInfo = await Keychain.getGenericPassword();
+      if (githubLoginInfo && githubLoginInfo.password) {
         setLoggedIn(true);
+        setLoggedInUserData(JSON.parse(githubLoginInfo.password));
       }
+
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -62,7 +57,7 @@ const App = () => {
   const removeItemFromStorage = async () => {
     try {
       setIsLoading(true);
-      await removeItem();
+      await Keychain.resetGenericPassword();
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -78,7 +73,13 @@ const App = () => {
     <AuthContext.Provider
       value={{isLoggedIn, updateAuthStatus, removeItemFromStorage}}>
       <RootContext.Provider value={{loggedInUserData, updateLoggedInUserData}}>
-        {!isLoggedIn ? <AuthScreen /> : <TabNavigation />}
+        {isLoading ? (
+          <LoadingScreen />
+        ) : !isLoggedIn ? (
+          <AuthScreen />
+        ) : (
+          <TabNavigation />
+        )}
       </RootContext.Provider>
     </AuthContext.Provider>
   );

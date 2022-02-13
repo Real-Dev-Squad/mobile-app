@@ -10,7 +10,6 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/drawer": "^6.1.8",
@@ -21,6 +20,7 @@
     "react-native-app-auth": "^6.4.2",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-image-picker": "^4.7.1",
+    "react-native-keychain": "^8.0.0",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2"

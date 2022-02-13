@@ -17,6 +17,8 @@ const Strings = {
   //LOGIN Screen
   SIGN_IN_BUTTON_TEXT: 'Sign In with Github',
   SIGN_IN_ERROR: 'Unable to login at the moment',
+  WELCOME_TO: 'Welcome to',
+  REAL_DEV_SQUAD: 'Real Dev Squad',
 };
 
 export default Strings;
