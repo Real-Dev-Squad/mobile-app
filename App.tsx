@@ -67,12 +67,22 @@ const App = () => {
 
   useEffect(() => {
     readItemFromStorage();
+    return () => {
+      setLoggedInUserData(null);
+      setLoggedIn(false);
+    };
   }, []);
 
   return (
     <AuthContext.Provider
       value={{isLoggedIn, updateAuthStatus, removeItemFromStorage}}>
-      <RootContext.Provider value={{loggedInUserData, updateLoggedInUserData}}>
+      <RootContext.Provider
+        value={{
+          loggedInUserData,
+          updateLoggedInUserData,
+          isLoading,
+          setIsLoading,
+        }}>
         {isLoading ? (
           <LoadingScreen />
         ) : !isLoggedIn ? (
