@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Text,
   View,
@@ -16,14 +16,17 @@ import {AuthViewStyle} from './styles';
 
 const AuthScreen = () => {
   const {updateAuthStatus} = useContext(AuthContext);
-  const {updateLoggedInUserData} = useContext(RootContext);
+  const {updateLoggedInUserData, setIsLoading} = useContext(RootContext);
 
   const handleSignIn = async () => {
     try {
+      setIsLoading(true);
       const authState = await authorize(githubConfig);
       updateAuthStatus(true);
       updateLoggedInUserData(authState);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       Alert.alert(Strings.SIGN_IN_ERROR);
     }
   };
