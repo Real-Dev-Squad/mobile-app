@@ -5,5 +5,6 @@ export const TaskScreenView = StyleSheet.create({
     padding: 20,
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#0034a5',
   },
 });
