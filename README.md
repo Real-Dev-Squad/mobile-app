@@ -29,7 +29,7 @@ After setting up the development environment:
 - `git clone<repository-url>` this repository
 - `cd mobile-app`
 - `cd RDSApp`
-- `npm install`
+- `yarn`
 
 **Running/Development**
 
