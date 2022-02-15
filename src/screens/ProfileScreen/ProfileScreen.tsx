@@ -14,10 +14,7 @@ import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
-
-const PLACEHOLDER_IMAGE =
-  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-// 'https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_960_720.png';
+import Images from '../../constants/images/Image';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
@@ -135,7 +132,9 @@ const ProfileScreen = () => {
           response.assets.map(({uri}: {uri: string}) => (
             <Avatar key={uri} uri={uri} size={100} />
           ))}
-        {showDefaultAvatar() && <Avatar uri={PLACEHOLDER_IMAGE} size={100} />}
+        {showDefaultAvatar() && (
+          <Avatar uri={Images.DEFAULT_IMAGE} size={100} />
+        )}
         <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
         <ButtonWidget
           title={response?.assets ? 'Change' : 'Upload'}

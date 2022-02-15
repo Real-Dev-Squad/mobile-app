@@ -17,8 +17,10 @@
     "@react-navigation/stack": "^6.0.11",
     "react": "17.0.2",
     "react-native": "0.66.4",
+    "react-native-app-auth": "^6.4.2",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-image-picker": "^4.7.1",
+    "react-native-keychain": "^8.0.0",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2"
@@ -54,6 +56,8 @@
       "json",
       "node"
     ],
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ]
   }
 }
