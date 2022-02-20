@@ -2,16 +2,15 @@ import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
-  PermissionsAndroid,
   Modal,
-  Platform,
   Pressable,
 } from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
+import takePicture from '../../helpers/LaunchCamera';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import Images from '../../constants/images/Image';
@@ -40,53 +39,6 @@ const ProfileScreen = () => {
     closeModal();
   };
 
-  const takePicture = async () => {
-    try {
-      if (Platform.OS === 'ios') {
-        launchCamera(
-          {
-            saveToPhotos: true,
-            mediaType: 'photo',
-            includeBase64: false,
-          },
-          setResponse,
-        );
-      }
-
-      let granted;
-      if (Platform.OS === 'android') {
-        granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          {
-            title: 'App Camera Permission',
-            message: 'App needs access to your camera ',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          },
-        );
-
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('Camera permission given');
-          launchCamera(
-            {
-              saveToPhotos: true,
-              mediaType: 'photo',
-              includeBase64: false,
-            },
-            setResponse,
-          );
-        } else {
-          console.log('Camera permission denied');
-        }
-      }
-      closeModal();
-    } catch (err) {
-      console.warn(err);
-      closeModal();
-    }
-  };
-
   const removePicture = () => {
     setResponse({});
     closeModal();
@@ -101,7 +53,7 @@ const ProfileScreen = () => {
         onRequestClose={() => setModalVisible(false)}>
         <View style={profileScreenStyles.centeredView}>
           <Pressable onPress={closeModal} style={profileScreenStyles.modalView}>
-            <ButtonWidget title={'Camera'} onPress={takePicture} />
+            <ButtonWidget title={'Camera'} onPress = {() => takePicture(setResponse, closeModal)} />
             <ButtonWidget title={'Gallery'} onPress={uploadImage} />
             {response.hasOwnProperty('assets') && (
               <ButtonWidget title={'Remove'} onPress={removePicture} />
