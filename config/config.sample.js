@@ -4,7 +4,7 @@ const githubConfig = {
   redirectUrl: 'x-realdevsquad-rdsapp://oauth2/authorize',
   clientId: '<client-id>',
   clientSecret: '<client-secret>',
-  scopes: ['notifications', 'user', 'identity'],
+  scopes: [],
   serviceConfiguration: {
     authorizationEndpoint: 'https://github.com/login/oauth/authorize',
     tokenEndpoint: 'https://github.com/login/oauth/access_token',
