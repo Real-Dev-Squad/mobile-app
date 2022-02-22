@@ -38,7 +38,7 @@ Note : Please delete the previous RDS app build if you have.
 - Clone the repo and go through the code base.
 - Make sure you have node installed on your computer.
 - Go through the issues and comment on issue which you find interesting.
-- Discuss contribute and raise the PR.
+- Discuss, contribute and raise the PR.
 - If you need any other help, feel free to ping on `mobile-app-react-native` channel at discord.
 
 **Installation**
