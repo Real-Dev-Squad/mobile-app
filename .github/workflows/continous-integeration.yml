@@ -29,4 +29,6 @@ jobs:
     - name: Install node modules
       run: |
         yarn install
-    - run: yarn test
+    - name: Running test
+      run: |
+        yarn test
