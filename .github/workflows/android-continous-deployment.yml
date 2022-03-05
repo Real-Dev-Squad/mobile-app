@@ -39,3 +39,12 @@ jobs:
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease --no-daemon
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
+      - name: Download a single artifact    
+        uses: actions/download-artifact@v3
+        with:
+          name: RDSApp
