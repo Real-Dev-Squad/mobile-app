@@ -9,14 +9,16 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Getting the repo
         uses: actions/checkout@v2
-      - uses: actions/setup-node@master
-      - uses: c-hive/gha-yarn-cache@v1
-
+      - name: Installing node
+        uses: actions/setup-node@v1
+      - name: Install React Native CLI
+        run: |
+          yarn global add react-native-cli
       - name: Install node modules
         run: |
           yarn install
-      - name: Run test
+      - name: Running test
         run: |
-          yarn test-ci
+          yarn test
