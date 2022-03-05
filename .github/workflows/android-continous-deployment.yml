@@ -34,6 +34,18 @@ jobs:
       - name: Create config.js file
         run: |
             cp ./config/config.sample.js ./config/config.js
+      - name: Find and Replace the clientId
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "<client-id>"
+          replace: "${{ secrets.CLIENT_GITHUB_ID }}"
+          include: "config/config.js"
+      - name: Find and Replace the clientSecret
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "<client-secret>"
+          replace: "${{ secrets.CLIENT_GITHUB_SECRET }}"
+          include: "config/config.js"
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
       - name: Build Android Release
