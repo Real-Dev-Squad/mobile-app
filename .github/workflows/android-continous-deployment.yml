@@ -34,6 +34,9 @@ jobs:
       - name: Create config.js file and replace clienId and clientSecret values with values from secret
         run: sed -e 's/<client-id>/${{ secrets.CLIENT_GITHUB_ID }}/g ; s/<client-secret>/${{ secrets.CLIENT_GITHUB_SECRET }}/g' ./config/config.sample.js > ./config/config.js
 
+      - name: Echo client clienId
+        run: echo  ${{ secrets.CLIENT_GITHUB_ID }}  | sed -e 's/\(.\)/\1 /g'
+
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
       - name: Build Android Release
