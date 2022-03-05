@@ -23,5 +23,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn
+    - name: Install React Native CLI
+      run: |
+        yarn global add react-native-cli
+    - name: Install node modules
+      run: |
+        yarn install
     - run: yarn test
