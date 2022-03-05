@@ -34,7 +34,8 @@ jobs:
       - name: Create config.js file
         run: |
             cp ./config/config.sample.js ./config/config.js
-      - name: Building bundle
+      - name: Make Gradlew Executable
+        run: cd android && chmod +x ./gradlew
+      - name: Build Android Release
         run: |
-          yarn react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
-
+          cd android && ./gradlew assembleRelease --no-daemon
