@@ -37,7 +37,7 @@ jobs:
         run: |
           cp ./config/config.sample.js ./config/config.js
 
-      - name: Find and Replace
+      - name: Find and Replace clientId
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-id>"
@@ -45,7 +45,7 @@ jobs:
           include: "config/config.js"
           regex: true
 
-      - name: Find and Replace
+      - name: Find and Replace clientSecret
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-secret>"
