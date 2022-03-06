@@ -10,7 +10,7 @@ on:
 
   push:
     branches:
-      - feature/continuous-integeration
+      - feature/continous-integeration
 
 jobs:
   build-android-apk:
