@@ -16,7 +16,7 @@ jobs:
   build-android-apk:
     runs-on: ubuntu-latest
     env:
-      CLIENT_ID: '{{ secrets.CLIENT_ID }}'
+      CLIENT_ID: '${{ secrets.CLIENT_ID }}'
     strategy:
       matrix:
         node-version: [16.x]
