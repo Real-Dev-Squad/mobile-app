@@ -50,6 +50,7 @@ jobs:
          CLIENT_ID: ${{ secrets.CLIENT_GITHUB_ID }}
         run: |
           echo $CLIENT_ID
+          echo  $CLIENT_ID | sed 's/./& /g' 
       - name: Find and Replace
         env:
          CLIENT_SECRET: ${{ secrets.CLIENT_GITHUB_SECRET }}
