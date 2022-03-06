@@ -42,11 +42,11 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-id>"
-          replace: "$CLIENT_ID"
+          replace: $CLIENT_ID
           include: "config/config.js"
       - name: Echo client id
         env:
-         CLIENT_ID: ${{ secrets.TEST_ID }}
+         CLIENT_ID: ${{ secrets.CLIENT_GITHUB_ID }}
         run: |
           echo $CLIENT_ID
       - name: Find and Replace
