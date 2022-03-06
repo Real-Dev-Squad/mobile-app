@@ -15,9 +15,6 @@ on:
 jobs:
   build-android-apk:
     runs-on: ubuntu-latest
-    env:
-      CLIENT_ID: ${{ secrets.CLIENT_GITHUB_ID }}
-      CLIENT_SECRET: '${{ secrets.CLIENT_GITHUB_SECRET }}'
     strategy:
       matrix:
         node-version: [16.x]
@@ -40,19 +37,25 @@ jobs:
           cp ./config/config.sample.js ./config/config.js
 
       - name: Find and Replace
+        env:
+         CLIENT_ID: ${{ secrets.TEST_ID }}
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-id>"
           replace: $CLIENT_ID
           include: "./config/config.js"
       - name: Echo client id
+        env:
+         CLIENT_ID: ${{ secrets.TEST_ID }}
         run: |
           echo $CLIENT_ID
       - name: Find and Replace
+        env:
+         CLIENT_SECRET: ${{ secrets.CLIENT_GITHUB_SECRET }}
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-secret>"
-          replace: "$CLIENT_SECRET"
+          replace: $CLIENT_SECRET
           include: "./config/config.js"
 
       - name: Make Gradlew Executable
