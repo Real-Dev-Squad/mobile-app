@@ -13,14 +13,6 @@ on:
       - feature/continous-integeration
 
 jobs:
-  create-config-file:
-   runs-on: ubuntu-latest
-   steps:
-      - name: Getting the repo
-        uses: actions/checkout@v2
-      - name: Create config file
-        run: |
-          cp ./config/config.sample.js ./config/config.js
 
   build-android-apk:
     needs: [create-config-file]
@@ -42,9 +34,9 @@ jobs:
         run: |
           yarn install
       
-      # - name: Create config file
-      #   run: |
-      #     cp ./config/config.sample.js ./config/config.js
+      - name: Create config file
+        run: |
+          cp ./config/config.sample.js ./config/config.js
 
       - name: Find and Replace
         env:
@@ -70,15 +62,15 @@ jobs:
 
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-      - name: Build Android Release
+      - name: Build Android Debug
         run: |
-          cd android && ./gradlew assembleRelease --no-daemon
+          cd android && ./gradlew assembleDebug --no-daemon
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release/
+          name: app-debug.apk
+          path: android/app/build/outputs/apk/debug/
       - name: Download a single artifact    
         uses: actions/download-artifact@v3
         with:
-          name: app-release.apk
+          name: app-debug.apk
