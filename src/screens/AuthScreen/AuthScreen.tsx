@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {authorize} from 'react-native-app-auth';
-import {githubConfig} from '../../../config/config.sample';
+import {githubConfig} from '../../../config/config';
 import AuthContext from '../../context/AuthContext';
 import RootContext from '../../context/RootContext';
 import Strings from '../../i18n/en';
