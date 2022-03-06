@@ -10,7 +10,7 @@ on:
 
   push:
     branches:
-      - test-develop
+      - feature/continuous-integeration
 
 jobs:
   build-android-apk:
@@ -31,23 +31,32 @@ jobs:
       - name: Install yarn dependencies
         run: |
           yarn install
-      - name: Create config.js file and replace clienId and clientSecret values with values from secret
-        run: sed -e 's/<client-id>/${{ secrets.CLIENT_GITHUB_ID }}/g ; s/<client-secret>/${{ secrets.CLIENT_GITHUB_SECRET }}/g' ./config/config.sample.js > ./config/config.js
-
-      - name: Test printing your secret (Remove this step in production)
-        run: cat $HOME/secrets/CLIENT_GITHUB_ID.json
-
-      - name: Make Gradlew Executable
-        run: cd android && chmod +x ./gradlew
-      - name: Build Android Release
+      
+      - name: Create config file
         run: |
-          cd android && ./gradlew assembleRelease --no-daemon
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+          cp ./config/config.sample.js ./config/config.js
+
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v2
         with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release/
-      - name: Download a single artifact    
-        uses: actions/download-artifact@v3
-        with:
-          name: app-release.apk
+          find: "<client-id>"
+          replace: "${{secrets.CLIENT_GITHUB_ID}}"
+          include: "./config/config.js" 
+
+      # - name: Test printing your secret (Remove this step in production)
+      #   run: cat $HOME/secrets/CLIENT_GITHUB_ID.json
+
+      # - name: Make Gradlew Executable
+      #   run: cd android && chmod +x ./gradlew
+      # - name: Build Android Release
+      #   run: |
+      #     cd android && ./gradlew assembleRelease --no-daemon
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: app-release.apk
+      #     path: android/app/build/outputs/apk/release/
+      # - name: Download a single artifact    
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: app-release.apk
