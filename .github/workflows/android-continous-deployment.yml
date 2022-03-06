@@ -43,8 +43,10 @@ jobs:
         with:
           find: "<client-id>"
           replace: "$CLIENT_ID"
-          include: "./config/config.js" 
-
+          include: "./config/config.js"
+      - name: Echo client id
+        run: |
+          echo $CLIENT_ID
       # - name: Test printing your secret (Remove this step in production)
       #   run: cat $HOME/secrets/CLIENT_GITHUB_ID.json
 
