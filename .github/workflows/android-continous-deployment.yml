@@ -43,7 +43,7 @@ jobs:
         with:
           find: "<client-id>"
           replace: $CLIENT_ID
-          include: "./config/config.js"
+          include: "config/config.js"
       - name: Echo client id
         env:
          CLIENT_ID: ${{ secrets.TEST_ID }}
