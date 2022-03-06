@@ -15,6 +15,8 @@ on:
 jobs:
   build-android-apk:
     runs-on: ubuntu-latest
+    env:
+      CLIENT_ID: '{{ secrets.CLIENT_ID }}'
     strategy:
       matrix:
         node-version: [16.x]
@@ -40,7 +42,7 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-id>"
-          replace: "${{secrets.CLIENT_GITHUB_ID}}"
+          replace: "$CLIENT_ID"
           include: "./config/config.js" 
 
       # - name: Test printing your secret (Remove this step in production)
