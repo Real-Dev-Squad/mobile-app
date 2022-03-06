@@ -13,7 +13,17 @@ on:
       - feature/continous-integeration
 
 jobs:
+  create-config-file:
+   runs-on: ubuntu-latest
+   steps:
+      - name: Getting the repo
+        uses: actions/checkout@v2
+      - name: Create config file
+        run: |
+          cp ./config/config.sample.js ./config/config.js
+
   build-android-apk:
+    needs: [create-config-file]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,9 +42,9 @@ jobs:
         run: |
           yarn install
       
-      - name: Create config file
-        run: |
-          cp ./config/config.sample.js ./config/config.js
+      # - name: Create config file
+      #   run: |
+      #     cp ./config/config.sample.js ./config/config.js
 
       - name: Find and Replace
         env:
