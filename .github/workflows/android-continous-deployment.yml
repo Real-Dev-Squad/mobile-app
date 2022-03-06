@@ -45,29 +45,27 @@ jobs:
           find: "<client-id>"
           replace: "$CLIENT_ID"
           include: "./config/config.js"
-      - name: Echo client id
-        run: |
-          echo $CLIENT_ID
+      # - name: Echo client id
+      #   run: |
+      #     echo $CLIENT_ID
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-secret>"
           replace: "$CLIENT_SECRET"
           include: "./config/config.js"
-      # - name: Test printing your secret (Remove this step in production)
-      #   run: cat $HOME/secrets/CLIENT_GITHUB_ID.json
 
-      # - name: Make Gradlew Executable
-      #   run: cd android && chmod +x ./gradlew
-      # - name: Build Android Release
-      #   run: |
-      #     cd android && ./gradlew assembleRelease --no-daemon
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: app-release.apk
-      #     path: android/app/build/outputs/apk/release/
-      # - name: Download a single artifact    
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: app-release.apk
+      - name: Make Gradlew Executable
+        run: cd android && chmod +x ./gradlew
+      - name: Build Android Release
+        run: |
+          cd android && ./gradlew assembleRelease --no-daemon
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
+      - name: Download a single artifact    
+        uses: actions/download-artifact@v3
+        with:
+          name: app-release.apk
