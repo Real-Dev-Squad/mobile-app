@@ -43,8 +43,9 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-id>"
-          replace: $CLIENT_ID
+          replace: "$CLIENT_ID"
           include: "config/config.js"
+          regex: true
       - name: Echo client id
         env:
          CLIENT_ID: ${{ secrets.CLIENT_GITHUB_ID }}
