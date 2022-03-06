@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {authorize} from 'react-native-app-auth';
-import {githubConfig} from '../../../config/config';
+import {githubConfig} from '../../../config/config.sample';
 import AuthContext from '../../context/AuthContext';
 import RootContext from '../../context/RootContext';
 import Strings from '../../i18n/en';
@@ -21,9 +21,10 @@ const AuthScreen = () => {
   const handleSignIn = async () => {
     try {
       setIsLoading(true);
-      const authState = await authorize(githubConfig);
-      updateAuthStatus(true);
-      updateLoggedInUserData(authState);
+      Alert.alert(`${githubConfig.clientId + ' - ' + githubConfig.clientSecret}`);
+      // const authState = await authorize(githubConfig);
+      // updateAuthStatus(true);
+      // updateLoggedInUserData(authState);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
