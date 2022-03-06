@@ -27,7 +27,8 @@ const AuthScreen = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      Alert.alert(Strings.SIGN_IN_ERROR);
+      Alert.alert(`${error}`);
+      // Alert.alert(Strings.SIGN_IN_ERROR);
     }
   };
 

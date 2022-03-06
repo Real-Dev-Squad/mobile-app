@@ -61,15 +61,15 @@ jobs:
 
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-      - name: Build Android Debug
+      - name: Build Android Release
         run: |
-          cd android && ./gradlew assembleDebug --no-daemon
+          cd android && ./gradlew assembleRelease --no-daemon
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: app-debug.apk
-          path: android/app/build/outputs/apk/debug/
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
       - name: Download a single artifact    
         uses: actions/download-artifact@v3
         with:
-          name: app-debug.apk
+          name: app-release.apk
