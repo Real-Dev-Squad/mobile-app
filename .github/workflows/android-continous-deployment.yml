@@ -38,8 +38,6 @@ jobs:
           cp ./config/config.sample.js ./config/config.js
 
       - name: Find and Replace
-        env:
-         CLIENT_ID: ${{ secrets.CLIENT_GITHUB_ID }}
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "<client-id>"
@@ -47,23 +45,12 @@ jobs:
           include: "config/config.js"
           regex: true
 
-      # - name: Find and replace
-      #   run: |
-      #     sed -i 's/<client-id>/$CLIENT_ID/g' config.js
-      - name: Echo client id
-        env:
-         CLIENT_ID: ${{ secrets.CLIENT_GITHUB_ID }}
-        run: |
-          echo $CLIENT_ID
-          echo  $CLIENT_ID | sed 's/./& /g' 
-      # - name: Find and Replace
-      #   env:
-      #    CLIENT_SECRET: ${{ secrets.CLIENT_GITHUB_SECRET }}
-      #   uses: jacobtomlinson/gha-find-replace@v2
-      #   with:
-      #     find: "<client-secret>"
-      #     replace: "$CLIENT_SECRET"
-      #     include: "config/config.js"
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "<client-secret>"
+          replace: ${{ secrets.CLIENT_GITHUB_SECRET }}
+          include: "config/config.js"
 
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
