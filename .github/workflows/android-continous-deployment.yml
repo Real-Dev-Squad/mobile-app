@@ -10,7 +10,7 @@ on:
 
   push:
     branches:
-      - feature/continous-integeration
+      - develop
 
 jobs:
 
