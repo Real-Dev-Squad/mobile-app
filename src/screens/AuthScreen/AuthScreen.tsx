@@ -21,15 +21,13 @@ const AuthScreen = () => {
   const handleSignIn = async () => {
     try {
       setIsLoading(true);
-      Alert.alert(`${githubConfig.clientId + ' - ' + githubConfig.clientSecret}`);
-      // const authState = await authorize(githubConfig);
-      // updateAuthStatus(true);
-      // updateLoggedInUserData(authState);
+      const authState = await authorize(githubConfig);
+      updateAuthStatus(true);
+      updateLoggedInUserData(authState);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      Alert.alert(`${error}`);
-      // Alert.alert(Strings.SIGN_IN_ERROR);
+      Alert.alert(Strings.SIGN_IN_ERROR);
     }
   };
 
