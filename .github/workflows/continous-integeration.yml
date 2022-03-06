@@ -6,7 +6,7 @@ name: Continous-Integeration
 on:
   pull_request:
     branches:
-      - test-develop
+      - develop
 
 jobs:
   build:
