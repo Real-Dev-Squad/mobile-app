@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     color: 'white',
-    minWidth: '60%',
+    minWidth: '35%',
     maxWidth: '100%',
   },
 });

@@ -54,6 +54,7 @@ const ProfileScreen = () => {
         <View style={profileScreenStyles.centeredView}>
           <Pressable onPress={closeModal} style={profileScreenStyles.modalView}>
             <ButtonWidget title={'Camera'} onPress = {() => takePicture(setResponse, closeModal)} />
+            <View style={{padding: '5%'}}></View>
             <ButtonWidget title={'Gallery'} onPress={uploadImage} />
             {response.hasOwnProperty('assets') && (
               <ButtonWidget title={'Remove'} onPress={removePicture} />

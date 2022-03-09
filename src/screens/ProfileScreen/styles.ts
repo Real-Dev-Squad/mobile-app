@@ -48,10 +48,16 @@ export const profileScreenStyles = StyleSheet.create({
   },
   modalView: {
     width: '100%',
-    height: '100%',
+    height: '15%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: '#ffffff',
+    marginTop: '156%',
+    flexDirection: 'row',
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    borderWidth: 1,
+    borderColor: 'black',
   },
   buttonOpen: {
     backgroundColor: '#E20062',
