@@ -32,7 +32,7 @@ Note : Please delete the previous RDS app build if you have.
 - Now clone the mobile app Repo with [Github Repo Link](https://github.com/Real-Dev-Squad/mobile-app)
 - Create a new file: config/config.js. copy  content from config/config.sample.js into config/config.js. 
 - Register the application for GitHub OAuth to get the clientId and clientSecret. Add the callback URL as x-realdevsquad-rdsapp://oauth2/authorize
-- Replace the clientId and clientSecret in config/config.js file with the values from the github oauth app 
+- Replace the clientId and clientSecret in `config/config.js` file with the values from the github oauth app 
 - Start contributing.
 
 ## Contributuion Guide
