@@ -8,6 +8,12 @@ const Images = {
   profileIconUnF: require('../../../assets/profile-g.png'),
   emptyTaskScreen: require('../../../assets/task-empty.png'),
 
+  // camera gallery options
+
+  cameraIcon: require('../../../assets/camera.png'),
+  galleryIcon: require('../../../assets/gallery.png'),
+  remove: require('../../../assets/remove.png'),
+
   //LOGO
   rdsLogo: require('../../../assets/rdsLogo.png'),
 

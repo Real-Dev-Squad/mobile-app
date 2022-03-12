@@ -29,6 +29,7 @@ export const profileScreenStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: 'red',
   },
 
   modalViewOld: {
@@ -47,12 +48,13 @@ export const profileScreenStyles = StyleSheet.create({
     elevation: 5,
   },
   modalView: {
+    position: 'absolute',
     width: '100%',
     height: '15%',
+    bottom: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    marginTop: '156%',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#fff',
     flexDirection: 'row',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,

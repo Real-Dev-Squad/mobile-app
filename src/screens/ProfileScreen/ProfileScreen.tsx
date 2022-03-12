@@ -1,19 +1,13 @@
 import React, {useState, useCallback} from 'react';
-import {
-  View,
-  Text,
-  Modal,
-  Pressable,
-} from 'react-native';
+import {View, Text} from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
-import {launchImageLibrary} from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
-import takePicture from '../../helpers/LaunchCamera';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import Images from '../../constants/images/Image';
+import UploadImageModalView from '../../components/GalleryModal';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
@@ -27,42 +21,9 @@ const ProfileScreen = () => {
     setModalVisible(false);
   }, []);
 
-  const uploadImage = () => {
-    launchImageLibrary(
-      {
-        selectionLimit: 1,
-        mediaType: 'photo',
-        includeBase64: false,
-      },
-      setResponse,
-    );
-    closeModal();
-  };
-
   const removePicture = () => {
     setResponse({});
     closeModal();
-  };
-
-  const UploadImageModalView = () => {
-    return (
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
-        <View style={profileScreenStyles.centeredView}>
-          <Pressable onPress={closeModal} style={profileScreenStyles.modalView}>
-            <ButtonWidget title={'Camera'} onPress = {() => takePicture(setResponse, closeModal)} />
-            <View style={{padding: '5%'}}></View>
-            <ButtonWidget title={'Gallery'} onPress={uploadImage} />
-            {response.hasOwnProperty('assets') && (
-              <ButtonWidget title={'Remove'} onPress={removePicture} />
-            )}
-          </Pressable>
-        </View>
-      </Modal>
-    );
   };
 
   const showDefaultAvatar = () => {
@@ -74,7 +35,13 @@ const ProfileScreen = () => {
 
   return (
     <View style={ScreenViewContainer.container}>
-      <UploadImageModalView />
+      <UploadImageModalView
+        closeModal={closeModal}
+        modalVisible={modalVisible}
+        removePicture={removePicture}
+        response={response}
+        setResponse={setResponse}
+      />
       <View style={profileScreenStyles.mainview}>
         {!response.hasOwnProperty('assets') && (
           <Text style={profileScreenStyles.subTitleText}>

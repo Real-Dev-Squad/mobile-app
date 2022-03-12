@@ -1,7 +1,15 @@
 import React from 'react';
-import {GestureResponderEvent, Pressable, StyleSheet, Text} from 'react-native';
+import {
+  GestureResponderEvent,
+  Image,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  Text,
+} from 'react-native';
 
 interface IButtonWidget {
+  icon?: ImageSourcePropType;
   title: string;
   textColor?: string;
   bgColor?: string;
@@ -11,6 +19,7 @@ interface IButtonWidget {
 
 const ButtonWidget = ({
   title,
+  icon,
   onPress,
   textColor,
   bgColor,
@@ -24,15 +33,19 @@ const ButtonWidget = ({
   ];
 
   return (
-    <Pressable style={btnStyle} onPress={onPress}>
-      <Text
-        style={{
-          color: textColor ? textColor : 'black',
-          textAlign: 'center',
-          fontSize: fontSize ? fontSize : 14,
-        }}>
-        {title}
-      </Text>
+    <Pressable style={icon ? styles.iconStyle : btnStyle} onPress={onPress}>
+      {icon ? (
+        <Image style={{height: 50, width: 50}} source={icon} />
+      ) : (
+        <Text
+          style={{
+            color: textColor ? textColor : 'black',
+            textAlign: 'center',
+            fontSize: fontSize ? fontSize : 14,
+          }}>
+          {title}
+        </Text>
+      )}
     </Pressable>
   );
 };
@@ -48,6 +61,9 @@ const styles = StyleSheet.create({
     color: 'white',
     minWidth: '35%',
     maxWidth: '100%',
+  },
+  iconStyle: {
+    borderRadius: 15,
   },
 });
 
