@@ -24,6 +24,7 @@ const AuthScreen = () => {
       const authState = await authorize(githubConfig);
       updateAuthStatus(true);
       updateLoggedInUserData(authState);
+      console.log("authState",authState)
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

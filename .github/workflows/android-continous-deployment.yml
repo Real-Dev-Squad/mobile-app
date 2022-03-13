@@ -1,0 +1,68 @@
+name: Build Android apk
+
+on:
+  workflow_dispatch:
+    inputs:
+      comments:
+        description: 'Comments'
+        required: true
+        default: 'Manual build Actions'
+
+  push:
+    branches:
+      - develop
+
+jobs:
+
+  build-android-apk:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Getting the repo
+        uses: actions/checkout@v2
+      - name: Installing Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install React Native CLI
+        run: |
+          yarn global add react-native-cli
+      - name: Install yarn dependencies
+        run: |
+          yarn install
+      
+      - name: Create config file
+        run: |
+          cp ./config/config.sample.js ./config/config.js
+
+      - name: Find and Replace clientId
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "<client-id>"
+          replace: ${{ secrets.CLIENT_GITHUB_ID }}
+          include: "config/config.js"
+          regex: true
+
+      - name: Find and Replace clientSecret
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "<client-secret>"
+          replace: ${{ secrets.CLIENT_GITHUB_SECRET }}
+          include: "config/config.js"
+
+      - name: Make Gradlew Executable
+        run: cd android && chmod +x ./gradlew
+      - name: Build Android Release
+        run: |
+          cd android && ./gradlew assembleRelease --no-daemon
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
+      - name: Download a single artifact    
+        uses: actions/download-artifact@v3
+        with:
+          name: app-release.apk
