@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {authorize} from 'react-native-app-auth';
-import {githubConfig} from '../../../config/config.sample'
+import {githubConfig} from '../../../config/config.sample';
 import AuthContext from '../../context/AuthContext';
 import RootContext from '../../context/RootContext';
 import Strings from '../../i18n/en';
@@ -22,9 +22,12 @@ const AuthScreen = () => {
     try {
       setIsLoading(true);
       const authState = await authorize(githubConfig);
+      const url =
+        'https://github.com/login/oauth/authorize?client_id=23c78f66ab7964e5ef97';
+
       updateAuthStatus(true);
       updateLoggedInUserData(authState);
-      console.log("authState",authState)
+      console.log('authState', authState);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

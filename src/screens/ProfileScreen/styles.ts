@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export const profileScreenStyles = StyleSheet.create({
   mainview: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 60,
     width: '100%',
     alignItems: 'center',
   },
@@ -49,7 +49,7 @@ export const profileScreenStyles = StyleSheet.create({
   modalView: {
     position: 'absolute',
     width: '100%',
-    height: '15%',
+    height: '8%',
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'space-evenly',

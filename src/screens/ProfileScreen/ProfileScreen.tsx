@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {View, Text} from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
 import * as Keychain from 'react-native-keychain';
@@ -13,12 +13,13 @@ import Images from '../../constants/images/Image';
 import UploadImageModalView from '../../components/GalleryModal';
 import RootContext from '../../context/RootContext';
 
-
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { loggedInUserData  } = useContext(RootContext);
+  const {loggedInUserData} = useContext(RootContext);
+  const [userName, setUserName] = useState('User');
+  const [profileImg, setProfileImg] = useState(Images.DEFAULT_IMAGE);
 
   const openModal = useCallback(() => {
     setModalVisible(true);
@@ -50,7 +51,7 @@ const ProfileScreen = () => {
 
       const data = JSON.parse(githubLoginInfo.password);
 
-      const { accessToken } = data;
+      const {accessToken} = data;
 
       const userAgent = await UserAgent.getWebViewUserAgent();
 
@@ -64,6 +65,8 @@ const ProfileScreen = () => {
       });
 
       console.log('data', JSON.stringify(res.data));
+      setUserName(res.data.login);
+      setProfileImg(res.data.avatar_url);
     } catch (error) {
       console.log('error', error);
     }
@@ -83,21 +86,22 @@ const ProfileScreen = () => {
         setResponse={setResponse}
       />
       <View style={profileScreenStyles.mainview}>
-        {!response.hasOwnProperty('assets') && (
+        {/* {!response.hasOwnProperty('assets') && (
           <Text style={profileScreenStyles.subTitleText}>
             {Strings.Img_Upload_Text}
           </Text>
-        )}
+        )} */}
         {response?.assets &&
           response.assets.map(({uri}: {uri: string}) => (
             <Avatar key={uri} uri={uri} size={100} />
           ))}
         {showDefaultAvatar() && (
-          <Avatar uri={Images.DEFAULT_IMAGE} size={100} />
+          // <Avatar uri={Images.DEFAULT_IMAGE} size={100} />
+          <Avatar uri={profileImg} size={100} />
         )}
-        <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
+        <Text style={profileScreenStyles.titleText}>{userName}</Text>
         <ButtonWidget
-          title={response?.assets ? 'Change' : 'Upload'}
+          title={response?.assets ? 'Change' : 'Update'}
           onPress={openModal}
         />
       </View>
