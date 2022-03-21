@@ -27,7 +27,6 @@ const AuthScreen = () => {
 
       updateAuthStatus(true);
       updateLoggedInUserData(authState);
-      console.log('authState', authState);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
