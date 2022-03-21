@@ -86,17 +86,11 @@ const ProfileScreen = () => {
         setResponse={setResponse}
       />
       <View style={profileScreenStyles.mainview}>
-        {/* {!response.hasOwnProperty('assets') && (
-          <Text style={profileScreenStyles.subTitleText}>
-            {Strings.Img_Upload_Text}
-          </Text>
-        )} */}
         {response?.assets &&
           response.assets.map(({uri}: {uri: string}) => (
             <Avatar key={uri} uri={uri} size={100} />
           ))}
         {showDefaultAvatar() && (
-          // <Avatar uri={Images.DEFAULT_IMAGE} size={100} />
           <Avatar uri={profileImg} size={100} />
         )}
         <Text style={profileScreenStyles.titleText}>{userName}</Text>
