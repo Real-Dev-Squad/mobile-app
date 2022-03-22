@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useContext, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
 import * as Keychain from 'react-native-keychain';
@@ -13,12 +13,11 @@ import Images from '../../constants/images/Image';
 import UploadImageModalView from '../../components/GalleryModal';
 import RootContext from '../../context/RootContext';
 
-
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { loggedInUserData  } = useContext(RootContext);
+  const {loggedInUserData} = useContext(RootContext);
 
   const openModal = useCallback(() => {
     setModalVisible(true);
@@ -50,7 +49,7 @@ const ProfileScreen = () => {
 
       const data = JSON.parse(githubLoginInfo.password);
 
-      const { accessToken } = data;
+      const {accessToken} = data;
 
       const userAgent = await UserAgent.getWebViewUserAgent();
 
@@ -92,9 +91,9 @@ const ProfileScreen = () => {
           response.assets.map(({uri}: {uri: string}) => (
             <Avatar key={uri} uri={uri} size={100} />
           ))}
-        {showDefaultAvatar() && (
+        {showDefaultAvatar() ? (
           <Avatar uri={Images.DEFAULT_IMAGE} size={100} />
-        )}
+        ) : null}
         <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
         <ButtonWidget
           title={response?.assets ? 'Change' : 'Upload'}
