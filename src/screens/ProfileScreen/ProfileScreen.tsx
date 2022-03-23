@@ -11,13 +11,13 @@ import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import Images from '../../constants/images/Image';
 import UploadImageModalView from '../../components/GalleryModal';
-import RootContext from '../../context/RootContext';
+import {AuthContext} from '../../context/AuthContext';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const {loggedInUserData} = useContext(RootContext);
+  const {loggedInUserData} = useContext(AuthContext);
   const [userName, setUserName] = useState('User');
   const [profileImg, setProfileImg] = useState(Images.DEFAULT_IMAGE);
 
@@ -41,41 +41,6 @@ const ProfileScreen = () => {
     return true;
   };
 
-  const fetchUserInfo = async () => {
-    try {
-      const githubLoginInfo = await Keychain.getGenericPassword();
-
-      if (!githubLoginInfo || !githubLoginInfo.password) {
-        return;
-      }
-
-      const data = JSON.parse(githubLoginInfo.password);
-
-      const {accessToken} = data;
-
-      const userAgent = await UserAgent.getWebViewUserAgent();
-
-      axios.defaults.headers.common['User-Agent'] = userAgent;
-
-      const res = await axios.get('https://api.github.com/user', {
-        headers: {
-          'User-Agent': `${userAgent}`,
-          Authorization: `token ${accessToken}`,
-        },
-      });
-
-      console.log('data', JSON.stringify(res.data));
-      setUserName(res.data.login);
-      setProfileImg(res.data.avatar_url);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, [loggedInUserData]);
-
   return (
     <View style={ScreenViewContainer.container}>
       <UploadImageModalView
@@ -86,24 +51,17 @@ const ProfileScreen = () => {
         setResponse={setResponse}
       />
       <View style={profileScreenStyles.mainview}>
-        {/* {!response.hasOwnProperty('assets') && (
-          <Text style={profileScreenStyles.subTitleText}>
-            {Strings.Img_Upload_Text}
-          </Text>
-        )} */}
         {response?.assets &&
           response.assets.map(({uri}: {uri: string}) => (
             <Avatar key={uri} uri={uri} size={100} />
           ))}
         {showDefaultAvatar() && (
-          // <Avatar uri={Images.DEFAULT_IMAGE} size={100} />
-          <Avatar uri={profileImg} size={100} />
+          <Avatar uri={loggedInUserData.profileUrl} size={100} />
         )}
-        <Text style={profileScreenStyles.titleText}>{userName}</Text>
-        <ButtonWidget
-          title={response?.assets ? 'Change' : 'Update'}
-          onPress={openModal}
-        />
+        <Text style={profileScreenStyles.titleText}>
+          {loggedInUserData.name}
+        </Text>
+        <ButtonWidget title={'Update'} onPress={openModal} />
       </View>
     </View>
   );

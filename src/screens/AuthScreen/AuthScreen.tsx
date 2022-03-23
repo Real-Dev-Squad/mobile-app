@@ -1,4 +1,5 @@
-import React, {useContext, useState} from 'react';
+import axios from 'axios';
+import React, {FC, useContext, useState} from 'react';
 import {
   Text,
   View,
@@ -8,33 +9,40 @@ import {
   ScrollView,
 } from 'react-native';
 import {authorize} from 'react-native-app-auth';
+import WebView from 'react-native-webview';
 import {githubConfig} from '../../../config/config.sample';
-import AuthContext from '../../context/AuthContext';
+import {urls} from '../../constants/appConstant/url';
+import {AuthContext} from '../../context/AuthContext';
 import RootContext from '../../context/RootContext';
 import Strings from '../../i18n/en';
 import {AuthViewStyle} from './styles';
+import {getUserData} from './Util';
 
 const AuthScreen = () => {
-  const {updateAuthStatus} = useContext(AuthContext);
-  const {updateLoggedInUserData, setIsLoading} = useContext(RootContext);
+  const {setLoggedInUserData, setIsLoading} = useContext(AuthContext);
+  const [githubView, setGithubView] = useState(false);
 
-  const handleSignIn = async () => {
-    try {
-      setIsLoading(true);
-      const authState = await authorize(githubConfig);
-      const url =
-        'https://github.com/login/oauth/authorize?client_id=23c78f66ab7964e5ef97';
-
-      updateAuthStatus(true);
-      updateLoggedInUserData(authState);
-      console.log('authState', authState);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      Alert.alert(Strings.SIGN_IN_ERROR);
-    }
+  const handleSignIn = () => {
+    setGithubView(true);
   };
 
+  if (githubView) {
+    return (
+      <ScrollView contentContainerStyle={AuthViewStyle.container}>
+        <WebView
+          onNavigationStateChange={({url}) => {
+            getUserData(url)
+              .then(res => setLoggedInUserData(res))
+              .catch(() => setLoggedInUserData(null));
+          }}
+          style={AuthViewStyle.webViewStyles}
+          source={{
+            uri: urls.GITHUB_AUTH,
+          }}
+        />
+      </ScrollView>
+    );
+  }
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
