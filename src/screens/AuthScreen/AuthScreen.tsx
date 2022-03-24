@@ -1,19 +1,8 @@
-import axios from 'axios';
-import React, {FC, useContext, useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-  Image,
-  ScrollView,
-} from 'react-native';
-import {authorize} from 'react-native-app-auth';
+import React, {useContext, useState} from 'react';
+import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
 import WebView from 'react-native-webview';
-import {githubConfig} from '../../../config/config.sample';
 import {urls} from '../../constants/appConstant/url';
 import {AuthContext} from '../../context/AuthContext';
-import RootContext from '../../context/RootContext';
 import Strings from '../../i18n/en';
 import {AuthViewStyle} from './styles';
 import {getUserData} from './Util';

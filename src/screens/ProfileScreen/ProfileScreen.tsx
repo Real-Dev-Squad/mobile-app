@@ -1,10 +1,6 @@
 import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {View, Text} from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
-import * as Keychain from 'react-native-keychain';
-import UserAgent from 'react-native-user-agent';
-import axios from 'axios';
-import Strings from '../../i18n/en';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
 import ButtonWidget from '../../components/ButtonWidget';
@@ -16,10 +12,7 @@ import {AuthContext} from '../../context/AuthContext';
 const ProfileScreen = () => {
   const [response, setResponse] = useState<any>({});
   const [modalVisible, setModalVisible] = useState(false);
-
   const {loggedInUserData} = useContext(AuthContext);
-  const [userName, setUserName] = useState('User');
-  const [profileImg, setProfileImg] = useState(Images.DEFAULT_IMAGE);
 
   const openModal = useCallback(() => {
     setModalVisible(true);

@@ -20,7 +20,6 @@ export const AuthContext = React.createContext<authContextProviderType>({
 export const AuthProvider = ({children}: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loggedInUserData, setLoggedInUserData] = useState<any>(null);
-  const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
 
   const context = {
     isLoading,
