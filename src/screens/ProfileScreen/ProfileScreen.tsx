@@ -1,11 +1,10 @@
-import React, {useState, useCallback, useEffect, useContext} from 'react';
+import React, {useState, useCallback, useContext} from 'react';
 import {View, Text} from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
-import Images from '../../constants/images/Image';
 import UploadImageModalView from '../../components/GalleryModal';
 import {AuthContext} from '../../context/AuthContext';
 
