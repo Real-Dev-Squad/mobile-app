@@ -1,8 +1,6 @@
 import axios from 'axios';
-import {urls} from '../../constants/appConstant/url';
 
 export const getUserData = async (url: string) => {
-  console.log(url);
   if (url === 'https://www.realdevsquad.com/goto') {
     return axios
       .get(`https://api.realdevsquad.com/users/self`, {
