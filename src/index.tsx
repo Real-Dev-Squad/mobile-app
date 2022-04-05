@@ -6,17 +6,15 @@ import AuthScreen from './screens/AuthScreen/AuthScreen';
 
 const Index = () => {
   const {isLoading, loggedInUserData} = useContext(AuthContext);
-  return (
-    <>
-      {isLoading ? (
-        <LoadingScreen />
-      ) : !loggedInUserData ? (
-        <AuthScreen />
-      ) : (
-        <TabNavigation />
-      )}
-    </>
-  );
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (!loggedInUserData) {
+    return <AuthScreen />;
+  }
+
+  return <TabNavigation />;
 };
 
 export default Index;

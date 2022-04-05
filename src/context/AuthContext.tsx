@@ -38,8 +38,6 @@ export const AuthProvider: FC<authProviderProps> = ({children}) => {
     },
   };
   return (
-    <AuthContext.Provider value={context}>
-      <>{children}</>
-    </AuthContext.Provider>
+    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
   );
 };
