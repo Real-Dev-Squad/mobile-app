@@ -28,7 +28,7 @@ it('check loading', () => {
 });
 
 it('check logged in user for Tab navigation Screen', () => {
-  const loggedInUserData = {name: 'shreya', profileUrl: ''};
+  const loggedInUserData = {name: 'RDS', profileUrl: ''};
   expect(!loggedInUserData)
     ? renderer.create(<AuthScreen />)
     : renderer.create(<TabNavigation />);

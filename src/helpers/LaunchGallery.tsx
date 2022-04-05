@@ -1,6 +1,12 @@
-import {launchImageLibrary} from 'react-native-image-picker';
+import {
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
-const uploadImage = (setResponse: any, closeModal: any) => {
+const uploadImage = (
+  setResponse: (res: ImagePickerResponse) => void,
+  closeModal: () => void,
+) => {
   launchImageLibrary(
     {
       quality: 0.5,
@@ -9,7 +15,6 @@ const uploadImage = (setResponse: any, closeModal: any) => {
       mediaType: 'photo',
     },
     res => {
-      console.log(res);
       setResponse(res);
     },
   );

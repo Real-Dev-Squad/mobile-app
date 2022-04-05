@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, Pressable, View} from 'react-native';
+import {ImagePickerResponse} from 'react-native-image-picker';
 import Images from '../constants/images/Image';
 import takePicture from '../helpers/LaunchCamera';
 import uploadImage from '../helpers/LaunchGallery';
@@ -7,8 +8,8 @@ import {profileScreenStyles} from '../screens/ProfileScreen/styles';
 import ButtonWidget from './ButtonWidget';
 
 type props = {
-  response: any;
-  setResponse: (res: any) => void;
+  response: ImagePickerResponse;
+  setResponse: (res: ImagePickerResponse) => void;
   closeModal: () => void;
   removePicture: () => void;
   modalVisible: boolean;

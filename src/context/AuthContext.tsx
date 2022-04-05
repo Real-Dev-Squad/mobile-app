@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
+import {loggedInUserType} from './type';
 
 type authContextProviderType = {
-  loggedInUserData: any;
+  loggedInUserData: loggedInUserType | null;
   isLoading: boolean;
   setIsLoading: () => void;
-  setLoggedInUserData: (userData: any) => void;
+  setLoggedInUserData: (userData: loggedInUserType | null) => void;
 };
 export const AuthContext = React.createContext<authContextProviderType>({
   isLoading: false,
@@ -17,9 +18,14 @@ export const AuthContext = React.createContext<authContextProviderType>({
   },
 });
 
-export const AuthProvider = ({children}: any) => {
+type authProviderProps = {
+  children: JSX.Element;
+};
+
+export const AuthProvider: FC<authProviderProps> = ({children}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loggedInUserData, setLoggedInUserData] = useState<any>(null);
+  const [loggedInUserData, setLoggedInUserData] =
+    useState<loggedInUserType | null>(null);
 
   const context = {
     isLoading,
@@ -27,7 +33,7 @@ export const AuthProvider = ({children}: any) => {
     setIsLoading: () => {
       setIsLoading(!isLoading);
     },
-    setLoggedInUserData: (userData: any) => {
+    setLoggedInUserData: (userData: loggedInUserType | null) => {
       setLoggedInUserData(userData);
     },
   };

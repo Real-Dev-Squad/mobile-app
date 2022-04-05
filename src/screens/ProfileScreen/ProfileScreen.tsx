@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useContext} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
@@ -7,11 +7,12 @@ import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';
 import {AuthContext} from '../../context/AuthContext';
+import {ImagePickerResponse} from 'react-native-image-picker';
 
 const ProfileScreen = () => {
-  const [response, setResponse] = useState<any>({});
+  const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-  const {loggedInUserData} = useContext(AuthContext);
+  const {loggedInUserData, setLoggedInUserData} = useContext(AuthContext);
 
   const openModal = useCallback(() => {
     setModalVisible(true);
@@ -35,6 +36,12 @@ const ProfileScreen = () => {
 
   return (
     <View style={ScreenViewContainer.container}>
+      <TouchableOpacity
+        onPress={() => {
+          setLoggedInUserData(null);
+        }}>
+        <Text>Logout</Text>
+      </TouchableOpacity>
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
@@ -44,14 +51,14 @@ const ProfileScreen = () => {
       />
       <View style={profileScreenStyles.mainview}>
         {response?.assets &&
-          response.assets.map(({uri}: {uri: string}) => (
-            <Avatar key={uri} uri={uri} size={100} />
+          response.assets.map(({uri}) => (
+            <Avatar key={uri} uri={uri || ''} size={100} />
           ))}
         {showDefaultAvatar() && (
-          <Avatar uri={loggedInUserData.profileUrl} size={100} />
+          <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
         )}
         <Text style={profileScreenStyles.titleText}>
-          {loggedInUserData.name}
+          {loggedInUserData?.name}
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
       </View>

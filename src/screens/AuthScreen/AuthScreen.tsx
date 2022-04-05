@@ -21,7 +21,16 @@ const AuthScreen = () => {
         <WebView
           onNavigationStateChange={({url}) => {
             getUserData(url)
-              .then(res => setLoggedInUserData(res))
+              .then(res => {
+                if (res) {
+                  setLoggedInUserData({
+                    name: res?.name,
+                    profileUrl: res?.profileUrl,
+                  });
+                } else {
+                  setLoggedInUserData(res);
+                }
+              })
               .catch(() => setLoggedInUserData(null));
           }}
           style={AuthViewStyle.webViewStyles}

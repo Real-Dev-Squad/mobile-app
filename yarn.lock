@@ -5808,11 +5808,6 @@ react-native-image-picker@^4.7.1:
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.7.3.tgz#f5863b27bf2e76c83649dd8efea4598426bd04e8"
   integrity sha512-eRKm4wlsmZHmsWFyv77kYc2F+ZyEVqe0m7mqhsMzWk6TQT4FBDtEDxmRDDFq+ivCu/1QD+EPhmYcAIpeGr7Ekg==
 
-react-native-keychain@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-8.0.0.tgz#ff708e4dc2a5440df717179bf9b7cd50f78b61d7"
-  integrity sha512-c7Cs+YQN26UaQsRG1dmlXL7VL2ctnXwH/dl0IOMEQ7ZaL2NdN313YSAI8ZEZZjrVhNmPsyWEuvTFqWrdpItqQg==
-
 react-native-reanimated@^2.2.4:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.4.1.tgz#4e33876fba525ce60ac13ab3c81fc3a9f8b132fe"
@@ -5838,11 +5833,6 @@ react-native-screens@^3.10.2, react-native-screens@^3.4.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
-
-react-native-user-agent@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-user-agent/-/react-native-user-agent-2.3.1.tgz#81308be0026d9d4e50cc8f1126068d58e6745868"
-  integrity sha512-AIFr1VgJHwgWmMwCOmIGxuBeAaADlouXKc10UyR4fzWneUbt5uIJIoRu2oExlfCtiT8IyCp106khDD5vx7RUjw==
 
 react-native-webview@^11.17.2:
   version "11.17.2"

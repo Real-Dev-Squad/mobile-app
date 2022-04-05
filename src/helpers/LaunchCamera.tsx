@@ -1,7 +1,10 @@
 import {PermissionsAndroid, Platform} from 'react-native';
-import {launchCamera} from 'react-native-image-picker';
+import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
 
-const takePicture = async (setResponse: any, closeModal: any) => {
+const takePicture = async (
+  setResponse: (res: ImagePickerResponse) => void,
+  closeModal: () => void,
+) => {
   try {
     if (Platform.OS === 'ios') {
       launchCamera(
