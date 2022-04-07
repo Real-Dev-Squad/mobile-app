@@ -8,6 +8,7 @@ import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';
 import {AuthContext} from '../../context/AuthContext';
 import {ImagePickerResponse} from 'react-native-image-picker';
+import Strings from '../../i18n/en';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<ImagePickerResponse>({});
@@ -40,7 +41,7 @@ const ProfileScreen = () => {
         onPress={() => {
           setLoggedInUserData(null);
         }}>
-        <Text>Logout</Text>
+        <Text>{Strings.LOGOUT}</Text>
       </TouchableOpacity>
       <UploadImageModalView
         closeModal={closeModal}

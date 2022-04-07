@@ -1,9 +1,10 @@
 import axios from 'axios';
+import {urls} from '../../constants/appConstant/url';
 
 export const getUserData = async (url: string) => {
-  if (url === 'https://www.realdevsquad.com/goto') {
+  if (url === urls.REDIRECT_URL) {
     return axios
-      .get(`https://api.realdevsquad.com/users/self`, {
+      .get(urls.GET_USERS_DATA, {
         headers: {
           cookie: '',
         },
