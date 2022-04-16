@@ -21,11 +21,10 @@
     "react-native-app-auth": "^6.4.2",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-image-picker": "^4.7.1",
-    "react-native-keychain": "^8.0.0",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2",
-    "react-native-user-agent": "^2.3.1"
+    "react-native-webview": "^11.17.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -60,6 +59,9 @@
     ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation)"
     ]
   }
 }

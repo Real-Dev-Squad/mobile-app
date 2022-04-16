@@ -19,6 +19,9 @@ const Strings = {
   SIGN_IN_ERROR: 'Unable to login at the moment',
   WELCOME_TO: 'Welcome to',
   REAL_DEV_SQUAD: 'Real Dev Squad',
+
+  // TEXT
+  LOGOUT: 'Logout',
 };
 
 export default Strings;

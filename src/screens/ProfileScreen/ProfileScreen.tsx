@@ -1,24 +1,19 @@
-import React, {useState, useCallback} from 'react';
-import {View, Text} from 'react-native';
+import React, {useState, useCallback, useContext} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {ScreenViewContainer} from '../../styles/GlobalStyle';
-import * as Keychain from 'react-native-keychain';
-import UserAgent from 'react-native-user-agent';
-import axios from 'axios';
-import Strings from '../../i18n/en';
 import {profileScreenStyles} from './styles';
 import withHeader from '../../helpers/withHeader';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
-import Images from '../../constants/images/Image';
 import UploadImageModalView from '../../components/GalleryModal';
-import RootContext from '../../context/RootContext';
-
+import {AuthContext} from '../../context/AuthContext';
+import {ImagePickerResponse} from 'react-native-image-picker';
+import Strings from '../../i18n/en';
 
 const ProfileScreen = () => {
-  const [response, setResponse] = useState<any>({});
+  const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-
-  const { loggedInUserData  } = useContext(RootContext);
+  const {loggedInUserData, setLoggedInUserData} = useContext(AuthContext);
 
   const openModal = useCallback(() => {
     setModalVisible(true);
@@ -40,41 +35,14 @@ const ProfileScreen = () => {
     return true;
   };
 
-  const fetchUserInfo = async () => {
-    try {
-      const githubLoginInfo = await Keychain.getGenericPassword();
-
-      if (!githubLoginInfo || !githubLoginInfo.password) {
-        return;
-      }
-
-      const data = JSON.parse(githubLoginInfo.password);
-
-      const { accessToken } = data;
-
-      const userAgent = await UserAgent.getWebViewUserAgent();
-
-      axios.defaults.headers.common['User-Agent'] = userAgent;
-
-      const res = await axios.get('https://api.github.com/user', {
-        headers: {
-          'User-Agent': `${userAgent}`,
-          Authorization: `token ${accessToken}`,
-        },
-      });
-
-      console.log('data', JSON.stringify(res.data));
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, [loggedInUserData]);
-
   return (
     <View style={ScreenViewContainer.container}>
+      <TouchableOpacity
+        onPress={() => {
+          setLoggedInUserData(null);
+        }}>
+        <Text>{Strings.LOGOUT}</Text>
+      </TouchableOpacity>
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
@@ -83,23 +51,17 @@ const ProfileScreen = () => {
         setResponse={setResponse}
       />
       <View style={profileScreenStyles.mainview}>
-        {!response.hasOwnProperty('assets') && (
-          <Text style={profileScreenStyles.subTitleText}>
-            {Strings.Img_Upload_Text}
-          </Text>
-        )}
         {response?.assets &&
-          response.assets.map(({uri}: {uri: string}) => (
-            <Avatar key={uri} uri={uri} size={100} />
+          response.assets.map(({uri}) => (
+            <Avatar key={uri} uri={uri || ''} size={100} />
           ))}
         {showDefaultAvatar() && (
-          <Avatar uri={Images.DEFAULT_IMAGE} size={100} />
+          <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
         )}
-        <Text style={profileScreenStyles.titleText}>{Strings.Greet_User}</Text>
-        <ButtonWidget
-          title={response?.assets ? 'Change' : 'Upload'}
-          onPress={openModal}
-        />
+        <Text style={profileScreenStyles.titleText}>
+          {loggedInUserData?.name}
+        </Text>
+        <ButtonWidget title={'Update'} onPress={openModal} />
       </View>
     </View>
   );

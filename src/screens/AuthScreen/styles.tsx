@@ -68,4 +68,8 @@ export const AuthViewStyle = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  webViewStyles: {
+    flex: 1,
+    paddingBottom: '20%',
+  },
 });
