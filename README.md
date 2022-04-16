@@ -19,7 +19,7 @@ This Project serves the RealdevSquad hybrid app. This project is built in React-
 - Feature with switching from out of office from back again
 - Profile Screen in which we can change our profile through our phone’s gallery
 
-Feel free to download our RDS app by clicking on the below link may be the right one. [RDS App](https://drive.google.com/file/d/1xWEl6qXmDFY7MhogKbW-UKNrMZVhELLo/view?usp=sharing)
+Feel free to download our RDS app by clicking on ➡️ [RDS App](https://drive.google.com/file/d/1xWEl6qXmDFY7MhogKbW-UKNrMZVhELLo/view?usp=sharing)
 
 Note : Please delete the previous RDS app build if you have.
 
