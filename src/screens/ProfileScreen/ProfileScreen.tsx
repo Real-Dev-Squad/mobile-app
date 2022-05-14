@@ -9,7 +9,7 @@ import UploadImageModalView from '../../components/GalleryModal';
 import {AuthContext} from '../../context/AuthContext';
 import {ImagePickerResponse} from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-
+import {getData} from  '../../hooks/dataStoreHook'
 const ProfileScreen = () => {
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);

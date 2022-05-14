@@ -12,11 +12,61 @@ export const getUserData = async (url: string) => {
 
       .then(res =>
         Promise.resolve({
+          id: res.data.id,
           name: res.data.github_display_name,
           profileUrl: res.data.picture.url,
+          status:res.data.status
+
         }),
       )
+   
       .catch(err => Promise.reject(null));
   }
   return null;
+};
+
+export const updateStatus = async (status: string) => {
+  return axios({
+      method: 'patch',
+      url: urls.GET_USERS_DATA, 
+      headers:{
+        cookie: '',
+      },
+      data: {
+        status:status
+      }
+    })
+    .then(res =>{
+      console.log("resss",res.config)
+      return Promise.resolve({
+          status :res.config.data.status
+      }) 
+    })
+    
+    .catch(err => Promise.reject(err));
+
+};
+
+export const updateMarkYourSelfAs_ = async (markStatus: string) => {
+  return axios({
+      method: 'patch',
+      url: urls.GET_USERS_DATA, 
+      headers:{
+        cookie: '',
+      },
+      data: {
+        status:markStatus
+      }
+    })
+
+    .then(res =>{
+      console.log("resss",res.data.status)
+      return Promise.resolve({
+          status :res.data.status
+      })
+    
+    })
+    
+    .catch(err => Promise.reject(err));
+
 };

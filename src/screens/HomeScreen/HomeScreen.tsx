@@ -1,51 +1,98 @@
-import React, {useState} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Text, View, TouchableOpacity, Alert} from 'react-native';
+import {AuthContext} from '../../context/AuthContext';
 import withHeader from '../../helpers/withHeader';
+import {DataStoreHook} from '../../hooks/dataStoreHook';
 import Strings from '../../i18n/en';
+import {updateStatus} from '../AuthScreen/Util';
 import {HomeViewStyle} from './styles';
 
 const HomeScreen = () => {
-  const [status, SetStatus] = useState<string>('active');
-  const [oooStatus, SetOOOStatus] = useState<boolean>(false);
-  const changeStatus = () =>
-    status === 'active' ? SetStatus('idle') : SetStatus('active');
-  const changeoooStatus = () =>
-    oooStatus === false ? SetOOOStatus(true) : SetOOOStatus(false);
-  return (
-    <View style={HomeViewStyle.container}>
-      {oooStatus === false && (
-        <View>
-          <Text style={HomeViewStyle.heading}>
-            {status === 'active' ? Strings.Active_Text : Strings.Idle_Text}
-          </Text>
-          <TouchableOpacity
-            style={
-              status === 'idle'
-                ? HomeViewStyle.idleBtn
-                : HomeViewStyle.activeButton
-            }
-            onPress={changeStatus}>
-            <Text
-              style={
-                status === 'idle'
-                  ? HomeViewStyle.idleBtnText
-                  : HomeViewStyle.activeBtnText
-              }>
-              {status === 'active'
-                ? Strings.IdleBtn_Text
-                : Strings.ActiveBtn_Text}
+  const [loader, setLoader] = useState<boolean>(false);
+
+  const {loggedInUserData, setLoggedInUserData} = useContext(AuthContext);
+
+  const changeStatus = (status:string) => {
+    
+    setLoader(true)
+    loggedInUserData &&
+      updateStatus(status).then(() => {
+        setLoggedInUserData({
+          ...loggedInUserData,
+          status: status
+        }) 
+        DataStoreHook(
+          'userData',
+          JSON.stringify({
+            ...loggedInUserData,
+            status: status
+
+          }),
+        );
+      }).catch((err) => Alert.alert(err)).finally(() => setLoader(false))
+  };
+
+    const renderScreen = () => {
+      if(loggedInUserData?.status === "ooo" ){
+        return (
+          <>
+            <Text style={HomeViewStyle.heading}>{Strings.OOOStatus_Text}</Text>
+          <TouchableOpacity 
+                  onPress={() => changeStatus("active")}>
+                  
+            <Text style={HomeViewStyle.oooBtn}>
+              {Strings.OOOBtn2_Text}
             </Text>
           </TouchableOpacity>
+          </>
+        )
+      }
+
+      return (
+<View>
+          <Text style={HomeViewStyle.heading}>
+            {loggedInUserData?.status === 'active'
+              ? Strings.Active_Text
+              : Strings.Idle_Text}
+          </Text>
+          {loader ? (
+            <Text>Loading...</Text>
+          ) : (
+            <>
+            <TouchableOpacity
+            key={loggedInUserData?.status||""}
+              style={
+                loggedInUserData?.status === 'idle'
+                  ? HomeViewStyle.idleBtn
+                  : HomeViewStyle.activeButton
+              }
+              onPress={() => changeStatus(loggedInUserData?.status ==="active" ? "idle" : "active" )}>
+              <Text
+                style={
+                  loggedInUserData?.status === 'idle'
+                    ? HomeViewStyle.idleBtnText
+                    : HomeViewStyle.activeBtnText
+                }>
+                {loggedInUserData?.status === 'active'
+                  ? Strings.IdleBtn_Text
+                  : Strings.ActiveBtn_Text}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                  onPress={() => changeStatus("ooo")}>
+                  
+            <Text style={HomeViewStyle.oooBtn}>
+              {Strings.OOOBtn1_Text}
+            </Text>
+          </TouchableOpacity>
+            </>
+          )}
         </View>
-      )}
-      {oooStatus === true && (
-        <Text style={HomeViewStyle.heading}>{Strings.OOOStatus_Text}</Text>
-      )}
-      <TouchableOpacity onPress={changeoooStatus}>
-        <Text style={HomeViewStyle.oooBtn}>
-          {oooStatus === false ? Strings.OOOBtn1_Text : Strings.OOOBtn2_Text}
-        </Text>
-      </TouchableOpacity>
+      )
+    }
+  return (
+    <View style={HomeViewStyle.container}>
+      {renderScreen()}
     </View>
   );
 };
