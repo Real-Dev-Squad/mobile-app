@@ -22,6 +22,11 @@ const Strings = {
 
   // TEXT
   LOGOUT: 'Logout',
+
+  // api const
+  OUT_OF_OFFICE: 'ooo',
+  ACTIVE: 'active',
+  IDLE:'idle'
 };
 
 export default Strings;

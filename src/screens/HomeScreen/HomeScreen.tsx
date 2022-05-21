@@ -33,12 +33,12 @@ const HomeScreen = () => {
   };
 
     const renderScreen = () => {
-      if(loggedInUserData?.status === "ooo" ){
+      if(loggedInUserData?.status === Strings.OUT_OF_OFFICE ){
         return (
           <>
             <Text style={HomeViewStyle.heading}>{Strings.OOOStatus_Text}</Text>
           <TouchableOpacity 
-                  onPress={() => changeStatus("active")}>
+                  onPress={() => changeStatus(Strings.ACTIVE)}>
                   
             <Text style={HomeViewStyle.oooBtn}>
               {Strings.OOOBtn2_Text}
@@ -51,7 +51,7 @@ const HomeScreen = () => {
       return (
 <View>
           <Text style={HomeViewStyle.heading}>
-            {loggedInUserData?.status === 'active'
+            {loggedInUserData?.status === Strings.ACTIVE
               ? Strings.Active_Text
               : Strings.Idle_Text}
           </Text>
@@ -62,24 +62,24 @@ const HomeScreen = () => {
             <TouchableOpacity
             key={loggedInUserData?.status||""}
               style={
-                loggedInUserData?.status === 'idle'
+                loggedInUserData?.status === Strings.IDLE
                   ? HomeViewStyle.idleBtn
                   : HomeViewStyle.activeButton
               }
-              onPress={() => changeStatus(loggedInUserData?.status ==="active" ? "idle" : "active" )}>
+              onPress={() => changeStatus(loggedInUserData?.status ===Strings.ACTIVE ? Strings.IDLE : Strings.ACTIVE )}>
               <Text
                 style={
-                  loggedInUserData?.status === 'idle'
+                  loggedInUserData?.status === Strings.IDLE
                     ? HomeViewStyle.idleBtnText
                     : HomeViewStyle.activeBtnText
                 }>
-                {loggedInUserData?.status === 'active'
+                {loggedInUserData?.status === Strings.ACTIVE
                   ? Strings.IdleBtn_Text
                   : Strings.ActiveBtn_Text}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity 
-                  onPress={() => changeStatus("ooo")}>
+                  onPress={() => changeStatus(Strings.OUT_OF_OFFICE)}>
                   
             <Text style={HomeViewStyle.oooBtn}>
               {Strings.OOOBtn1_Text}
