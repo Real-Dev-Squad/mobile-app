@@ -37,7 +37,6 @@ export const updateStatus = async (status: string) => {
       }
     })
     .then(res =>{
-      console.log("resss",res.config)
       return Promise.resolve({
           status :res.config.data.status
       }) 
@@ -60,7 +59,6 @@ export const updateMarkYourSelfAs_ = async (markStatus: string) => {
     })
 
     .then(res =>{
-      console.log("resss",res.data.status)
       return Promise.resolve({
           status :res.data.status
       })
