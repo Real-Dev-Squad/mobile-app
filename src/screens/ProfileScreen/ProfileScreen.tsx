@@ -1,19 +1,19 @@
-import React, {useState, useCallback, useContext} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {ScreenViewContainer} from '../../styles/GlobalStyle';
-import {profileScreenStyles} from './styles';
+import React, { useState, useCallback, useContext } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { ScreenViewContainer } from '../../styles/GlobalStyle';
+import { profileScreenStyles } from './styles';
 import withHeader from '../../helpers/withHeader';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';
-import {AuthContext} from '../../context/AuthContext';
-import {ImagePickerResponse} from 'react-native-image-picker';
+import { AuthContext } from '../../context/AuthContext';
+import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-  const {loggedInUserData, setLoggedInUserData} = useContext(AuthContext);
+  const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
 
   const openModal = useCallback(() => {
     setModalVisible(true);
@@ -40,7 +40,8 @@ const ProfileScreen = () => {
       <TouchableOpacity
         onPress={() => {
           setLoggedInUserData(null);
-        }}>
+        }}
+      >
         <Text>{Strings.LOGOUT}</Text>
       </TouchableOpacity>
       <UploadImageModalView
@@ -52,7 +53,7 @@ const ProfileScreen = () => {
       />
       <View style={profileScreenStyles.mainview}>
         {response?.assets &&
-          response.assets.map(({uri}) => (
+          response.assets.map(({ uri }) => (
             <Avatar key={uri} uri={uri || ''} size={100} />
           ))}
         {showDefaultAvatar() && (

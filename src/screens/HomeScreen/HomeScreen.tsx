@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 import withHeader from '../../helpers/withHeader';
 import Strings from '../../i18n/en';
-import {HomeViewStyle} from './styles';
+import { HomeViewStyle } from './styles';
 
 const HomeScreen = () => {
   const [status, SetStatus] = useState<string>('active');
@@ -24,13 +24,15 @@ const HomeScreen = () => {
                 ? HomeViewStyle.idleBtn
                 : HomeViewStyle.activeButton
             }
-            onPress={changeStatus}>
+            onPress={changeStatus}
+          >
             <Text
               style={
                 status === 'idle'
                   ? HomeViewStyle.idleBtnText
                   : HomeViewStyle.activeBtnText
-              }>
+              }
+            >
               {status === 'active'
                 ? Strings.IdleBtn_Text
                 : Strings.ActiveBtn_Text}
