@@ -12,9 +12,9 @@ import LoadingScreen from '../src/components/LoadingScreen';
 import AuthScreen from '../src/screens/AuthScreen/AuthScreen';
 import TabNavigation from '../src/navigations/TabNavigation/TabNavigation';
 import Strings from '../src/i18n/en';
-import {fireEvent, render} from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import WebView from 'react-native-webview';
-import {urls} from '../src/constants/appConstant/url';
+import { urls } from '../src/constants/appConstant/url';
 
 it('renders correctly', () => {
   renderer.create(<App />);
@@ -28,7 +28,7 @@ it('check loading', () => {
 });
 
 it('check logged in user for Tab navigation Screen', () => {
-  const loggedInUserData = {name: 'RDS', profileUrl: ''};
+  const loggedInUserData = { name: 'RDS', profileUrl: '' };
   expect(!loggedInUserData)
     ? renderer.create(<AuthScreen />)
     : renderer.create(<TabNavigation />);
@@ -42,7 +42,7 @@ it('check logged in user for Auth Screen', () => {
 });
 
 it('should render a button and onclick event', () => {
-  const {getByText} = render(<AuthScreen />);
+  const { getByText } = render(<AuthScreen />);
   const loginButton = getByText(Strings.SIGN_IN_BUTTON_TEXT);
   fireEvent.press(loginButton);
   const login = true;
@@ -53,7 +53,7 @@ it('should render a button and onclick event', () => {
           source={{
             uri: urls.GITHUB_AUTH,
           }}
-          onNavigationStateChange={({url}) => {
+          onNavigationStateChange={({ url }) => {
             setTimeout(() => {
               loginData = {
                 name: 'shreya',

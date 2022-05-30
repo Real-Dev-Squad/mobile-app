@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {View, ActivityIndicator} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 //change the color of the loader according to your choice
 const colorString = '#E30062';

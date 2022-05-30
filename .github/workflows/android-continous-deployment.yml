@@ -13,7 +13,6 @@ on:
       - develop
 
 jobs:
-
   build-android-apk:
     runs-on: ubuntu-latest
     strategy:
@@ -32,7 +31,7 @@ jobs:
       - name: Install yarn dependencies
         run: |
           yarn install
-      
+
       - name: Create config file
         run: |
           cp ./config/config.sample.js ./config/config.js
@@ -40,17 +39,17 @@ jobs:
       - name: Find and Replace clientId
         uses: jacobtomlinson/gha-find-replace@v2
         with:
-          find: "<client-id>"
+          find: '<client-id>'
           replace: ${{ secrets.CLIENT_GITHUB_ID }}
-          include: "config/config.js"
+          include: 'config/config.js'
           regex: true
 
       - name: Find and Replace clientSecret
         uses: jacobtomlinson/gha-find-replace@v2
         with:
-          find: "<client-secret>"
+          find: '<client-secret>'
           replace: ${{ secrets.CLIENT_GITHUB_SECRET }}
-          include: "config/config.js"
+          include: 'config/config.js'
 
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
@@ -62,7 +61,7 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
-      - name: Download a single artifact    
+      - name: Download a single artifact
         uses: actions/download-artifact@v3
         with:
           name: app-release.apk
