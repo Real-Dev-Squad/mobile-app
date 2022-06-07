@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import WebView from 'react-native-webview';
-import {urls} from '../../constants/appConstant/url';
-import {AuthContext} from '../../context/AuthContext';
+import { urls } from '../../constants/appConstant/url';
+import { AuthContext } from '../../context/AuthContext';
 import { DataStoreHook } from '../../hooks/dataStoreHook';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
@@ -15,7 +15,7 @@ const AuthScreen = () => {
   const handleSignIn = () => {
     setGithubView(true);
   };
-  
+
   if (githubView) {
     return (
       <ScrollView contentContainerStyle={AuthViewStyle.container}>
@@ -24,12 +24,12 @@ const AuthScreen = () => {
             getUserData(url)
               .then((res) => {
                 if (res) {
-                  DataStoreHook("userData" , JSON.stringify(res))
+                  DataStoreHook('userData', JSON.stringify(res));
                   setLoggedInUserData({
-                    id:res?.id,
+                    id: res?.id,
                     name: res?.name,
                     profileUrl: res?.profileUrl,
-                    status:res?.status
+                    status: res?.status,
                   });
                 } else {
                   setLoggedInUserData(res);

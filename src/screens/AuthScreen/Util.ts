@@ -15,57 +15,51 @@ export const getUserData = async (url: string) => {
           id: res.data.id,
           name: res.data.github_display_name,
           profileUrl: res.data.picture.url,
-          status:res.data.status
-
+          status: res.data.status,
         }),
       )
-   
-      .catch(err => Promise.reject(null));
 
+      .catch((err) => Promise.reject(null));
   }
   return null;
 };
 
 export const updateStatus = async (status: string) => {
   return axios({
-      method: 'patch',
-      url: urls.GET_USERS_DATA, 
-      headers:{
-        cookie: '',
-      },
-      data: {
-        status:status
-      }
-    })
-    .then(res =>{
+    method: 'patch',
+    url: urls.GET_USERS_DATA,
+    headers: {
+      cookie: '',
+    },
+    data: {
+      status: status,
+    },
+  })
+    .then((res) => {
       return Promise.resolve({
-          status :res.config.data.status
-      }) 
+        status: res.config.data.status,
+      });
     })
-    
-    .catch(err => Promise.reject(err));
 
+    .catch((err) => Promise.reject(err));
 };
 
 export const updateMarkYourSelfAs_ = async (markStatus: string) => {
   return axios({
-      method: 'patch',
-      url: urls.GET_USERS_DATA, 
-      headers:{
-        cookie: '',
-      },
-      data: {
-        status:markStatus
-      }
-    })
-
-    .then(res =>{
+    method: 'patch',
+    url: urls.GET_USERS_DATA,
+    headers: {
+      cookie: '',
+    },
+    data: {
+      status: markStatus,
+    },
+  })
+    .then((res) => {
       return Promise.resolve({
-          status :res.data.status
-      })
-    
+        status: res.data.status,
+      });
     })
-    
-    .catch(err => Promise.reject(err));
 
+    .catch((err) => Promise.reject(err));
 };

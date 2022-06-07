@@ -26,7 +26,7 @@ const Strings = {
   // api const
   OUT_OF_OFFICE: 'ooo',
   ACTIVE: 'active',
-  IDLE:'idle'
+  IDLE: 'idle',
 };
 
 export default Strings;

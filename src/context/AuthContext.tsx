@@ -1,6 +1,6 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { getData } from '../hooks/dataStoreHook';
-import {loggedInUserType} from './type';
+import { loggedInUserType } from './type';
 
 type authContextProviderType = {
   loggedInUserData: loggedInUserType | null;
@@ -27,13 +27,11 @@ export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loggedInUserData, setLoggedInUserData] =
     useState<loggedInUserType | null>(null);
-    useEffect(()=>{
-      getData("userData").then((res) => setLoggedInUserData(res)) 
-     },[])
-     const updateStatus = () => {
-        
-     }
-     const context = {
+  useEffect(() => {
+    getData('userData').then((res) => setLoggedInUserData(res));
+  }, []);
+  const updateStatus = () => {};
+  const context = {
     isLoading,
     loggedInUserData,
     setIsLoading: () => {

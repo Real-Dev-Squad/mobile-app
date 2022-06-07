@@ -1,6 +1,6 @@
 export type loggedInUserType = {
-  id:string;
+  id: string;
   name: string;
   profileUrl: string;
-  status:string;
+  status: string;
 };
