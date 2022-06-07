@@ -23,7 +23,7 @@ type authProviderProps = {
   children: JSX.Element;
 };
 
-export const AuthProvider: FC<authProviderProps> = ({children}) => {
+export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loggedInUserData, setLoggedInUserData] =
     useState<loggedInUserType | null>(null);

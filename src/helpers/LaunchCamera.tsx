@@ -1,5 +1,5 @@
-import {PermissionsAndroid, Platform} from 'react-native';
-import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
+import { PermissionsAndroid, Platform } from 'react-native';
+import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
 
 const takePicture = async (
   setResponse: (res: ImagePickerResponse) => void,

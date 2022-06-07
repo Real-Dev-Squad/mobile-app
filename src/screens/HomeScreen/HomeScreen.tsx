@@ -7,6 +7,7 @@ import Strings from '../../i18n/en';
 import {updateStatus} from '../AuthScreen/Util';
 import {HomeViewStyle} from './styles';
 
+
 const HomeScreen = () => {
   const [loader, setLoader] = useState<boolean>(false);
 
@@ -83,6 +84,7 @@ const HomeScreen = () => {
                   
             <Text style={HomeViewStyle.oooBtn}>
               {Strings.OOOBtn1_Text}
+
             </Text>
           </TouchableOpacity>
             </>

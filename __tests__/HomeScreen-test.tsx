@@ -9,7 +9,7 @@ import HomeScreen from '../src/screens/HomeScreen/HomeScreen';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
-import {render, fireEvent} from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 
 import Strings from '../src/i18n/en';
 
@@ -23,7 +23,7 @@ it('snapshot should match', () => {
 });
 
 test('If a user clicks on Mark Yourself As OOO', () => {
-  const {getByText, getAllByText} = render(<HomeScreen />);
+  const { getByText, getAllByText } = render(<HomeScreen />);
 
   fireEvent.press(getByText(Strings.OOOBtn1_Text));
 
@@ -33,7 +33,7 @@ test('If a user clicks on Mark Yourself As OOO', () => {
 });
 
 test('If a user clicks on Mark Yourself Active Again', () => {
-  const {getByText, getAllByText} = render(<HomeScreen />);
+  const { getByText, getAllByText } = render(<HomeScreen />);
 
   fireEvent.press(getByText(Strings.OOOBtn1_Text));
 
@@ -45,7 +45,7 @@ test('If a user clicks on Mark Yourself Active Again', () => {
 });
 
 test('If a user clicks on change status to Idle', () => {
-  const {getByText, getAllByText} = render(<HomeScreen />);
+  const { getByText, getAllByText } = render(<HomeScreen />);
 
   fireEvent.press(getByText(Strings.OOOBtn1_Text));
 
@@ -55,7 +55,7 @@ test('If a user clicks on change status to Idle', () => {
 });
 
 test('If a user clicks on change status to Active', () => {
-  const {getByText, getAllByText} = render(<HomeScreen />);
+  const { getByText, getAllByText } = render(<HomeScreen />);
 
   fireEvent.press(getByText(Strings.OOOBtn1_Text));
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {urls} from '../../constants/appConstant/url';
+import { urls } from '../../constants/appConstant/url';
 
 export const getUserData = async (url: string) => {
   if (url === urls.REDIRECT_URL) {
@@ -10,7 +10,7 @@ export const getUserData = async (url: string) => {
         },
       })
 
-      .then(res =>
+      .then((res) =>
         Promise.resolve({
           id: res.data.id,
           name: res.data.github_display_name,
@@ -21,6 +21,7 @@ export const getUserData = async (url: string) => {
       )
    
       .catch(err => Promise.reject(null));
+
   }
   return null;
 };
