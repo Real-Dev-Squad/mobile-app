@@ -50,6 +50,7 @@ describe('getUserData util', () => {
 describe('updateStatus util', () => {
   test('pass arg undefined receive throw error', async () => {
     mockedAxios.patch.mockRejectedValue(
+      // eslint-disable-next-line no-use-before-define
       `TypeError: Cannot read properties of undefined (reading 'protocol')`,
     );
     try {
@@ -57,6 +58,7 @@ describe('updateStatus util', () => {
     } catch (err) {
       /* tslint:disable-next-line */
       expect(err).toEqual(
+        // eslint-disable-next-line no-use-before-define
         `TypeError: Cannot read properties of undefined (reading 'protocol')`,
       );
     }
@@ -87,6 +89,7 @@ describe('updateStatus util', () => {
 describe('updateMarkYourSelfAs_ util', () => {
   test('pass arg undefined receive throw error', async () => {
     mockedAxios.patch.mockRejectedValue(
+      // eslint-disable-next-line no-use-before-define
       `TypeError: Cannot read properties of undefined (reading 'protocol')`,
     );
     try {
@@ -94,6 +97,7 @@ describe('updateMarkYourSelfAs_ util', () => {
     } catch (err) {
       /* tslint:disable-next-line */
       expect(err).toEqual(
+        // eslint-disable-next-line no-use-before-define
         `TypeError: Cannot read properties of undefined (reading 'protocol')`,
       );
     }

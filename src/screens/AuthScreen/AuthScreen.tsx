@@ -9,7 +9,7 @@ import { AuthViewStyle } from './styles';
 import { getUserData } from './Util';
 
 const AuthScreen = () => {
-  const { setLoggedInUserData, setIsLoading } = useContext(AuthContext);
+  const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState(false);
 
   const handleSignIn = () => {

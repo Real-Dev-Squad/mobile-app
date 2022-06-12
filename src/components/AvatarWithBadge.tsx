@@ -5,7 +5,6 @@ import Avatar from './Avatar';
 const AvatarWithBadge = ({
   uri,
   size,
-  icon,
   onPress,
 }: {
   uri: string;
