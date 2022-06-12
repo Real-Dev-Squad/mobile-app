@@ -9,10 +9,38 @@ export const getUserData = async (url: string) => {
       },
     });
     return {
+      id: res.data.id,
       name: res.data.github_display_name,
       profileUrl: res.data.picture.url,
+      status: res.data.status,
     };
-  } else {
-    return null;
   }
+  return null;
+};
+
+export const updateStatus = async (status: string) => {
+  const res = await axios.patch(
+    urls.GET_USERS_DATA,
+    { status },
+    {
+      headers: {
+        cookie: '',
+      },
+    },
+  );
+  return res.config.data.status;
+};
+
+export const updateMarkYourSelfAs_ = async (markStatus: string) => {
+  const res = await axios.patch(
+    urls.GET_USERS_DATA,
+    { status: markStatus },
+    {
+      headers: {
+        cookie: '',
+      },
+    },
+  );
+
+  return res.data.status;
 };
