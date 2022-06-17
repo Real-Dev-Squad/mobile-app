@@ -35,7 +35,7 @@ export const AuthProvider: FC<authProviderProps> = ({ children }) => {
     isLoading,
     loggedInUserData,
     setIsLoading: () => {
-      setIsLoading(!isLoading);
+      setIsLoading((prevIsLoading) => !prevIsLoading);
     },
     setLoggedInUserData: (userData: loggedInUserType | null) => {
       setLoggedInUserData(userData);

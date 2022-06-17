@@ -11,11 +11,12 @@ export const getUserData = async (url: string) => {
     return {
       id: res.data.id,
       name: res.data.github_display_name,
-      profileUrl: res.data.picture.url,
-      status: res.data.status,
+      profileUrl: res.data?.picture?.url,
+      status: res.data?.status,
     };
+  } else {
+    return null;
   }
-  return null;
 };
 
 export const updateStatus = async (status: string) => {

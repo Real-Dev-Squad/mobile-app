@@ -21,21 +21,23 @@ const AuthScreen = () => {
       <ScrollView contentContainerStyle={AuthViewStyle.container}>
         <WebView
           onNavigationStateChange={({ url }) => {
-            getUserData(url)
-              .then((res) => {
-                if (res) {
+            (async function () {
+              if (url === urls.REDIRECT_URL) {
+                try {
+                  const res = await getUserData(url);
                   DataStoreHook('userData', JSON.stringify(res));
+
                   setLoggedInUserData({
                     id: res?.id,
                     name: res?.name,
                     profileUrl: res?.profileUrl,
                     status: res?.status,
                   });
-                } else {
-                  setLoggedInUserData(res);
+                } catch (err) {
+                  setLoggedInUserData(null);
                 }
-              })
-              .catch(() => setLoggedInUserData(null));
+              }
+            })();
           }}
           style={AuthViewStyle.webViewStyles}
           source={{
