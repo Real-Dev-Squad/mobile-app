@@ -7,6 +7,7 @@ const App = () => {
     <AuthProvider>
       <Index />
     </AuthProvider>
+ 
   );
 };
 
