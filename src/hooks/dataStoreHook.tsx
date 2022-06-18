@@ -6,7 +6,6 @@ export const DataStoreHook = (name: string, value: string) => {
 
 export const getData = async (item: string) => {
   return AsyncStorage.getItem(item).then((res) => {
-    console.log('res', res);
     return res ? JSON.parse(res) : '';
   });
 };

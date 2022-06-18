@@ -31,7 +31,6 @@ const takePicture = async (
       );
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('Camera permission given');
         launchCamera(
           {
             quality: 0.5,
@@ -43,7 +42,8 @@ const takePicture = async (
           setResponse,
         );
       } else {
-        console.log('Camera permission denied');
+        // TODO: add toast to notify user
+        // console.log('Camera permission denied');
       }
     }
     closeModal();

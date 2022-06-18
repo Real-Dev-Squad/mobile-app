@@ -28,7 +28,7 @@ const TabNavigation = () => {
           component={HomeScreen}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused, color }) => {
+            tabBarLabel: ({ focused }) => {
               return (
                 <Text
                   style={{
@@ -42,7 +42,7 @@ const TabNavigation = () => {
                 </Text>
               );
             },
-            tabBarIcon: ({ focused, color }) => {
+            tabBarIcon: ({ focused }) => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
@@ -58,7 +58,7 @@ const TabNavigation = () => {
           options={{
             headerShown: false,
 
-            tabBarLabel: ({ focused, color }) => {
+            tabBarLabel: ({ focused }) => {
               return (
                 <Text
                   style={{
@@ -72,7 +72,7 @@ const TabNavigation = () => {
                 </Text>
               );
             },
-            tabBarIcon: ({ focused, color }) => {
+            tabBarIcon: ({ focused }) => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
@@ -88,7 +88,7 @@ const TabNavigation = () => {
           component={ProfileScreen}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused, color }) => {
+            tabBarLabel: ({ focused }) => {
               return (
                 <Text
                   style={{

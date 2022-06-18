@@ -30,12 +30,12 @@ export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   useEffect(() => {
     getData('userData').then((res) => setLoggedInUserData(res));
   }, []);
-  const updateStatus = () => {};
+  // const updateStatus = () => {};
   const context = {
     isLoading,
     loggedInUserData,
     setIsLoading: () => {
-      setIsLoading(!isLoading);
+      setIsLoading((prevIsLoading) => !prevIsLoading);
     },
     setLoggedInUserData: (userData: loggedInUserType | null) => {
       setLoggedInUserData(userData);
