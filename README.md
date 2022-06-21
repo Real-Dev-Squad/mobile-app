@@ -47,9 +47,8 @@ Note : Please delete the previous RDS app build if you have.
 
 **Installation**
 
-## **NOTE** : Make sure to set up the proper development environment required to run react-native applications.
-
-You can refer : https://reactnative.dev/docs/environment-setup
+> **Note**
+> Proper development environment is REQUIRED to run react-native applications. Please make sure it has been setup according to [Environment Setup for React Native Docs](https://reactnative.dev/docs/environment-setup)
 
 After setting up the development environment:
 
