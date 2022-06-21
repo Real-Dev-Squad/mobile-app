@@ -8,7 +8,7 @@ React Native, TypeScript, StyleSheet
 
 ## About the Project
 
-This Project serves the RealdevSquad cross-platform-app. This project is built in React-native.
+This Project serves the RealdevSquad cross-platform-app. This project is built in React-Native.
 
 ## First Phase
 
@@ -43,20 +43,20 @@ You can refer : https://reactnative.dev/docs/environment-setup
 - Run the command - `Yarn`.
 - Start contributing.
 
-## Contributuion Guide
+## Contribution Guide
 
-- You must have all the pre-requisites which is mentioned above.
-- Go through the issues and comment on the same which you like.
-- When the issue is assigned to you then just follow all the local App setup steps and congrats you are good to do😊
+- You must have all the pre-requisites which are mentioned above.
+- Go through the issues and comment on the one which you like.
+- When an issue is assigned to you then just follow all the local App setup steps and you are good to do😊
 - Before pushing the code make sure you follow the below 👇steps
 
   - Make sure you run the app on your local machine. It should not give any errors.
   - Run `yarn run format-fix`
-  - Run `yarn run lint` for fix linting errors.
+  - Run `yarn run lint` to fix linting errors.
   - Remove unused comments and console logs.
   - Run `yarn run test`.
   - then Run `your git commands` to push your code.
-  - Make sure give the proper commit message.
+  - Make sure to give a proper commit message.
  
 - If you need any other help, feel free to ping on `mobile-app-react-native` channel at discord.
 
