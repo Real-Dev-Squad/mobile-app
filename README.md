@@ -4,11 +4,11 @@ This is the repository of our mobile app, which will have all the features of ou
 
 ## Tech Stack
 
-React Native, TypeScript, CSS
+React Native, TypeScript, StyleSheet
 
 ## About the Project
 
-This Project serves the RealdevSquad hybrid app. This project is built in React-native.
+This Project serves the RealdevSquad cross-platform-app. This project is built in React-native.
 
 ## First Phase
 
@@ -24,42 +24,58 @@ Feel free to download our RDS app by clicking on ➡️ [RDS App](https://drive.
 
 Note : Please delete the previous RDS app build if you have.
 
+
 ## Prerequisites
+
+- React Native setup
+- Android Studio
+- Node setup
+
+## **NOTE** : Make sure to set up the proper development environment required to run react-native applications.
+
+You can refer : https://reactnative.dev/docs/environment-setup
 
 ### Local App setup
 
 - First set up with React native environment on your local machine. You can refer the [Environment Setup Link](https://reactnative.dev/docs/environment-setup)
 - If you have done the first point then congrats 🎉now you are good to go !
 - Now clone the mobile app Repo with [Github Repo Link](https://github.com/Real-Dev-Squad/mobile-app)
-- Create a new file: config/config.js. copy content from config/config.sample.js into config/config.js.
-- Register the application for GitHub OAuth to get the clientId and clientSecret. Add the callback URL as x-realdevsquad-rdsapp://oauth2/authorize
-- Replace the clientId and clientSecret in `config/config.js` file with the values from the github oauth app
+- Run the command - `Yarn`.
 - Start contributing.
 
 ## Contributuion Guide
 
-- If you are new to React Native please go through react-native documentation and setup the installation setup first.
-- Clone the repo and go through the code base.
-- Make sure you have node installed on your computer.
-- Go through the issues and comment on issue which you find interesting.
-- Discuss, contribute and raise the PR.
+- You must have all the pre-requisites which is mentioned above.
+- Go through the issues and comment on the same which you like.
+- When the issue is assigned to you then just follow all the local App setup steps and congrats you are good to do😊
+- Before pushing the code make sure you follow the below 👇steps
+  - Make sure you run the app on your local machine. It should not give any errors.
+  - Run `yarn run format-fix`
+  - Run `yarn run lint` for fix linting errors.
+  - Remove unused comments and console logs.
+  - Run `yarn run test`.
+  - then Run `your git commands` to push your code.
+  - Make sure give the proper commit message.
+
 - If you need any other help, feel free to ping on `mobile-app-react-native` channel at discord.
 
-**Installation**
 
-## **NOTE** : Make sure to set up the proper development environment required to run react-native applications.
+Git commands for local setup:
 
-You can refer : https://reactnative.dev/docs/environment-setup
-
-After setting up the development environment:
-
-- `git clone<repository-url>` this repository
+- `git clone https://github.com/Real-Dev-Squad/mobile-app.git`
 - `cd mobile-app`
-- `cd RDSApp`
 - `yarn`
+
+Git commands to commit your code:
+
+- `git checkout -b 'your PR name'` 
+- `git add .`
+- `git commit -m "message"`
+- `git push origin your PR name`
+
 
 **Running/Development**
 
-- `npx react-native start` - to start Metro, the JavaScript bundler that ships with React Native.
+- `yarn react-native start` - to start Metro, the JavaScript bundler that ships with React Native.
 - Let Metro Bundler run in its own terminal. Open a new terminal inside your React Native project folder. Run the following:
-- `npx react-native run-android` - To start the emulator.
+- `yarn react-native run-android` - To start the emulator.
