@@ -3,12 +3,13 @@ import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import { AuthContext } from '../../context/AuthContext';
+import { DataStoreHook } from '../../hooks/dataStoreHook';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { getUserData } from './Util';
 
 const AuthScreen = () => {
-  const { setLoggedInUserData, setIsLoading } = useContext(AuthContext);
+  const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState(false);
 
   const handleSignIn = () => {
@@ -20,18 +21,23 @@ const AuthScreen = () => {
       <ScrollView contentContainerStyle={AuthViewStyle.container}>
         <WebView
           onNavigationStateChange={({ url }) => {
-            getUserData(url)
-              .then((res) => {
-                if (res) {
+            (async function () {
+              if (url === urls.REDIRECT_URL) {
+                try {
+                  const res = await getUserData(url);
+                  DataStoreHook('userData', JSON.stringify(res));
+
                   setLoggedInUserData({
+                    id: res?.id,
                     name: res?.name,
                     profileUrl: res?.profileUrl,
+                    status: res?.status,
                   });
-                } else {
-                  setLoggedInUserData(res);
+                } catch (err) {
+                  setLoggedInUserData(null);
                 }
-              })
-              .catch(() => setLoggedInUserData(null));
+              }
+            })();
           }}
           style={AuthViewStyle.webViewStyles}
           source={{
