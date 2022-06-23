@@ -19,7 +19,6 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
     "axios": "^0.26.0",
-    "mock-async-storage": "^2.2.0",
     "react": "17.0.2",
     "react-native": "0.66.4",
     "react-native-app-auth": "^6.4.2",
@@ -43,7 +42,7 @@
     "@typescript-eslint/parser": "^5.7.0",
     "babel-jest": "^26.6.3",
     "eslint": "^7.14.0",
-    "jest": "^28.1.1",
+    "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.66.2",
     "prettier": "2.6.2",
     "react-test-renderer": "17.0.2",
@@ -54,7 +53,6 @@
   },
   "jest": {
     "preset": "react-native",
-
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -66,7 +64,6 @@
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
     ],
-    "setupFiles": ["./__tests__/jestSetupFile.ts"],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation)"
     ]
