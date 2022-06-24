@@ -18,7 +18,10 @@ const AuthScreen = () => {
 
   if (githubView) {
     return (
-      <ScrollView contentContainerStyle={AuthViewStyle.container}>
+      <ScrollView
+        contentContainerStyle={AuthViewStyle.container}
+        testID="webview"
+      >
         <WebView
           onNavigationStateChange={({ url }) => {
             (async function () {

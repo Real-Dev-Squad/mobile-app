@@ -55,3 +55,12 @@ describe('Index renders correctly depending on AuthContext states', () => {
     getByText(Strings.Tab_Home);
   });
 });
+
+describe('webview behaviour', () => {
+  test.todo('when githubview true, goto github auth url in webview');
+  test.todo(
+    'when correct username, password are entered goto redirect url in webview & invoke getUserData',
+  );
+  test.todo('when getUserData is successful, setLoggedInUserData');
+  test.todo('when getUserData fails, setLoggedInUserData to null');
+});
