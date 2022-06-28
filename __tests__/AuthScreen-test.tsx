@@ -34,7 +34,7 @@ describe('render controlled by githubview: boolean', () => {
     getByText(Strings.SIGN_IN_BUTTON_TEXT);
   });
 
-  test('when !loggedInUserData & !githubView, sign-in is clicked, setGithubview true, render webview', () => {
+  test('when !loggedInUserData, !githubView, & sign-in is clicked, setGithubview true & render webview', () => {
     const { getByText, getByTestId } = renderAuthScreen({
       loggedInUserData: null,
     });
