@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Image } from 'react-native';
+import Images from '../constants/images/Image';
 
 const Avatar = ({ uri, size }: { uri: string; size: number }) => {
+  const uriToPass = uri ? uri : Images.DEFAULT_IMAGE;
   return (
-    <View key={uri} style={{ alignItems: 'center' }}>
+    <View key={uriToPass} style={{ alignItems: 'center' }}>
       <Image
         resizeMode="cover"
         resizeMethod="scale"
         style={{ width: size, height: size, borderRadius: size }}
-        source={{ uri: uri }}
+        source={{ uri: uriToPass }}
       />
     </View>
   );
