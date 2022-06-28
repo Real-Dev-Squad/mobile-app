@@ -37,14 +37,12 @@ const ProfileScreen = () => {
 
   return (
     <View style={ScreenViewContainer.container}>
-      {/* TODO: remove temp style & improve Logout btn style Issue #71 */}
       <TouchableOpacity
-        style={{ backgroundColor: '#FFFFFF', padding: '5%' }}
         onPress={() => {
           setLoggedInUserData(null);
         }}
       >
-        <Text style={{ color: '#000000' }}>{Strings.LOGOUT}</Text>
+        <Text>{Strings.LOGOUT}</Text>
       </TouchableOpacity>
       <UploadImageModalView
         closeModal={closeModal}

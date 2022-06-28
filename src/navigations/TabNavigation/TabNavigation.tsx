@@ -11,9 +11,9 @@ import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
 import TaskScreen from '../../screens/TaskScreen/TaskScreen';
 import { TabViewStyle } from './style';
 
-const tab = createBottomTabNavigator();
-
 const TabNavigation = () => {
+  const tab = createBottomTabNavigator();
+
   return (
     <NavigationContainer independent>
       <tab.Navigator

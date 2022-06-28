@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import { AuthContext } from '../../context/AuthContext';
-import { storeData } from '../../hooks/dataStoreHook';
+import { DataStoreHook } from '../../hooks/dataStoreHook';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { getUserData } from './Util';
@@ -28,7 +28,7 @@ const AuthScreen = () => {
               if (url === urls.REDIRECT_URL) {
                 try {
                   const res = await getUserData(url);
-                  await storeData('userData', JSON.stringify(res));
+                  DataStoreHook('userData', JSON.stringify(res));
 
                   setLoggedInUserData({
                     id: res?.id,
