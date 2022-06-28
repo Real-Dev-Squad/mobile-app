@@ -61,6 +61,8 @@ describe('webview behaviour', () => {
   test.todo(
     'when correct username, password are entered goto redirect url in webview & invoke getUserData',
   );
-  test.todo('when getUserData is successful, setLoggedInUserData');
+  test.todo(
+    'when getUserData is successful, setLoggedInUserData & render TabNavigation',
+  );
   test.todo('when getUserData fails, setLoggedInUserData to null');
 });
