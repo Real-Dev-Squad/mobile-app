@@ -3,8 +3,8 @@ import { Text, View, TouchableOpacity, Image, ScrollView, ActivityIndicator } fr
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import { AuthContext } from '../../context/AuthContext';
-import { DataStoreHook } from '../../hooks/dataStoreHook';
 import Images from '../../constants/images/Image';
+import { storeData } from '../../hooks/dataStoreHook';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { getUserData } from './Util';
@@ -54,7 +54,7 @@ const AuthScreen = () => {
                 setAdressbarURL(url)
                 try {
                   const res = await getUserData(url);
-                  DataStoreHook('userData', JSON.stringify(res));
+                  await storeData('userData', JSON.stringify(res));
 
                   setLoggedInUserData({
                     id: res?.id,

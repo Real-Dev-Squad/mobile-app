@@ -54,7 +54,7 @@ You can refer : https://reactnative.dev/docs/environment-setup
   - Run `yarn run format-fix`
   - Run `yarn run lint` to fix linting errors.
   - Remove unused comments and console logs.
-  - Run `yarn run test`.
+  - Run `yarn test`.
   - then Run `your git commands` to push your code.
   - Make sure to give a proper commit message.
  
@@ -74,9 +74,16 @@ Git commands to commit your code:
 - `git commit -m "message"`
 - `git push origin your PR name`
 
+**TDD**
+
+- All the PRs should be raised with the 100% test coverage.
+- Before submitting the PRs you should run the command `yarn test` to check if all the tests are passed or not.
 
 **Running/Development**
 
 - `yarn react-native start` - to start Metro, the JavaScript bundler that ships with React Native.
 - Let Metro Bundler run in its own terminal. Open a new terminal inside your React Native project folder. Run the following:
 - `yarn react-native run-android` - To start the emulator.
+
+
+

@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
 
 async function asyncOperationOnAsyncStorage() {
-  AsyncStorage.setItem('myKey', '1');
+  await AsyncStorage.setItem('myKey', '1');
 }
 
 it('checks if Async Storage is used', async () => {
