@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Text, View, TouchableOpacity, Alert } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 import withHeader from '../../helpers/withHeader';
-import { DataStoreHook } from '../../hooks/dataStoreHook';
+import { storeData } from '../../hooks/dataStoreHook';
 import Strings from '../../i18n/en';
 import { updateStatus } from '../AuthScreen/Util';
 import { HomeViewStyle } from './styles';
@@ -21,7 +21,7 @@ const HomeScreen = () => {
             ...loggedInUserData,
             status: status,
           });
-          DataStoreHook(
+          storeData(
             'userData',
             JSON.stringify({
               ...loggedInUserData,
