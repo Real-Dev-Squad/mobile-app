@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { getData } from '../hooks/dataStoreHook';
+import { getData } from '../utils/dataStore';
 import { loggedInUserType } from './type';
 
 type authContextProviderType = {
