@@ -51,10 +51,7 @@ You can refer : https://reactnative.dev/docs/environment-setup
 - Before pushing the code make sure you follow the below 👇steps
 
   - Make sure you run the app on your local machine. It should not give any errors.
-  - Run `yarn run format-fix`
-  - Run `yarn run lint` to fix linting errors.
-  - Remove unused comments and console logs.
-  - Run `yarn test`.
+  - Run `yarn run precommit-check`
   - then Run `your git commands` to push your code.
   - Make sure to give a proper commit message.
  
