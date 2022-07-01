@@ -1,4 +1,4 @@
-import { PermissionsAndroid, Platform } from 'react-native';
+import { PermissionsAndroid, Platform ,Alert} from 'react-native';
 import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
 
 const takePicture = async (
@@ -44,6 +44,8 @@ const takePicture = async (
       } else {
         // TODO: add toast to notify user
         // console.log('Camera permission denied');
+        Alert.alert('Camera permission denied')
+       
       }
     }
     closeModal();
