@@ -8,6 +8,9 @@ const Images = {
   profileIconUnF: require('../../../assets/profile-g.png'),
   emptyTaskScreen: require('../../../assets/task-empty.png'),
 
+  //AuthScreen Icon
+  refreshIcon: require('../../../assets/refresh_icon.png'),
+
   // camera gallery options
 
   cameraIcon: require('../../../assets/camera.png'),

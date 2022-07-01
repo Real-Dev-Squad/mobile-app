@@ -68,8 +68,33 @@ export const AuthViewStyle = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  addressBarStyle: {
+    backgroundColor: "#7130e3",
+    paddingVertical: 15,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  addressBarLink: {
+    color: "#5ced83",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  addressBarCancel: {
+    fontSize: 18,
+    color: "#fff",
+    marginLeft: 5,
+  },
+  addressBarIcon: {
+    resizeMode: "cover",
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
   webViewStyles: {
     flex: 1,
     paddingBottom: '20%',
   },
+
 });
