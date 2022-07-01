@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import { AuthContext } from '../../context/AuthContext';
-import { storeData } from '../../hooks/dataStoreHook';
+import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { getUserData } from './Util';
