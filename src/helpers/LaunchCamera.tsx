@@ -42,8 +42,6 @@ const takePicture = async (
           setResponse,
         );
       } else {
-        // TODO: add toast to notify user
-        // console.log('Camera permission denied');
         Alert.alert('Camera permission denied');
       }
     }
