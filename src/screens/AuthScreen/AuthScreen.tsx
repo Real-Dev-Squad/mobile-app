@@ -4,7 +4,7 @@ import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import { AuthContext } from '../../context/AuthContext';
 import Images from '../../constants/images/Image';
-import { storeData } from '../../hooks/dataStoreHook';
+import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { getUserData } from './Util';
