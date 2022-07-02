@@ -1,6 +1,7 @@
 import { PermissionsAndroid, Platform } from 'react-native';
 import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
+import Strings from '../i18n/en';
 
 const takePicture = async (
   setResponse: (res: ImagePickerResponse) => void,
@@ -45,8 +46,8 @@ const takePicture = async (
       } else {
         Toast.show({
           type: 'error',
-          text1: 'Permission denied',
-          text2: 'Camera Permission denied',
+          text1: Strings.Permissin_Denied_Head,
+          text2: Strings.Permission_Denied_Text,
           position: 'bottom',
           bottomOffset: 80,
         });

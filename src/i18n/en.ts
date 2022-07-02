@@ -11,6 +11,7 @@ const Strings = {
   ActiveBtn_Text: 'change status to Active',
   OOOBtn1_Text: 'Mark Yourself as OOO',
   OOOBtn2_Text: 'Mark Yourself as Active again',
+  
   // Profile Screen
   Greet_User: 'Hello User',
   Img_Upload_Text: 'Upload your Profile Image',
@@ -19,6 +20,10 @@ const Strings = {
   SIGN_IN_ERROR: 'Unable to login at the moment',
   WELCOME_TO: 'Welcome to',
   REAL_DEV_SQUAD: 'Real Dev Squad',
+
+  // Launch Camera
+  Permissin_Denied_Head: 'Permission Denied',
+  Permission_Denied_Text: 'Camera Permission denied',
 
   // TEXT
   LOGOUT: 'Logout',
