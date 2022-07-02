@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 import withHeader from '../../helpers/withHeader';
 import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
 import { updateStatus } from '../AuthScreen/Util';
 import { HomeViewStyle } from './styles';
+import Toast from 'react-native-toast-message';
 
 const HomeScreen = () => {
   const [loader, setLoader] = useState<boolean>(false);
@@ -29,7 +30,15 @@ const HomeScreen = () => {
             }),
           );
         })
-        .catch((err) => Alert.alert(err))
+        .catch((err) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: err,
+            position: 'bottom',
+            bottomOffset: 80,
+          });
+        })
         .finally(() => setLoader(false));
   };
 
