@@ -1,5 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { Text, View, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import { AuthContext } from '../../context/AuthContext';
@@ -12,46 +19,45 @@ import { getUserData } from './Util';
 const AuthScreen = () => {
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState(false);
-  const [addressbarURL,setAdressbarURL] = useState<String>("")
-  const [loading,setLoading] = useState(false)
-  const [key,setKey] = useState(1)
+  const [addressbarURL, setAdressbarURL] = useState<String>('');
+  const [loading, setLoading] = useState(false);
+  const [key, setKey] = useState(1);
 
   const handleSignIn = () => {
     setGithubView(true);
   };
-  
+
   if (githubView) {
     return (
       <ScrollView contentContainerStyle={AuthViewStyle.container}>
         <View style={AuthViewStyle.addressBarStyle}>
-          {loading ?
-            <ActivityIndicator style={{marginLeft: 5}} size={25} color="#fff" /> :
-            <TouchableOpacity 
-              onPress={() => setGithubView(false)}
-            >
+          {loading ? (
+            <ActivityIndicator
+              style={{ marginLeft: 5 }}
+              size={25}
+              color="#fff"
+            />
+          ) : (
+            <TouchableOpacity onPress={() => setGithubView(false)}>
               <Text style={AuthViewStyle.addressBarCancel}>Cancel</Text>
             </TouchableOpacity>
-          }
+          )}
           <Text style={AuthViewStyle.addressBarLink}>{addressbarURL}</Text>
-          {loading ? 
-            null : 
-            <TouchableOpacity
-              onPress={() => setKey(key + 1)}
-            >
-              <Image 
+          {loading ? null : (
+            <TouchableOpacity onPress={() => setKey(key + 1)}>
+              <Image
                 source={Images.refreshIcon}
                 style={AuthViewStyle.addressBarIcon}
               />
             </TouchableOpacity>
-          }
-          
+          )}
         </View>
         <WebView
           key={key}
           onNavigationStateChange={({ url }) => {
             (async function () {
               if (url === urls.REDIRECT_URL) {
-                setAdressbarURL(url)
+                setAdressbarURL(url);
                 try {
                   const res = await getUserData(url);
                   await storeData('userData', JSON.stringify(res));
@@ -65,11 +71,11 @@ const AuthScreen = () => {
                 } catch (err) {
                   setLoggedInUserData(null);
                 }
-              } else if(url.indexOf("?") > 0) {
-                let uri = url.substring(0, url.indexOf("?"))
-                setAdressbarURL(uri)
+              } else if (url.indexOf('?') > 0) {
+                let uri = url.substring(0, url.indexOf('?'));
+                setAdressbarURL(uri);
               } else {
-                setAdressbarURL(url)
+                setAdressbarURL(url);
               }
             })();
           }}
@@ -77,11 +83,11 @@ const AuthScreen = () => {
           source={{
             uri: urls.GITHUB_AUTH,
           }}
-          onLoadStart = {() => {
-            setLoading(true)
+          onLoadStart={() => {
+            setLoading(true);
           }}
-          onLoadEnd = {() => {
-            setLoading(false)
+          onLoadEnd={() => {
+            setLoading(false);
           }}
         />
       </ScrollView>
