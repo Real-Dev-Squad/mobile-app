@@ -1,40 +1,40 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const AuthViewStyle = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 0,
-    backgroundColor: '#2819b3',
+    backgroundColor: "#2819b3",
   },
   imageContainer: {
     paddingTop: 0,
     flex: 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   constContainer: {
     paddingTop: 20,
     flex: 0.2,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 
   btnContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     flex: 0.4,
   },
 
   btnView: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    flexDirection: 'row',
+    flexDirection: "row",
     minHeight: 60,
     minWidth: 200,
-    width: '55%',
+    width: "55%",
   },
 
   logo: {
@@ -43,57 +43,57 @@ export const AuthViewStyle = StyleSheet.create({
   },
   githubLogo: {
     flex: 0.2,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingStart: 5,
   },
   signInTxtView: {
     flex: 0.8,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingRight: 5,
   },
   welcomeMsg: {
     fontSize: 35,
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: "#FFFFFF",
+    fontWeight: "bold",
   },
   cmpnyName: {
     fontSize: 35,
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    textTransform: "uppercase",
   },
   signInText: {
-    textAlign: 'center',
-    color: '#000000',
+    textAlign: "center",
+    color: "#000000",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   addressBarStyle: {
-    backgroundColor: '#7130e3',
+    backgroundColor: "#7130e3",
     paddingVertical: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   addressBarLink: {
-    color: '#5ced83',
+    color: "#5ced83",
     fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    fontWeight: "bold",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   addressBarCancel: {
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
     marginLeft: 5,
   },
   addressBarIcon: {
-    resizeMode: 'cover',
+    resizeMode: "cover",
     width: 20,
     height: 20,
     marginRight: 10,
   },
   webViewStyles: {
     flex: 1,
-    paddingBottom: '20%',
+    paddingBottom: "20%",
   },
 });

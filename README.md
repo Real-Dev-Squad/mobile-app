@@ -30,6 +30,7 @@ Note : Please delete the previous RDS app build if you have.
 - React Native setup
 - Android Studio
 - Node setup
+- [Volta](https://docs.volta.sh/guide/getting-started) | [Why Volta?](https://docs.volta.sh/guide/#why-volta)
 
 ## **NOTE** : Make sure to set up the proper development environment required to run react-native applications.
 
