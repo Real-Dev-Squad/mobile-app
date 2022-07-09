@@ -1,12 +1,17 @@
 const Images = {
   homeIcon: require('../../../assets/home.png'),
-  taskIcon: require('../../../assets/task-b.png'),
+  goalIcon: require('../../../assets/goalIconF.png'),
   profileIcon: require('../../../assets/profile.png'),
   //unfocused Icons
   homeIconUnF: require('../../../assets/home-g.png'),
-  taskIconUnF: require('../../../assets/task-g.png'),
+  goalIconUnF: require('../../../assets/goalIcon.png'),
   profileIconUnF: require('../../../assets/profile-g.png'),
   emptyTaskScreen: require('../../../assets/task-empty.png'),
+
+  //GoalScreen Icons
+  arrowIcon: require('../../../assets/arrow.png'),
+  doneIcon: require('../../../assets/done.png'),
+  commentIcon: require('../../../assets/Comment.png'),
 
   //AuthScreen Icon
   refreshIcon: require('../../../assets/refresh_icon.png'),

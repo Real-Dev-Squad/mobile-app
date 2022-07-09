@@ -2,7 +2,7 @@ const Strings = {
   // TAB NAVIGATION
   Tab_Home: 'Home',
   Tab_Profile: 'Profile',
-  Tab_Task: 'Tasks',
+  Tab_Goal: 'Goals',
   // HOME SCREEN
   OOOStatus_Text: 'I am OOO',
   Active_Text: 'I am doing a task',
