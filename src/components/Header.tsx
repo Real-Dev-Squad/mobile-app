@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
-import Colors from '../constants/colors/Colors';
-import Images from '../constants/images/Image';
+import Colors from '../constants/colors';
+import Images from '../constants/images';
 
 const Header = () => {
   return (

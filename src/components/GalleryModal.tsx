@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Pressable, View } from 'react-native';
 import { ImagePickerResponse } from 'react-native-image-picker';
-import Images from '../constants/images/Image';
+import Images from '../constants/images';
 import takePicture from '../helpers/LaunchCamera';
 import uploadImage from '../helpers/LaunchGallery';
 import { profileScreenStyles } from '../screens/ProfileScreen/styles';

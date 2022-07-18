@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
-import withHeader from '../../helpers/withHeader';
+import withHeader from '../../helpers/WithHeader';
 import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
-import { updateStatus } from '../AuthScreen/Util';
+import { updateStatus } from '../AuthScreen/utils';
 import { HomeViewStyle } from './styles';
 import Toast from 'react-native-toast-message';
 

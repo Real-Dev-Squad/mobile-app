@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { ScreenViewContainer } from '../../styles/GlobalStyle';
+import { ScreenViewContainer } from '../../styles/global-styles';
 import { profileScreenStyles } from './styles';
-import withHeader from '../../helpers/withHeader';
+import withHeader from '../../helpers/WithHeader';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import Images from '../constants/images/Image';
+import Images from '../constants/images';
 
 const Avatar = ({ uri, size }: { uri: string; size: number }) => {
   const uriToPass = uri ? uri : Images.DEFAULT_IMAGE;
