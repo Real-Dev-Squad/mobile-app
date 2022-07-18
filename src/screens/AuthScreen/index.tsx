@@ -8,13 +8,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import WebView from 'react-native-webview';
-import { urls } from '../../constants/appConstant/url';
+import { urls } from '../../constants/app-constants/url';
 import { AuthContext } from '../../context/AuthContext';
-import Images from '../../constants/images/Image';
+import Images from '../../constants/images';
 import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
-import { getUserData } from './Util';
+import { getUserData } from './utils';
 
 const AuthScreen = () => {
   const { setLoggedInUserData } = useContext(AuthContext);

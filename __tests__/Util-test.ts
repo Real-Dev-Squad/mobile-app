@@ -2,7 +2,7 @@ import {
   getUserData,
   updateMarkYourSelfAs_,
   updateStatus,
-} from '../src/screens/AuthScreen/Util';
+} from '../src/screens/AuthScreen/utils';
 import { urls } from '../src/constants/appConstant/url';
 import Strings from '../src/i18n/en';
 import axios from 'axios';
