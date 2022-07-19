@@ -8,8 +8,8 @@ import Images from '../../constants/images/Image';
 import Strings from '../../i18n/en';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
-import TaskScreen from '../../screens/TaskScreen/TaskScreen';
 import { TabViewStyle } from './style';
+import GoalScreen from '../../screens/GoalScreen/GoalScreen';
 
 const tab = createBottomTabNavigator();
 
@@ -53,8 +53,8 @@ const TabNavigation = () => {
           }}
         />
         <tab.Screen
-          name={Strings.Tab_Task}
-          component={TaskScreen}
+          name={Strings.Tab_Goal}
+          component={GoalScreen}
           options={{
             headerShown: false,
 
@@ -68,7 +68,7 @@ const TabNavigation = () => {
                       : Colors.Tab_Inactive_Color,
                   }}
                 >
-                  {Strings.Tab_Task}
+                  {Strings.Tab_Goal}
                 </Text>
               );
             },
@@ -76,7 +76,7 @@ const TabNavigation = () => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
-                  source={focused ? Images.taskIcon : Images.taskIconUnF}
+                  source={focused ? Images.goalIcon : Images.goalIconUnF}
                 />
               );
             },
