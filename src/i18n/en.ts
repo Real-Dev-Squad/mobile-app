@@ -25,6 +25,10 @@ const Strings = {
   Permissin_Denied_Head: 'Permission Denied',
   Permission_Denied_Text: 'Camera Permission denied',
 
+  // Goal Screen
+  Task_desc: 'Description',
+  Task_Assignee: 'Assignee',
+
   // TEXT
   LOGOUT: 'Logout',
 
