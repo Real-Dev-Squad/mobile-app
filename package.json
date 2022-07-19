@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "format-check": "prettier --check ./src",
-    "format-fix": "prettier --write ./src",
+    "format-fix": "prettier --write ./src/components/TodoComponent",
     "precommit-check": "yarn run format-fix && yarn run lint && yarn run test"
   },
   "dependencies": {

@@ -7,6 +7,7 @@ const GoalScreen = () => {
   return (
     <View>
       <TodoComponent />
+      <ShortGoalsComponent />
     </View>
   );
 };
