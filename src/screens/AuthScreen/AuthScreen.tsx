@@ -92,7 +92,7 @@ const AuthScreen = () => {
               setLoading(false);
             }}
           />
-        </ScrollView>`
+        </ScrollView>
       </SafeAreaView>
     );
   }
