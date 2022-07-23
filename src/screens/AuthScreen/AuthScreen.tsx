@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
@@ -30,7 +30,7 @@ const AuthScreen = () => {
 
   if (githubView) {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={AuthViewStyle.container}>
           <View style={AuthViewStyle.addressBarStyle}>
             {loading ? (

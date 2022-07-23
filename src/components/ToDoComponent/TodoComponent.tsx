@@ -22,7 +22,7 @@ const TodoComponent = () => {
     setTasks(newdata);
   };
   return (
-    <View>
+    <View style={TodoStyles.container}>
       <Text style={TodoStyles.title}>To Do's</Text>
       <View style={{ paddingVertical: 35 }}>
         {tasks

@@ -1,5 +1,5 @@
 import { Image, Text, View, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
@@ -73,7 +73,7 @@ const Card = ({ item, posStyle, changecard, removeCard }: any) => {
             style={[CardStyles.card, animatedStyle, { position: posStyle }]}
           >
             <View style={{ justifyContent: 'center' }}>
-              <View>
+              <View style={!item.isread ? { height: 25 } : null}>
                 {item.isread && (
                   <Image
                     source={Images.earthIcon}
