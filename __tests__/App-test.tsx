@@ -14,6 +14,8 @@ it('checks if Async Storage is used', async () => {
   expect(res).toMatch('1');
 });
 
+jest.mock('react-native-gesture-handler', () => {});
+
 it('renders correctly', async () => {
   renderer.create(<App />);
 });

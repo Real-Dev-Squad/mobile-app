@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import Card from './Card';
 import Data from './Data';
@@ -28,13 +28,16 @@ const ShortGoalsComponent = () => {
         </TouchableOpacity>
       </View>
       {show ? (
-        <FlatList
-          data={Data}
-          renderItem={({ item }) => <Card item={item} />}
-          keyExtractor={(item) => item.id}
-          nestedScrollEnabled={true}
-          testID="flatlist"
-        />
+        <View testID='flatlist'>
+          {Data.map((item) => {
+            return (
+              <Card
+                key={item.id}
+                item={item}
+              />
+            );
+          })}
+        </View>
       ) : null}
     </View>
   );
