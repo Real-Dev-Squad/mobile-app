@@ -3,21 +3,17 @@ import { urls } from '../../constants/appConstant/url';
 
 export const getUserData = async (url: string) => {
   if (url === urls.REDIRECT_URL) {
-    try {
-      const res = await axios.get(urls.GET_USERS_DATA, {
-        headers: {
-          cookie: '',
-        },
-      });
-      return {
-        id: res.data.id,
-        name: res.data.github_display_name,
-        profileUrl: res.data?.picture?.url,
-        status: res.data?.status,
-      };
-    } catch (error) {
-      console.log('error', error);
-    }
+    const res = await axios.get(urls.GET_USERS_DATA, {
+      headers: {
+        cookie: '',
+      },
+    });
+    return {
+      id: res.data.id,
+      name: res.data.github_display_name,
+      profileUrl: res.data?.picture?.url,
+      status: res.data?.status,
+    };
   } else {
     return null;
   }
