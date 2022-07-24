@@ -8,22 +8,25 @@ export type ProgressBarProps = {
 
 const ProgressBarInternal = (props: ProgressBarProps) => {
   const translateX = useRef(new Animated.Value(0));
-  const styles = ProgressBarStyles;
 
   useEffect(() => {
-    Animated.timing(translateX.current, {
+    const animation = Animated.timing(translateX.current, {
       toValue: props.progress / 100,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: false,
-    }).start();
+    });
+    animation.start();
+    return () => {
+      animation.stop();
+    };
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View testID={'progress_bar'} style={styles.innerContainer}>
+    <View style={ProgressBarStyles.container}>
+      <View testID={'progress_bar'} style={ProgressBarStyles.innerContainer}>
         <Animated.View
           style={[
-            styles.bar,
+            ProgressBarStyles.bar,
             {
               width: translateX.current.interpolate({
                 inputRange: [0, 1],

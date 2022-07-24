@@ -12,24 +12,22 @@ export type GoalCardProps = {
 };
 
 function GoalCard(props: GoalCardProps) {
-  const styles = GoalCardStyles;
-
   return (
-    <View style={styles.card}>
+    <View style={GoalCardStyles.card}>
       <View>
-        <Text style={styles.title}>{props.title}</Text>
+        <Text style={GoalCardStyles.title}>{props.title}</Text>
       </View>
       <View>
         <Text>
-          <Text style={styles.heading}>{Strings.Task_Assignee} </Text>
-          <Text style={styles.text}>{props.taskAssignee}</Text>
+          <Text style={GoalCardStyles.heading}>{Strings.Task_Assignee} </Text>
+          <Text style={GoalCardStyles.text}>{props.taskAssignee}</Text>
         </Text>
       </View>
       <View>
-        <Text style={styles.text}>{props.taskDescription}</Text>
+        <Text style={GoalCardStyles.text}>{props.taskDescription}</Text>
       </View>
-      <View style={[styles.flex, styles.container]}>
-        <Text style={styles.dueText}>Due now</Text>
+      <View style={[GoalCardStyles.flex, GoalCardStyles.container]}>
+        <Text style={GoalCardStyles.dueText}>Due now</Text>
         <ProgressBar progress={props.progress} />
       </View>
     </View>

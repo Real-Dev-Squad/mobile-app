@@ -1,6 +1,6 @@
 const data = [
   {
-    id: '1',
+    id: 1,
     title: 'Complete Goal Sites Tutorial',
     assignee: 'Ankush Dharkar',
     description:
@@ -10,7 +10,7 @@ const data = [
     progress: 40,
   },
   {
-    id: '2',
+    id: 2,
     title: 'Complete Goal Sites Tutorial',
     assignee: 'Ankush Dharkar',
     description:
@@ -20,7 +20,7 @@ const data = [
     progress: 50,
   },
   {
-    id: '3',
+    id: 3,
     title: 'Complete Goal Sites Tutorial',
     assignee: 'Ankush Dharkar',
     description:
@@ -30,7 +30,7 @@ const data = [
     progress: 60,
   },
   {
-    id: '4',
+    id: 4,
     title: 'Complete Goal Sites Tutorial',
     assignee: 'Ankush Dharkar',
     description:
@@ -40,7 +40,7 @@ const data = [
     progress: 30,
   },
   {
-    id: '5',
+    id: 5,
     title: 'Complete Goal Sites Tutorial',
     assignee: 'Ankush Dharkar',
     description:

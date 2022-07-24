@@ -10,11 +10,10 @@ export type GoalScreenHeaderProps = {
 };
 
 function GoalScreenHeader(props: GoalScreenHeaderProps) {
-  const styles = GoalScreenHeaderStyle;
   return (
     <View>
-      <View style={styles.container}>
-        <Text style={styles.title}>{props.title}</Text>
+      <View style={GoalScreenHeaderStyle.container}>
+        <Text style={GoalScreenHeaderStyle.title}>{props.title}</Text>
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => props.onPress()}
@@ -24,8 +23,8 @@ function GoalScreenHeader(props: GoalScreenHeaderProps) {
             source={Images.arrowIcon}
             style={
               props.shouldShowArrowDownIcon
-                ? styles.arrowIconDown
-                : styles.arrowIcon
+                ? GoalScreenHeaderStyle.arrowIconDown
+                : GoalScreenHeaderStyle.arrowIcon
             }
             testID="arrowBtnIcon"
           />
