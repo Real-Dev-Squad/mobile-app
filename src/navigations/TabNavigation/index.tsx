@@ -6,8 +6,13 @@ import Colors from '../../constants/colors';
 import Fonts from '../../constants/fonts/tabFont';
 import Images from '../../constants/images';
 import Strings from '../../i18n/en';
+<<<<<<< HEAD:src/navigations/TabNavigation/index.tsx
 import HomeScreen from '../../screens/HomeScreen';
 import ProfileScreen from '../../screens/ProfileScreen';
+=======
+import HomeScreen from '../../screens/HomeScreen/HomeScreen';
+import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
+>>>>>>> 1e96f22c05d62fa61883de2189cad90fe87fab4e:src/navigations/TabNavigation/TabNavigation.tsx
 import { TabViewStyle } from './style';
 import GoalScreen from '../../screens/GoalScreen/GoalScreen';
 
