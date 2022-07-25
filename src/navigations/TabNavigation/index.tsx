@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { Image, Text } from 'react-native';
 import Colors from '../../constants/colors';
-import Fonts from '../../constants/fonts/tab-font';
+import Fonts from '../../constants/fonts/tabFont';
 import Images from '../../constants/images';
 import Strings from '../../i18n/en';
 import HomeScreen from '../../screens/HomeScreen';
 import ProfileScreen from '../../screens/ProfileScreen';
-import TaskScreen from '../../screens/TaskScreen';
 import { TabViewStyle } from './style';
+import GoalScreen from '../../screens/GoalScreen/GoalScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,8 +53,8 @@ const TabNavigation = () => {
           }}
         />
         <Tab.Screen
-          name={Strings.Tab_Task}
-          component={TaskScreen}
+          name={Strings.Tab_Goal}
+          component={GoalScreen}
           options={{
             headerShown: false,
 
@@ -68,7 +68,7 @@ const TabNavigation = () => {
                       : Colors.Tab_Inactive_Color,
                   }}
                 >
-                  {Strings.Tab_Task}
+                  {Strings.Tab_Goal}
                 </Text>
               );
             },
@@ -76,7 +76,7 @@ const TabNavigation = () => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
-                  source={focused ? Images.taskIcon : Images.taskIconUnF}
+                  source={focused ? Images.goalIcon : Images.goalIconUnF}
                 />
               );
             },

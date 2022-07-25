@@ -2,7 +2,7 @@ const Strings = {
   // TAB NAVIGATION
   Tab_Home: 'Home',
   Tab_Profile: 'Profile',
-  Tab_Task: 'Tasks',
+  Tab_Goal: 'Goals',
   // HOME SCREEN
   OOOStatus_Text: 'I am OOO',
   Active_Text: 'I am doing a task',
@@ -24,6 +24,10 @@ const Strings = {
   // Launch Camera
   Permissin_Denied_Head: 'Permission Denied',
   Permission_Denied_Text: 'Camera Permission denied',
+
+  // Goal Screen
+  Task_desc: 'Description',
+  Task_Assignee: 'Assignee',
 
   // TEXT
   LOGOUT: 'Logout',

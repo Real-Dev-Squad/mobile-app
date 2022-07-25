@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import { ScreenViewContainer } from '../../styles/global-styles';
-import withHeader from '../../helpers/WithHeader';
+import { ScreenViewContainer } from '../../styles/globalStyles';
+import withHeader from '../../helpers/withHeader';
 import Images from '../../constants/images';
 import { TaskScreenView } from './styles';
 const TaskScreen = () => {
