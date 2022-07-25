@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import WebView from 'react-native-webview';
-import { urls } from '../../constants/appConstants.ts/url';
+import { urls } from '../../constants/appConstants/url';
 import { AuthContext } from '../../context/AuthContext';
 import Images from '../../constants/images';
 import { storeData } from '../../utils/dataStore';
