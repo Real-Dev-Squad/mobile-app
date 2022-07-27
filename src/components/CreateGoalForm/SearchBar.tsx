@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 
-// import all the components we are going to use
 import {
   SafeAreaView,
   Text,
@@ -11,7 +10,7 @@ import {
   TextInput,
 } from 'react-native';
 
-const App = () => {
+const SearchBar = () => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -53,7 +52,7 @@ const App = () => {
 
   const ItemView = ({ item }) => {
     return (
-      // Flat List Item
+      
       <Text style={styles.itemStyle} onPress={() => getItem(item)}>
         {item.id}
         {'.'}
@@ -64,7 +63,7 @@ const App = () => {
 
   const ItemSeparatorView = () => {
     return (
-      // Flat List Item Separator
+     
       <View
         style={{
           height: 0.5,
@@ -76,7 +75,7 @@ const App = () => {
   };
 
   const getItem = (item) => {
-    // Function for click on an item
+    
     alert('Id : ' + item.id + ' Title : ' + item.title);
   };
 
@@ -120,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default SearchBar;

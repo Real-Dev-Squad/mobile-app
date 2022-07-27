@@ -15,8 +15,7 @@ const local_data = [
   },
 ];
 
-export interface Props {
-}
+export interface Props {}
 
 const SelectCountryScreen: React.FC<Props> = () => {
   const [duration, setDuration] = useState('1');
@@ -38,7 +37,7 @@ const SelectCountryScreen: React.FC<Props> = () => {
         }}
       />
 
-      {duration === 'long' && (
+      {duration === 'long' ? (
         <View>
           <Text style={styles.formchild}>Roadmap Type</Text>
           <Radio />
@@ -46,9 +45,7 @@ const SelectCountryScreen: React.FC<Props> = () => {
           <Text style={styles.formchild}>Existing Roadmap</Text>
           <Searchbar />
         </View>
-      )}
-
-      {duration === 'short' && (
+      ) : (
         <View>
           <Text style={styles.formchild}>Associated Long Term Goal</Text>
           <Searchbar />

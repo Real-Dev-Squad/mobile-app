@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from 'react-native';
 
 const radioButtonsData = [
   {
-    id: '1', // acts as primary key, should be unique and non-empty string
+    id: '1',
     label: 'Existing',
     value: 'existing',
   },
@@ -15,7 +15,7 @@ const radioButtonsData = [
   },
 ];
 
-export default function App() {
+export default function RadioGroupComponent() {
   const [radioButtons, setRadioButtons] = useState(radioButtonsData);
 
   function onPressRadioButton(radioButtonsArray) {

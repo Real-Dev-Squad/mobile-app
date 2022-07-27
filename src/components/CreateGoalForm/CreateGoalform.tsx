@@ -11,8 +11,8 @@ import Deadline from './DatePicker';
 import Dropdown from './Dropdown';
 
 export default function CreateGoalform() {
-  const [title, onChangeTitle] = React.useState('');
-  const [description, onChangeDescription] = React.useState('');
+  const [title, onChangeTitle] = useState('');
+  const [description, onChangeDescription] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (
@@ -77,7 +77,6 @@ export default function CreateGoalform() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
     backgroundColor: 'white',
     border: '2px solid black',
     padding: 30,

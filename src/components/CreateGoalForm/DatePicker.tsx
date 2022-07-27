@@ -1,16 +1,9 @@
-// React Native Date Picker – To Pick the Date using Native Calendar
-// https://aboutreact.com/react-native-datepicker/
 
-// import React in our code
 import React, { useState } from 'react';
-
-// import all the components we are going to use
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-
-//import DatePicker from the package we installed
 import DatePicker from 'react-native-datepicker';
 
-const App = () => {
+const DatePickerComponent = () => {
   const [date, setDate] = useState('');
 
   return (
@@ -48,7 +41,7 @@ const App = () => {
   );
 };
 
-export default App;
+export default DatePickerComponent;
 
 const styles = StyleSheet.create({
   container: {
