@@ -1,5 +1,5 @@
 import { Image, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
@@ -15,7 +15,30 @@ import Images from '../../constants/images/Image';
 import Toast from 'react-native-toast-message';
 import { CardStyles } from './Styles/CardStyles';
 
-const Card = ({ item, posStyle, changecard, removeCard }: any) => {
+type items = {
+  id: number;
+  task: string;
+  isread: boolean;
+};
+
+type props = {
+  item: items;
+  posStyle: any;
+  changecard: (id: number) => void;
+  removeCard: (id: number) => void;
+};
+
+const Card = ({ item, posStyle, changecard, removeCard }: props) => {
+  let timerRef: any;
+  const deleteTask = () => {
+    timerRef = setTimeout(() => deleteCardFunction(), 4000);
+  };
+
+  useEffect(() => {
+    // Clear the interval when the component unmounts
+    return () => clearTimeout(timerRef);
+  }, []);
+
   const translateY = useSharedValue(0);
   const [checked, setChecked] = useState(false);
   let deleteCard = 'false';
@@ -47,7 +70,7 @@ const Card = ({ item, posStyle, changecard, removeCard }: any) => {
     setChecked(true);
     Toast.show({
       type: 'error',
-      text1: 'Mark as done',
+      text1: 'Marked as done',
       text2: 'Click here to mark undone',
       position: 'bottom',
       bottomOffset: 80,
@@ -57,12 +80,14 @@ const Card = ({ item, posStyle, changecard, removeCard }: any) => {
         setChecked(false);
       },
     });
-    setTimeout(() => {
-      if (deleteCard === 'true') {
-        changecard(item.id);
-        removeCard(item.id);
-      }
-    }, 4000);
+    deleteTask();
+  };
+
+  const deleteCardFunction = () => {
+    if (deleteCard === 'true') {
+      changecard(item.id);
+      removeCard(item.id);
+    }
   };
 
   return (

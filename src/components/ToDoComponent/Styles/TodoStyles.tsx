@@ -3,11 +3,12 @@ import { StyleSheet } from 'react-native';
 export const TodoStyles = StyleSheet.create({
   container: {
     padding: 10,
-    paddingBottom: 25,
+    paddingBottom: 45,
     borderBottomWidth: 3,
     borderBottomColor: '#b9c0c9',
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
+    zIndex: 1,
   },
   shodowcard: {
     width: '80%',
