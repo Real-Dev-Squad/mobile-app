@@ -12,7 +12,11 @@ const Images = {
   arrowIcon: require('../../../assets/arrow.png'),
   doneIcon: require('../../../assets/done.png'),
   commentIcon: require('../../../assets/Comment.png'),
-
+  checkedIcon: require('../../../assets/checked.png'),
+  uncheckedIcon: require('../../../assets/unchecked.png'),
+  externalLinkIcon: require('../../../assets/externallink.png'),
+  earthIcon: require('../../../assets/earth.png'),
+  
   //AuthScreen Icon
   refreshIcon: require('../../../assets/refresh_icon.png'),
 

@@ -8,6 +8,7 @@ export const ShortGoalsStyle = StyleSheet.create({
     justifyContent: 'space-between',
     width: '90%',
     alignSelf: 'center',
+    zIndex: -1,
   },
   title: {
     fontSize: 25,
