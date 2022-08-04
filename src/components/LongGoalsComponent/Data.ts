@@ -47,7 +47,7 @@ const data = [
       'Use the goals site of RDS and all features within the application',
     messageCount: 1,
     dueDate: 7,
-    progress: 80,
+    progress: 10,
   },
 ];
 export default data;

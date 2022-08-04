@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { View } from 'react-native';
 import React, { useState } from 'react';
 import Data from './Data';
 import GoalScreenHeader from '../GoalScreenHeader';
@@ -13,21 +13,21 @@ const LongGoalsComponent = () => {
         onPress={() => setShow(!show)}
         shouldShowArrowDownIcon={show}
       />
+
       {show ? (
-        <FlatList
-          data={Data}
-          renderItem={({ item }) => (
-            <GoalCard
-              title={item.title}
-              taskAssignee={item.assignee}
-              taskDescription={item.description}
-              progress={item.progress}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          nestedScrollEnabled={true}
-          testID="flatlist"
-        />
+        <View testID="flatlist">
+          {Data.map((item) => {
+            return (
+              <GoalCard
+                key={item.id}
+                title={item.title}
+                taskAssignee={item.assignee}
+                taskDescription={item.description}
+                progress={item.progress}
+              />
+            );
+          })}
+        </View>
       ) : null}
     </>
   );
