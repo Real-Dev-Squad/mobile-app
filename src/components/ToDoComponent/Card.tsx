@@ -107,7 +107,7 @@ const Card = ({ item, posStyle, changecard, removeCard }: props) => {
                 )}
               </View>
               <View style={CardStyles.flex}>
-                <TouchableOpacity onPress={markDone}>
+                <TouchableOpacity onPress={markDone} testID='doneBtn'>
                   {checked ? (
                     <Image
                       source={Images.checkedIcon}
