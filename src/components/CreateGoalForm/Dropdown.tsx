@@ -38,7 +38,7 @@ const SelectCountryScreen: React.FC<Props> = () => {
       />
 
       {duration === 'long' ? (
-        <View>
+        <View testID="longTermRoadmap">
           <Text style={styles.formchild}>Roadmap Type</Text>
           <Radio />
 
@@ -46,7 +46,7 @@ const SelectCountryScreen: React.FC<Props> = () => {
           <Searchbar />
         </View>
       ) : (
-        <View>
+        <View testID = "shortTermInput">
           <Text style={styles.formchild}>Associated Long Term Goal</Text>
           <Searchbar />
         </View>
