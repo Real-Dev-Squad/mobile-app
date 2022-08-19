@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { ScrollView } from 'react-native';
+
 import withHeader from '../../helpers/withHeader';
 import ShortGoalsComponent from '../../components/ShortGoalsComponent/ShortGoalsComponent';
 import LongGoalsComponent from '../../components/LongGoalsComponent';
@@ -15,3 +17,4 @@ const GoalScreen = () => {
 };
 
 export default withHeader(GoalScreen);
+
