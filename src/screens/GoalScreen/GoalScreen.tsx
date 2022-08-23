@@ -17,4 +17,3 @@ const GoalScreen = () => {
 };
 
 export default withHeader(GoalScreen);
-

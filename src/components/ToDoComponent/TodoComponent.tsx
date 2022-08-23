@@ -38,7 +38,7 @@ const TodoComponent = () => {
             );
           })
           .reverse()}
-        <View style={TodoStyles.shodowcard}></View>
+        <View style={TodoStyles.shodowcard} />
       </View>
     </View>
   );

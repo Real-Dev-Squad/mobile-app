@@ -16,7 +16,7 @@ const Images = {
   uncheckedIcon: require('../../../assets/unchecked.png'),
   externalLinkIcon: require('../../../assets/externallink.png'),
   earthIcon: require('../../../assets/earth.png'),
-  
+
   //AuthScreen Icon
   refreshIcon: require('../../../assets/refresh_icon.png'),
 

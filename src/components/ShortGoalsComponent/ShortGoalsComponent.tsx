@@ -8,7 +8,7 @@ import { ShortGoalsStyle } from './Styles/ShortGoalsStyle';
 const ShortGoalsComponent = () => {
   const [show, setShow] = useState(false);
   return (
-    <View>
+    <View style={{ marginBottom: 20 }}>
       <View style={ShortGoalsStyle.container}>
         <Text style={ShortGoalsStyle.title}>Short Term Goals</Text>
         <TouchableOpacity
@@ -28,14 +28,9 @@ const ShortGoalsComponent = () => {
         </TouchableOpacity>
       </View>
       {show ? (
-        <View testID='flatlist'>
+        <View testID="flatlist">
           {Data.map((item) => {
-            return (
-              <Card
-                key={item.id}
-                item={item}
-              />
-            );
+            return <Card key={item.id} item={item} />;
           })}
         </View>
       ) : null}
