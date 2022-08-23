@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
 import data from './Data';
 import { TodoStyles } from './Styles/TodoStyles';
