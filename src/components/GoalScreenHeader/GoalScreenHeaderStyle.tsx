@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const ShortGoalsStyle = StyleSheet.create({
+export const GoalScreenHeaderStyle = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginTop: 10,
@@ -8,7 +8,6 @@ export const ShortGoalsStyle = StyleSheet.create({
     justifyContent: 'space-between',
     width: '90%',
     alignSelf: 'center',
-    zIndex: -1,
   },
   title: {
     fontSize: 25,
