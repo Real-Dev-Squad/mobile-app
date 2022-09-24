@@ -17,13 +17,13 @@ const local_data = [
 
 export interface Props {}
 
-const SelectCountryScreen: React.FC<Props> = () => {
+const SelectCountryScreen: React.FC<Props> = _props => {
   const [duration, setDuration] = useState('1');
 
   return (
     <View>
       <SelectCountry
-        style={styles.drop}
+        style={styles.dropdown}
         selectedTextStyle={styles.selectedTextStyle}
         placeholderStyle={styles.placeholderStyle}
         maxHeight={200}
@@ -37,7 +37,8 @@ const SelectCountryScreen: React.FC<Props> = () => {
         }}
       />
 
-      {duration === 'long' ? (
+      {
+      duration === 'long' ? (
 
         <View testID="longTermRoadmap">
 
@@ -49,6 +50,7 @@ const SelectCountryScreen: React.FC<Props> = () => {
           <Text style={styles.formchild}>Existing Roadmap</Text>
           <Searchbar />
         </View>
+        </View>
       ) : (
 
         <View testID = "shortTermInput">
@@ -58,15 +60,17 @@ const SelectCountryScreen: React.FC<Props> = () => {
           <Text style={styles.formchild}>Associated Long Term Goal</Text>
           <Searchbar />
         </View>
-      )}
-    </View>
+        </View>
+      )
+      }
+      </View>
   );
 };
 
 export default SelectCountryScreen;
 
 const styles = StyleSheet.create({
-  drop: {
+  dropdown: {
     margin: 10,
     height: 30,
     width: 205,
