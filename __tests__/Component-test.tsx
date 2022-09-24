@@ -28,8 +28,8 @@ test('roadmap type does not exist on initial render', () => {
 })
 
  test('roadmap type exists when use select duration as long term', ()=>{
-    const {getByDisplayValue, queryByTestId ,getByTestId} = render(<DurationDropdown/>);
-    fireEvent.press(getByDisplayValue('Long Term'));
+    const { queryByTestId ,getByTestId} = render(<DurationDropdown/>);
+    fireEvent.press(getByTestId('longTermRoadmap'));
     expect(queryByTestId('shortTermInput')).toBeNull();
     expect(getByTestId('longTermRoadmap').props.value).toStrictEqual('long');
  })
