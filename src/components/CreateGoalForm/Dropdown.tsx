@@ -32,6 +32,7 @@ const SelectCountryScreen: React.FC<Props> = _props => {
         valueField="value"
         labelField="lable"
         placeholder="Select Duration"
+        testID = "roadmapType"
         onChange={(e) => {
           setDuration(e.value);
         }}
