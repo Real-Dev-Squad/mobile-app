@@ -27,10 +27,10 @@ test('roadmap type does not exist on initial render', () => {
     expect(queryByTestId('longTermRoadmap')).toBeNull();
 })
 
- test('roadmap type exists when use select duration as long term', ()=>{
+ test('roadmap type exists when use select duration as long term and stays undefined initally', ()=>{
     const {getByTestId} = render(<DurationDropdown/>);
     fireEvent.press(getByTestId('roadmapType'));
-    expect(getByTestId('longTermRoadmap').props.value).toStrictEqual('long');
+    expect(getByTestId('roadmapType').props.value).toStrictEqual(undefined);
  })
 
  // Floating Button test
