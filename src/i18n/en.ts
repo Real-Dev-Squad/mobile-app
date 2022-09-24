@@ -17,9 +17,12 @@ const Strings = {
   Img_Upload_Text: 'Upload your Profile Image',
   //LOGIN Screen
   SIGN_IN_BUTTON_TEXT: 'Sign In with Github',
+  SIGN_IN_WITH_WEB: 'Sign In with Web',
   SIGN_IN_ERROR: 'Unable to login at the moment',
   WELCOME_TO: 'Welcome to',
   REAL_DEV_SQUAD: 'Real Dev Squad',
+  ENTER_4_DIGIT_OTP: 'Enter 4 Digit Otp',
+  SUBMIT: 'Submit',
 
   // Launch Camera
   Permissin_Denied_Head: 'Permission Denied',
