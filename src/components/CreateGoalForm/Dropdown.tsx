@@ -23,7 +23,7 @@ const SelectCountryScreen: React.FC<Props> = () => {
   return (
     <View>
       <SelectCountry
-        style={styles.dropdown}
+        style={styles.drop}
         selectedTextStyle={styles.selectedTextStyle}
         placeholderStyle={styles.placeholderStyle}
         maxHeight={200}
@@ -58,7 +58,7 @@ const SelectCountryScreen: React.FC<Props> = () => {
 export default SelectCountryScreen;
 
 const styles = StyleSheet.create({
-  dropdown: {
+  drop: {
     margin: 10,
     height: 30,
     width: 205,
