@@ -28,14 +28,9 @@ const ShortGoalsComponent = () => {
         </TouchableOpacity>
       </View>
       {show ? (
-        <View testID='flatlist'>
+        <View testID="flatlist">
           {Data.map((item) => {
-            return (
-              <Card
-                key={item.id}
-                item={item}
-              />
-            );
+            return <Card key={item.id} item={item} />;
           })}
         </View>
       ) : null}
