@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 import {
@@ -52,7 +51,6 @@ const SearchBar = () => {
 
   const ItemView = ({ item }) => {
     return (
-      
       <Text style={styles.itemStyle} onPress={() => getItem(item)}>
         {item.id}
         {'.'}
@@ -63,7 +61,6 @@ const SearchBar = () => {
 
   const ItemSeparatorView = () => {
     return (
-     
       <View
         style={{
           height: 0.5,
@@ -75,7 +72,6 @@ const SearchBar = () => {
   };
 
   const getItem = (item) => {
-    
     alert('Id : ' + item.id + ' Title : ' + item.title);
   };
 
@@ -109,13 +105,13 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     height: 30,
-    width:205,
+    width: 205,
     borderWidth: 1,
     paddingLeft: 10,
     margin: 5,
-    marginLeft:8,
+    marginLeft: 8,
     borderColor: 'black',
-    backgroundColor: "#ecf0f1",
+    backgroundColor: '#ecf0f1',
   },
 });
 

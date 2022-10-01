@@ -37,7 +37,7 @@ const Card = ({ item, posStyle, changecard, removeCard }: props) => {
   useEffect(() => {
     // Clear the interval when the component unmounts
     return () => clearTimeout(timerRef);
-  }, []);
+  });
 
   const translateY = useSharedValue(0);
   const [checked, setChecked] = useState(false);
