@@ -108,17 +108,10 @@ const Card = ({ item, posStyle, changecard, removeCard }: props) => {
               </View>
               <View style={CardStyles.flex}>
                 <TouchableOpacity onPress={markDone} testID='doneBtn'>
-                  {checked ? (
-                    <Image
-                      source={Images.checkedIcon}
-                      style={[CardStyles.icon, { marginLeft: 5 }]}
-                    />
-                  ) : (
-                    <Image
-                      source={Images.uncheckedIcon}
-                      style={[CardStyles.icon, { marginLeft: 5 }]}
-                    />
-                  )}
+                  <Image
+                    source={checked ? Images.checkedIcon : Images.uncheckedIcon}
+                    style={[CardStyles.icon, { marginLeft: 5 }]}
+                  />
                 </TouchableOpacity>
                 <Text style={CardStyles.taskText}>{item.task}</Text>
               </View>
