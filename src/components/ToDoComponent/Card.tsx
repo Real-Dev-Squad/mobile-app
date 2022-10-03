@@ -49,8 +49,8 @@ const Card = ({
     return () => clearTimeout(timerRef);
   }, [timerRef]);
 
-  const translateY = useSharedValue(0);
-  const [checked, setChecked] = useState(false);
+  const translateY = useSharedValue<number>(0);
+  const [checked, setChecked] = useState<boolean>(false);
   let deleteCard = 'false';
 
   const panGesture = useAnimatedGestureHandler({

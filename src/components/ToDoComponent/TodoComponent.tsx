@@ -6,9 +6,9 @@ import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 
 const TodoComponent = () => {
-  const [tasks, setTasks] = useState(data);
-  const [disabled, setDisabled] = useState(false);
-  const [changed, setChanged] = useState(false);
+  const [tasks, setTasks] = useState<Task[]>(data);
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [changed, setChanged] = useState<boolean>(false);
 
   useEffect(() => {
     setTasks(tasks);
