@@ -21,18 +21,18 @@ import { getUserData } from './Util';
 
 const AuthScreen = () => {
   const { setLoggedInUserData } = useContext(AuthContext);
-  const [githubView, setGithubView] = useState(false);
+  const [githubView, setGithubView] = useState<boolean>(false);
   const [otpCode, setOtpCode] = useState<string>('');
-  const [otpModalVisible, setotpModalVisible] = useState<boolean>(false);
+  const [otpModalVisible, setOtpModalVisible] = useState<boolean>(false);
   const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [loading, setLoading] = useState(false);
   const [key, setKey] = useState(1);
 
   const closeModal = () => {
-    setotpModalVisible(false);
+    setOtpModalVisible(false);
     setOtpCode('');
   };
-  const openModal = () => setotpModalVisible(true);
+  const openModal = () => setOtpModalVisible(true);
   const setCode = (code: string) => setOtpCode(code);
   //TODO: add to constants
   const maxLength = 4;

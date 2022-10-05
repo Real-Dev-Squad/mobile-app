@@ -2,11 +2,11 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import ButtonStyle from './styles';
 
-interface AuthScreenButtonProps {
+type AuthScreenButtonProps = {
   text: string;
   uri?: string;
   onPress?: () => void;
-}
+};
 
 export function AuthScreenButton({
   text,

@@ -9,7 +9,7 @@ export default StyleSheet.create({
   backdrop: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: '#00000080',
   },
   centeredWrapper: {
     backgroundColor: '#fff',
@@ -75,6 +75,6 @@ export default StyleSheet.create({
   },
   submitText: {
     fontSize: 20,
-    color: 'white',
+    color: '#fff',
   },
 });

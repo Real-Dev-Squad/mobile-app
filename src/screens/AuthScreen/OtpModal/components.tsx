@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import OtpModalStyle from './styles';
 
-interface OtpBoxProps {
+type OtpBoxProps = {
   index: number;
   code: string;
   maxLength: number;
   textInputFocus: boolean;
-}
+};
 
 export function OtpBox({
   index,

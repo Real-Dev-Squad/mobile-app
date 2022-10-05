@@ -12,7 +12,7 @@ import OtpModalStyle from './styles';
 import { isValidTextInput } from '../Util';
 import Strings from '../../../i18n/en';
 
-interface OtpModalProps {
+type OtpModalProps = {
   code: string;
   maxLength: 4 | 6;
   testId: string;
@@ -20,7 +20,7 @@ interface OtpModalProps {
   visible: boolean;
   setCode: (code: string) => void;
   closeModal: () => void;
-}
+};
 
 export function OtpModal({
   testId,
