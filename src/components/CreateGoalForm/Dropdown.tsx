@@ -15,10 +15,10 @@ const local_data = [
   },
 ];
 
-export interface Props {}
+export interface Props { }
 
-const SelectCountryScreen: React.FC<Props> = () => {
-  const [duration, setDuration] = useState('1');
+const SelectCountryScreen: React.FC<Props> = _props => {
+  const [duration, setDuration] = useState<string>('1');
 
   return (
     <View>
@@ -32,25 +32,38 @@ const SelectCountryScreen: React.FC<Props> = () => {
         valueField="value"
         labelField="lable"
         placeholder="Select Duration"
+        testID="roadmapType"
         onChange={(e) => {
           setDuration(e.value);
         }}
       />
 
-      {duration === 'long' ? (
-        <View>
-          <Text style={styles.formchild}>Roadmap Type</Text>
-          <Radio />
+      {
+        duration === 'long' ? (
 
-          <Text style={styles.formchild}>Existing Roadmap</Text>
-          <Searchbar />
-        </View>
-      ) : (
-        <View>
-          <Text style={styles.formchild}>Associated Long Term Goal</Text>
-          <Searchbar />
-        </View>
-      )}
+          <View testID="longTermRoadmap">
+
+            <View>
+
+              <Text style={styles.formchild}>Roadmap Type</Text>
+              <Radio />
+
+              <Text style={styles.formchild}>Existing Roadmap</Text>
+              <Searchbar />
+            </View>
+          </View>
+        ) : (
+
+          <View testID="shortTermInput">
+
+            <View>
+
+              <Text style={styles.formchild}>Associated Long Term Goal</Text>
+              <Searchbar />
+            </View>
+          </View>
+        )
+      }
     </View>
   );
 };
