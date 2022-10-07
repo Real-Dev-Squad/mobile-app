@@ -15,17 +15,18 @@ const SearchBar = () => {
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
 
-  useEffect(() => {
-    fetch('')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setFilteredDataSource(responseJson);
-        setMasterDataSource(responseJson);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  // Call this useEffect for data from backend 
+  // useEffect(() => {
+  //   fetch('')
+  //     .then((response) => response.json())
+  //     .then((responseJson) => {
+  //       setFilteredDataSource(responseJson);
+  //       setMasterDataSource(responseJson);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
