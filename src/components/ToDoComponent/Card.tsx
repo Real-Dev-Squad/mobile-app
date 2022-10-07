@@ -120,18 +120,11 @@ const Card = ({
                 )}
               </View>
               <View style={CardStyles.flex}>
-                <TouchableOpacity disabled={disabled} onPress={markDone}>
-                  {checked ? (
-                    <Image
-                      source={Images.checkedIcon}
-                      style={[CardStyles.icon, { marginLeft: 5 }]}
-                    />
-                  ) : (
-                    <Image
-                      source={Images.uncheckedIcon}
-                      style={[CardStyles.icon, { marginLeft: 5 }]}
-                    />
-                  )}
+                <TouchableOpacity onPress={markDone} testID='doneBtn'>
+                  <Image
+                    source={checked ? Images.checkedIcon : Images.uncheckedIcon}
+                    style={[CardStyles.icon, { marginLeft: 5 }]}
+                  />
                 </TouchableOpacity>
                 <Text style={CardStyles.taskText}>{item.task}</Text>
               </View>
