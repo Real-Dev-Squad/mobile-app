@@ -26,4 +26,10 @@ export const TodoStyles = StyleSheet.create({
     color: '#492ed1',
     fontWeight: 'bold',
   },
+  taskNotFound: {
+    fontSize: 20,
+    alignSelf: 'center',
+    position: 'relative',
+    top: 10,
+  },
 });
