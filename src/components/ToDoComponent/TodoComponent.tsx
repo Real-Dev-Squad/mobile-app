@@ -3,42 +3,54 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import data from './Data';
 import { TodoStyles } from './Styles/TodoStyles';
+import Task from './taskType';
 
 const TodoComponent = () => {
-  const [tasks, setTasks] = useState(data);
-  const [position, setpostion] = useState(1);
+  const [tasks, setTasks] = useState<Task[]>(data);
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [changed, setChanged] = useState<boolean>(false);
 
-  const changeCardFunction = (id: any) => {
-    const newData = tasks.filter((item) => item.id == id);
-    tasks.shift();
-    tasks.push(newData[0]);
-    position !== tasks[tasks.length - 1].id
-      ? setpostion(tasks[position + 1].id)
-      : setpostion(tasks[0].id);
+  useEffect(() => {
+    setTasks(tasks);
+  }, [changed, tasks]);
+
+  const changeCardFunction = () => {
+    setChanged(true);
+    const item = tasks.shift() as Task;
+    tasks.push(item);
+    setChanged(false);
   };
 
   const removeCard = (id: any) => {
-    const newdata = data.filter((item) => item.id !== id);
-    setTasks(newdata);
+    const newArr = tasks.filter((task) => task.id !== id);
+    setTasks(newArr);
+    setDisabled(false);
   };
+
   return (
     <View style={TodoStyles.container}>
       <Text style={TodoStyles.title}>To Do's</Text>
       <View style={{ paddingVertical: 35 }}>
-        {tasks
-          .map((task) => {
-            return (
-              <Card
-                posStyle={task.id !== position ? 'absolute' : 'relative'}
-                key={task.id}
-                item={task}
-                changecard={changeCardFunction}
-                removeCard={removeCard}
-              />
-            );
-          })
-          .reverse()}
-        <View style={TodoStyles.shodowcard}></View>
+        {tasks.length === 0 ? (
+          <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
+        ) : (
+          tasks
+            .map((task) => {
+              return (
+                <Card
+                  posStyle={tasks.indexOf(task) !== 0 ? 'absolute' : 'relative'}
+                  key={task.id}
+                  item={task}
+                  changecard={changeCardFunction}
+                  removeCard={removeCard}
+                  disabled={disabled}
+                  setDisabled={setDisabled}
+                />
+              );
+            })
+            .reverse()
+        )}
+        <View style={TodoStyles.shodowcard} />
       </View>
     </View>
   );

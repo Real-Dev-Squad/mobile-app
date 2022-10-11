@@ -1,6 +1,7 @@
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Animated, {
+  Easing,
   runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -26,9 +27,18 @@ type props = {
   posStyle: any;
   changecard: (id: number) => void;
   removeCard: (id: number) => void;
+  disabled: boolean;
+  setDisabled: any;
 };
 
-const Card = ({ item, posStyle, changecard, removeCard }: props) => {
+const Card = ({
+  item,
+  posStyle,
+  changecard,
+  removeCard,
+  disabled,
+  setDisabled,
+}: props) => {
   let timerRef: any;
   const deleteTask = () => {
     timerRef = setTimeout(() => deleteCardFunction(), 4000);
@@ -37,23 +47,25 @@ const Card = ({ item, posStyle, changecard, removeCard }: props) => {
   useEffect(() => {
     // Clear the interval when the component unmounts
     return () => clearTimeout(timerRef);
-  }, []);
+  }, [timerRef]);
 
-  const translateY = useSharedValue(0);
-  const [checked, setChecked] = useState(false);
+  const translateY = useSharedValue<number>(0);
+  const [checked, setChecked] = useState<boolean>(false);
   let deleteCard = 'false';
 
   const panGesture = useAnimatedGestureHandler({
     onActive: (event) => {
       if (translateY.value < 150) {
+        // It ensures that we do not go beyond a certain limit
         translateY.value = event.translationY;
       }
     },
     onEnd: () => {
-      translateY.value = withTiming(0, {
-        duration: 700,
-      });
-      runOnJS(changecard)(item.id);
+      translateY.value = withTiming(0, { easing: Easing.linear });
+      if (translateY.value > 100) {
+        // item.id required but after removing this the function is not getting called
+        runOnJS(changecard)(item.id);
+      }
     },
   });
 
@@ -68,6 +80,7 @@ const Card = ({ item, posStyle, changecard, removeCard }: props) => {
   const markDone = () => {
     deleteCard = 'true';
     setChecked(true);
+    setDisabled(true);
     Toast.show({
       type: 'error',
       text1: 'Marked as done',
@@ -78,6 +91,7 @@ const Card = ({ item, posStyle, changecard, removeCard }: props) => {
         Toast.hide();
         deleteCard = 'false';
         setChecked(false);
+        setDisabled(false);
       },
     });
     deleteTask();
@@ -85,7 +99,6 @@ const Card = ({ item, posStyle, changecard, removeCard }: props) => {
 
   const deleteCardFunction = () => {
     if (deleteCard === 'true') {
-      changecard(item.id);
       removeCard(item.id);
     }
   };
