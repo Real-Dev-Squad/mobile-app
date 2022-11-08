@@ -45,3 +45,6 @@ export const updateMarkYourSelfAs_ = async (markStatus: string) => {
 
   return res.data.status;
 };
+
+export const isValidTextInput = (code: string) =>
+  Boolean(/^[\d]{1,4}$|^$/.test(code));

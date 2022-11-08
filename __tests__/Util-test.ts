@@ -1,5 +1,6 @@
 import {
   getUserData,
+  isValidTextInput,
   updateMarkYourSelfAs_,
   updateStatus,
 } from '../src/screens/AuthScreen/Util';
@@ -123,4 +124,12 @@ describe('updateMarkYourSelfAs_ util', () => {
       expect(err).toEqual('500: internal server error');
     }
   });
+});
+
+test('check is otpcode of valid format', () => {
+  expect(isValidTextInput('')).toBeTruthy();
+  expect(isValidTextInput('1234')).toBeTruthy();
+  expect(isValidTextInput('abcd')).toBeFalsy();
+  expect(isValidTextInput('AB12')).toBeFalsy();
+  expect(isValidTextInput('1%2B')).toBeFalsy();
 });

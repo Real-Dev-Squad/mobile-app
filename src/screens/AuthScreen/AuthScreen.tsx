@@ -15,15 +15,27 @@ import Images from '../../constants/images/Image';
 import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
+import { AuthScreenButton } from './Button';
+import { OtpModal } from './OtpModal';
 import { getUserData } from './Util';
 
 const AuthScreen = () => {
   const { setLoggedInUserData } = useContext(AuthContext);
-  const [githubView, setGithubView] = useState(false);
+  const [githubView, setGithubView] = useState<boolean>(false);
+  const [otpCode, setOtpCode] = useState<string>('');
+  const [otpModalVisible, setOtpModalVisible] = useState<boolean>(false);
   const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [loading, setLoading] = useState(false);
   const [key, setKey] = useState(1);
 
+  const closeModal = () => {
+    setOtpModalVisible(false);
+    setOtpCode('');
+  };
+  const openModal = () => setOtpModalVisible(true);
+  const setCode = (code: string) => setOtpCode(code);
+  //TODO: add to constants
+  const maxLength = 4;
   const handleSignIn = () => {
     setGithubView(true);
   };
@@ -96,6 +108,7 @@ const AuthScreen = () => {
       </SafeAreaView>
     );
   }
+  //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
@@ -109,17 +122,34 @@ const AuthScreen = () => {
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
-        <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
-          <View style={AuthViewStyle.githubLogo}>
-            <Image source={require('../../../assets/github_logo.png')} />
-          </View>
-          <View style={AuthViewStyle.signInTxtView}>
-            <Text style={AuthViewStyle.signInText}>
-              {Strings.SIGN_IN_BUTTON_TEXT}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <View style={AuthViewStyle.btnContainer}>
+          <TouchableOpacity
+            onPress={handleSignIn}
+            style={AuthViewStyle.btnView}
+          >
+            <View style={AuthViewStyle.githubLogo}>
+              <Image source={require('../../../assets/github_logo.png')} />
+            </View>
+            <View style={AuthViewStyle.signInTxtView}>
+              <Text style={AuthViewStyle.signInText}>
+                {Strings.SIGN_IN_BUTTON_TEXT}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <AuthScreenButton text={Strings.SIGN_IN_WITH_WEB} onPress={openModal} />
       </View>
+      {otpModalVisible && (
+        <OtpModal
+          title={Strings.ENTER_4_DIGIT_OTP}
+          testId="otpModal"
+          visible={otpModalVisible}
+          code={otpCode}
+          maxLength={maxLength}
+          setCode={setCode}
+          closeModal={closeModal}
+        />
+      )}
     </ScrollView>
   );
 };
