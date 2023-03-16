@@ -25,7 +25,6 @@
     "react-native": "0.66.4",
     "react-native-app-auth": "^6.4.3",
     "react-native-datepicker": "^1.7.2",
-    "react-native-dotenv": "^3.4.8",
     "react-native-element-dropdown": "^2.0.0",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "^2.2.0",
@@ -33,7 +32,7 @@
     "react-native-keychain": "^8.1.1",
     "react-native-paper": "^4.12.3",
     "react-native-radio-buttons-group": "^2.2.11",
-    "react-native-reanimated": "^3.0.2",
+    "react-native-reanimated": "^2.2.9",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2",
     "react-native-toast-message": "^2.1.5"
@@ -55,6 +54,7 @@
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.66.2",
     "prettier": "2.6.2",
+    "react-native-dotenv": "^3.4.8",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.4.4"
   },
