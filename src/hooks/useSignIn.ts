@@ -5,7 +5,7 @@ import login from '../utils/api/login';
 import { setSecureValue } from '../utils/setSecureValue';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-async function loginWithGithub(config: Config) {
+async function authorizeUser(config: Config) {
   try {
     const result = await authorize(config);
     return result;
@@ -31,7 +31,7 @@ export default function useSignIn() {
       skipCodeExchange: true,
       usePKCE: true,
     };
-    const result = await loginWithGithub(config);
+    const result = await authorizeUser(config);
     const loginResponse = await login(result?.authorizationCode || '');
     await setSecureValue(
       'ACCESS_TOKEN',
