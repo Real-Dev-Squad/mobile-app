@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import DatePicker from 'react-native-datepicker';
@@ -11,7 +12,7 @@ const DatePickerComponent = () => {
         <DatePicker
           style={styles.datePickerStyle}
           date={date}
-          mode="date"
+          mode="date" 
           placeholder="DD-MM-YYYY"
           format="DD-MM-YYYY"
           minDate="01-01-2020"
@@ -27,8 +28,8 @@ const DatePickerComponent = () => {
             },
             dateInput: {
               marginLeft: 36,
-              height: 30,
-              border: 'none',
+              height:30,
+              border:"none",
             },
           }}
           onDateChange={(date) => {
@@ -50,8 +51,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   datePickerStyle: {
-    height: 40,
-    border: '1px solid black',
+    height:40,
+    border:'1px solid black',
     width: 205,
     marginTop: 2,
   },

@@ -120,7 +120,7 @@ const Card = ({
                 )}
               </View>
               <View style={CardStyles.flex}>
-                <TouchableOpacity onPress={markDone} testID="doneBtn">
+                <TouchableOpacity onPress={markDone} testID='doneBtn'>
                   <Image
                     source={checked ? Images.checkedIcon : Images.uncheckedIcon}
                     style={[CardStyles.icon, { marginLeft: 5 }]}
