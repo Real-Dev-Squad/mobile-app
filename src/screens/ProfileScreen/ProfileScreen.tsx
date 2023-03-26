@@ -9,11 +9,14 @@ import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
+import { removeSecureValue } from '../../utils/keychain';
+import { removeData } from '../../utils/dataStore';
 
 const ProfileScreen = () => {
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-  const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+  const { loggedInUserData, setLoggedInUserData, setIsLoading } =
+    useContext(AuthContext);
 
   const openModal = useCallback(() => {
     setModalVisible(true);
@@ -41,7 +44,11 @@ const ProfileScreen = () => {
       <TouchableOpacity
         style={{ backgroundColor: '#FFFFFF', padding: '5%' }}
         onPress={() => {
+          setIsLoading();
+          removeData('userData');
+          removeSecureValue('ACCESS_TOKEN');
           setLoggedInUserData(null);
+          setIsLoading();
         }}
       >
         <Text style={{ color: '#000000' }}>{Strings.LOGOUT}</Text>

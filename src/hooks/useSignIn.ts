@@ -1,9 +1,10 @@
 import { GITHUB_OAUTH_CLIENT_ID } from '@env';
-import { useCallback, useState } from 'react';
+import { useCallback, useContext } from 'react';
 import { authorize } from 'react-native-app-auth';
 import login from '../utils/api/login';
-import { setSecureValue } from '../utils/setSecureValue';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setSecureValue } from '../utils/keychain';
+import { AuthContext } from '../context/AuthContext';
+import { storeData } from '../utils/dataStore';
 
 async function authorizeUser(config: Config) {
   try {
@@ -15,13 +16,13 @@ async function authorizeUser(config: Config) {
 }
 
 export default function useSignIn() {
-  const [isLoading, setIsLoading] = useState(false);
+  const { setIsLoading, setLoggedInUserData } = useContext(AuthContext);
 
   const handleSignIn = useCallback(async () => {
-    setIsLoading(true);
+    setIsLoading();
     const config = {
       clientId: GITHUB_OAUTH_CLIENT_ID,
-      redirectUrl: 'com.mobileclient.auth://oauth',
+      redirectUrl: 'com.rdsapp.auth://oauth',
       scopes: ['read:user'],
       serviceConfiguration: {
         authorizationEndpoint: 'https://github.com/login/oauth/authorize',
@@ -37,12 +38,13 @@ export default function useSignIn() {
       'ACCESS_TOKEN',
       loginResponse?.data?.data?.accessToken || '',
     );
-    await AsyncStorage.setItem(
+    await storeData(
       'userData',
       JSON.stringify(loginResponse?.data?.data?.user || ''),
     );
-    setIsLoading(false);
-  }, []);
+    setLoggedInUserData(loginResponse?.data?.data?.user || null);
+    setIsLoading();
+  }, [setIsLoading, setLoggedInUserData]);
 
-  return { isLoading, handleSignIn };
+  return { handleSignIn };
 }

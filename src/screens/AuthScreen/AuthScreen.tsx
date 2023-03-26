@@ -1,21 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
-// import { urls } from '../../constants/appConstant/url';
-import { AuthContext } from '../../context/AuthContext';
-// import Images from '../../constants/images/Image';
-// import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { OtpModal } from './OtpModal';
-// import { getUserData } from './Util';
 import useSignIn from '../../hooks/useSignIn';
 
 const AuthScreen = () => {
-  const { setLoggedInUserData } = useContext(AuthContext);
   const [otpCode, setOtpCode] = useState<string>('');
   const [otpModalVisible, setOtpModalVisible] = useState<boolean>(false);
-  const { isLoading, handleSignIn } = useSignIn();
+  const { handleSignIn } = useSignIn();
 
   const closeModal = () => {
     setOtpModalVisible(false);

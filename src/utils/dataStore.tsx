@@ -15,3 +15,9 @@ export const getData = async (item: string) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const removeData = async (item: string) => {
+  return AsyncStorage.removeItem(item)
+    .then(() => {})
+    .catch((err) => console.log(err));
+};
