@@ -13,29 +13,30 @@
     "precommit-check": "yarn run format-fix && yarn run lint && yarn run test"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.3",
-    "@react-native-masked-view/masked-view": "^0.2.8",
+    "@react-native-async-storage/async-storage": "^1.15.16",
+    "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/drawer": "^6.1.8",
-    "@react-navigation/native": "^6.0.6",
-    "@react-navigation/stack": "^6.0.11",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/stack": "^6.2.0",
     "axios": "^0.26.0",
     "eslint-plugin-prettier": "^4.1.0",
     "react": "17.0.2",
-    "react-native": "0.66.4",
+    "react-native": "0.67.0",
     "react-native-app-auth": "^6.4.2",
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^2.0.0",
     "react-native-floating-action": "^1.22.0",
-    "react-native-gesture-handler": "^2.2.0",
+    "react-native-gesture-handler": "^1.10.3",
     "react-native-image-picker": "^4.7.1",
     "react-native-paper": "^4.12.3",
     "react-native-radio-buttons-group": "^2.2.11",
-    "react-native-reanimated": "^2.2.9",
-    "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.10.2",
+    "react-native-reanimated": "^2.2.4",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^3.9.0",
     "react-native-toast-message": "^2.1.5",
-    "react-native-webview": "^11.17.2"
+    "react-native-vision-camera": "^2.15.4",
+    "react-native-webview": "^11.13.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -79,7 +80,7 @@
     ]
   },
   "volta": {
-    "node": "16.15.1",
+    "node": "16.20.0",
     "yarn": "1.22.19"
   }
 }
