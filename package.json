@@ -31,7 +31,7 @@
     "react-native-image-picker": "^4.7.1",
     "react-native-paper": "^4.12.3",
     "react-native-radio-buttons-group": "^2.2.11",
-    "react-native-reanimated": "^2.2.4",
+    "react-native-reanimated": "^2.2.9",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2",
     "react-native-toast-message": "^2.1.5",
