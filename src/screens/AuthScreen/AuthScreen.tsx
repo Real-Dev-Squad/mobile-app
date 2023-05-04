@@ -32,12 +32,28 @@ const AuthScreen = () => {
     setOtpModalVisible(false);
     setOtpCode('');
   };
+
   const openModal = () => setOtpModalVisible(true);
   const setCode = (code: string) => setOtpCode(code);
   //TODO: add to constants
   const maxLength = 4;
   const handleSignIn = () => {
     setGithubView(true);
+  };
+
+  const updateUserData = async (url: string) => {
+    try {
+      const res = await getUserData(url);
+      await storeData('userData', JSON.stringify(res));
+      setLoggedInUserData({
+        id: res?.id,
+        name: res?.name,
+        profileUrl: res?.profileUrl,
+        status: res?.status,
+      });
+    } catch (err) {
+      setLoggedInUserData(null);
+    }
   };
 
   if (githubView) {
@@ -69,29 +85,17 @@ const AuthScreen = () => {
           <WebView
             key={key}
             onNavigationStateChange={({ url }) => {
-              (async function () {
-                if (url === urls.REDIRECT_URL) {
-                  setAdressbarURL(url);
-                  try {
-                    const res = await getUserData(url);
-                    await storeData('userData', JSON.stringify(res));
-
-                    setLoggedInUserData({
-                      id: res?.id,
-                      name: res?.name,
-                      profileUrl: res?.profileUrl,
-                      status: res?.status,
-                    });
-                  } catch (err) {
-                    setLoggedInUserData(null);
-                  }
-                } else if (url.indexOf('?') > 0) {
-                  let uri = url.substring(0, url.indexOf('?'));
-                  setAdressbarURL(uri);
-                } else {
-                  setAdressbarURL(url);
-                }
-              })();
+              if (url === urls.REDIRECT_URL) {
+                setAdressbarURL(url);
+                updateUserData(url);
+              } else if (url.indexOf('?') > 0) {
+                let uri = url.substring(0, url.indexOf('?'));
+                setAdressbarURL(uri);
+                updateUserData(uri);
+              } else {
+                setAdressbarURL(url);
+                updateUserData(url);
+              }
             }}
             style={AuthViewStyle.webViewStyles}
             source={{
