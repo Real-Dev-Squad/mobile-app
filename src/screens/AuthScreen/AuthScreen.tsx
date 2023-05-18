@@ -7,6 +7,7 @@ import { OtpModal } from './OtpModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const AuthScreen = () => {
+  // TODO: will revamp github signIn feature
   // const { setLoggedInUserData } = useContext(AuthContext);
   // const [githubView, setGithubView] = useState<boolean>(false);
   const [otpCode, setOtpCode] = useState<string>('');
