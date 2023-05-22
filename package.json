@@ -22,7 +22,7 @@
     "axios": "^0.26.0",
     "eslint-plugin-prettier": "^4.1.0",
     "react": "17.0.2",
-    "react-native": "0.66.4",
+    "react-native": "0.71.8",
     "react-native-app-auth": "^6.4.2",
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^2.0.0",
