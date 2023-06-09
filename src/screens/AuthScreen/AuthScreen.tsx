@@ -38,6 +38,7 @@ const AuthScreen = () => {
   //TODO: add to constants
   const maxLength = 4;
   const handleSignIn = () => {
+    console.log('hELLO');
     setGithubView(true);
   };
 

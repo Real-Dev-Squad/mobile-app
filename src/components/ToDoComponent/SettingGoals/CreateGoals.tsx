@@ -6,15 +6,14 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
 import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
-import Calendar from './SettingGoalsComponents/Calendar';
+import DeadLineDatePicker from './SettingGoalsComponents/Calendar';
 
 const MainScreen = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View
         style={{
           borderWidth: 3,
@@ -52,7 +51,7 @@ const MainScreen = ({navigation}) => {
         <Text style={styles.titles}>Duration</Text>
         <DurationDropDown />
         <Text style={styles.titles}>DeadLine</Text>
-        <Calendar />
+        <DeadLineDatePicker />
         <TouchableOpacity
           style={styles.createButtonStyle}
           onPress={() => navigation.push('Form screen')}
@@ -60,7 +59,7 @@ const MainScreen = ({navigation}) => {
           <Text style={styles.createButtonText}>Create</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 

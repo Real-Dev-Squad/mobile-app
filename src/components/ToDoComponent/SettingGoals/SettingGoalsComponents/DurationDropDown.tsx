@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+} from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 const timeperiod = [
@@ -14,20 +20,7 @@ const DurationDropDown = () => {
   return (
     <View>
       <TouchableOpacity
-        style={{
-          width: '100%',
-          height: 50,
-          elevation: 5,
-          borderRadius: 10,
-          backgroundColor: 'white',
-          alignSelf: 'center',
-          marginTop: 10,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingLeft: 15,
-          paddingRight: 15,
-        }}
+        style={styles.DropDownButton}
         onPress={() => {
           setClicked(!clicked);
         }}
@@ -44,26 +37,12 @@ const DurationDropDown = () => {
       {clicked ? (
         <SafeAreaView>
           <FlatList
-            style={{
-              elevation: 5,
-              marginTop: 20,
-              height: 100,
-              alignSelf: 'center',
-              width: '90%',
-              backgroundColor: '#fff',
-              borderRadius: 10,
-            }}
+            style={styles.DropDownMenu}
             data={data}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
-                  style={{
-                    width: '85%',
-                    alignSelf: 'center',
-                    height: 50,
-                    justifyContent: 'center',
-                    borderBottomWidth: 0.5,
-                  }}
+                  style={styles.DropDownElement}
                   onPress={() => {
                     setSelectedTimePeriod(item.names);
                     setClicked(!clicked);
@@ -81,5 +60,38 @@ const DurationDropDown = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  DropDownButton: {
+    width: '100%',
+    height: 50,
+    elevation: 5,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  DropDownMenu: {
+    elevation: 5,
+    marginTop: 20,
+    height: 100,
+    alignSelf: 'center',
+    width: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+  },
+  DropDownElement: {
+    width: '85%',
+    alignSelf: 'center',
+    height: 50,
+    justifyContent: 'center',
+    borderBottomWidth: 0.5,
+  },
+});
 
 export default DurationDropDown;
