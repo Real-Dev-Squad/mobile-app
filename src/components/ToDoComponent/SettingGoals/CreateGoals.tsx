@@ -11,46 +11,26 @@ import {
 import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
 import DeadLineDatePicker from './SettingGoalsComponents/Calendar';
 
-const MainScreen = ({navigation}) => {
+const MainScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
-      <View
-        style={{
-          borderWidth: 3,
-          paddingTop: 20,
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingBottom: 40,
-          height: 650,
-          borderRadius: 20,
-          overflow: 'hidden',
-        }}
-      >
-        <Text
-          style={{
-            color: '#2827CC',
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}
-        >
-          Create New Goal
-        </Text>
-        <Text style={styles.titles}>Title</Text>
+      <View style={styles.formView}>
+        <Text style={styles.formHeading}>Create New Goal</Text>
+        <Text style={styles.titleText}>Title</Text>
         <TextInput
           style={styles.inputStyle}
           maxLength={50}
           placeholder="Enter title max of 50 characters."
         />
-        <Text style={styles.titles}>Description</Text>
+        <Text style={styles.titleText}>Description</Text>
         <TextInput
           style={styles.inputStyle}
           maxLength={200}
           placeholder="Enter max 200 characters."
         />
-        <Text style={styles.titles}>Duration</Text>
+        <Text style={styles.titleText}>Duration</Text>
         <DurationDropDown />
-        <Text style={styles.titles}>DeadLine</Text>
+        <Text style={styles.titleText}>DeadLine</Text>
         <DeadLineDatePicker />
         <TouchableOpacity
           style={styles.createButtonStyle}
@@ -73,13 +53,30 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
   },
+  formView: {
+    borderWidth: 3,
+    paddingTop: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 40,
+    height: 650,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  formHeading: {
+    color: '#2827CC',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   inputStyle: {
     padding: 10,
-    backgroundColor: 'silver',
+    backgroundColor: '#F9F6EE',
     borderRadius: 5,
     fontSize: 12,
+    borderWidth: 2,
   },
-  titles: {
+  titleText: {
     fontSize: 15,
     marginBottom: 10,
     marginTop: 20,

@@ -23,8 +23,16 @@ const GoalScreen = ({ navigation }) => {
 function GoalsScreenStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="GoalsScreen" component={GoalScreen} />
-      <Stack.Screen name="CreatingGoals" component={CreatingGoals} />
+      <Stack.Screen
+        name="GoalsScreen"
+        component={GoalScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreatingGoals"
+        component={CreatingGoals}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
