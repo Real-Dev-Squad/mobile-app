@@ -29,13 +29,16 @@ const TodoComponent = ({ navigationProp }) => {
 
   return (
     <View style={TodoStyles.container}>
+      <View style={TodoStyles.flex}>
       <Text style={TodoStyles.title}>To Do's</Text>
       <TouchableOpacity
         style={styles.CreateGoalButton}
         onPress={() => navigationProp.navigate('CreatingGoals')}
       >
-        <Text style={{ color: 'black' }}> Create new goal</Text>
+        <Text style={{ color: 'black',elevation:10 }}> Add</Text>
       </TouchableOpacity>
+      </View>
+   
       <View style={{ paddingVertical: 35 }}>
         {tasks.length === 0 ? (
           <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
@@ -64,13 +67,13 @@ const TodoComponent = ({ navigationProp }) => {
 
 const styles = StyleSheet.create({
   CreateGoalButton: {
-    width: '100%',
-    height: 50,
-    elevation: 5,
-    borderRadius: 10,
+    // width: '100%',
+    // height: 50,
+    elevation: 5, 
+    borderRadius: 5,
     backgroundColor: 'white',
     alignSelf: 'center',
-    marginTop: 10,
+    // marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -11,7 +11,7 @@ import {
 import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
 import DeadLineDatePicker from './SettingGoalsComponents/Calendar';
 
-const MainScreen = ({navigation}) => {
+const MainScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <View
@@ -34,7 +34,7 @@ const MainScreen = ({navigation}) => {
             textAlign: 'center',
           }}
         >
-          Create New Goal
+          Add New Goal
         </Text>
         <Text style={styles.titles}>Title</Text>
         <TextInput
@@ -48,8 +48,15 @@ const MainScreen = ({navigation}) => {
           maxLength={200}
           placeholder="Enter max 200 characters."
         />
-        <Text style={styles.titles}>Duration</Text>
-        <DurationDropDown />
+        {/* <Text style={styles.titles}>Duration</Text>
+        <DurationDropDown /> */}
+
+        <Text style={styles.titles}>Assigned To</Text>
+        {/* <DurationDropDown /> */}
+        <TouchableOpacity onPress={() => navigation.navigate("Member's page")}>
+          <Text style={styles.inputStyle}>Enter member's name</Text>
+        </TouchableOpacity>
+
         <Text style={styles.titles}>DeadLine</Text>
         <DeadLineDatePicker />
         <TouchableOpacity
@@ -75,12 +82,14 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     padding: 10,
-    backgroundColor: 'silver',
+    // backgroundColor: 'silver',
     borderRadius: 5,
+    elevation: 2,
     fontSize: 12,
   },
   titles: {
-    fontSize: 15,
+    fontSize: 12,
+    elevation: 2,
     marginBottom: 10,
     marginTop: 20,
     color: 'black',

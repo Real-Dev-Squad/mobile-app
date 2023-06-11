@@ -8,23 +8,31 @@ import LongGoalsComponent from '../../components/LongGoalsComponent';
 import TodoComponent from '../../components/ToDoComponent/TodoComponent';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CreatingGoals from '../../components/ToDoComponent/SettingGoals/CreateGoals';
+import MembersPage from '../MemberScreen/MembersPage';
 
 const Stack = createNativeStackNavigator();
 const GoalScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <TodoComponent navigationProp={navigation} />
+      {/* TODO: moving to v2
       <ShortGoalsComponent />
-      <LongGoalsComponent />
+      <LongGoalsComponent /> */}
     </ScrollView>
   );
 };
 
 function GoalsScreenStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name="GoalsScreen" component={GoalScreen} />
       <Stack.Screen name="CreatingGoals" component={CreatingGoals} />
+      <Stack.Screen name="Member's page" component={MembersPage} />
+
     </Stack.Navigator>
   );
 }
