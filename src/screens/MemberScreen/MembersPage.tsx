@@ -5,7 +5,7 @@ import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
 
 const MembersPage = () => {
   const [membersData, setMembersData] = useState([]);
-  const data = membersData
+  const membersDataCopy = membersData
   const [selectedMember, setSelectedMember] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
@@ -22,7 +22,7 @@ const MembersPage = () => {
   return (
     <View>
       <Text>MembersPage</Text>
-      <SearchBar setSearchValue = {setSearchValue} searchValue={searchValue} membersData={data} setMembersData={setMembersData} />
+      <SearchBar setSearchValue = {setSearchValue} searchValue={searchValue} membersData={membersDataCopy} setMembersData={setMembersData} />
       <FlatList
         data={membersData}
         renderItem={({ item }) => <RenderMemberItem item = {item} setSelectedMember={setSelectedMember} />}
