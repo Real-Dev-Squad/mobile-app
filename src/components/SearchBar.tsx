@@ -1,14 +1,23 @@
 import { View, StyleSheet, TextInput } from 'react-native';
 import React from 'react';
 
+type SearchBarProps = {
+    setSearchValue: (text:string) => void;
+    searchValue: string;
+    membersData:MembersDataProps [];
+    setMembersData: ([]) => void;
+}
 
-const SearchBar = ({setSearchValue,searchValue,membersData,setMembersData}) => {
+type MembersDataProps = {
+    github_display_name: string;
+}
 
- const searchFunction = (text) => {
+
+const SearchBar = ({setSearchValue,searchValue,membersData,setMembersData}:SearchBarProps) => {
+
+ const searchFunction = (text:string) => {
     const updatedData = membersData?.filter((item) => {
-        console.log('inside search func',item.github_display_name)
-      const item_data = `${item?.github_display_name?.toUpperCase()}`;
-      console.log('item_data',item_data)
+      const item_data = `${item.github_display_name.toUpperCase()}`;
       const text_data = text?.toUpperCase();
       return item_data.indexOf(text_data) > -1;
     });
