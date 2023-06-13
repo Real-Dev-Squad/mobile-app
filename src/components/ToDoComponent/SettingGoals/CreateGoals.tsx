@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
-import DeadLineDatePicker from './SettingGoalsComponents/Calendar';
+import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 
 const MainScreen = ({ navigation }) => {
   return (
