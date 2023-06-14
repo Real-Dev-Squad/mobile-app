@@ -12,6 +12,8 @@ import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
 import DeadLineDatePicker from './SettingGoalsComponents/Calendar';
 
 const MainScreen = ({ navigation }) => {
+  const [selectedMember, setSelectedMember] = React.useState('');
+
   return (
     <ScrollView style={styles.container}>
       <View
@@ -53,10 +55,18 @@ const MainScreen = ({ navigation }) => {
 
         <Text style={styles.titles}>Assigned To</Text>
         {/* <DurationDropDown /> */}
-        <TouchableOpacity onPress={() => navigation.navigate("Member's page")}>
-          <Text style={styles.inputStyle}>Enter member's name</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Member's page", {
+              setSelectedMember,
+              selectedMember,
+            })
+          }
+        >
+          <Text style={styles.inputStyle}>
+            {selectedMember ? selectedMember : "Enter member's name"}
+          </Text>
         </TouchableOpacity>
-
         <Text style={styles.titles}>DeadLine</Text>
         <DeadLineDatePicker />
         <TouchableOpacity
