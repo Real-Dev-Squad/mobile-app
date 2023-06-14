@@ -60,7 +60,7 @@ const TodoComponent = ({ navigationProp }) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   CreateGoalButton: {
