@@ -1,37 +1,67 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList,ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
-import { useNavigation,RouteProp, useRoute } from '@react-navigation/native';
-
+import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 
 type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
 
 const MembersPage = () => {
-  const route = useRoute<MembersPageRouteProp>()
+  const route = useRoute<MembersPageRouteProp>();
   const [membersData, setMembersData] = useState([]);
-  const membersDataCopy = membersData
-  const {selectedMember,setSelectedMember} = route.params;
-  const [searchValue, setSearchValue] = useState('')
+  const membersDataCopy = membersData;
+  const { selectedMember, setSelectedMember } = route.params;
+  const [searchValue, setSearchValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     callMembersApi();
   }, [selectedMember]);
 
   const callMembersApi = async () => {
-    const members = await fetch('https://api.realdevsquad.com/members');
-    const membersJsonData = await members.json();
-    setMembersData(membersJsonData.members);
+    try {
+      // Set loading state
+      setLoading(true);
+
+      const members = await fetch('https://api.realdevsquad.com/members');
+      const membersJsonData = await members.json();
+
+      // Set members data and clear loading and error states
+      setMembersData(membersJsonData.members);
+      setLoading(false);
+      setError(null);
+    } catch (error) {
+      // Set error state and clear loading state
+      setError('Error fetching members data.');
+      setLoading(false);
+    }
+  };
+
+  const renderLoader = () => {
+    return loading ? (
+      <View style={styles.loaderView}>
+        <ActivityIndicator size="large" />
+      </View>
+    ) : null;
   };
 
   return (
     <View>
-      <Text>{selectedMember}</Text>
-      <SearchBar setSearchValue = {setSearchValue} searchValue={searchValue} membersData={membersDataCopy} setMembersData={setMembersData} />
+      <Text style={styles.title}>Real Dev Squad Member's</Text>
+      <SearchBar
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
+        membersData={membersDataCopy}
+        setMembersData={setMembersData}
+      />
       <FlatList
         data={membersData}
-        renderItem={({ item }) => <RenderMemberItem item = {item} setSelectedMember={setSelectedMember} />}
+        renderItem={({ item }) => (
+          <RenderMemberItem item={item} setSelectedMember={setSelectedMember} />
+        )}
         keyExtractor={(item) => item.id}
+        ListFooterComponent={renderLoader}
       />
     </View>
   );
@@ -39,4 +69,13 @@ const MembersPage = () => {
 
 export default MembersPage;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  title:{  fontSize: 30,
+    fontWeight: 'bold',
+    color: 'blue',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 2,
+  },
+  loaderView:{ alignItems: 'center', paddingVertical: 20 }
+});
