@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 const GoalScreen = ({ navigation }) => {
   return (
     <ScrollView>
-      <TodoComponent navigationProp={navigation} />
+      <TodoComponent data-testid="todo-component" navigationProp={navigation} />
       {/* TODO: moving to v2
       <ShortGoalsComponent />
       <LongGoalsComponent /> */}
