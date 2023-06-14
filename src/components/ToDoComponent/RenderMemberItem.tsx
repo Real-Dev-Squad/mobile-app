@@ -2,14 +2,19 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-const RenderMemberItem = ({ item, setSelectedMember }) => {
+type RenderMemberItemProps = {
+ item:githubDisplayNameType;
+ setSelectedMember:()=>void;
+}
+type githubDisplayNameType ={
+  github_display_name?:string;
+}
+const RenderMemberItem = ({ item, setSelectedMember }:RenderMemberItemProps) => {
   const navigation = useNavigation();
   const { github_display_name } = item;
 
-  const handleSelectMember = (name: any) => {
-    console.log('name in handleSelectMember', name);
+  const handleSelectMember = (name: string) => {
     setSelectedMember(name);
-
     navigation.navigate('CreatingGoals');
   };
 

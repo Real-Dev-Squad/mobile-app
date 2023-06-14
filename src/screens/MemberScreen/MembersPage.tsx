@@ -2,9 +2,13 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,RouteProp, useRoute } from '@react-navigation/native';
 
-const MembersPage = ({route}) => {
+
+type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
+
+const MembersPage = () => {
+  const route = useRoute<MembersPageRouteProp>()
   const [membersData, setMembersData] = useState([]);
   const membersDataCopy = membersData
   const {selectedMember,setSelectedMember} = route.params;
