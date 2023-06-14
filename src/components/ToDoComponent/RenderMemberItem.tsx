@@ -20,8 +20,8 @@ const RenderMemberItem = ({ item, setSelectedMember }:RenderMemberItemProps) => 
 
   return (
     <TouchableOpacity onPress={() => handleSelectMember(github_display_name)}>
-      <View style={{ marginTop: 20, elevation: 5 }}>
-        <Text>{github_display_name}</Text>
+      <View style={styles.itemContainer}>
+        <Text style={styles.itemText}>{github_display_name}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -29,4 +29,18 @@ const RenderMemberItem = ({ item, setSelectedMember }:RenderMemberItemProps) => 
 
 export default RenderMemberItem;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  itemContainer: {
+    backgroundColor: '#FFFFFF',
+    padding: 12,
+    marginTop:10,
+    marginBottom: 8,
+    borderRadius: 8,
+  },
+  itemText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333333',
+    padding:4
+  },
+});

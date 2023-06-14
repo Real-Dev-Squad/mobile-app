@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, FlatList,ActivityIndicator } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
@@ -47,7 +53,7 @@ const MembersPage = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Real Dev Squad Member's</Text>
       <SearchBar
         setSearchValue={setSearchValue}
@@ -55,14 +61,17 @@ const MembersPage = () => {
         membersData={membersDataCopy}
         setMembersData={setMembersData}
       />
-      <FlatList
-        data={membersData}
-        renderItem={({ item }) => (
-          <RenderMemberItem item={item} setSelectedMember={setSelectedMember} />
-        )}
-        keyExtractor={(item) => item.id}
-        ListFooterComponent={renderLoader}
-      />
+        <FlatList
+          data={membersData}
+          renderItem={({ item }) => (
+            <RenderMemberItem
+              item={item}
+              setSelectedMember={setSelectedMember}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          ListFooterComponent={renderLoader}
+        />
     </View>
   );
 };
@@ -70,12 +79,16 @@ const MembersPage = () => {
 export default MembersPage;
 
 const styles = StyleSheet.create({
-  title:{  fontSize: 30,
+  container: { flex: 1, padding: 4, backgroundColor: '#F5F5F5' },
+  title: {
+    fontSize: 30,
     fontWeight: 'bold',
     color: 'blue',
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 2,
+    textAlign:'center',
+    margin:2
   },
-  loaderView:{ alignItems: 'center', paddingVertical: 20 }
+  loaderView: { alignItems: 'center', paddingVertical: 20 },
 });

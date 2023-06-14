@@ -42,6 +42,7 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
   container: {
+    marginTop:40,
     position: 'absolute',
     top: 30,
     width: 350,
