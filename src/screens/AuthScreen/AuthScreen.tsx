@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { OtpModal } from './OtpModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AuthContext } from '../../context/AuthContext';
+import { getUserData } from './Util';
+import { storeData } from '../../utils/dataStore';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityIndicator } from 'react-native';
+import Images from '../../constants/images/Image';
+import WebView from 'react-native-webview';
+import { urls } from '../../constants/appConstant/url';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
-  // const { setLoggedInUserData } = useContext(AuthContext);
-  // const [githubView, setGithubView] = useState<boolean>(false);
+  const { setLoggedInUserData } = useContext(AuthContext);
+  const [githubView, setGithubView] = useState<boolean>(false);
   const [otpCode, setOtpCode] = useState<string>('');
   const [otpModalVisible, setOtpModalVisible] = useState<boolean>(false);
-  // const [addressbarURL, setAdressbarURL] = useState<String>('');
-  // const [loading, setLoading] = useState(false);
-  // const [key, setKey] = useState(1);
+  const [addressbarURL, setAdressbarURL] = useState<String>('');
+  const [loading, setLoading] = useState(false);
+  const [key, setKey] = useState(1);
 
   const closeModal = () => {
     setOtpModalVisible(false);
