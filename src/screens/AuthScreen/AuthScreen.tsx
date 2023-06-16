@@ -20,6 +20,7 @@ const AuthScreen = () => {
     setOtpModalVisible(false);
     setOtpCode('');
   };
+
   const openModal = () => setOtpModalVisible(true);
   const setCode = (code: string) => setOtpCode(code);
   //TODO: add to constants
@@ -34,6 +35,77 @@ const AuthScreen = () => {
     });
   };
 
+  const updateUserData = async (url: string) => {
+    try {
+      const res = await getUserData(url);
+      await storeData('userData', JSON.stringify(res));
+      setLoggedInUserData({
+        id: res?.id,
+        name: res?.name,
+        profileUrl: res?.profileUrl,
+        status: res?.status,
+      });
+    } catch (err) {
+      setLoggedInUserData(null);
+    }
+  };
+
+  if (githubView) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={AuthViewStyle.container}>
+          <View style={AuthViewStyle.addressBarStyle}>
+            {loading ? (
+              <ActivityIndicator
+                style={{ marginLeft: 5 }}
+                size={25}
+                color="#fff"
+              />
+            ) : (
+              <TouchableOpacity onPress={() => setGithubView(false)}>
+                <Text style={AuthViewStyle.addressBarCancel}>Cancel</Text>
+              </TouchableOpacity>
+            )}
+            <Text style={AuthViewStyle.addressBarLink}>{addressbarURL}</Text>
+            {loading ? null : (
+              <TouchableOpacity onPress={() => setKey(key + 1)}>
+                <Image
+                  source={Images.refreshIcon}
+                  style={AuthViewStyle.addressBarIcon}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+          <WebView
+            key={key}
+            onNavigationStateChange={({ url }) => {
+              if (url === urls.REDIRECT_URL) {
+                setAdressbarURL(url);
+                updateUserData(url);
+              } else if (url.indexOf('?') > 0) {
+                let uri = url.substring(0, url.indexOf('?'));
+                setAdressbarURL(uri);
+                updateUserData(uri);
+              } else {
+                setAdressbarURL(url);
+                updateUserData(url);
+              }
+            }}
+            style={AuthViewStyle.webViewStyles}
+            source={{
+              uri: urls.GITHUB_AUTH,
+            }}
+            onLoadStart={() => {
+              setLoading(true);
+            }}
+            onLoadEnd={() => {
+              setLoading(false);
+            }}
+          />
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
   //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
