@@ -23,7 +23,7 @@ This Project serves the RealdevSquad cross-platform-app. This project is built i
 ## Second Phase
 
 - QR code Scanner Authentication ✅
-- Three Screens - Home , Task and Profile ✅
+- Three Screens - Home , Goals and Profile ✅
 - Home screen Features ✅
 - Goals site Tab
 - Goals site feature will have the TODO app where you can assign the task to the member of the RDS.
