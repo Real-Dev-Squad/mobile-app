@@ -20,6 +20,14 @@ This Project serves the RealdevSquad cross-platform-app. This project is built i
 - Profile Screen in which we can change our profile through our phone’s gallery ✅
 - API integration in Profile Screen
 
+## Second Phase
+
+- QR code Scanner Authentication ✅
+- Three Screens - Home , Task and Profile ✅
+- Home screen Features ✅
+- Goals site Tab
+- Goals site feature will have the TODO app where you can assign the task to the member of the RDS.
+
 Feel free to download our RDS app by clicking on ➡️ [RDS App](https://drive.google.com/file/d/1xWEl6qXmDFY7MhogKbW-UKNrMZVhELLo/view?usp=sharing)
 
 Note : Please delete the previous RDS app build if you have.
@@ -82,6 +90,3 @@ Git commands to commit your code:
 - `yarn react-native start` - to start Metro, the JavaScript bundler that ships with React Native.
 - Let Metro Bundler run in its own terminal. Open a new terminal inside your React Native project folder. Run the following:
 - `yarn react-native run-android` - To start the emulator.
-
-
-
