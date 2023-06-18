@@ -15,10 +15,10 @@ This Project serves the RealdevSquad cross-platform-app. This project is built i
 - Github Authentication ✅
 - Three Screens - Home , Task and Profile ✅
 - Home screen Features ✅
-- Feature with switching from I am idle to doing task
-- Feature with switching from out of office from back again
+- Feature with switching from I am idle to doing task ✅
+- Feature with switching from out of office from back again ✅
 - Profile Screen in which we can change our profile through our phone’s gallery ✅
-- API integration in Profile Screen
+- API integration in Profile Screen ✅
 
 ## Second Phase
 
