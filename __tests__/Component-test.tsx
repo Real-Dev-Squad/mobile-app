@@ -10,7 +10,6 @@ import Strings from '../src/i18n/en';
 import AuthScreen from '../src/screens/AuthScreen/AuthScreen';
 import { OtpModal } from '../src/screens/AuthScreen/OtpModal';
 
-
 // Short Term Goals component test
 
 test('flatlist does not exist on initial render', () => {
@@ -35,29 +34,29 @@ test('flatlist exists when we click on the arrow button', () => {
   });
 });
 
-
 // Create Goal component test
 
-
 test('roadmap type does not exist on initial render', () => {
-    const {queryByTestId} = render(<DurationDropdown/>);
-    expect(queryByTestId('longTermRoadmap')).toBeNull();
-})
+  const { queryByTestId } = render(<DurationDropdown />);
+  expect(queryByTestId('longTermRoadmap')).toBeNull();
+});
 
- test('roadmap type exists when use select duration as long term and stays undefined initally', ()=>{
-    const {getByTestId} = render(<DurationDropdown/>);
-    fireEvent.press(getByTestId('roadmapType'));
-    expect(getByTestId('roadmapType').props.value).toStrictEqual(undefined);
- })
+test('roadmap type exists when use select duration as long term and stays undefined initally', () => {
+  const { getByTestId } = render(<DurationDropdown />);
+  fireEvent.press(getByTestId('roadmapType'));
+  expect(getByTestId('roadmapType').props.value).toStrictEqual(undefined);
+});
 
- // Floating Button test
+// Floating Button test
 
- test('floating actions exists when we click floating button', ()=> {
-    const {queryByTestId, getByTestId} = render(<FloatingButton/>);
-    fireEvent.press(getByTestId('floatingButton'))
-    expect(queryByTestId('floatingButton')).toBeTruthy();
-    expect(getByTestId('floatingButton').props.style).toStrictEqual({marginTop: '120%'})
- })
+test('floating actions exists when we click floating button', () => {
+  const { queryByTestId, getByTestId } = render(<FloatingButton />);
+  fireEvent.press(getByTestId('floatingButton'));
+  expect(queryByTestId('floatingButton')).toBeTruthy();
+  expect(getByTestId('floatingButton').props.style).toStrictEqual({
+    marginTop: '120%',
+  });
+});
 
 // ToDoComponent Tests
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import 'react-native-gesture-handler';
 import {
   Text,
@@ -12,6 +12,8 @@ import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 
 const MainScreen = ({ navigation }) => {
+  const [titleText, setTitleText] = useState('');
+  const [descriptionText, setDescriptionText] = useState('');
   return (
     <ScrollView style={styles.container}>
       <View style={styles.formView}>
@@ -20,11 +22,15 @@ const MainScreen = ({ navigation }) => {
         <TextInput
           style={styles.inputStyle}
           maxLength={50}
+          value={titleText}
+          onChangeText={setTitleText}
           placeholder="Enter title max of 50 characters."
         />
         <Text style={styles.titleText}>Description</Text>
         <TextInput
           style={styles.inputStyle}
+          value={descriptionText}
+          onChangeText={setDescriptionText}
           maxLength={200}
           placeholder="Enter max 200 characters."
         />
@@ -71,6 +77,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     padding: 10,
+    height: 50,
     backgroundColor: '#F9F6EE',
     borderRadius: 5,
     fontSize: 12,

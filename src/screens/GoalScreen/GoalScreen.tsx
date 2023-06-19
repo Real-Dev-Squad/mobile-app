@@ -10,10 +10,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CreatingGoals from '../../components/ToDoComponent/SettingGoals/CreateGoals';
 
 const Stack = createNativeStackNavigator();
-const GoalScreen = ({ navigation }) => {
+const GoalScreen = () => {
   return (
     <ScrollView>
-      <TodoComponent navigationProp={navigation} />
+      <TodoComponent />
       <ShortGoalsComponent />
       <LongGoalsComponent />
     </ScrollView>

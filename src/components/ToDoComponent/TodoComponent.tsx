@@ -4,8 +4,9 @@ import Card from './Card';
 import data from './Data';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
+import { useNavigation } from '@react-navigation/native';
 
-const TodoComponent = ({ navigationProp }) => {
+const TodoComponent = () => {
   const [tasks, setTasks] = useState<Task[]>(data);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [changed, setChanged] = useState<boolean>(false);
@@ -27,12 +28,14 @@ const TodoComponent = ({ navigationProp }) => {
     setDisabled(false);
   };
 
+  const navigation = useNavigation();
+
   return (
     <View style={TodoStyles.container}>
       <Text style={TodoStyles.title}>To Do's</Text>
       <TouchableOpacity
         style={styles.CreateGoalButton}
-        onPress={() => navigationProp.navigate('CreatingGoals')}
+        onPress={() => navigation.navigate('CreatingGoals')}
       >
         <Text style={{ color: 'black' }}> Create new goal</Text>
       </TouchableOpacity>
