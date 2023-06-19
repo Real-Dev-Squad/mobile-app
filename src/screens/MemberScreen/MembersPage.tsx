@@ -15,7 +15,6 @@ type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
 const MembersPage = () => {
   const route = useRoute<MembersPageRouteProp>();
   const [membersData, setMembersData] = useState([]);
-  const membersDataCopy = membersData;
   const { selectedMember, setSelectedMember } = route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -58,7 +57,7 @@ const MembersPage = () => {
       <SearchBar
         setSearchValue={setSearchValue}
         searchValue={searchValue}
-        membersData={membersDataCopy}
+        membersData={membersData}
         setMembersData={setMembersData}
       />
         <FlatList
