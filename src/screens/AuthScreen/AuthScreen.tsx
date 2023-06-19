@@ -45,6 +45,7 @@ const AuthScreen = () => {
   const updateUserData = async (url: string) => {
     try {
       const res = await getUserData(url);
+      console.log('respponse',url,res)
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
         id: res?.id,

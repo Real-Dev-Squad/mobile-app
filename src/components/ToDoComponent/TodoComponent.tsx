@@ -38,7 +38,7 @@ const TodoComponent = ({ navigationProp }) => {
         <Text style={{ color: 'black',elevation:10 }}> Add</Text>
       </TouchableOpacity>
       </View>
-   
+   s
       <View style={{ paddingVertical: 35 }}>
         {tasks.length === 0 ? (
           <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
