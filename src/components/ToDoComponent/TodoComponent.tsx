@@ -6,14 +6,20 @@ import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 
 const TodoComponent = ({ navigationProp }) => {
-  const [tasks, setTasks] = useState<Task[]>(data);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [changed, setChanged] = useState<boolean>(false);
 
   useEffect(() => {
-    setTasks(tasks);
+    getTodos()
   }, [changed, tasks]);
 
+  const getTodos = async() => {
+    const todos = await fetch('https://backend-goals-production.up.railway.app/goal/');
+    const todosJsonData = await todos.json();
+    console.log('todos',todosJsonData.data)
+    setTasks(todosJsonData.data)
+  }
   const changeCardFunction = () => {
     setChanged(true);
     const item = tasks.shift() as Task;
@@ -38,7 +44,6 @@ const TodoComponent = ({ navigationProp }) => {
         <Text style={{ color: 'black',elevation:10 }}> Add</Text>
       </TouchableOpacity>
       </View>
-   s
       <View style={{ paddingVertical: 35 }}>
         {tasks.length === 0 ? (
           <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
