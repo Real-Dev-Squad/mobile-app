@@ -27,7 +27,7 @@ const SearchBar = ({
             .includes(text.toLowerCase()),
         )
       : membersData;
-    setMembersData(updatedData);
+      setMembersData(updatedData)
   };
 
   return (

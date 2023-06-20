@@ -15,6 +15,7 @@ type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
 const MembersPage = () => {
   const route = useRoute<MembersPageRouteProp>();
   const [membersData, setMembersData] = useState([]);
+  const [filterMemberData,setFilterMemberData] = useState([])
   const { selectedMember, setSelectedMember } = route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ const MembersPage = () => {
 
       // Set members data and clear loading and error states
       setMembersData(membersJsonData.members);
+      setFilterMemberData(membersJsonData.members)
       setLoading(false);
       setError(null);
     } catch (error) {
@@ -57,7 +59,7 @@ const MembersPage = () => {
       <SearchBar
         setSearchValue={setSearchValue}
         searchValue={searchValue}
-        membersData={membersData}
+        membersData={filterMemberData}
         setMembersData={setMembersData}
       />
         <FlatList
