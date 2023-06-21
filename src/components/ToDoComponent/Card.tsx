@@ -29,6 +29,8 @@ type props = {
   removeCard: (id: number) => void;
   disabled: boolean;
   setDisabled: any;
+  title?:string;
+  assigned_by?:string
 };
 
 const Card = ({
@@ -38,8 +40,11 @@ const Card = ({
   removeCard,
   disabled,
   setDisabled,
+  title,
+  assigned_by
 }: props) => {
-  let timerRef: any;
+  let timerRef: any
+
   const deleteTask = () => {
     timerRef = setTimeout(() => deleteCardFunction(), 4000);
   };
@@ -109,15 +114,15 @@ const Card = ({
         <PanGestureHandler onGestureEvent={panGesture}>
           <Animated.View
             style={[CardStyles.card, animatedStyle, { position: posStyle }]}
-          >
+          >        
             <View style={{ justifyContent: 'center' }}>
               <View style={!item.isread ? { height: 25 } : null}>
-                {item.isread && (
+                {/* {item.isread && (
                   <Image
                     source={Images.earthIcon}
                     style={[CardStyles.icon, { alignSelf: 'flex-end' }]}
                   />
-                )}
+                )} */}
               </View>
               <View style={CardStyles.flex}>
                 <TouchableOpacity onPress={markDone} testID='doneBtn'>
@@ -126,12 +131,12 @@ const Card = ({
                     style={[CardStyles.icon, { marginLeft: 5 }]}
                   />
                 </TouchableOpacity>
-                <Text style={CardStyles.taskText}>{item.task}</Text>
+                <Text style={CardStyles.taskText}>{title}</Text>
               </View>
-              <Image
-                source={Images.externalLinkIcon}
-                style={[CardStyles.icon, { alignSelf: 'flex-end' }]}
-              />
+              <View style={CardStyles.assignedTextContainer}>
+              <Text style={{fontWeight:'bold'}}>Assigned By: </Text>
+              <Text>{assigned_by}</Text>
+              </View>
             </View>
           </Animated.View>
         </PanGestureHandler>
