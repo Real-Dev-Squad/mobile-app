@@ -4,13 +4,18 @@ import React from 'react';
 type SearchBarProps = {
   setSearchValue: (text: string) => void;
   searchValue: string;
-  membersData: MembersDataProps[];
+  membersData: DisplayNameTypeProps[];
   setMembersData: ([]) => void;
 };
 
-type MembersDataProps = {
-  github_display_name: string;
-};
+type DisplayNameTypeProps ={
+  github_display_name?:string;
+  first_name?:string | undefined;
+  last_name?:string | undefined;
+  username?:string;
+  github_id?:string;
+}
+
 
 const SearchBar = ({
   setSearchValue,
@@ -18,13 +23,15 @@ const SearchBar = ({
   membersData,
   setMembersData,
 }: SearchBarProps) => {
-  const searchFunction = (text: string) => {
+  const searchFunction = (text: string) => {  
     setSearchValue(text);
     const updatedData = text
-      ? membersData?.filter((member) =>
-          member?.github_display_name
+      ? membersData?.filter((member) =>{
+        const { github_display_name,first_name,last_name,username, github_id } = member;
+        const assignedTo =   username ?? github_display_name  ?? github_id ?? first_name + last_name;  
+          assignedTo
             ?.toLowerCase()
-            .includes(text.toLowerCase()),
+            .includes(text.toLowerCase())}
         )
       : membersData;
       setMembersData(updatedData)
