@@ -12,7 +12,7 @@ const TodoComponent = ({ navigationProp }) => {
 
   useEffect(() => {
     getTodos();
-  }, [changed, tasks]);
+  }, []);
 
   const getTodos = async () => {
     const todos = await fetch(
@@ -24,7 +24,8 @@ const TodoComponent = ({ navigationProp }) => {
   const changeCardFunction = () => {
     setChanged(true);
     const item = tasks.shift() as Task;
-    tasks.push(item);
+    const filteredTasks = tasks.filter((task) => task.attributes?.id === item.attributes?.id)
+    setTasks([...filteredTasks,item])
     setChanged(false);
   };
 
