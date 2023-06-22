@@ -1,10 +1,18 @@
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import data from './Data';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 import { useNavigation } from '@react-navigation/native';
+
+const windowWidth = Dimensions.get('window').width;
 
 const TodoComponent = () => {
   const [tasks, setTasks] = useState<Task[]>(data);
@@ -37,7 +45,7 @@ const TodoComponent = () => {
         style={styles.CreateGoalButton}
         onPress={() => navigation.navigate('CreatingGoals')}
       >
-        <Text style={{ color: 'black' }}> Create new goal</Text>
+        <Text style={styles.heading}> Create new goal</Text>
       </TouchableOpacity>
       <View style={{ paddingVertical: 35 }}>
         {tasks.length === 0 ? (
@@ -66,8 +74,11 @@ const TodoComponent = () => {
 };
 
 const styles = StyleSheet.create({
+  heading: {
+    color: 'black',
+  },
   CreateGoalButton: {
-    width: '100%',
+    width: windowWidth,
     height: 50,
     elevation: 5,
     borderRadius: 10,

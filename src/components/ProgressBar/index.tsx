@@ -19,7 +19,7 @@ const ProgressBarInternal = (props: ProgressBarProps) => {
     return () => {
       animation.stop();
     };
-  }, [props.progress]);
+  }, []);
 
   return (
     <View style={ProgressBarStyles.container}>

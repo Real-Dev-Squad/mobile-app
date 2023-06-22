@@ -12,6 +12,7 @@ const timeperiod = [
   { names: 'Mid term' },
   { names: 'Long term' },
 ];
+
 const DurationDropDown = () => {
   const [clicked, setClicked] = useState(false);
   const [data, setData] = useState(timeperiod);
@@ -25,13 +26,13 @@ const DurationDropDown = () => {
           setClicked(!clicked);
         }}
       >
-        <Text style={{ fontWeight: '600', color: 'black' }}>
+        <Text style={styles.TimePeriod}>
           {selectedTimePeriod === '' ? 'Select duration' : selectedTimePeriod}
         </Text>
         {clicked ? (
-          <Text style={{ color: 'black', fontSize: 20 }}>-</Text>
+          <Text style={styles.DropDownClose}>-</Text>
         ) : (
-          <Text style={{ color: 'black', fontSize: 20 }}>+</Text>
+          <Text style={styles.DropDownOpen}>+</Text>
         )}
       </TouchableOpacity>
       {clicked ? (
@@ -48,9 +49,7 @@ const DurationDropDown = () => {
                     setClicked(!clicked);
                   }}
                 >
-                  <Text style={{ fontWeight: '600', color: 'black' }}>
-                    {item.names}
-                  </Text>
+                  <Text style={styles.DropDownList}>{item.names}</Text>
                 </TouchableOpacity>
               );
             }}
@@ -73,8 +72,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 25,
+    paddingRight: 25,
   },
   DropDownMenu: {
     elevation: 5,
@@ -91,6 +90,22 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     borderBottomWidth: 0.5,
+  },
+  DropDownClose: {
+    color: 'black',
+    fontSize: 20,
+  },
+  DropDownOpen: {
+    color: 'black',
+    fontSize: 20,
+  },
+  DropDownList: {
+    fontWeight: '600',
+    color: 'black',
+  },
+  TimePeriod: {
+    fontWeight: '600',
+    color: 'black',
   },
 });
 
