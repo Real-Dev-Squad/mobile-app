@@ -31,9 +31,9 @@ jobs:
       - name: Linting
         run: |
           yarn lint
-      - name: Prettier
+      - name: Prettier Check
         run: |
-          yarn prettier --check
+          yarn format-check
       - name: Running test
         run: |
           yarn test
