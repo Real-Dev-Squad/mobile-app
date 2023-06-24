@@ -13,7 +13,7 @@ const DeadLineDatePicker = () => {
         style={styles.buttonStyle}
         onPress={() => setOpen(true)}
       >
-        {<Text style={styles.buttonTextStyle}>{dates.getDate}</Text>}
+        <Text style={styles.buttonTextStyle}>Pick date</Text>
       </TouchableOpacity>
       <DatePicker
         modal

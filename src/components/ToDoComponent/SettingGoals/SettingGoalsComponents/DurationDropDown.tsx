@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,6 +13,9 @@ const timeperiod = [
   { names: 'Mid term' },
   { names: 'Long term' },
 ];
+
+const windowWidth = Dimensions.get('window').width;
+const durationButtonWidth = windowWidth - 150;
 
 const DurationDropDown = () => {
   const [clicked, setClicked] = useState(false);
@@ -62,7 +66,7 @@ const DurationDropDown = () => {
 
 const styles = StyleSheet.create({
   DropDownButton: {
-    width: '100%',
+    width: durationButtonWidth,
     height: 50,
     elevation: 5,
     borderRadius: 10,
