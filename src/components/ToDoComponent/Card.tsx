@@ -36,7 +36,6 @@ const Card = ({
   posStyle,
   changecard,
   removeCard,
-  disabled,
   setDisabled,
 }: props) => {
   let timerRef: any;
