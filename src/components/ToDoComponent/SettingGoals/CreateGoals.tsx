@@ -12,13 +12,35 @@ import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 
 const MainScreen = ({ navigation }) => {
+  const [selectedMember, setSelectedMember] = React.useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.formView}>
-        <Text style={styles.formHeading}>Create New Goal</Text>
-        <Text style={styles.titleText}>Title</Text>
+      <View
+        style={{
+          borderWidth: 3,
+          paddingTop: 20,
+          paddingLeft: 30,
+          paddingRight: 30,
+          paddingBottom: 40,
+          height: 650,
+          borderRadius: 20,
+          overflow: 'hidden',
+        }}
+      >
+        {' '}
+        <Text
+          style={{
+            color: '#2827CC',
+            fontSize: 25,
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          Add New Goal
+        </Text>
+        <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
           maxLength={50}
@@ -34,9 +56,23 @@ const MainScreen = ({ navigation }) => {
           maxLength={200}
           placeholder="Enter max 200 characters."
         />
-        <Text style={styles.titleText}>Duration</Text>
-        <DurationDropDown />
-        <Text style={styles.titleText}>DeadLine</Text>
+        {/* <Text style={styles.titles}>Duration</Text>
+        <DurationDropDown /> */}
+        <Text style={styles.titles}>Assigned To</Text>
+        {/* <DurationDropDown /> */}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Member's page", {
+              setSelectedMember,
+              selectedMember,
+            })
+          }
+        >
+          <Text style={styles.inputStyle}>
+            {selectedMember ? selectedMember : "Enter member's name"}
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.titles}>DeadLine</Text>
         <DeadLineDatePicker />
         <TouchableOpacity
           style={styles.createButtonStyle}
@@ -77,14 +113,15 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     padding: 10,
-    height: 50,
-    backgroundColor: '#F9F6EE',
+    // backgroundColor: 'silver',
     borderRadius: 5,
+    elevation: 2,
     fontSize: 12,
     borderWidth: 2,
   },
-  titleText: {
-    fontSize: 15,
+  titles: {
+    fontSize: 12,
+    elevation: 2,
     marginBottom: 10,
     marginTop: 20,
     color: 'black',

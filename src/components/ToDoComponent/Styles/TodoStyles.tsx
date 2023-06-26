@@ -4,7 +4,7 @@ export const TodoStyles = StyleSheet.create({
   container: {
     padding: 10,
     paddingBottom: 45,
-    borderBottomWidth: 3,
+    // borderBottomWidth: 3, TODO: will need in v2
     borderBottomColor: '#b9c0c9',
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
@@ -32,4 +32,9 @@ export const TodoStyles = StyleSheet.create({
     position: 'relative',
     top: 10,
   },
+  flex:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center'
+  }
 });
