@@ -17,18 +17,20 @@ const MainScreen = ({ navigation }) => {
   const [descriptionText, setDescriptionText] = useState('');
   return (
     <ScrollView style={styles.container}>
-    <View
+      <View
         style={{
           borderWidth: 3,
           paddingTop: 20,
-          paddingLeft: 30  ,
+          paddingLeft: 30,
           paddingRight: 30,
           paddingBottom: 40,
           height: 650,
           borderRadius: 20,
           overflow: 'hidden',
         }}
-      >      <Text
+      >
+        {' '}
+        <Text
           style={{
             color: '#2827CC',
             fontSize: 25,
@@ -38,7 +40,7 @@ const MainScreen = ({ navigation }) => {
         >
           Add New Goal
         </Text>
-                <Text style={styles.titles}>Title</Text>
+        <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
           maxLength={50}
@@ -56,7 +58,6 @@ const MainScreen = ({ navigation }) => {
         />
         {/* <Text style={styles.titles}>Duration</Text>
         <DurationDropDown /> */}
-
         <Text style={styles.titles}>Assigned To</Text>
         {/* <DurationDropDown /> */}
         <TouchableOpacity
