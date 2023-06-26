@@ -12,7 +12,7 @@ import {
 const SearchBar = () => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const [masterDataSource, setMasterDataSource] = useState([]);
+  const [masterDataSource] = useState([]);
 
   // Call this useEffect for data from backend
   // useEffect(() => {

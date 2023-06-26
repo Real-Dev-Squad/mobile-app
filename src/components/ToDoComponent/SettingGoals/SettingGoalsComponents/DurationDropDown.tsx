@@ -19,7 +19,7 @@ const durationButtonWidth = windowWidth - 150;
 
 const DurationDropDown = () => {
   const [clicked, setClicked] = useState(false);
-  const [data, setData] = useState(timeperiod);
+  const [data] = useState(timeperiod);
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('');
 
   return (

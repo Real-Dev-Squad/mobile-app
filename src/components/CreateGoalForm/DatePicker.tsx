@@ -31,7 +31,7 @@ const DatePickerComponent = () => {
               border: 'none',
             },
           }}
-          onDateChange={(date) => {
+          onDateChange={() => {
             setDate(date);
           }}
         />
