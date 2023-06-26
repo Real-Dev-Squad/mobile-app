@@ -6,7 +6,6 @@ const DeadLineDatePicker = () => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
-  const dates = date;
   return (
     <ScrollView>
       <TouchableOpacity
@@ -20,7 +19,7 @@ const DeadLineDatePicker = () => {
         mode="date"
         open={open}
         date={date}
-        onConfirm={(date) => {
+        onConfirm={() => {
           setOpen(false);
           setDate(date);
         }}
