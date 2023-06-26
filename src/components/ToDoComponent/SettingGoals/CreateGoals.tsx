@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import 'react-native-gesture-handler';
 import {
   Text,
@@ -9,26 +9,26 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
-import DeadLineDatePicker from './SettingGoalsComponents/Calendar';
+import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 
 const MainScreen = ({ navigation }) => {
   const [selectedMember, setSelectedMember] = React.useState('');
-
+  const [titleText, setTitleText] = useState('');
+  const [descriptionText, setDescriptionText] = useState('');
   return (
     <ScrollView style={styles.container}>
-      <View
+    <View
         style={{
           borderWidth: 3,
           paddingTop: 20,
-          paddingLeft: 30,
+          paddingLeft: 30  ,
           paddingRight: 30,
           paddingBottom: 40,
           height: 650,
           borderRadius: 20,
           overflow: 'hidden',
         }}
-      >
-        <Text
+      >      <Text
           style={{
             color: '#2827CC',
             fontSize: 25,
@@ -38,15 +38,19 @@ const MainScreen = ({ navigation }) => {
         >
           Add New Goal
         </Text>
-        <Text style={styles.titles}>Title</Text>
+                <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
           maxLength={50}
+          value={titleText}
+          onChangeText={setTitleText}
           placeholder="Enter title max of 50 characters."
         />
-        <Text style={styles.titles}>Description</Text>
+        <Text style={styles.titleText}>Description</Text>
         <TextInput
           style={styles.inputStyle}
+          value={descriptionText}
+          onChangeText={setDescriptionText}
           maxLength={200}
           placeholder="Enter max 200 characters."
         />
@@ -90,12 +94,29 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white',
   },
+  formView: {
+    borderWidth: 3,
+    paddingTop: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 40,
+    height: 650,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  formHeading: {
+    color: '#2827CC',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   inputStyle: {
     padding: 10,
     // backgroundColor: 'silver',
     borderRadius: 5,
     elevation: 2,
     fontSize: 12,
+    borderWidth: 2,
   },
   titles: {
     fontSize: 12,

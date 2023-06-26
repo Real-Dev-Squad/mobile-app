@@ -6,13 +6,14 @@ const DeadLineDatePicker = () => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
+  const dates = date;
   return (
     <ScrollView>
       <TouchableOpacity
         style={styles.buttonStyle}
         onPress={() => setOpen(true)}
       >
-        <Text style={styles.buttonTextStyle}>Open calendar</Text>
+        <Text style={styles.buttonTextStyle}>Pick date</Text>
       </TouchableOpacity>
       <DatePicker
         modal

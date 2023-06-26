@@ -11,7 +11,7 @@ import CreatingGoals from '../../components/ToDoComponent/SettingGoals/CreateGoa
 import MembersPage from '../MemberScreen/MembersPage';
 
 const Stack = createNativeStackNavigator();
-const GoalScreen = ({ navigation }) => {
+const GoalScreen = () => {
   return (
     <ScrollView>
       <TodoComponent navigationProp={navigation} />
