@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import withHeader from '../../helpers/withHeader';
@@ -38,15 +38,15 @@ const ProfileScreen = () => {
 
   return (
     <View style={ScreenViewContainer.container}>
-      {/* TODO: remove temp style & improve Logout btn style Issue #71 */}
-      <TouchableOpacity
-        style={{ backgroundColor: '#FFFFFF', padding: '5%' }}
+      <Pressable
+        style={profileScreenStyles.logoutButton}
         onPress={() => {
           setLoggedInUserData(null);
         }}
       >
-        <Text style={{ color: '#000000' }}>{Strings.LOGOUT}</Text>
-      </TouchableOpacity>
+        <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
+      </Pressable>
+
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}

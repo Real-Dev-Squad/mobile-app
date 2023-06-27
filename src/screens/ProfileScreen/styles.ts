@@ -76,4 +76,20 @@ export const profileScreenStyles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  logoutButton: {
+    backgroundColor: '#E20062',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    width: '40%',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    color: 'white',
+  },
+  logoutText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });

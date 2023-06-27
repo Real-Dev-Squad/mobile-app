@@ -11,10 +11,10 @@ import CreatingGoals from '../../components/ToDoComponent/SettingGoals/CreateGoa
 import MembersPage from '../MemberScreen/MembersPage';
 
 const Stack = createNativeStackNavigator();
-const GoalScreen = ({ navigation }) => {
+const GoalScreen = () => {
   return (
     <ScrollView>
-      <TodoComponent data-testid="todo-component" navigationProp={navigation} />
+      <TodoComponent data-testid="todo-component" />
       {/* TODO: moving to v2
       <ShortGoalsComponent />
       <LongGoalsComponent /> */}

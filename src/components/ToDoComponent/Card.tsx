@@ -1,5 +1,5 @@
 import { Image, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import Animated, {
   Easing,
   runOnJS,
@@ -38,7 +38,6 @@ const Card = ({
   posStyle,
   changecard,
   removeCard,
-  disabled,
   setDisabled,
   title,
   assigned_by
@@ -125,10 +124,10 @@ const Card = ({
                 )} */}
               </View>
               <View style={CardStyles.flex}>
-                <TouchableOpacity onPress={markDone} testID='doneBtn'>
+                <TouchableOpacity onPress={markDone} testID="doneBtn">
                   <Image
                     source={checked ? Images.checkedIcon : Images.uncheckedIcon}
-                    style={[CardStyles.icon, { marginLeft: 5 }]}
+                    style={[CardStyles.icon]}
                   />
                 </TouchableOpacity>
                 <Text style={CardStyles.taskText}>{title}</Text>
@@ -145,4 +144,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default memo(Card);

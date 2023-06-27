@@ -26,6 +26,9 @@ export const CardStyles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
   },
+  viewStyle: {
+    justifyContent: 'center',
+  },
   taskText: {
     fontSize: 18,
     color: '#252525',

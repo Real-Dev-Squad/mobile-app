@@ -12,14 +12,14 @@ const DeadLineDatePicker = () => {
         style={styles.buttonStyle}
         onPress={() => setOpen(true)}
       >
-        <Text style={styles.buttonTextStyle}>Open calendar</Text>
+        <Text style={styles.buttonTextStyle}>Pick date</Text>
       </TouchableOpacity>
       <DatePicker
         modal
         mode="date"
         open={open}
         date={date}
-        onConfirm={(date) => {
+        onConfirm={() => {
           setOpen(false);
           setDate(date);
         }}

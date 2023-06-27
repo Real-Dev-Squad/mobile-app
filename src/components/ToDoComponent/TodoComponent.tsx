@@ -24,8 +24,10 @@ const TodoComponent = ({ navigationProp }) => {
   const changeCardFunction = () => {
     setChanged(true);
     const item = tasks.shift() as Task;
-    const filteredTasks = tasks.filter((task) => task.attributes?.id === item.attributes?.id)
-    setTasks([...filteredTasks,item])
+    const filteredTasks = tasks.filter(
+      (task) => task.attributes?.id === item.attributes?.id,
+    );
+    setTasks([...filteredTasks, item]);
     setChanged(false);
   };
 
@@ -35,45 +37,52 @@ const TodoComponent = ({ navigationProp }) => {
     setDisabled(false);
   };
 
+  const navigation = useNavigation();
+
   return (
-  <View style={TodoStyles.container}>
-    <View style={TodoStyles.flex}>
-    <Text style={TodoStyles.title}>To Do's</Text>
-    <TouchableOpacity
-      style={styles.CreateGoalButton}
-      onPress={() => navigationProp.navigate('CreatingGoals')}
-    >
-      <Text style={{ color: 'black',elevation:10 }}> Add</Text>
-    </TouchableOpacity>
+    <View style={TodoStyles.container}>
+      <View style={TodoStyles.flex}>
+        <Text style={TodoStyles.title}>To Do's</Text>
+        <TouchableOpacity
+          style={styles.CreateGoalButton}
+          onPress={() => navigationProp.navigate('CreatingGoals')}
+        >
+          <Text style={{ color: 'black', elevation: 10 }}> Add</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ paddingVertical: 35 }}>
+        {tasks?.length === 0 ? (
+          <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
+        ) : (
+          tasks
+            ?.map((task) => {
+              const { title, assigned_by } = task?.attributes;
+              return (
+                <Card
+                  posStyle={tasks.indexOf(task) !== 0 ? 'absolute' : 'relative'}
+                  key={task.id}
+                  item={task}
+                  changecard={changeCardFunction}
+                  removeCard={removeCard}
+                  disabled={disabled}
+                  setDisabled={setDisabled}
+                  title={title}
+                  assigned_by={assigned_by}
+                />
+              );
+            })
+            .reverse()
+        )}
+        <View style={TodoStyles.shodowcard} />
+      </View>
     </View>
-    <View style={{ paddingVertical: 35 }}>
-      {tasks?.length === 0 ? (
-        <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
-      ) : (
-        tasks?.map((task) => {
-          const {title,assigned_by} = task?.attributes
-            return (
-              <Card
-                posStyle={tasks.indexOf(task) !== 0 ? 'absolute' : 'relative'}
-                key={task.id}
-                item={task}
-                changecard={changeCardFunction}
-                removeCard={removeCard}
-                disabled={disabled}
-                setDisabled={setDisabled}
-                title={title}
-                assigned_by={assigned_by}
-              />
-            );
-          })
-          .reverse()
-      )}
-      <View style={TodoStyles.shodowcard} />
-    </View>
-  </View>)
+  );
 };
 
 const styles = StyleSheet.create({
+  heading: {
+    color: 'black',
+  },
   CreateGoalButton: {
     // width: '100%',
     // height: 50,
