@@ -5,11 +5,13 @@ import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 import Data from './Data';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
+import { useNavigation } from '@react-navigation/native';
 
 const TodoComponent = ({ navigationProp }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [changed, setChanged] = useState<boolean>(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     getTodos();
@@ -42,7 +44,7 @@ const TodoComponent = ({ navigationProp }) => {
         <Text style={TodoStyles.title}>To Do's</Text>
         <TouchableOpacity
           style={styles.CreateGoalButton}
-          onPress={() => navigationProp.navigate('CreatingGoals')}
+          onPress={() => navigation.navigate('CreatingGoals')}
         >
           <Text style={{ color: 'black', elevation: 10 }}> Add</Text>
         </TouchableOpacity>
