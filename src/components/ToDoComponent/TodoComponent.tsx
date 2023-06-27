@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
@@ -11,8 +10,6 @@ import data from './Data';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 import { useNavigation } from '@react-navigation/native';
-
-const windowWidth = Dimensions.get('window').width;
 
 const TodoComponent = () => {
   const [tasks, setTasks] = useState<Task[]>(data);
@@ -26,7 +23,6 @@ const TodoComponent = () => {
   const getTodos = async() => {
     const todos = await fetch('https://backend-goals-production.up.railway.app/goal/');
     const todosJsonData = await todos.json();
-    console.log('todos',todosJsonData.data)
     setTasks(todosJsonData.data)
   }
   const changeCardFunction = () => {
@@ -86,13 +82,10 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   CreateGoalButton: {
-    // width: '100%',
-    // height: 50,
     elevation: 5, 
     borderRadius: 5,
     backgroundColor: 'white',
     alignSelf: 'center',
-    // marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
