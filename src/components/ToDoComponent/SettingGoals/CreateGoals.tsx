@@ -29,7 +29,6 @@ const MainScreen = ({ navigation }) => {
           overflow: 'hidden',
         }}
       >
-        {' '}
         <Text
           style={{
             color: '#2827CC',
@@ -139,6 +138,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#2827CC',
   },
+  titleText:{
+
+  }
 });
 
 export default MainScreen;
