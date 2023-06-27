@@ -4,6 +4,7 @@ import Card from './Card';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 import Data from './Data';
+import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
 const TodoComponent = ({ navigationProp }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -15,12 +16,10 @@ const TodoComponent = ({ navigationProp }) => {
   }, []);
 
   const getTodos = async () => {
-    const todos = await fetch(
-      'https://backend-goals-production.up.railway.app/goal/',
-    );
+    const todos = await fetch(GoalsApi.GET_TODO_S);
     const todosJsonData = await todos.json();
     setTasks([...Data.data, ...todosJsonData.data]);
-  };
+  };  
   const changeCardFunction = () => {
     setChanged(true);
     const item = tasks.shift() as Task;
