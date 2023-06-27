@@ -26,6 +26,9 @@ export const CardStyles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
   },
+  viewStyle: {
+    justifyContent: 'center',
+  },
   taskText: {
     fontSize: 18,
     color: '#252525',
@@ -35,6 +38,8 @@ export const CardStyles = StyleSheet.create({
     resizeMode: 'cover',
     width: 25,
     height: 25,
-    marginRight: 5,
+    alignSelf: 'flex-end',
+    marginRight: 15,
+    marginLeft: 15,
   },
 });

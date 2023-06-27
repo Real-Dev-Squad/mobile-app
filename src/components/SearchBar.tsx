@@ -2,27 +2,39 @@ import { View, StyleSheet, TextInput } from 'react-native';
 import React from 'react';
 
 type SearchBarProps = {
-    setSearchValue: (text:string) => void;
-    searchValue: string;
-    membersData:MembersDataProps [];
-    setMembersData: ([]) => void;
+  setSearchValue: (text: string) => void;
+  searchValue: string;
+  membersData: DisplayNameTypeProps[];
+  setMembersData: ([]) => void;
+};
+
+type DisplayNameTypeProps ={
+  github_display_name?:string;
+  first_name?:string | undefined;
+  last_name?:string | undefined;
+  username?:string;
+  github_id?:string;
 }
 
-type MembersDataProps = {
-    github_display_name: string;
-}
 
-
-const SearchBar = ({setSearchValue,searchValue,membersData,setMembersData}:SearchBarProps) => {
-
- const searchFunction = (text:string) => {
-    const updatedData = membersData?.filter((item) => {
-      const item_data = `${item.github_display_name.toUpperCase()}`;
-      const text_data = text?.toUpperCase();
-      return item_data.indexOf(text_data) > -1;
-    });
-    setMembersData(updatedData)
-    setSearchValue(text)
+const SearchBar = ({
+  setSearchValue,
+  searchValue,
+  membersData,
+  setMembersData,
+}: SearchBarProps) => {
+  const searchFunction = (text: string) => {  
+    setSearchValue(text);
+    const updatedData = text
+      ? membersData?.filter((member) =>{
+        const { github_display_name,first_name,last_name,username, github_id } = member;
+        const assignedTo =   username ?? github_display_name  ?? github_id ?? first_name + last_name;  
+          assignedTo
+            ?.toLowerCase()
+            .includes(text.toLowerCase())}
+        )
+      : membersData;
+      setMembersData(updatedData)
   };
 
   return (
@@ -32,7 +44,7 @@ const SearchBar = ({setSearchValue,searchValue,membersData,setMembersData}:Searc
         style={styles.formField}
         placeholderTextColor={'#888888'}
         value={searchValue}
-        onChangeText={(text) => searchFunction(text)}
+        onChangeText={searchFunction}
       />
     </View>
   );
@@ -42,7 +54,7 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:40,
+    marginTop: 40,
     position: 'absolute',
     top: 30,
     width: 350,

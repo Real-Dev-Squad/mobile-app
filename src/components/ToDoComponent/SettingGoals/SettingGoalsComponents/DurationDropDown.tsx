@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,9 +13,13 @@ const timeperiod = [
   { names: 'Mid term' },
   { names: 'Long term' },
 ];
+
+const windowWidth = Dimensions.get('window').width;
+const durationButtonWidth = windowWidth - 150;
+
 const DurationDropDown = () => {
   const [clicked, setClicked] = useState(false);
-  const [data, setData] = useState(timeperiod);
+  const [data] = useState(timeperiod);
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('');
 
   return (
@@ -25,13 +30,13 @@ const DurationDropDown = () => {
           setClicked(!clicked);
         }}
       >
-        <Text style={{ fontWeight: '600', color: 'black' }}>
+        <Text style={styles.TimePeriod}>
           {selectedTimePeriod === '' ? 'Select duration' : selectedTimePeriod}
         </Text>
         {clicked ? (
-          <Text style={{ color: 'black', fontSize: 20 }}>-</Text>
+          <Text style={styles.DropDownClose}>-</Text>
         ) : (
-          <Text style={{ color: 'black', fontSize: 20 }}>+</Text>
+          <Text style={styles.DropDownOpen}>+</Text>
         )}
       </TouchableOpacity>
       {clicked ? (
@@ -48,9 +53,7 @@ const DurationDropDown = () => {
                     setClicked(!clicked);
                   }}
                 >
-                  <Text style={{ fontWeight: '600', color: 'black' }}>
-                    {item.names}
-                  </Text>
+                  <Text style={styles.DropDownList}>{item.names}</Text>
                 </TouchableOpacity>
               );
             }}
@@ -63,7 +66,7 @@ const DurationDropDown = () => {
 
 const styles = StyleSheet.create({
   DropDownButton: {
-    width: '100%',
+    width: durationButtonWidth,
     height: 50,
     elevation: 5,
     borderRadius: 10,
@@ -73,8 +76,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 25,
+    paddingRight: 25,
   },
   DropDownMenu: {
     elevation: 5,
@@ -91,6 +94,22 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     borderBottomWidth: 0.5,
+  },
+  DropDownClose: {
+    color: 'black',
+    fontSize: 20,
+  },
+  DropDownOpen: {
+    color: 'black',
+    fontSize: 20,
+  },
+  DropDownList: {
+    fontWeight: '600',
+    color: 'black',
+  },
+  TimePeriod: {
+    fontWeight: '600',
+    color: 'black',
   },
 });
 

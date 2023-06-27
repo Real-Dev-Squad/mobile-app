@@ -9,13 +9,14 @@ import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
+import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
 type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
 
 const MembersPage = () => {
   const route = useRoute<MembersPageRouteProp>();
   const [membersData, setMembersData] = useState([]);
-  const membersDataCopy = membersData;
+  const [filterMemberData,setFilterMemberData] = useState([])
   const { selectedMember, setSelectedMember } = route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,11 +31,12 @@ const MembersPage = () => {
       // Set loading state
       setLoading(true);
 
-      const members = await fetch('https://api.realdevsquad.com/members');
+      const members = await fetch(GoalsApi.MembersApi);
       const membersJsonData = await members.json();
 
       // Set members data and clear loading and error states
       setMembersData(membersJsonData.members);
+      setFilterMemberData(membersJsonData.members)
       setLoading(false);
       setError(null);
     } catch (error) {
@@ -58,7 +60,7 @@ const MembersPage = () => {
       <SearchBar
         setSearchValue={setSearchValue}
         searchValue={searchValue}
-        membersData={membersDataCopy}
+        membersData={filterMemberData}
         setMembersData={setMembersData}
       />
         <FlatList

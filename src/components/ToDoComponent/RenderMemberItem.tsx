@@ -3,15 +3,20 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 type RenderMemberItemProps = {
- item:githubDisplayNameType;
+ item:DisplayNameType;
  setSelectedMember:()=>void;
 }
-type githubDisplayNameType ={
+type DisplayNameType ={
   github_display_name?:string;
+  first_name?:string;
+  last_name?:string
+  username?:string;
+  github_id?:string
 }
 const RenderMemberItem = ({ item, setSelectedMember }:RenderMemberItemProps) => {
   const navigation = useNavigation();
-  const { github_display_name } = item;
+  const { github_display_name,first_name,last_name,username, github_id } = item;
+  const assignedTo =   username ?? github_display_name  ?? github_id ?? first_name + last_name  
 
   const handleSelectMember = (name: string) => {
     setSelectedMember(name);
@@ -19,9 +24,9 @@ const RenderMemberItem = ({ item, setSelectedMember }:RenderMemberItemProps) => 
   };
 
   return (
-    <TouchableOpacity onPress={() => handleSelectMember(github_display_name)}>
+    <TouchableOpacity onPress={() => handleSelectMember(assignedTo)}>
       <View style={styles.itemContainer}>
-        <Text style={styles.itemText}>{github_display_name}</Text>
+        <Text style={styles.itemText}>{assignedTo}</Text>
       </View>
     </TouchableOpacity>
   );
