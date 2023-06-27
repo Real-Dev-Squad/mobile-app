@@ -36,8 +36,6 @@ const TodoComponent = ({ navigationProp }) => {
     setDisabled(false);
   };
 
-  const navigation = useNavigation();
-
   return (
     <View style={TodoStyles.container}>
       <View style={TodoStyles.flex}>
@@ -89,7 +87,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'white',
     alignSelf: 'center',
-    // marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
