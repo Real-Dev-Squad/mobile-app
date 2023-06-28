@@ -5,7 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import  Toast  from 'react-native-toast-message';
+import Toast from 'react-native-toast-message';
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
@@ -21,7 +21,7 @@ const MembersPage = () => {
   const { selectedMember, setSelectedMember } = route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | string>(null );
+  const [errorState, setErrorState] = useState<null | string>(null);
 
   useEffect(() => {
     callMembersApi();
@@ -39,10 +39,10 @@ const MembersPage = () => {
       setMembersData(membersJsonData.members);
       setFilterMemberData(membersJsonData.members);
       setLoading(false);
-      setError(null);
+      setErrorState(null);
     } catch (error) {
       // Set error state and clear loading state
-      setError('Network error!');
+      setErrorState('Network error!');
       setLoading(false);
     }
   };
@@ -56,7 +56,7 @@ const MembersPage = () => {
   };
 
   const renderError = () => {
-    if (error) {
+    if (errorState) {
       return Toast.show({
         type: 'error',
         text1: 'Network Error',
@@ -66,24 +66,31 @@ const MembersPage = () => {
   };
 
   return (
-    error ?? renderError ?? loading ?? renderLoader ??
-    <View style={styles.container}>
-      <Text style={styles.title}>Real Dev Squad Member's</Text>
-      <SearchBar
-        setSearchValue={setSearchValue}
-        searchValue={searchValue}
-        membersData={filterMemberData}
-        setMembersData={setMembersData}
-      />
-      <FlatList
-        data={membersData}
-        renderItem={({ item }) => (
-          <RenderMemberItem item={item} setSelectedMember={setSelectedMember} />
-        )}
-        keyExtractor={(item) => item.id}
-        ListFooterComponent={renderLoader}
-      />
-    </View>
+    errorState ??
+    renderError ??
+    loading ??
+    renderLoader ?? (
+      <View style={styles.container}>
+        <Text style={styles.title}>Real Dev Squad Member's</Text>
+        <SearchBar
+          setSearchValue={setSearchValue}
+          searchValue={searchValue}
+          membersData={filterMemberData}
+          setMembersData={setMembersData}
+        />
+        <FlatList
+          data={membersData}
+          renderItem={({ item }) => (
+            <RenderMemberItem
+              item={item}
+              setSelectedMember={setSelectedMember}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          ListFooterComponent={renderLoader}
+        />
+      </View>
+    )
   );
 };
 
