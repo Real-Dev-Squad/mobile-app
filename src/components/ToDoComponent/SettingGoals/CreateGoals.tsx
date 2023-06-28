@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 
 const MainScreen = ({ navigation }) => {
@@ -138,9 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#2827CC',
   },
-  titleText:{
-
-  }
+  titleText: {},
 });
 
 export default MainScreen;

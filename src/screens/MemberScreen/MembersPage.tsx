@@ -5,10 +5,11 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
-import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
 type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
@@ -16,11 +17,11 @@ type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
 const MembersPage = () => {
   const route = useRoute<MembersPageRouteProp>();
   const [membersData, setMembersData] = useState([]);
-  const [filterMemberData,setFilterMemberData] = useState([])
+  const [filterMemberData, setFilterMemberData] = useState([]);
   const { selectedMember, setSelectedMember } = route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | string>(null);
+  const [errorState, setErrorState] = useState<null | string>(null);
 
   useEffect(() => {
     callMembersApi();
@@ -36,12 +37,12 @@ const MembersPage = () => {
 
       // Set members data and clear loading and error states
       setMembersData(membersJsonData.members);
-      setFilterMemberData(membersJsonData.members)
+      setFilterMemberData(membersJsonData.members);
       setLoading(false);
-      setError(null);
+      setErrorState(null);
     } catch (error) {
       // Set error state and clear loading state
-      setError('Error fetching members data.');
+      setErrorState('Network error!');
       setLoading(false);
     }
   };
@@ -54,16 +55,30 @@ const MembersPage = () => {
     ) : null;
   };
 
+  const renderError = () => {
+    if (errorState) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Network Error',
+        text2: 'error',
+      });
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Real Dev Squad Member's</Text>
-      <SearchBar
-        setSearchValue={setSearchValue}
-        searchValue={searchValue}
-        membersData={filterMemberData}
-        setMembersData={setMembersData}
-      />
-      {loading ? renderLoader :  <FlatList
+    errorState ??
+    renderError ??
+    loading ??
+    renderLoader ?? (
+      <View style={styles.container}>
+        <Text style={styles.title}>Real Dev Squad Member's</Text>
+        <SearchBar
+          setSearchValue={setSearchValue}
+          searchValue={searchValue}
+          membersData={filterMemberData}
+          setMembersData={setMembersData}
+        />
+        <FlatList
           data={membersData}
           renderItem={({ item }) => (
             <RenderMemberItem
@@ -73,9 +88,9 @@ const MembersPage = () => {
           )}
           keyExtractor={(item) => item.id}
           ListFooterComponent={renderLoader}
-        />}
-       
-    </View>
+        />
+      </View>
+    )
   );
 };
 
@@ -90,8 +105,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 2,
-    textAlign:'center',
-    margin:2
+    textAlign: 'center',
+    margin: 2,
   },
   loaderView: { alignItems: 'center', paddingVertical: 20 },
 });

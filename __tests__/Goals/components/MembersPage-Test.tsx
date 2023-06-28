@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
 import MembersPage from '../../../src/screens/MemberScreen/MembersPage';
 
 // Mock the fetch function
@@ -40,7 +40,7 @@ describe('MembersPage', () => {
     // Mock a failed response from the API
     global.fetch.mockRejectedValueOnce(new Error('API error'));
 
-    const { getByText, getByTestId } = render(<MembersPage />);
+    const { getByTestId } = render(<MembersPage />);
 
     // Verify that loading state is displayed
     expect(getByTestId('loader')).toBeTruthy();
@@ -52,3 +52,5 @@ describe('MembersPage', () => {
     expect(() => getByTestId('loader')).toThrow();
 
     // Verify that the error message
+  });
+});
