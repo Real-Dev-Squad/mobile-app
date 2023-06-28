@@ -42,7 +42,7 @@ const MembersPage = () => {
       setError(null);
     } catch (error) {
       // Set error state and clear loading state
-      setError(error);
+      setError('Network error!');
       setLoading(false);
     }
   };
