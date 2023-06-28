@@ -63,7 +63,7 @@ const MembersPage = () => {
         membersData={filterMemberData}
         setMembersData={setMembersData}
       />
-        <FlatList
+      {loading ? renderLoader :  <FlatList
           data={membersData}
           renderItem={({ item }) => (
             <RenderMemberItem
@@ -73,7 +73,8 @@ const MembersPage = () => {
           )}
           keyExtractor={(item) => item.id}
           ListFooterComponent={renderLoader}
-        />
+        />}
+       
     </View>
   );
 };
