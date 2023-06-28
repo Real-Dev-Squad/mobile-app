@@ -48,11 +48,11 @@ const MembersPage = () => {
   };
 
   const renderLoader = () => {
-    return loading ? 
+    return loading ? (
       <View style={styles.loaderView}>
         <ActivityIndicator size="large" />
       </View>
-     : null;
+    ) : null;
   };
 
   const renderError = () => {
