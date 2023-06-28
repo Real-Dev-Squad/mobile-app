@@ -8,7 +8,7 @@ jest.mock('node-fetch');
 describe('MembersPage', () => {
   it('renders the component', () => {
     render(<MembersPage />);
-  })
+  });
 
   it('fetches and renders members data', async () => {
     // Mock the response from the API
@@ -40,7 +40,7 @@ describe('MembersPage', () => {
     // Mock a failed response from the API
     global.fetch.mockRejectedValueOnce(new Error('API error'));
 
-    const { getByText, getByTestId } = render(<MembersPage />);
+    const { getByTestId } = render(<MembersPage />);
 
     // Verify that loading state is displayed
     expect(getByTestId('loader')).toBeTruthy();
@@ -53,4 +53,4 @@ describe('MembersPage', () => {
 
     // Verify that the error message
   });
-})
+});
