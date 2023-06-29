@@ -9,12 +9,43 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
-import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
+import DeadLineDatePicker, { deadlineDate } from './SettingGoalsComponents/DeadLineDatePicker';
 
 const MainScreen = ({ navigation }) => {
   const [selectedMember, setSelectedMember] = React.useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
+
+  const postData = async () => {
+    const url = 'https://backend-goals-production.up.railway.app/goal/';
+    let request = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        data: [
+          {
+            type: 'Goal',
+            id: '1',
+            attributes: {
+              title: titleText,
+              description: descriptionText,
+              created_at: '2023-06-22T00:08:38.695783Z',
+              created_by: '',
+              assigned_to: selectedMember,
+              starts_on: null,
+              ends_on: deadlineDate,
+              percentage_completed: 20,
+              assigned_by: '',
+              status: 'COMPLETED',
+            },
+          },
+        ],
+      }),
+    });
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View
@@ -75,7 +106,7 @@ const MainScreen = ({ navigation }) => {
         <DeadLineDatePicker />
         <TouchableOpacity
           style={styles.createButtonStyle}
-          onPress={() => navigation.push('Form screen')}
+          onPress={() => postData()}
         >
           <Text style={styles.createButtonText}>Create</Text>
         </TouchableOpacity>
