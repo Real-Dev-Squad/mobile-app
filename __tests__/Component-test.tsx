@@ -85,10 +85,15 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
+const DATA = {
+  title: 'Task1',
+  assigned_by: 'admin',
+};
+
 test('setTimeout called which calls other two functions remove and changecard', () => {
   const { getByTestId } = render(
     <Card
-      item={Data[0]}
+      item={DATA}
       posStyle="relative"
       changecard={() => {}}
       removeCard={() => {}}
