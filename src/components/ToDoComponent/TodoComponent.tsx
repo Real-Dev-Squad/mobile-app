@@ -7,10 +7,10 @@ import Data from './Data';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 import { useNavigation } from '@react-navigation/native';
 
-const TodoComponent = ({ navigationProp }) => {
+const TodoComponent = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
-  const [changed, setChanged] = useState<boolean>(false);
+  // const [changed, setChanged] = useState<boolean>(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -21,15 +21,15 @@ const TodoComponent = ({ navigationProp }) => {
     const todos = await fetch(GoalsApi.GET_TODO_S);
     const todosJsonData = await todos.json();
     setTasks([...Data.data, ...todosJsonData.data]);
-  };  
+  };
   const changeCardFunction = () => {
-    setChanged(true);
+    // setChanged(true);
     const item = tasks.shift() as Task;
     const filteredTasks = tasks.filter(
       (task) => task.attributes?.id === item.attributes?.id,
     );
     setTasks([...filteredTasks, item]);
-    setChanged(false);
+    // setChanged(false);
   };
 
   const removeCard = (id: any) => {
