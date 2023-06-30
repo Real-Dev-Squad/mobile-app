@@ -101,12 +101,12 @@ const DATA = {
 //     />,
 //   );
 
-  jest.useFakeTimers();
-  jest.spyOn(global, 'setTimeout');
-  fireEvent.press(getByTestId('doneBtn'));
-  expect(setTimeout).toHaveBeenCalledTimes(1);
-  expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 4000);
-});
+//   jest.useFakeTimers();
+//   jest.spyOn(global, 'setTimeout');
+//   fireEvent.press(getByTestId('doneBtn'));
+//   expect(setTimeout).toHaveBeenCalledTimes(1);
+//   expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 4000);
+// });
 
 //Sign In Withh Web and OtpModal Component Test
 test('Check is sign in with web and otpmodal is rendering', () => {
