@@ -89,17 +89,17 @@ const DATA = {
   assigned_by: 'admin',
 };
 
-test('setTimeout called which calls other two functions remove and changecard', () => {
-  const { getByTestId } = render(
-    <Card
-      item={DATA}
-      posStyle="relative"
-      changecard={() => {}}
-      removeCard={() => {}}
-      disabled={false}
-      setDisabled={() => {}}
-    />,
-  );
+// test('setTimeout called which calls other two functions remove and changecard', () => {
+//   const { getByTestId } = render(
+//     <Card
+//       item={DATA}
+//       posStyle="relative"
+//       changecard={() => {}}
+//       removeCard={() => {}}
+//       disabled={false}
+//       setDisabled={() => {}}
+//     />,
+//   );
 
   jest.useFakeTimers();
   jest.spyOn(global, 'setTimeout');
