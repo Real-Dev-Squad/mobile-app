@@ -34,12 +34,20 @@ export const CardStyles = StyleSheet.create({
     color: '#252525',
     fontWeight: 'bold',
   },
-  icon: {
-    resizeMode: 'cover',
-    width: 25,
-    height: 25,
+  assignedTextContainer: {
+    display: 'flex',
+    flexDirection: 'row',
     alignSelf: 'flex-end',
-    marginRight: 15,
-    marginLeft: 15,
+    margin: 4,
+  },
+  icon:{
+    resizeMode:'cover',
+    width: 25,
+    height:25,
+    marginRight:5 
+  },
+  assignedToText: {
+    margin: 4,
+    alignSelf: 'flex-end',
   },
 });

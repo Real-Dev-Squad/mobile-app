@@ -1,34 +1,34 @@
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
-import data from './Data';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
+import Data from './Data';
+import GoalsApi from '../../constants/apiConstant/GoalsApi';
 import { useNavigation } from '@react-navigation/native';
 
-const TodoComponent = () => {
-  const [tasks, setTasks] = useState<Task[]>(data);
+const TodoComponent = ({ navigationProp }) => {
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [changed, setChanged] = useState<boolean>(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
-    getTodos()
-  }, [changed, tasks]);
+    getTodos();
+  }, []);
 
-  const getTodos = async() => {
-    const todos = await fetch('https://backend-goals-production.up.railway.app/goal/');
+  const getTodos = async () => {
+    const todos = await fetch(GoalsApi.GET_TODO_S);
     const todosJsonData = await todos.json();
-    setTasks(todosJsonData.data)
-  }
+    setTasks([...Data.data, ...todosJsonData.data]);
+  };  
   const changeCardFunction = () => {
     setChanged(true);
     const item = tasks.shift() as Task;
-    tasks.push(item);
+    const filteredTasks = tasks.filter(
+      (task) => task.attributes?.id === item.attributes?.id,
+    );
+    setTasks([...filteredTasks, item]);
     setChanged(false);
   };
 
@@ -38,25 +38,24 @@ const TodoComponent = () => {
     setDisabled(false);
   };
 
-  const navigation = useNavigation();
-
   return (
     <View style={TodoStyles.container}>
       <View style={TodoStyles.flex}>
-      <Text style={TodoStyles.title}>To Do's</Text>
-      <TouchableOpacity
-        style={styles.CreateGoalButton}
-        onPress={() => navigation.navigate('CreatingGoals')}
-      >
-        <Text style={{ color: 'black',elevation:10 }}> Add</Text>
-      </TouchableOpacity>
+        <Text style={TodoStyles.title}>To Do's</Text>
+        <TouchableOpacity
+          style={styles.CreateGoalButton}
+          onPress={() => navigation.navigate('CreatingGoals')}
+        >
+          <Text style={{ color: 'black', elevation: 10 }}> Add</Text>
+        </TouchableOpacity>
       </View>
       <View style={{ paddingVertical: 35 }}>
-        {tasks.length === 0 ? (
+        {tasks?.length === 0 ? (
           <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
         ) : (
           tasks
-            .map((task) => {
+            ?.map((task) => {
+              const { title, assigned_by } = task?.attributes;
               return (
                 <Card
                   posStyle={tasks.indexOf(task) !== 0 ? 'absolute' : 'relative'}
@@ -66,6 +65,8 @@ const TodoComponent = () => {
                   removeCard={removeCard}
                   disabled={disabled}
                   setDisabled={setDisabled}
+                  title={title}
+                  assigned_by={assigned_by}
                 />
               );
             })
@@ -82,7 +83,9 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   CreateGoalButton: {
-    elevation: 5, 
+    // width: '100%',
+    // height: 50,
+    elevation: 5,
     borderRadius: 5,
     backgroundColor: 'white',
     alignSelf: 'center',

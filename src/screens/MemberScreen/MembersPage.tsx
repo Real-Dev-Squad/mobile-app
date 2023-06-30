@@ -32,7 +32,7 @@ const MembersPage = () => {
       // Set loading state
       setLoading(true);
 
-      const members = await fetch(GoalsApi.MembersApi);
+      const members = await fetch(GoalsApi.MEMBERS_API);
       const membersJsonData = await members.json();
 
       // Set members data and clear loading and error states
