@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import ShortGoalsComponent from '../src/components/ShortGoalsComponent/ShortGoalsComponent';
 import Card from '../src/components/ToDoComponent/Card';
-import Data from '../src/components/ToDoComponent/Data';
 import 'react-native-gesture-handler';
 import DurationDropdown from '../src/components/CreateGoalForm/Dropdown';
 import FloatingButton from '../src/components/FloatingButton';
@@ -77,7 +76,6 @@ jest.mock('react-native-reanimated', () => {
   const View = require('react-native').View;
 
   return {
-    useSharedValue: jest.fn(),
     useAnimatedGestureHandler: jest.fn(),
     useAnimatedStyle: jest.fn(),
     View: View,
