@@ -9,7 +9,7 @@ import Strings from '../../i18n/en';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
 import { TabViewStyle } from './style';
-import GoalScreen from '../../screens/GoalScreen/GoalScreen';
+import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 
 const tab = createBottomTabNavigator();
 
@@ -54,7 +54,7 @@ const TabNavigation = () => {
         />
         <tab.Screen
           name={Strings.Tab_Goal}
-          component={GoalScreen}
+          component={GoalsScreenStack}
           options={{
             headerShown: false,
 

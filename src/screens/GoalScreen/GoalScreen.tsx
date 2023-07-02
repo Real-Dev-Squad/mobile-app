@@ -6,14 +6,35 @@ import withHeader from '../../helpers/withHeader';
 import ShortGoalsComponent from '../../components/ShortGoalsComponent/ShortGoalsComponent';
 import LongGoalsComponent from '../../components/LongGoalsComponent';
 import TodoComponent from '../../components/ToDoComponent/TodoComponent';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CreatingGoals from '../../components/ToDoComponent/SettingGoals/CreateGoals';
+import MembersPage from '../MemberScreen/MembersPage';
+
+const Stack = createNativeStackNavigator();
 const GoalScreen = () => {
   return (
     <ScrollView>
-      <TodoComponent />
+      <TodoComponent data-testid="todo-component" />
+      {/* TODO: moving to v2
       <ShortGoalsComponent />
-      <LongGoalsComponent />
+      <LongGoalsComponent /> */}
     </ScrollView>
   );
 };
 
-export default withHeader(GoalScreen);
+function GoalsScreenStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="GoalsScreen" component={GoalScreen} />
+      <Stack.Screen name="CreatingGoals" component={CreatingGoals} />
+      <Stack.Screen name="Member's page" component={MembersPage} />
+
+    </Stack.Navigator>
+  );
+}
+
+export default withHeader(GoalsScreenStack);
