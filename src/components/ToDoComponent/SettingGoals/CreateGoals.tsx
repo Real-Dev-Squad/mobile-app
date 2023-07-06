@@ -8,68 +8,24 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
-import DeadLineDatePicker, { deadlineDate } from './SettingGoalsComponents/DeadLineDatePicker';
+import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
+import postData from './POST_API';
 
+export let selectedMemberData: string,
+  titleData: string,
+  descriptionData: string;
 const MainScreen = ({ navigation }) => {
   const [selectedMember, setSelectedMember] = React.useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
-
-  const postData = async () => {
-    const url = 'https://backend-goals-production.up.railway.app/goal/';
-    let request = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        data: [
-          {
-            type: 'Goal',
-            id: '1',
-            attributes: {
-              title: titleText,
-              description: descriptionText,
-              created_at: '2023-06-22T00:08:38.695783Z',
-              created_by: '',
-              assigned_to: selectedMember,
-              starts_on: null,
-              ends_on: deadlineDate,
-              percentage_completed: 20,
-              assigned_by: '',
-              status: 'COMPLETED',
-            },
-          },
-        ],
-      }),
-    });
-  };
+  selectedMemberData = selectedMember;
+  titleData = titleText;
+  descriptionData = descriptionText;
 
   return (
     <ScrollView style={styles.container}>
-      <View
-        style={{
-          borderWidth: 3,
-          paddingTop: 20,
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingBottom: 40,
-          height: 650,
-          borderRadius: 20,
-          overflow: 'hidden',
-        }}
-      >
-        <Text
-          style={{
-            color: '#2827CC',
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}
-        >
-          Add New Goal
-        </Text>
+      <View style={styles.titleStyle}>
+        <Text style={styles.titleTextStyle}>Add New Goal</Text>
         <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
@@ -78,7 +34,7 @@ const MainScreen = ({ navigation }) => {
           onChangeText={setTitleText}
           placeholder="Enter title max of 50 characters."
         />
-        <Text style={styles.titleText}>Description</Text>
+        <Text style={styles.titles}>Description</Text>
         <TextInput
           style={styles.inputStyle}
           value={descriptionText}
@@ -169,9 +125,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#2827CC',
   },
-  titleText:{
-
-  }
+  titleTextStyle: {
+    color: '#2827CC',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  titleStyle: {
+    borderWidth: 3,
+    paddingTop: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 40,
+    height: 650,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
 });
 
 export default MainScreen;
