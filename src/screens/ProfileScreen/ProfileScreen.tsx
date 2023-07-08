@@ -9,23 +9,15 @@ import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-import { fetchContribution, fetchUserData } from '../AuthScreen/Util';
-import { User } from '../../context/type';
+import { fetchContribution } from '../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { useSelector } from 'react-redux';
+
 const ProfileScreen = () => {
+  const { user } = useSelector((store) => store);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-  const [userDetails, setUserDetails] = useState<User | null>({
-    company: '',
-    designation: '',
-    githubUrl: '',
-    linkedInUrl: '',
-    name: '',
-    profileUrl: '',
-    twitterUrl: '',
-    userName: '',
-  });
   const [contributionData, setContributionData] = useState({
     allData: [],
     noteworthy: [],
@@ -55,13 +47,9 @@ const ProfileScreen = () => {
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        // TODO: get the userId from global store
-        const userId = 'lDaUIVTP4sXRwPWh3Gn4';
         const userName = 'ankush';
-        const userResponse = await fetchUserData(userId);
         const contributionResponse = await fetchContribution(userName);
         setContributionData(contributionResponse);
-        setUserDetails(userResponse);
       })();
     }, []),
   );

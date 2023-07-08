@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 import withHeader from '../../helpers/withHeader';
@@ -7,9 +7,12 @@ import Strings from '../../i18n/en';
 import { updateStatus } from '../AuthScreen/Util';
 import { HomeViewStyle } from './styles';
 import Toast from 'react-native-toast-message';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../actions';
 
 const HomeScreen = () => {
   const [loader, setLoader] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
 
@@ -102,6 +105,12 @@ const HomeScreen = () => {
       </View>
     );
   };
+
+  useEffect(() => {
+    // TODO: get the userId from global store
+    dispatch(getUser('lDaUIVTP4sXRwPWh3Gn4'));
+  }, [dispatch]);
+
   return <View style={HomeViewStyle.container}>{renderScreen()}</View>;
 };
 
