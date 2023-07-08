@@ -2,7 +2,7 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import { User } from '../../context/type';
 import { fetchUserData } from '../requests/fetchUser';
 
-function* fetchUserRequest(action) {
+export function* fetchUserRequest(action) {
   try {
     const user: User = yield call(fetchUserData, action.payload);
     yield put({ type: 'FETCH_USER', user: user });
