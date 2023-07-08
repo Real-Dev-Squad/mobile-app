@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
 import MembersPage from '../../../src/screens/MemberScreen/MembersPage';
 
 // Mock the fetch function
@@ -52,3 +52,5 @@ describe('MembersPage', () => {
     expect(() => getByTestId('loader')).toThrow();
 
     // Verify that the error message
+  });
+});

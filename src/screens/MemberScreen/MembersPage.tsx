@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
-import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
 type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
@@ -16,7 +16,7 @@ type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
 const MembersPage = () => {
   const route = useRoute<MembersPageRouteProp>();
   const [membersData, setMembersData] = useState([]);
-  const [filterMemberData,setFilterMemberData] = useState([])
+  const [filterMemberData, setFilterMemberData] = useState([]);
   const { selectedMember, setSelectedMember } = route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ const MembersPage = () => {
 
       // Set members data and clear loading and error states
       setMembersData(membersJsonData.members);
-      setFilterMemberData(membersJsonData.members)
+      setFilterMemberData(membersJsonData.members);
       setLoading(false);
       setError(null);
     } catch (error) {
@@ -63,17 +63,14 @@ const MembersPage = () => {
         membersData={filterMemberData}
         setMembersData={setMembersData}
       />
-        <FlatList
-          data={membersData}
-          renderItem={({ item }) => (
-            <RenderMemberItem
-              item={item}
-              setSelectedMember={setSelectedMember}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          ListFooterComponent={renderLoader}
-        />
+      <FlatList
+        data={membersData}
+        renderItem={({ item }) => (
+          <RenderMemberItem item={item} setSelectedMember={setSelectedMember} />
+        )}
+        keyExtractor={(item) => item.id}
+        ListFooterComponent={renderLoader}
+      />
     </View>
   );
 };
@@ -89,8 +86,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 2,
-    textAlign:'center',
-    margin:2
+    textAlign: 'center',
+    margin: 2,
   },
   loaderView: { alignItems: 'center', paddingVertical: 20 },
 });

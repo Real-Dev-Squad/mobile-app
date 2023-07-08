@@ -11,7 +11,7 @@ import CreatingGoals from '../../components/ToDoComponent/SettingGoals/CreateGoa
 import MembersPage from '../MemberScreen/MembersPage';
 
 const Stack = createNativeStackNavigator();
-const GoalScreen = () => {
+const GoalsScreen = () => {
   return (
     <ScrollView>
       <TodoComponent data-testid="todo-component" />
@@ -29,10 +29,9 @@ function GoalsScreenStack() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="GoalsScreen" component={GoalScreen} />
+      <Stack.Screen name="GoalsScreen" component={GoalsScreen} />
       <Stack.Screen name="CreatingGoals" component={CreatingGoals} />
       <Stack.Screen name="Member's page" component={MembersPage} />
-
     </Stack.Navigator>
   );
 }
