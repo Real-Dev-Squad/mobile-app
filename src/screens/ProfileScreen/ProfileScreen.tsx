@@ -15,7 +15,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
 const ProfileScreen = () => {
-  const { user } = useSelector((store) => store);
+  const { data: userData } = useSelector((store) => store.user);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
   const [contributionData, setContributionData] = useState({
