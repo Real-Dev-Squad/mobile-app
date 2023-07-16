@@ -1,4 +1,4 @@
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect, memo } from 'react';
 import Animated, {
   Easing,
@@ -110,7 +110,7 @@ const Card = ({
             style={[CardStyles.card, animatedStyle, { position: posStyle }]}
           >
             <View style={CardStyles.viewStyle}>
-              <View style={!item.isread ? { height: 25 } : null}>
+              <View style={!item.isread && styles.imageContainer}>
                 {item.isread && (
                   <Image source={Images.earthIcon} style={[CardStyles.icon]} />
                 )}
@@ -135,5 +135,9 @@ const Card = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  imageContainer: { height: 25 },
+});
 
 export default memo(Card);

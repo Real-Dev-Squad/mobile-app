@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
 import MembersPage from '../../../src/screens/MemberScreen/MembersPage';
 
 // Mock the fetch function
@@ -7,7 +7,13 @@ jest.mock('node-fetch');
 
 describe('MembersPage', () => {
   it('renders the component', () => {
-    render(<MembersPage />);
+    render(
+      <MembersPage
+        key={''}
+        name={'MembersPage'}
+        params={{ selectedMember: 'test member', setSelectedMember: () => {} }}
+      />,
+    );
   });
 
   it('fetches and renders members data', async () => {
@@ -20,7 +26,13 @@ describe('MembersPage', () => {
       json: jest.fn().mockResolvedValueOnce({ members: mockMembers }),
     });
 
-    const { getByText, getByTestId } = render(<MembersPage />);
+    const { getByText, getByTestId } = render(
+      <MembersPage
+        key={''}
+        name={'MembersPage'}
+        params={{ selectedMember: 'test member', setSelectedMember: () => {} }}
+      />,
+    );
 
     // Verify that loading state is displayed
     expect(getByTestId('loader')).toBeTruthy();
@@ -40,7 +52,13 @@ describe('MembersPage', () => {
     // Mock a failed response from the API
     global.fetch.mockRejectedValueOnce(new Error('API error'));
 
-    const { getByText, getByTestId } = render(<MembersPage />);
+    const { getByTestId } = render(
+      <MembersPage
+        key={''}
+        name={'MembersPage'}
+        params={{ selectedMember: 'test member', setSelectedMember: () => {} }}
+      />,
+    );
 
     // Verify that loading state is displayed
     expect(getByTestId('loader')).toBeTruthy();
@@ -52,3 +70,5 @@ describe('MembersPage', () => {
     expect(() => getByTestId('loader')).toThrow();
 
     // Verify that the error message
+  });
+});

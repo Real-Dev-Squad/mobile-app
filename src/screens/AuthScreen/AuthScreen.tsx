@@ -7,6 +7,7 @@ import {
   ScrollView,
   ActivityIndicator,
   SafeAreaView,
+  StyleSheet,
 } from 'react-native';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
@@ -58,12 +59,12 @@ const AuthScreen = () => {
 
   if (githubView) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.mainContainer}>
         <ScrollView contentContainerStyle={AuthViewStyle.container}>
           <View style={AuthViewStyle.addressBarStyle}>
             {loading ? (
               <ActivityIndicator
-                style={{ marginLeft: 5 }}
+                style={styles.activityIndicator}
                 size={25}
                 color="#fff"
               />
@@ -157,5 +158,10 @@ const AuthScreen = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  mainContainer: { flex: 1 },
+  activityIndicator: { marginLeft: 5 },
+});
 
 export default AuthScreen;

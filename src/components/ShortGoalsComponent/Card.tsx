@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import React from 'react';
 import Images from '../../constants/images/Image';
 import { CardStyles } from './Styles/CardStyles';
@@ -25,18 +25,22 @@ const Card = ({ item }: any) => {
       <View style={[CardStyles.flex, CardStyles.container]}>
         <View style={CardStyles.flex}>
           <Image source={Images.commentIcon} style={CardStyles.commentIcon} />
-          <Text style={{ color: 'blue' }}>{item.messageCount}</Text>
+          <Text style={styles.messageCount}>{item.messageCount}</Text>
         </View>
-        <Text style={{ color: 'red' }}>Due in {item.dueDate} days</Text>
+        <Text style={styles.dueText}>Due in {item.dueDate} days</Text>
         <TouchableOpacity style={[CardStyles.doneBtn, CardStyles.flex]}>
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>
-            Mark as done
-          </Text>
+          <Text style={styles.btnText}>Mark as done</Text>
           <Image source={Images.doneIcon} style={CardStyles.doneIcon} />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  messageCount: { color: 'blue' },
+  btnText: { color: 'white', fontWeight: 'bold' },
+  dueText: { color: 'red' },
+});
 
 export default Card;

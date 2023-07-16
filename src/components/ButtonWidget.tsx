@@ -35,7 +35,7 @@ const ButtonWidget = ({
   return (
     <Pressable style={icon ? styles.iconStyle : btnStyle} onPress={onPress}>
       {icon ? (
-        <Image style={{ height: 50, width: 50 }} source={icon} />
+        <Image style={styles.image} source={icon} />
       ) : (
         <Text
           style={{
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     borderRadius: 15,
   },
+  image: { height: 50, width: 50 },
 });
 
 export default ButtonWidget;

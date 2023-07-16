@@ -8,6 +8,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');
@@ -61,23 +62,20 @@ const SearchBar = () => {
   };
 
   const ItemSeparatorView = () => {
-    return (
-      <View
-        style={{
-          height: 0.5,
-          width: '100%',
-          backgroundColor: '#C8C8C8',
-        }}
-      />
-    );
+    return <View style={style.itemSeparatorLine} />;
   };
 
   const getItem = (item) => {
-    alert('Id : ' + item.id + ' Title : ' + item.title);
+    Toast.show({
+      type: 'info',
+      text1: item.title,
+      position: 'bottom',
+      bottomOffset: 80,
+    });
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.mainContainer}>
       <View style={styles.container}>
         <TextInput
           style={styles.textInputStyle}
@@ -98,6 +96,7 @@ const SearchBar = () => {
 };
 
 const styles = StyleSheet.create({
+  mainContainer: { flex: 1 },
   container: {
     backgroundColor: 'white',
   },
@@ -113,6 +112,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     borderColor: 'black',
     backgroundColor: '#ecf0f1',
+  },
+  itemSeparatorLine: {
+    height: 0.5,
+    width: '100%',
+    backgroundColor: '#C8C8C8',
   },
 });
 

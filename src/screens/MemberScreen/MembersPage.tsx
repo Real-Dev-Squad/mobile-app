@@ -8,19 +8,19 @@ import {
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
-import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
+import Toast from 'react-native-toast-message';
+import { RootStackParamList } from '../GoalScreen/GoalScreen';
 
-type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
+type MembersPageRouteProp = RouteProp<RootStackParamList, 'MembersPage'>;
 
-const MembersPage = () => {
-  const route = useRoute<MembersPageRouteProp>();
+const MembersPage = (props: MembersPageRouteProp) => {
   const [membersData, setMembersData] = useState([]);
-  const [filterMemberData,setFilterMemberData] = useState([])
-  const { selectedMember, setSelectedMember } = route.params;
+  const [filterMemberData, setFilterMemberData] = useState([]);
+  const { selectedMember, setSelectedMember } = props.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     callMembersApi();
@@ -36,12 +36,16 @@ const MembersPage = () => {
 
       // Set members data and clear loading and error states
       setMembersData(membersJsonData.members);
-      setFilterMemberData(membersJsonData.members)
+      setFilterMemberData(membersJsonData.members);
       setLoading(false);
-      setError(null);
-    } catch (error) {
+    } catch (_) {
       // Set error state and clear loading state
-      setError('Error fetching members data.');
+      Toast.show({
+        type: 'error',
+        text1: 'Error fetching members data.',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
       setLoading(false);
     }
   };
@@ -61,19 +65,19 @@ const MembersPage = () => {
         setSearchValue={setSearchValue}
         searchValue={searchValue}
         membersData={filterMemberData}
-        setMembersData={setMembersData}
+        setMembersData={() => setMembersData}
       />
-        <FlatList
-          data={membersData}
-          renderItem={({ item }) => (
-            <RenderMemberItem
-              item={item}
-              setSelectedMember={setSelectedMember}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          ListFooterComponent={renderLoader}
-        />
+      <FlatList
+        data={membersData}
+        renderItem={({ item }) => (
+          <RenderMemberItem
+            item={item}
+            setSelectedMember={() => setSelectedMember}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+        ListFooterComponent={renderLoader}
+      />
     </View>
   );
 };
@@ -89,8 +93,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 2,
-    textAlign:'center',
-    margin:2
+    textAlign: 'center',
+    margin: 2,
   },
   loaderView: { alignItems: 'center', paddingVertical: 20 },
 });

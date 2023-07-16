@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import DurationDropDown from './SettingGoalsComponents/DurationDropDown';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 
 const MainScreen = ({ navigation }) => {
@@ -16,29 +15,9 @@ const MainScreen = ({ navigation }) => {
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   return (
-    <ScrollView style={styles.container}>
-      <View
-        style={{
-          borderWidth: 3,
-          paddingTop: 20,
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingBottom: 40,
-          height: 650,
-          borderRadius: 20,
-          overflow: 'hidden',
-        }}
-      >
-        <Text
-          style={{
-            color: '#2827CC',
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}
-        >
-          Add New Goal
-        </Text>
+    <ScrollView style={styles.mainContainer}>
+      <View style={styles.container}>
+        <Text style={styles.header}>Add New Goal</Text>
         <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
@@ -61,7 +40,7 @@ const MainScreen = ({ navigation }) => {
         {/* <DurationDropDown /> */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Member's page", {
+            navigation.navigate('MembersPage', {
               setSelectedMember,
               selectedMember,
             })
@@ -85,7 +64,7 @@ const MainScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     paddingTop: 30,
     paddingLeft: 40,
@@ -93,6 +72,22 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20,
     backgroundColor: 'white',
+  },
+  container: {
+    borderWidth: 3,
+    paddingTop: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 40,
+    height: 650,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  header: {
+    color: '#2827CC',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   formView: {
     borderWidth: 3,
@@ -138,9 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#2827CC',
   },
-  titleText:{
-
-  }
+  titleText: {},
 });
 
 export default MainScreen;

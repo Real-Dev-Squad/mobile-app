@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import Images from '../constants/images/Image';
 
 const Avatar = ({ uri, size }: { uri: string; size: number }) => {
   const uriToPass = uri ? uri : Images.DEFAULT_IMAGE;
   return (
-    <View key={uriToPass} style={{ alignItems: 'center' }}>
+    <View key={uriToPass} style={styles.container}>
       <Image
         resizeMode="cover"
         resizeMethod="scale"
@@ -15,5 +15,11 @@ const Avatar = ({ uri, size }: { uri: string; size: number }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
+});
 
 export default Avatar;

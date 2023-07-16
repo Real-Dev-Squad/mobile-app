@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Avatar from './Avatar';
 
 const AvatarWithBadge = ({
@@ -14,7 +14,7 @@ const AvatarWithBadge = ({
 }) => {
   const ICON_SIZE = size / 2.5;
   return (
-    <View key={uri} style={{ alignItems: 'center', position: 'relative' }}>
+    <View key={uri} style={styles.container}>
       <Image
         resizeMode="cover"
         resizeMethod="scale"
@@ -35,5 +35,9 @@ const AvatarWithBadge = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { alignItems: 'center', position: 'relative' },
+});
 
 export default AvatarWithBadge;

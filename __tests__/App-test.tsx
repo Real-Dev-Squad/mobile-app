@@ -2,6 +2,7 @@ import React from 'react';
 import App from '../App';
 import renderer from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+jest.useFakeTimers();
 
 async function asyncOperationOnAsyncStorage() {
   await AsyncStorage.setItem('myKey', '1');
