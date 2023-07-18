@@ -29,7 +29,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^2.0.0",
     "react-native-floating-action": "^1.22.0",
-    "react-native-gesture-handler": "^1.10.3",
+    "react-native-gesture-handler": "2.12.0",
     "react-native-image-picker": "^4.7.1",
     "react-native-paper": "^4.12.3",
     "react-native-radio-buttons-group": "^2.2.11",

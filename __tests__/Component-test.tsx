@@ -3,7 +3,6 @@ import { fireEvent, render } from '@testing-library/react-native';
 import ShortGoalsComponent from '../src/components/ShortGoalsComponent/ShortGoalsComponent';
 import Card from '../src/components/ToDoComponent/Card';
 import Data from '../src/components/ToDoComponent/Data';
-import 'react-native-gesture-handler';
 import DurationDropdown from '../src/components/CreateGoalForm/Dropdown';
 import FloatingButton from '../src/components/FloatingButton';
 import Strings from '../src/i18n/en';
@@ -59,8 +58,6 @@ test('floating actions exists when we click floating button', () => {
 });
 
 // ToDoComponent Tests
-
-jest.mock('react-native-gesture-handler', () => {});
 
 jest.mock('react-native-gesture-handler', () => {
   const View = require('react-native').View;

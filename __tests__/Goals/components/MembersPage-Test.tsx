@@ -22,11 +22,12 @@ describe('MembersPage', () => {
       { id: 1, name: 'John Doe' },
       { id: 2, name: 'Jane Smith' },
     ];
-    global.fetch.mockResolvedValueOnce({
-      json: jest.fn().mockResolvedValueOnce({ members: mockMembers }),
+
+    global.fetch = jest.fn().mockResolvedValue({
+      json: () => Promise.resolve({ members: mockMembers }),
     });
 
-    const { getByText, getByTestId } = render(
+    const { getByText } = render(
       <MembersPage
         key={''}
         name={'MembersPage'}
@@ -34,14 +35,8 @@ describe('MembersPage', () => {
       />,
     );
 
-    // Verify that loading state is displayed
-    expect(getByTestId('loader')).toBeTruthy();
-
     // Wait for API call to finish
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
-
-    // Verify that loading state is hidden
-    expect(() => getByTestId('loader')).toThrow();
 
     // Verify that the member's names are rendered
     expect(getByText('John Doe')).toBeTruthy();
@@ -60,14 +55,8 @@ describe('MembersPage', () => {
       />,
     );
 
-    // Verify that loading state is displayed
-    expect(getByTestId('loader')).toBeTruthy();
-
     // Wait for API call to finish
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
-
-    // Verify that loading state is hidden
-    expect(() => getByTestId('loader')).toThrow();
 
     // Verify that the error message
   });

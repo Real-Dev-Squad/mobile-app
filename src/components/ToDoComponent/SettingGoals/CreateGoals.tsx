@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import 'react-native-gesture-handler';
 import {
   Text,
   TextInput,
