@@ -1,19 +1,33 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react-native';
 import MembersPage from '../../../src/screens/MemberScreen/MembersPage';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../src/screens/GoalScreen/GoalScreen';
 
 // Mock the fetch function
 jest.mock('node-fetch');
 
 describe('MembersPage', () => {
+  const navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'MembersSceen'
+  > = {
+    navigate: jest.fn(),
+  };
+
+  const params = {
+    selectedMember: 'test member',
+    setSelectedMember: jest.fn(),
+  };
+
   it('renders the component', () => {
-    render(
+    const { getByText } = render(
       <MembersPage
-        key={''}
-        name={'MembersPage'}
-        params={{ selectedMember: 'test member', setSelectedMember: () => {} }}
+        navigation={navigation}
+        route={{ key: '', name: 'MembersSceen', params: { ...params } }}
       />,
     );
+    expect(getByText("Real Dev Squad Member's")).toBeTruthy();
   });
 
   it('fetches and renders members data', async () => {
@@ -27,16 +41,16 @@ describe('MembersPage', () => {
       json: () => Promise.resolve({ members: mockMembers }),
     });
 
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
+
     const { getByText } = render(
       <MembersPage
-        key={''}
-        name={'MembersPage'}
-        params={{ selectedMember: 'test member', setSelectedMember: () => {} }}
+        navigation={navigation}
+        route={{ key: '', name: 'MembersSceen', params: { ...params } }}
       />,
     );
 
     // Wait for API call to finish
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
 
     // Verify that the member's names are rendered
     expect(getByText('John Doe')).toBeTruthy();
@@ -49,14 +63,16 @@ describe('MembersPage', () => {
 
     const { getByTestId } = render(
       <MembersPage
-        key={''}
-        name={'MembersPage'}
-        params={{ selectedMember: 'test member', setSelectedMember: () => {} }}
+        navigation={navigation}
+        route={{ key: '', name: 'MembersSceen', params: { ...params } }}
       />,
     );
 
     // Wait for API call to finish
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(2));
+
+    // Verify that loading state is hidden
+    expect(() => getByTestId('loader')).toThrow();
 
     // Verify that the error message
   });

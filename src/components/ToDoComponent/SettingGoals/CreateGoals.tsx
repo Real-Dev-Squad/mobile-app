@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {
   Text,
@@ -7,9 +8,15 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { RootStackParamList } from '../../../screens/GoalScreen/GoalScreen';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 
-const MainScreen = ({ navigation }) => {
+type CreatingGoalScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'CreatingGoalsSceen'
+>;
+
+const CreatingGoalScreen = ({ navigation }: CreatingGoalScreenProps) => {
   const [selectedMember, setSelectedMember] = React.useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
@@ -39,7 +46,7 @@ const MainScreen = ({ navigation }) => {
         {/* <DurationDropDown /> */}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('MembersPage', {
+            navigation.navigate('MembersSceen', {
               setSelectedMember,
               selectedMember,
             })
@@ -51,10 +58,7 @@ const MainScreen = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.titles}>DeadLine</Text>
         <DeadLineDatePicker />
-        <TouchableOpacity
-          style={styles.createButtonStyle}
-          onPress={() => navigation.push('Form screen')}
-        >
+        <TouchableOpacity style={styles.createButtonStyle} onPress={() => {}}>
           <Text style={styles.createButtonText}>Create</Text>
         </TouchableOpacity>
       </View>
@@ -135,4 +139,4 @@ const styles = StyleSheet.create({
   titleText: {},
 });
 
-export default MainScreen;
+export default CreatingGoalScreen;

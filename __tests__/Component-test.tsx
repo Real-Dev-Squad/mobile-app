@@ -8,7 +8,7 @@ import FloatingButton from '../src/components/FloatingButton';
 import Strings from '../src/i18n/en';
 import AuthScreen from '../src/screens/AuthScreen/AuthScreen';
 import { OtpModal } from '../src/screens/AuthScreen/OtpModal';
-
+jest.useFakeTimers();
 // Short Term Goals component test
 
 test('flatlist does not exist on initial render', () => {

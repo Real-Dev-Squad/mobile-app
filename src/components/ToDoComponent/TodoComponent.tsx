@@ -4,9 +4,18 @@ import Card from './Card';
 import data from './Data';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
-import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../screens/GoalScreen/GoalScreen';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-const TodoComponent = () => {
+export type TodoComponentProp = {
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'GoalsScreen',
+    undefined
+  >;
+};
+
+const TodoComponent = ({ navigation }: TodoComponentProp) => {
   const [tasks, setTasks] = useState<Task[]>(data);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [changed, setChanged] = useState<boolean>(false);
@@ -28,17 +37,15 @@ const TodoComponent = () => {
     setDisabled(false);
   };
 
-  const navigation = useNavigation();
-
   return (
     <View style={TodoStyles.container}>
       <View style={TodoStyles.flex}>
         <Text style={TodoStyles.title}>To Do's</Text>
         <TouchableOpacity
           style={styles.CreateGoalButton}
-          onPress={() => navigation.navigate('CreatingGoals')}
+          onPress={() => navigation.navigate('CreatingGoalsSceen')}
         >
-          <Text style={styles.buttonTitle}> Add</Text>
+          <Text style={styles.buttonTitle}>Add</Text>
         </TouchableOpacity>
       </View>
 

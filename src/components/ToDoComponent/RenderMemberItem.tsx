@@ -25,7 +25,7 @@ const RenderMemberItem = ({
 
   const handleSelectMember = (name: string) => {
     setSelectedMember(name);
-    navigation.navigate('CreatingGoals');
+    navigation.navigate('CreatingGoalsSceen');
   };
 
   return (

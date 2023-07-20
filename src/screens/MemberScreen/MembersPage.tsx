@@ -8,17 +8,20 @@ import {
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
-import { RouteProp } from '@react-navigation/native';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 import Toast from 'react-native-toast-message';
 import { RootStackParamList } from '../GoalScreen/GoalScreen';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type MembersPageRouteProp = RouteProp<RootStackParamList, 'MembersPage'>;
+type MembersSceenProp = NativeStackScreenProps<
+  RootStackParamList,
+  'MembersSceen'
+>;
 
-const MembersPage = (props: MembersPageRouteProp) => {
+const MembersPage = (props: MembersSceenProp) => {
   const [membersData, setMembersData] = useState([]);
   const [filterMemberData, setFilterMemberData] = useState([]);
-  const { selectedMember, setSelectedMember } = props.params;
+  const { selectedMember, setSelectedMember } = props.route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
 
