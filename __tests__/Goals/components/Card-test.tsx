@@ -35,6 +35,7 @@ describe('Card', () => {
         removeCard={() => {}}
         disabled={false}
         setDisabled={() => {}}
+        testId="animated-view"
       />,
     );
     const animatedView = getByTestId('animated-view');

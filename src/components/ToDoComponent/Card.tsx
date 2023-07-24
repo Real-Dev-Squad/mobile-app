@@ -29,6 +29,7 @@ type props = {
   removeCard: (id: number) => void;
   disabled: boolean;
   setDisabled: any;
+  testId?: string;
 };
 
 const Card = ({
@@ -108,6 +109,7 @@ const Card = ({
         <PanGestureHandler onGestureEvent={panGesture}>
           <Animated.View
             style={[CardStyles.card, animatedStyle, { position: posStyle }]}
+            testID="animated-view"
           >
             <View style={CardStyles.viewStyle}>
               <View style={!item.isread && styles.imageContainer}>

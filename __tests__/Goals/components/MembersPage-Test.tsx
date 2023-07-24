@@ -41,8 +41,6 @@ describe('MembersPage', () => {
       json: () => Promise.resolve({ members: mockMembers }),
     });
 
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
-
     const { getByText } = render(
       <MembersPage
         navigation={navigation}
@@ -51,6 +49,7 @@ describe('MembersPage', () => {
     );
 
     // Wait for API call to finish
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
 
     // Verify that the member's names are rendered
     expect(getByText('John Doe')).toBeTruthy();
