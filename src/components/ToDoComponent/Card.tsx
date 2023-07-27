@@ -30,7 +30,8 @@ type props = {
   disabled: boolean;
   setDisabled: any;
   title?:string;
-  assigned_by?:string
+  assigned_by?:string;
+  markDone?:() => void;
 };
 
 const Card = ({
@@ -54,22 +55,35 @@ const Card = ({
   }, [timerRef]);
 
   const translateY = useSharedValue<number>(0);
+  const translateX = useSharedValue<number>(0);
+
   const [checked, setChecked] = useState<boolean>(false);
   let deleteCard = 'false';
 
   const panGesture = useAnimatedGestureHandler({
     onActive: (event) => {
       if (translateY.value < 150) {
-        // It ensures that we do not go beyond a certain limit
         translateY.value = event.translationY;
+      }      if (translateX.value < 150) {
+        translateX.value = event.translationX;
+      }
+      if (translateY.value < -150) {
+        translateY.value = event.translationY;
+      } 
+      if (translateX.value < -150) {
+        translateX.value = event.translationX;
       }
     },
     onEnd: () => {
       translateY.value = withTiming(0, { easing: Easing.linear });
+      translateX.value = withTiming(0, { easing: Easing.linear });
+
       if (translateY.value > 100) {
         // item.id required but after removing this the function is not getting called
-        runOnJS(changecard)(item.id);
+        return runOnJS(changecard)(item.id);
       }
+      runOnJS(changecard)(item.id);
+
     },
   });
 
@@ -77,7 +91,11 @@ const Card = ({
     transform: [
       {
         translateY: translateY.value,
+
       },
+      {
+        translateX: translateX.value,
+      }
     ],
   }));
 
