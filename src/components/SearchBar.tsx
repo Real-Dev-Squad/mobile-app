@@ -25,11 +25,13 @@ const SearchBar = ({
 }: SearchBarProps) => {
   const searchFunction = (text: string) => {  
     setSearchValue(text);
+    console.log('1',text)
+
     const updatedData = text
       ? membersData?.filter((member) =>{
         const { github_display_name,first_name,last_name,username, github_id } = member;
         const assignedTo =   username ?? github_display_name  ?? github_id ?? first_name + last_name;  
-          assignedTo
+          return assignedTo
             ?.toLowerCase()
             .includes(text.toLowerCase())}
         )

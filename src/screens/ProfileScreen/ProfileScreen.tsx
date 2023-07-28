@@ -14,6 +14,7 @@ const ProfileScreen = () => {
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+  console.log('loggedIn',loggedInUserData)
 
   const openModal = useCallback(() => {
     setModalVisible(true);

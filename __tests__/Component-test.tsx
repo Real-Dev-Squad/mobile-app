@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import ShortGoalsComponent from '../src/components/ShortGoalsComponent/ShortGoalsComponent';
 import Card from '../src/components/ToDoComponent/Card';
-import Data from '../src/components/ToDoComponent/Data';
 import 'react-native-gesture-handler';
 import DurationDropdown from '../src/components/CreateGoalForm/Dropdown';
 import FloatingButton from '../src/components/FloatingButton';
@@ -85,10 +84,15 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
+const DATA = {
+  title: 'Task1',
+  assigned_by: 'admin',
+};
+
 test('setTimeout called which calls other two functions remove and changecard', () => {
   const { getByTestId } = render(
     <Card
-      item={Data[0]}
+      item={DATA}
       posStyle="relative"
       changecard={() => {}}
       removeCard={() => {}}
