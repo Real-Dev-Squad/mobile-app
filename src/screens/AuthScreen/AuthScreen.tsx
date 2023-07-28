@@ -1,25 +1,21 @@
 import React, { useContext, useState } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  ActivityIndicator,
-  SafeAreaView,
-} from 'react-native';
-import WebView from 'react-native-webview';
-import { urls } from '../../constants/appConstant/url';
-import { AuthContext } from '../../context/AuthContext';
-import Images from '../../constants/images/Image';
-import { storeData } from '../../utils/dataStore';
+import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { OtpModal } from './OtpModal';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AuthContext } from '../../context/AuthContext';
 import { getUserData } from './Util';
+import { storeData } from '../../utils/dataStore';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityIndicator } from 'react-native';
+import Images from '../../constants/images/Image';
+import WebView from 'react-native-webview';
+import { urls } from '../../constants/appConstant/url';
 
 const AuthScreen = () => {
+  // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
   const [otpCode, setOtpCode] = useState<string>('');
@@ -38,7 +34,13 @@ const AuthScreen = () => {
   //TODO: add to constants
   const maxLength = 4;
   const handleSignIn = () => {
-    setGithubView(true);
+    // NOTE: toast until sign in with Github is implemented
+    Toast.show({
+      type: 'info',
+      text1: 'Sign in with GitHub coming soon...',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
   };
 
   const updateUserData = async (url: string) => {

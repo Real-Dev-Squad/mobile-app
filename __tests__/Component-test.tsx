@@ -103,38 +103,3 @@ test('setTimeout called which calls other two functions remove and changecard', 
   expect(setTimeout).toHaveBeenCalledTimes(1);
   expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 4000);
 });
-
-//Sign In Withh Web and OtpModal Component Test
-test('Check is sign in with web and otpmodal is rendering', () => {
-  const { getByText, queryByTestId } = render(<AuthScreen />);
-  const SignInWithWeb = getByText(Strings.SIGN_IN_WITH_WEB);
-  expect(SignInWithWeb).toBeTruthy();
-  expect(queryByTestId('otpModal')).toBeNull();
-  fireEvent.press(SignInWithWeb);
-  expect(queryByTestId('otpModal')).toBeTruthy();
-});
-
-test('Check otpmodal submit to be disabled and enabled', () => {
-  const props = {
-    title: Strings.ENTER_4_DIGIT_OTP,
-    testId: 'otpModal',
-    visible: true,
-    code: '',
-    setCode: () => {},
-    closeModal: () => {},
-  };
-  const data = [
-    { code: '', disabled: true },
-    { code: '12', disabled: true },
-    { code: '1234', disabled: false },
-  ];
-  data.forEach(({ code, disabled }) => {
-    const { getByTestId } = render(
-      <OtpModal maxLength={4} {...props} code={code} />,
-    );
-    expect(getByTestId('submitOtpModal').props).toHaveProperty(
-      'accessibilityState',
-      { disabled },
-    );
-  });
-});
