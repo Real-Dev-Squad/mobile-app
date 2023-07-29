@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
+export let deadlineDate;
 const DeadLineDatePicker = () => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  deadlineDate = date;
 
   return (
     <ScrollView>
