@@ -25,9 +25,7 @@ const postData = async () => {
   });
   request = await request.json();
   if (request.ok) {
-    Alert.alert(`Successfully created the goal.`);
-  } else {
-    Alert.alert(`${request.status}`);
+    Alert.alert('Successfully created the goal.');
   }
 };
 

@@ -66,31 +66,23 @@ const MembersPage = () => {
   };
 
   return (
-    errorState ??
-    renderError ??
-    loading ??
-    renderLoader ?? (
-      <View style={styles.container}>
-        <Text style={styles.title}>Real Dev Squad Member's</Text>
-        <SearchBar
-          setSearchValue={setSearchValue}
-          searchValue={searchValue}
-          membersData={filterMemberData}
-          setMembersData={setMembersData}
-        />
-        <FlatList
-          data={membersData}
-          renderItem={({ item }) => (
-            <RenderMemberItem
-              item={item}
-              setSelectedMember={setSelectedMember}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          ListFooterComponent={renderLoader}
-        />
-      </View>
-    )
+    <View style={styles.container}>
+      <Text style={styles.title}>Real Dev Squad Member's</Text>
+      <SearchBar
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
+        membersData={filterMemberData}
+        setMembersData={setMembersData}
+      />
+      <FlatList
+        data={membersData}
+        renderItem={({ item }) => (
+          <RenderMemberItem item={item} setSelectedMember={setSelectedMember} />
+        )}
+        keyExtractor={(item) => item.id}
+        ListFooterComponent={renderLoader}
+      />
+    </View>
   );
 };
 
