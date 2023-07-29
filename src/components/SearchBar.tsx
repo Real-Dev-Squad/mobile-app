@@ -8,14 +8,13 @@ type SearchBarProps = {
   setMembersData: ([]) => void;
 };
 
-type DisplayNameTypeProps ={
-  github_display_name?:string;
-  first_name?:string | undefined;
-  last_name?:string | undefined;
-  username?:string;
-  github_id?:string;
-}
-
+type DisplayNameTypeProps = {
+  github_display_name?: string;
+  first_name?: string | undefined;
+  last_name?: string | undefined;
+  username?: string;
+  github_id?: string;
+};
 
 const SearchBar = ({
   setSearchValue,
@@ -23,20 +22,28 @@ const SearchBar = ({
   membersData,
   setMembersData,
 }: SearchBarProps) => {
-  const searchFunction = (text: string) => {  
+  const searchFunction = (text: string) => {
     setSearchValue(text);
     console.log('1',text)
 
     const updatedData = text
-      ? membersData?.filter((member) =>{
-        const { github_display_name,first_name,last_name,username, github_id } = member;
-        const assignedTo =   username ?? github_display_name  ?? github_id ?? first_name + last_name;  
-          return assignedTo
-            ?.toLowerCase()
-            .includes(text.toLowerCase())}
-        )
+      ? membersData?.filter((member) => {
+          const {
+            github_display_name,
+            first_name,
+            last_name,
+            username,
+            github_id,
+          } = member;
+          const assignedTo =
+            username ??
+            github_display_name ??
+            github_id ??
+            first_name + last_name;
+          assignedTo?.toLowerCase().includes(text.toLowerCase());
+        })
       : membersData;
-      setMembersData(updatedData)
+    setMembersData(updatedData);
   };
 
   return (

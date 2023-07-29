@@ -9,35 +9,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
+import postData from './POST_API';
 
+export let selectedMemberData: string,
+  titleData: string,
+  descriptionData: string;
 const MainScreen = ({ navigation }) => {
   const [selectedMember, setSelectedMember] = React.useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
+  selectedMemberData = selectedMember;
+  titleData = titleText;
+  descriptionData = descriptionText;
+
   return (
     <ScrollView style={styles.container}>
-      <View
-        style={{
-          borderWidth: 3,
-          paddingTop: 20,
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingBottom: 40,
-          height: 650,
-          borderRadius: 20,
-          overflow: 'hidden',
-        }}
-      >
-        <Text
-          style={{
-            color: '#2827CC',
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}
-        >
-          Add New Goal
-        </Text>
+      <View style={styles.titleStyle}>
+        <Text style={styles.titleTextStyle}>Add New Goal</Text>
         <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
@@ -46,7 +34,7 @@ const MainScreen = ({ navigation }) => {
           onChangeText={setTitleText}
           placeholder="Enter title max of 50 characters."
         />
-        <Text style={styles.titleText}>Description</Text>
+        <Text style={styles.titles}>Description</Text>
         <TextInput
           style={styles.inputStyle}
           value={descriptionText}
@@ -74,7 +62,7 @@ const MainScreen = ({ navigation }) => {
         <DeadLineDatePicker />
         <TouchableOpacity
           style={styles.createButtonStyle}
-          onPress={() => navigation.push('Form screen')}
+          onPress={() => postData()}
         >
           <Text style={styles.createButtonText}>Create</Text>
         </TouchableOpacity>
@@ -137,7 +125,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#2827CC',
   },
-  titleText: {},
+  titleTextStyle: {
+    color: '#2827CC',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  titleStyle: {
+    borderWidth: 3,
+    paddingTop: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 40,
+    height: 650,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
 });
 
 export default MainScreen;

@@ -48,7 +48,15 @@ const TodoComponent = () => {
         >
           <Text style={{ color: 'black', elevation: 10 }}> Add</Text>
         </TouchableOpacity>
+        <Text style={TodoStyles.title}>To Do's</Text>
+        <TouchableOpacity
+          style={styles.CreateGoalButton}
+          onPress={() => navigation.navigate('CreatingGoals')}
+        >
+          <Text style={{ color: 'black', elevation: 10 }}> Add</Text>
+        </TouchableOpacity>
       </View>
+
       <View style={{ paddingVertical: 35 }}>
         {tasks?.length === 0 ? (
           <Text style={TodoStyles.taskNotFound}>No tasks found</Text>

@@ -32,9 +32,9 @@ export const TodoStyles = StyleSheet.create({
     position: 'relative',
     top: 10,
   },
-  flex:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center'
-  }
+  flex: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });
