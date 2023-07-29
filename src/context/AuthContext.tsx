@@ -28,7 +28,10 @@ export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   const [loggedInUserData, setLoggedInUserData] =
     useState<loggedInUserType | null>(null);
   useEffect(() => {
-    getData('userData').then((res) => {console.log('res',res);setLoggedInUserData(res)});
+    getData('userData').then((res) => {
+      console.log('res', res);
+      setLoggedInUserData(res);
+    });
   }, []);
 
   const context = {

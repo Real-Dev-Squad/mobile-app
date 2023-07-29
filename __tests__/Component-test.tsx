@@ -5,9 +5,6 @@ import Card from '../src/components/ToDoComponent/Card';
 import 'react-native-gesture-handler';
 import DurationDropdown from '../src/components/CreateGoalForm/Dropdown';
 import FloatingButton from '../src/components/FloatingButton';
-import Strings from '../src/i18n/en';
-import AuthScreen from '../src/screens/AuthScreen/AuthScreen';
-import { OtpModal } from '../src/screens/AuthScreen/OtpModal';
 
 // Short Term Goals component test
 
