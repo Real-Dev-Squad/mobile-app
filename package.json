@@ -27,6 +27,7 @@
     "react-native-app-auth": "^6.4.2",
     "react-native-date-picker": "^4.2.13",
     "react-native-datepicker": "^1.7.2",
+    "react-native-device-info": "^10.8.0",
     "react-native-element-dropdown": "^2.0.0",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "^1.10.3",

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
@@ -62,6 +63,8 @@ const AuthScreen = () => {
 
   const getAuthStatus = async () => {
     setLoading(true);
+    const deviceInfo = await DeviceInfo.getDeviceName();
+    const deviceId = await DeviceInfo.getUniqueId();
 
     try {
       const data = await fetch(AuthApis.QR_AUTH_API, {
@@ -70,9 +73,9 @@ const AuthScreen = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          device_info: 't5k77PHnuDSrgEzvMJAj',
+          device_info: deviceInfo,
           user_id: 'BE9a4sGXFLDwxZU3DSiq', //TODO: replace with scanner results
-          device_id: 'sdkdjASdjdsfns3kdj',
+          device_id: deviceId,
         }),
       });
 
