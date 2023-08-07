@@ -30,7 +30,6 @@ function GoalsScreenStack() {
       <Stack.Screen name="GoalsScreen" component={GoalScreen} />
       <Stack.Screen name="CreatingGoals" component={CreatingGoals} />
       <Stack.Screen name="Member's page" component={MembersPage} />
-
     </Stack.Navigator>
   );
 }

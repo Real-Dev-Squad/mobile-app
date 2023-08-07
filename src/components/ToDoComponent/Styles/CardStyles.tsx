@@ -40,11 +40,11 @@ export const CardStyles = StyleSheet.create({
     alignSelf: 'flex-end',
     margin: 4,
   },
-  icon:{
-    resizeMode:'cover',
+  icon: {
+    resizeMode: 'cover',
     width: 25,
-    height:25,
-    marginRight:5 
+    height: 25,
+    marginRight: 5,
   },
   assignedToText: {
     margin: 4,
