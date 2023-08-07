@@ -90,7 +90,7 @@ const AuthScreen = () => {
         });
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       Toast.show({
         type: 'error',
         text1: 'Somethin went wrong, please try again later',
