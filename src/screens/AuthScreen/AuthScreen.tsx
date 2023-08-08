@@ -1,5 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
@@ -13,6 +20,13 @@ import { ActivityIndicator } from 'react-native';
 import Images from '../../constants/images/Image';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
+import {
+  Camera,
+  Frame,
+  useCameraDevices,
+  useFrameProcessor,
+} from 'react-native-vision-camera';
+import { useSharedValue } from 'react-native-reanimated';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
@@ -23,14 +37,48 @@ const AuthScreen = () => {
   const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [loading, setLoading] = useState(false);
   const [key, setKey] = useState(1);
+  const [cameraActive, setCameraActive] = useState(false);
 
-  const closeModal = () => {
-    setOtpModalVisible(false);
-    setOtpCode('');
+  const newCameraPermission = () => Camera.requestCameraPermission();
+  // const newMicrophonePermission = Camera.requestMicrophonePermission();
+
+  const devices = useCameraDevices();
+  const device = devices.back;
+
+  const detectorResult = useSharedValue('');
+
+  const activateCamera = async () => {
+    try {
+      await Camera.requestCameraPermission(); // Request camera permission
+      setCameraActive(true); // Set cameraActive state to true
+    } catch (error) {
+      console.error('Error requesting camera permission:', error);
+    }
   };
 
-  const openModal = () => setOtpModalVisible(true);
-  const setCode = (code: string) => setOtpCode(code);
+  const labelImage = async (frame) => {
+    const model = await tf.loadModel('path/to/model');
+    const image = tf.image.decodePng(frame);
+    const predictions = model.predict(image);
+    const labels = [];
+    for (const prediction of predictions) {
+      const label = prediction.classLabel;
+      const confidence = prediction.confidence;
+      labels.push({
+        label,
+        confidence,
+      });
+    }
+    return labels;
+  };
+  const frameProcessor = useFrameProcessor((frame) => {
+    'worklet';
+    const imageLabels = labelImage(frame);
+
+    console.log('Image labels:', imageLabels);
+    detectorResult.value = imageLabels[0]?.label;
+  }, []);
+
   //TODO: add to constants
   const maxLength = 4;
   const handleSignIn = () => {
@@ -46,7 +94,7 @@ const AuthScreen = () => {
   const updateUserData = async (url: string) => {
     try {
       const res = await getUserData(url);
-      console.log('respponse',url,res)
+      console.log('respponse', url, res);
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
         id: res?.id,
@@ -144,17 +192,16 @@ const AuthScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <AuthScreenButton text={Strings.SIGN_IN_WITH_WEB} onPress={openModal} />
+        <AuthScreenButton
+          text={Strings.SIGN_IN_WITH_WEB}
+          onPress={activateCamera}
+        />
       </View>
-      {otpModalVisible && (
-        <OtpModal
-          title={Strings.ENTER_4_DIGIT_OTP}
-          testId="otpModal"
-          visible={otpModalVisible}
-          code={otpCode}
-          maxLength={maxLength}
-          setCode={setCode}
-          closeModal={closeModal}
+      {cameraActive && device && (
+        <Camera
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={true}
         />
       )}
     </ScrollView>
