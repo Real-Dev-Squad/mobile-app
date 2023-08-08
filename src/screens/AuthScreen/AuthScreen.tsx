@@ -30,6 +30,8 @@ const AuthScreen = () => {
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
+  const deviceInfo = await DeviceInfo.getDeviceName();
+  const deviceId = await DeviceInfo.getUniqueId();
 
   const activateCamera = async () => {
     try {
@@ -73,9 +75,6 @@ const AuthScreen = () => {
 
   const getAuthStatus = async () => {
     setLoading(true);
-    const deviceInfo = await DeviceInfo.getDeviceName();
-    const deviceId = await DeviceInfo.getUniqueId();
-
     try {
       const data = await fetch(AuthApis.QR_AUTH_API, {
         method: 'POST',
@@ -111,10 +110,10 @@ const AuthScreen = () => {
     setLoading(false);
   };
 
-  // TODO: trigger on qr code scan
   useEffect(() => {
     getAuthStatus();
-  }, []);
+    /* eslint-disable */
+  }, [scannedUserId]);
 
   if (githubView) {
     return (
