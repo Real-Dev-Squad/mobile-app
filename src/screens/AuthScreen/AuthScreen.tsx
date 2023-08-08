@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
@@ -13,6 +14,7 @@ import { ActivityIndicator } from 'react-native';
 import Images from '../../constants/images/Image';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
+import AuthApis from '../../constants/apiConstant/AuthApi';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
@@ -58,6 +60,51 @@ const AuthScreen = () => {
       setLoggedInUserData(null);
     }
   };
+
+  const getAuthStatus = async () => {
+    setLoading(true);
+    const deviceInfo = await DeviceInfo.getDeviceName();
+    const deviceId = await DeviceInfo.getUniqueId();
+
+    try {
+      const data = await fetch(AuthApis.QR_AUTH_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          device_info: deviceInfo,
+          user_id: 'BE9a4sGXFLDwxZU3DSiq', //TODO: replace with scanner results
+          device_id: deviceId,
+        }),
+      });
+
+      if (data.ok) {
+        console.log('patch call successfull');
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Somethin went wrong, please try again',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      Toast.show({
+        type: 'error',
+        text1: 'Somethin went wrong, please try again later',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+    }
+    setLoading(false);
+  };
+
+  // TODO: trigger on qr code scan
+  React.useEffect(() => {
+    getAuthStatus();
+  }, []);
 
   if (githubView) {
     return (
