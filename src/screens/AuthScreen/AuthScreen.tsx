@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import {
   Text,
@@ -29,6 +29,7 @@ const AuthScreen = () => {
   const [githubView, setGithubView] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
+  const [scannedUserId, setScannedUserID] = useState('');
 
   const activateCamera = async () => {
     try {
@@ -40,9 +41,7 @@ const AuthScreen = () => {
   };
 
   const handleQRCodeScanned = ({ nativeEvent }: any) => {
-    console.log('nativeEvent.codeStringValue', nativeEvent.codeStringValue);
-    // setScanResult(nativeEvent.codeStringValue);
-    // navigation.navigate('Result', { data: nativeEvent.codeStringValue });
+    setScannedUserID(nativeEvent.codeStringValue);
   };
 
   //TODO: add to constants
@@ -85,7 +84,7 @@ const AuthScreen = () => {
         },
         body: JSON.stringify({
           device_info: deviceInfo,
-          user_id: 'BE9a4sGXFLDwxZU3DSiq', //TODO: replace with scanner results
+          user_id: scannedUserId,
           device_id: deviceId,
         }),
       });
@@ -113,7 +112,7 @@ const AuthScreen = () => {
   };
 
   // TODO: trigger on qr code scan
-  React.useEffect(() => {
+  useEffect(() => {
     getAuthStatus();
   }, []);
 
