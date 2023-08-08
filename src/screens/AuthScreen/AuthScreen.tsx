@@ -1,13 +1,6 @@
 import React, { useContext, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import { Text, View, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
@@ -29,6 +22,7 @@ import {
   useFrameProcessor,
 } from 'react-native-vision-camera';
 import { useSharedValue } from 'react-native-reanimated';
+import { Camera, CameraScreen } from 'react-native-camera-kit';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
@@ -44,43 +38,35 @@ const AuthScreen = () => {
   const newCameraPermission = () => Camera.requestCameraPermission();
   // const newMicrophonePermission = Camera.requestMicrophonePermission();
 
-  const devices = useCameraDevices();
-  const device = devices.back;
+  // const devices = useCameraDevices();
+  // const device = devices.back;
 
-  const detectorResult = useSharedValue('');
+  // const detectorResult = useSharedValue('');
+
+
 
   const activateCamera = async () => {
     try {
-      await Camera.requestCameraPermission(); // Request camera permission
+      // await Camera.requestCameraPermission(); // Request camera permission
       setCameraActive(true); // Set cameraActive state to true
     } catch (error) {
       console.error('Error requesting camera permission:', error);
     }
   };
 
-  const labelImage = async (frame) => {
-    const model = await tf.loadModel('path/to/model');
-    const image = tf.image.decodePng(frame);
-    const predictions = model.predict(image);
-    const labels = [];
-    for (const prediction of predictions) {
-      const label = prediction.classLabel;
-      const confidence = prediction.confidence;
-      labels.push({
-        label,
-        confidence,
-      });
-    }
-    return labels;
+  const handleQRCodeScanned = ({ nativeEvent }: any) => {
+    console.log('nativeEvent.codeStringValue', nativeEvent.codeStringValue);
+    // setScanResult(nativeEvent.codeStringValue);
+    // navigation.navigate('Result', { data: nativeEvent.codeStringValue });
   };
-  const frameProcessor = useFrameProcessor((frame) => {
-    'worklet';
-    const imageLabels = labelImage(frame);
 
-    console.log('Image labels:', imageLabels);
-    detectorResult.value = imageLabels[0]?.label;
-  }, []);
+  const closeModal = () => {
+    setOtpModalVisible(false);
+    setOtpCode('');
+  };
 
+  const openModal = () => setOtpModalVisible(true);
+  const setCode = (code: string) => setOtpCode(code);
   //TODO: add to constants
   const maxLength = 4;
   const handleSignIn = () => {
@@ -239,18 +225,18 @@ const AuthScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <AuthScreenButton
-          text={Strings.SIGN_IN_WITH_WEB}
-          onPress={activateCamera}
-        />
+        <AuthScreenButton text={Strings.SIGN_IN_WITH_WEB} onPress={activateCamera} />
       </View>
-      {cameraActive && device && (
-        <Camera
-          style={StyleSheet.absoluteFill}
-          device={device}
-          isActive={true}
-        />
-      )}
+
+      {cameraActive && <CameraScreen
+        style={StyleSheet.absoluteFill}
+      showFrame
+      scanBarcode={true}
+      onReadCode={handleQRCodeScanned}
+      frameColor={'white'}
+      laserColor={'white'}
+    />}
+    
     </ScrollView>
   );
 };
