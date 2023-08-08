@@ -1,10 +1,16 @@
 import React, { useContext, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
-import { Text, View, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
-import { OtpModal } from './OtpModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
 import { getUserData } from './Util';
@@ -15,35 +21,14 @@ import Images from '../../constants/images/Image';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
-import {
-  Camera,
-  Frame,
-  useCameraDevices,
-  useFrameProcessor,
-} from 'react-native-vision-camera';
-import { useSharedValue } from 'react-native-reanimated';
-import { Camera, CameraScreen } from 'react-native-camera-kit';
+import { CameraScreen } from 'react-native-camera-kit';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
-  const [otpCode, setOtpCode] = useState<string>('');
-  const [otpModalVisible, setOtpModalVisible] = useState<boolean>(false);
-  const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [loading, setLoading] = useState(false);
-  const [key, setKey] = useState(1);
   const [cameraActive, setCameraActive] = useState(false);
-
-  const newCameraPermission = () => Camera.requestCameraPermission();
-  // const newMicrophonePermission = Camera.requestMicrophonePermission();
-
-  // const devices = useCameraDevices();
-  // const device = devices.back;
-
-  // const detectorResult = useSharedValue('');
-
-
 
   const activateCamera = async () => {
     try {
@@ -60,15 +45,7 @@ const AuthScreen = () => {
     // navigation.navigate('Result', { data: nativeEvent.codeStringValue });
   };
 
-  const closeModal = () => {
-    setOtpModalVisible(false);
-    setOtpCode('');
-  };
-
-  const openModal = () => setOtpModalVisible(true);
-  const setCode = (code: string) => setOtpCode(code);
   //TODO: add to constants
-  const maxLength = 4;
   const handleSignIn = () => {
     // NOTE: toast until sign in with Github is implemented
     Toast.show({
@@ -225,18 +202,22 @@ const AuthScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <AuthScreenButton text={Strings.SIGN_IN_WITH_WEB} onPress={activateCamera} />
+        <AuthScreenButton
+          text={Strings.SIGN_IN_WITH_WEB}
+          onPress={activateCamera}
+        />
       </View>
 
-      {cameraActive && <CameraScreen
-        style={StyleSheet.absoluteFill}
-      showFrame
-      scanBarcode={true}
-      onReadCode={handleQRCodeScanned}
-      frameColor={'white'}
-      laserColor={'white'}
-    />}
-    
+      {cameraActive && (
+        <CameraScreen
+          style={StyleSheet.absoluteFill}
+          showFrame
+          scanBarcode={true}
+          onReadCode={handleQRCodeScanned}
+          frameColor={'white'}
+          laserColor={'white'}
+        />
+      )}
     </ScrollView>
   );
 };
