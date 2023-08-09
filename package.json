@@ -25,6 +25,7 @@
     "react": "17.0.2",
     "react-native": "0.67.0",
     "react-native-app-auth": "^6.4.2",
+    "react-native-camera-kit": "^13.0.0",
     "react-native-date-picker": "^4.2.13",
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^10.8.0",
@@ -38,7 +39,6 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.9.0",
     "react-native-toast-message": "^2.1.5",
-    "react-native-vision-camera": "^2.15.4",
     "react-native-webview": "^11.13.0"
   },
   "devDependencies": {

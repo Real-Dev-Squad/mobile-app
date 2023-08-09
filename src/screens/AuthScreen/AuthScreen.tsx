@@ -1,10 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
-import { OtpModal } from './OtpModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
 import { getUserData } from './Util';
@@ -15,26 +22,32 @@ import Images from '../../constants/images/Image';
 import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
+import { CameraScreen } from 'react-native-camera-kit';
+import CustomModal from '../../components/Modal/CustomModal';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
-  const [otpCode, setOtpCode] = useState<string>('');
-  const [otpModalVisible, setOtpModalVisible] = useState<boolean>(false);
-  const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [loading, setLoading] = useState(false);
-  const [key, setKey] = useState(1);
+  const [cameraActive, setCameraActive] = useState(false);
+  const [scannedUserId, setScannedUserID] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const closeModal = () => {
-    setOtpModalVisible(false);
-    setOtpCode('');
+  const activateCamera = async () => {
+    try {
+      // await Camera.requestCameraPermission(); // Request camera permission
+      setCameraActive(true); // Set cameraActive state to true
+    } catch (error) {
+      console.error('Error requesting camera permission:', error);
+    }
   };
 
-  const openModal = () => setOtpModalVisible(true);
-  const setCode = (code: string) => setOtpCode(code);
+  const handleQRCodeScanned = ({ nativeEvent }: any) => {
+    setScannedUserID(nativeEvent.codeStringValue);
+  };
+
   //TODO: add to constants
-  const maxLength = 4;
   const handleSignIn = () => {
     // NOTE: toast until sign in with Github is implemented
     Toast.show({
@@ -62,10 +75,12 @@ const AuthScreen = () => {
   };
 
   const getAuthStatus = async () => {
-    setLoading(true);
     const deviceInfo = await DeviceInfo.getDeviceName();
     const deviceId = await DeviceInfo.getUniqueId();
-
+    console.log('device info', deviceInfo);
+    console.log('device id', deviceId);
+    console.log('userID', scannedUserId);
+    setLoading(true);
     try {
       const data = await fetch(AuthApis.QR_AUTH_API, {
         method: 'POST',
@@ -74,17 +89,35 @@ const AuthScreen = () => {
         },
         body: JSON.stringify({
           device_info: deviceInfo,
-          user_id: 'BE9a4sGXFLDwxZU3DSiq', //TODO: replace with scanner results
+          user_id: scannedUserId,
           device_id: deviceId,
         }),
       });
 
+      // {"message": "User Device Info added successfully!", "userDeviceInfoData": {"authorization_status": "NOT_INIT", "device_id": "389e089e7e6feb38", "device_info": "Shreya", "user_id": "T7IL7MB8YriniTw4bt39"}}
+
       if (data.ok) {
-        console.log('patch call successfull');
+        const dataJson = await data.json();
+        console.log('Post call successful', dataJson);
+        Alert.alert('Please Confirm', dataJson.message, [
+          {
+            text: 'Cancel',
+            onPress: () => setCameraActive(false),
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              setCameraActive(false);
+              setModalVisible(true);
+            },
+          }, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen
+        ]);
       } else {
+        const dataJson = await data.json();
+        console.log('data in else', dataJson.message);
         Toast.show({
           type: 'error',
-          text1: 'Somethin went wrong, please try again',
+          text1: 'Something went wrong, please try again',
           position: 'bottom',
           bottomOffset: 80,
         });
@@ -93,7 +126,7 @@ const AuthScreen = () => {
       console.error(err);
       Toast.show({
         type: 'error',
-        text1: 'Somethin went wrong, please try again later',
+        text1: 'Something went wrong, please try again later',
         position: 'bottom',
         bottomOffset: 80,
       });
@@ -101,10 +134,10 @@ const AuthScreen = () => {
     setLoading(false);
   };
 
-  // TODO: trigger on qr code scan
-  React.useEffect(() => {
+  useEffect(() => {
     getAuthStatus();
-  }, []);
+    /* eslint-disable */
+  }, [scannedUserId]);
 
   if (githubView) {
     return (
@@ -191,17 +224,27 @@ const AuthScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <AuthScreenButton text={Strings.SIGN_IN_WITH_WEB} onPress={openModal} />
+        <AuthScreenButton
+          text={Strings.SIGN_IN_WITH_WEB}
+          onPress={activateCamera}
+        />
       </View>
-      {otpModalVisible && (
-        <OtpModal
-          title={Strings.ENTER_4_DIGIT_OTP}
-          testId="otpModal"
-          visible={otpModalVisible}
-          code={otpCode}
-          maxLength={maxLength}
-          setCode={setCode}
-          closeModal={closeModal}
+
+      {cameraActive && (
+        <CameraScreen
+          style={StyleSheet.absoluteFill}
+          showFrame
+          scanBarcode={true}
+          onReadCode={handleQRCodeScanned}
+          frameColor={'white'}
+          laserColor={'white'}
+        />
+      )}
+
+      {modalVisible && (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
         />
       )}
     </ScrollView>
