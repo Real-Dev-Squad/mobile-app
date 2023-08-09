@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 const message = "Press Done button once you verify yourself from My-site"
 
