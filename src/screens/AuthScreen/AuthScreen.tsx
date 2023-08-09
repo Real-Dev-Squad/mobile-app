@@ -25,8 +25,6 @@ import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 
-
-
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
@@ -35,7 +33,6 @@ const AuthScreen = () => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-
 
   const activateCamera = async () => {
     try {
@@ -80,9 +77,9 @@ const AuthScreen = () => {
   const getAuthStatus = async () => {
     const deviceInfo = await DeviceInfo.getDeviceName();
     const deviceId = await DeviceInfo.getUniqueId();
-    console.log("device info",deviceInfo)
-    console.log("device id",deviceId)
-    console.log('userID',scannedUserId)
+    console.log('device info', deviceInfo);
+    console.log('device id', deviceId);
+    console.log('userID', scannedUserId);
     setLoading(true);
     try {
       const data = await fetch(AuthApis.QR_AUTH_API, {
@@ -102,16 +99,22 @@ const AuthScreen = () => {
       if (data.ok) {
         const dataJson = await data.json();
         console.log('Post call successful', dataJson);
-        Alert.alert('Please Confirm',dataJson.message, [
+        Alert.alert('Please Confirm', dataJson.message, [
           {
             text: 'Cancel',
-            onPress: () => setCameraActive(false)
+            onPress: () => setCameraActive(false),
           },
-          { text: 'OK', onPress: () => {setCameraActive(false); setModalVisible(true)}}, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen 
+          {
+            text: 'OK',
+            onPress: () => {
+              setCameraActive(false);
+              setModalVisible(true);
+            },
+          }, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen
         ]);
       } else {
         const dataJson = await data.json();
-        console.log('data in else', dataJson.message)
+        console.log('data in else', dataJson.message);
         Toast.show({
           type: 'error',
           text1: 'Something went wrong, please try again',
@@ -238,9 +241,11 @@ const AuthScreen = () => {
         />
       )}
 
-     { modalVisible && (
-        <CustomModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
-
+      {modalVisible && (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
       )}
     </ScrollView>
   );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
-const message = "Press Done button once you verify yourself from My-site"
+const message = 'Press Done button once you verify yourself from My-site';
 
 const CustomModal = ({ modalVisible, setModalVisible }) => {
-    console.log('mess',message)
+  console.log('mess', message);
   return (
     <Modal
       animationType="slide"
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-
   },
   button: {
     borderRadius: 20,
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    color:'black'
+    color: 'black',
   },
 });
 
