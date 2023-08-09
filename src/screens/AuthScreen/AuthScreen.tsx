@@ -23,7 +23,6 @@ import WebView from 'react-native-webview';
 import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
-import TabNavigation from '../../navigations/TabNavigation/TabNavigation';
 import CustomModal from '../../components/Modal/CustomModal';
 
 
