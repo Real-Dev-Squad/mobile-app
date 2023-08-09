@@ -41,8 +41,8 @@
     "react-native-webview": "^11.13.0",
     "react-redux": "^8.1.1",
     "redux": "^4.2.1",
-    "redux-saga": "^1.2.3"
-    "react-native-vision-camera": "^2.15.4",
+    "redux-saga": "^1.2.3",
+    "react-native-vision-camera": "^2.15.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
