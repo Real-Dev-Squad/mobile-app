@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
-import { User } from '../../context/type';
 
 export const getUserData = async (url: string) => {
   if (url === urls.REDIRECT_URL) {

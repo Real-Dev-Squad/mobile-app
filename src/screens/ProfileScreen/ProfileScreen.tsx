@@ -1,3 +1,5 @@
+// TODO: we wil remove this once we start using userData and contributionData
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
