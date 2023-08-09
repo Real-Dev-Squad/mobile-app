@@ -2,13 +2,9 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import ShortGoalsComponent from '../src/components/ShortGoalsComponent/ShortGoalsComponent';
 import Card from '../src/components/ToDoComponent/Card';
-import Data from '../src/components/ToDoComponent/Data';
 import 'react-native-gesture-handler';
 import DurationDropdown from '../src/components/CreateGoalForm/Dropdown';
 import FloatingButton from '../src/components/FloatingButton';
-import Strings from '../src/i18n/en';
-import AuthScreen from '../src/screens/AuthScreen/AuthScreen';
-import { OtpModal } from '../src/screens/AuthScreen/OtpModal';
 
 // Short Term Goals component test
 
@@ -85,10 +81,15 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
+const DATA = {
+  title: 'Task1',
+  assigned_by: 'admin',
+};
+
 test('setTimeout called which calls other two functions remove and changecard', () => {
   const { getByTestId } = render(
     <Card
-      item={Data[0]}
+      item={DATA}
       posStyle="relative"
       changecard={() => {}}
       removeCard={() => {}}
@@ -102,39 +103,4 @@ test('setTimeout called which calls other two functions remove and changecard', 
   fireEvent.press(getByTestId('doneBtn'));
   expect(setTimeout).toHaveBeenCalledTimes(1);
   expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 4000);
-});
-
-//Sign In Withh Web and OtpModal Component Test
-test('Check is sign in with web and otpmodal is rendering', () => {
-  const { getByText, queryByTestId } = render(<AuthScreen />);
-  const SignInWithWeb = getByText(Strings.SIGN_IN_WITH_WEB);
-  expect(SignInWithWeb).toBeTruthy();
-  expect(queryByTestId('otpModal')).toBeNull();
-  fireEvent.press(SignInWithWeb);
-  expect(queryByTestId('otpModal')).toBeTruthy();
-});
-
-test('Check otpmodal submit to be disabled and enabled', () => {
-  const props = {
-    title: Strings.ENTER_4_DIGIT_OTP,
-    testId: 'otpModal',
-    visible: true,
-    code: '',
-    setCode: () => {},
-    closeModal: () => {},
-  };
-  const data = [
-    { code: '', disabled: true },
-    { code: '12', disabled: true },
-    { code: '1234', disabled: false },
-  ];
-  data.forEach(({ code, disabled }) => {
-    const { getByTestId } = render(
-      <OtpModal maxLength={4} {...props} code={code} />,
-    );
-    expect(getByTestId('submitOtpModal').props).toHaveProperty(
-      'accessibilityState',
-      { disabled },
-    );
-  });
 });

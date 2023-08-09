@@ -9,6 +9,7 @@ export const storeData = async (name: string, value: string) => {
 };
 
 export const getData = async (item: string) => {
+  console.log('getData', item);
   return AsyncStorage.getItem(item)
     .then((res) => {
       return res ? JSON.parse(res) : '';

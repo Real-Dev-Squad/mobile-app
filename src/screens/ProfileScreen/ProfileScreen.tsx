@@ -23,6 +23,7 @@ const ProfileScreen = () => {
     noteworthy: [],
   });
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+  console.log('loggedIn', loggedInUserData);
 
   const openModal = useCallback(() => {
     setModalVisible(true);

@@ -1,25 +1,23 @@
 import React, { useContext, useState } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  ActivityIndicator,
-  SafeAreaView,
-} from 'react-native';
-import WebView from 'react-native-webview';
-import { urls } from '../../constants/appConstant/url';
-import { AuthContext } from '../../context/AuthContext';
-import Images from '../../constants/images/Image';
-import { storeData } from '../../utils/dataStore';
+import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { OtpModal } from './OtpModal';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AuthContext } from '../../context/AuthContext';
 import { getUserData } from './Util';
+import { storeData } from '../../utils/dataStore';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityIndicator } from 'react-native';
+import Images from '../../constants/images/Image';
+import WebView from 'react-native-webview';
+import { urls } from '../../constants/appConstant/url';
+import AuthApis from '../../constants/apiConstant/AuthApi';
 
 const AuthScreen = () => {
+  // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
   const [otpCode, setOtpCode] = useState<string>('');
@@ -38,12 +36,19 @@ const AuthScreen = () => {
   //TODO: add to constants
   const maxLength = 4;
   const handleSignIn = () => {
-    setGithubView(true);
+    // NOTE: toast until sign in with Github is implemented
+    Toast.show({
+      type: 'info',
+      text1: 'Sign in with GitHub coming soon...',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
   };
 
   const updateUserData = async (url: string) => {
     try {
       const res = await getUserData(url);
+      console.log('respponse', url, res);
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
         id: res?.id,
@@ -55,6 +60,51 @@ const AuthScreen = () => {
       setLoggedInUserData(null);
     }
   };
+
+  const getAuthStatus = async () => {
+    setLoading(true);
+    const deviceInfo = await DeviceInfo.getDeviceName();
+    const deviceId = await DeviceInfo.getUniqueId();
+
+    try {
+      const data = await fetch(AuthApis.QR_AUTH_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          device_info: deviceInfo,
+          user_id: 'BE9a4sGXFLDwxZU3DSiq', //TODO: replace with scanner results
+          device_id: deviceId,
+        }),
+      });
+
+      if (data.ok) {
+        console.log('patch call successfull');
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Somethin went wrong, please try again',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      Toast.show({
+        type: 'error',
+        text1: 'Somethin went wrong, please try again later',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+    }
+    setLoading(false);
+  };
+
+  // TODO: trigger on qr code scan
+  React.useEffect(() => {
+    getAuthStatus();
+  }, []);
 
   if (githubView) {
     return (

@@ -29,6 +29,9 @@ type props = {
   removeCard: (id: number) => void;
   disabled: boolean;
   setDisabled: any;
+  title?: string;
+  assigned_by?: string;
+  markDone?: () => void;
 };
 
 const Card = ({
@@ -37,8 +40,11 @@ const Card = ({
   changecard,
   removeCard,
   setDisabled,
+  title,
+  assigned_by,
 }: props) => {
   let timerRef: any;
+
   const deleteTask = () => {
     timerRef = setTimeout(() => deleteCardFunction(), 4000);
   };
@@ -49,22 +55,35 @@ const Card = ({
   }, [timerRef]);
 
   const translateY = useSharedValue<number>(0);
+  const translateX = useSharedValue<number>(0);
+
   const [checked, setChecked] = useState<boolean>(false);
   let deleteCard = 'false';
 
   const panGesture = useAnimatedGestureHandler({
     onActive: (event) => {
       if (translateY.value < 150) {
-        // It ensures that we do not go beyond a certain limit
         translateY.value = event.translationY;
+      }
+      if (translateX.value < 150) {
+        translateX.value = event.translationX;
+      }
+      if (translateY.value < -150) {
+        translateY.value = event.translationY;
+      }
+      if (translateX.value < -150) {
+        translateX.value = event.translationX;
       }
     },
     onEnd: () => {
       translateY.value = withTiming(0, { easing: Easing.linear });
+      translateX.value = withTiming(0, { easing: Easing.linear });
+
       if (translateY.value > 100) {
         // item.id required but after removing this the function is not getting called
-        runOnJS(changecard)(item.id);
+        return runOnJS(changecard)(item.id);
       }
+      runOnJS(changecard)(item.id);
     },
   });
 
@@ -72,6 +91,9 @@ const Card = ({
     transform: [
       {
         translateY: translateY.value,
+      },
+      {
+        translateX: translateX.value,
       },
     ],
   }));
@@ -109,11 +131,14 @@ const Card = ({
           <Animated.View
             style={[CardStyles.card, animatedStyle, { position: posStyle }]}
           >
-            <View style={CardStyles.viewStyle}>
+            <View style={{ justifyContent: 'center' }}>
               <View style={!item.isread ? { height: 25 } : null}>
-                {item.isread && (
-                  <Image source={Images.earthIcon} style={[CardStyles.icon]} />
-                )}
+                {/* {item.isread && (
+                  <Image
+                    source={Images.earthIcon}
+                    style={[CardStyles.icon, { alignSelf: 'flex-end' }]}
+                  />
+                )} */}
               </View>
               <View style={CardStyles.flex}>
                 <TouchableOpacity onPress={markDone} testID="doneBtn">
@@ -122,12 +147,12 @@ const Card = ({
                     style={[CardStyles.icon]}
                   />
                 </TouchableOpacity>
-                <Text style={CardStyles.taskText}>{item.task}</Text>
+                <Text style={CardStyles.taskText}>{title}</Text>
               </View>
-              <Image
-                source={Images.externalLinkIcon}
-                style={[CardStyles.icon]}
-              />
+              <View style={CardStyles.assignedTextContainer}>
+                <Text style={{ fontWeight: 'bold' }}>Assigned By: </Text>
+                <Text>{assigned_by}</Text>
+              </View>
             </View>
           </Animated.View>
         </PanGestureHandler>
