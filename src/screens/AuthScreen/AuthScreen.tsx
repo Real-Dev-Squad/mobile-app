@@ -78,13 +78,12 @@ const AuthScreen = () => {
     const deviceId = await DeviceInfo.getUniqueId();
 
     const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`;
-    //    {"data": {"authorization_status": "NOT_INIT", "device_id": "389e089e7e6feb38", "device_info": "Shreya", "user_id": "T7IL7MB8YriniTw4bt39"}, "message": "Authentication document retrieved successfully."}
     try {
       const userInfo = await fetch(url);
       const userInfoJson = await userInfo.json();
       console.log('userInfoJson', userInfoJson);
 
-      if (!userInfoJson.token) {
+      if (userInfoJson.token) {
         const userDetailsInfo = await fetch(
           `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
         );
@@ -97,6 +96,13 @@ const AuthScreen = () => {
           name: username,
           profileUrl: picture.url,
           status: status,
+        });
+      }else{
+        Toast.show({
+          type: 'error',
+          text1: 'Please authorize from my-site by giving confirmations',
+          position: 'bottom',
+          bottomOffset: 80,
         });
       }
     } catch (err) {
