@@ -74,6 +74,42 @@ const AuthScreen = () => {
     }
   };
 
+  const qrCodeLogin = async () => {
+    const deviceId = await DeviceInfo.getUniqueId();
+
+    const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`;
+    //    {"data": {"authorization_status": "NOT_INIT", "device_id": "389e089e7e6feb38", "device_info": "Shreya", "user_id": "T7IL7MB8YriniTw4bt39"}, "message": "Authentication document retrieved successfully."}
+    try {
+      const userInfo = await fetch(url);
+      const userInfoJson = await userInfo.json();
+      console.log('userInfoJson', userInfoJson);
+
+      if (!userInfoJson.token) {
+        const userDetailsInfo = await fetch(
+          `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
+        );
+        const userDetailsInfoJson = await userDetailsInfo.json();
+        console.log('userDetailsInfoJson', userDetailsInfoJson);
+        await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
+        const {picture,id,username,status} = userDetailsInfoJson.user
+        setLoggedInUserData({
+          id: id,
+          name: username,
+          profileUrl: picture.url,
+          status: status,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      Toast.show({
+        type: 'error',
+        text1: 'Something went wrong, please try again later',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+    }
+  };
+
   const getAuthStatus = async () => {
     const deviceInfo = await DeviceInfo.getDeviceName();
     const deviceId = await DeviceInfo.getUniqueId();
@@ -245,6 +281,7 @@ const AuthScreen = () => {
         <CustomModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          qrCodeLogin={qrCodeLogin}
         />
       )}
     </ScrollView>
