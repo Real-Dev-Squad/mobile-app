@@ -81,23 +81,21 @@ const AuthScreen = () => {
     try {
       const userInfo = await fetch(url);
       const userInfoJson = await userInfo.json();
-      console.log('userInfoJson', userInfoJson);
-
-      if (userInfoJson.token) {
+      if (userInfoJson.data.token) {
         const userDetailsInfo = await fetch(
           `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
         );
         const userDetailsInfoJson = await userDetailsInfo.json();
         console.log('userDetailsInfoJson', userDetailsInfoJson);
         await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
-        const {picture,id,username,status} = userDetailsInfoJson.user
+        const { picture, id, username, status } = userDetailsInfoJson.user;
         setLoggedInUserData({
           id: id,
           name: username,
-          profileUrl: picture.url,
+          profileUrl: picture?.url,
           status: status,
         });
-      }else{
+      } else {
         Toast.show({
           type: 'error',
           text1: 'Please authorize from my-site by giving confirmations',
@@ -136,11 +134,8 @@ const AuthScreen = () => {
         }),
       });
 
-      // {"message": "User Device Info added successfully!", "userDeviceInfoData": {"authorization_status": "NOT_INIT", "device_id": "389e089e7e6feb38", "device_info": "Shreya", "user_id": "T7IL7MB8YriniTw4bt39"}}
-
       if (data.ok) {
         const dataJson = await data.json();
-        console.log('Post call successful', dataJson);
         Alert.alert('Please Confirm', dataJson.message, [
           {
             text: 'Cancel',

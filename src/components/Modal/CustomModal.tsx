@@ -19,7 +19,7 @@ const CustomModal = ({ modalVisible, setModalVisible, qrCodeLogin}) => {
           <Text style={styles.modalText}>{message}</Text>
           <Pressable
             style={[styles.button, styles.buttonClose]}
-            onPress={ qrCodeLogin}
+            onPress={qrCodeLogin}
           >
             <Text style={styles.textStyle}>Done</Text>
           </Pressable>
