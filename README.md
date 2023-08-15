@@ -28,7 +28,7 @@ This Project serves the RealdevSquad cross-platform-app. This project is built i
 - Goals site Tab
 - Goals site feature will have the TODO app where you can assign the task to the member of the RDS.
 
-Feel free to download our RDS app by clicking on ➡️ [RDS App](https://drive.google.com/file/d/1xWEl6qXmDFY7MhogKbW-UKNrMZVhELLo/view?usp=sharing)
+Feel free to download our RDS app by clicking on ➡️ [RDS App](https://drive.google.com/file/d/1Y7IVr7HvYU_IYekh0Glt7aYrFiS7z19X/view?usp=sharing)
 
 Note : Please delete the previous RDS app build if you have.
 
