@@ -61,7 +61,6 @@ const AuthScreen = () => {
   const updateUserData = async (url: string) => {
     try {
       const res = await getUserData(url);
-      console.log('respponse', url, res);
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
         id: res?.id,
@@ -86,7 +85,6 @@ const AuthScreen = () => {
           `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
         );
         const userDetailsInfoJson = await userDetailsInfo.json();
-        console.log('userDetailsInfoJson', userDetailsInfoJson);
         await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
         const { picture, id, username, status } = userDetailsInfoJson.user;
         setLoggedInUserData({
@@ -104,7 +102,6 @@ const AuthScreen = () => {
         });
       }
     } catch (err) {
-      console.error(err);
       Toast.show({
         type: 'error',
         text1: 'Something went wrong, please try again later',
@@ -117,9 +114,6 @@ const AuthScreen = () => {
   const getAuthStatus = async () => {
     const deviceInfo = await DeviceInfo.getDeviceName();
     const deviceId = await DeviceInfo.getUniqueId();
-    console.log('device info', deviceInfo);
-    console.log('device id', deviceId);
-    console.log('userID', scannedUserId);
     setLoading(true);
     try {
       const data = await fetch(AuthApis.QR_AUTH_API, {
@@ -151,7 +145,6 @@ const AuthScreen = () => {
         ]);
       } else {
         const dataJson = await data.json();
-        console.log('data in else', dataJson.message);
         Toast.show({
           type: 'error',
           text1: 'Something went wrong, please try again',
@@ -160,7 +153,6 @@ const AuthScreen = () => {
         });
       }
     } catch (err) {
-      console.error(err);
       Toast.show({
         type: 'error',
         text1: 'Something went wrong, please try again later',
