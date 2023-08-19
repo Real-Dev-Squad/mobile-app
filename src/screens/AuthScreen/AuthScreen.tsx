@@ -8,6 +8,7 @@ import {
   ScrollView,
   StyleSheet,
   Alert,
+  Linking,
 } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
@@ -24,7 +25,10 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
+import { githubConfig } from '../../../config/config';
 
+const githubAuthUrl =
+  'https://github.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=yourappname://oauth&scope=user';
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
@@ -33,6 +37,27 @@ const AuthScreen = () => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    const handleDeepLink = async (event) => {
+      console.log('handleDeep link', event);
+      if (event.url.startsWith('x-realdevsquad-rdsapp/oauth')) {
+        console.log('inside if ', event.url);
+        const url = new URL(event.url);
+        const authorizationCode = url.searchParams.get('code');
+        if (authorizationCode) {
+          console.log('aut code', authorizationCode);
+          // Call a function to exchange the code for an access token
+          githubConfig(authorizationCode);
+        }
+      }
+    };
+    Linking.addEventListener('url', handleDeepLink);
+
+    return () => {
+      Linking.removeEventListener('url', handleDeepLink);
+    };
+  }, []);
 
   const activateCamera = async () => {
     try {
@@ -49,13 +74,7 @@ const AuthScreen = () => {
 
   //TODO: add to constants
   const handleSignIn = () => {
-    // NOTE: toast until sign in with Github is implemented
-    Toast.show({
-      type: 'info',
-      text1: 'Sign in with GitHub coming soon...',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
+    Linking.openURL(githubAuthUrl);
   };
 
   const updateUserData = async (url: string) => {
@@ -168,62 +187,6 @@ const AuthScreen = () => {
     /* eslint-disable */
   }, [scannedUserId]);
 
-  if (githubView) {
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={AuthViewStyle.container}>
-          <View style={AuthViewStyle.addressBarStyle}>
-            {loading ? (
-              <ActivityIndicator
-                style={{ marginLeft: 5 }}
-                size={25}
-                color="#fff"
-              />
-            ) : (
-              <TouchableOpacity onPress={() => setGithubView(false)}>
-                <Text style={AuthViewStyle.addressBarCancel}>Cancel</Text>
-              </TouchableOpacity>
-            )}
-            <Text style={AuthViewStyle.addressBarLink}>{addressbarURL}</Text>
-            {loading ? null : (
-              <TouchableOpacity onPress={() => setKey(key + 1)}>
-                <Image
-                  source={Images.refreshIcon}
-                  style={AuthViewStyle.addressBarIcon}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          <WebView
-            key={key}
-            onNavigationStateChange={({ url }) => {
-              if (url === urls.REDIRECT_URL) {
-                setAdressbarURL(url);
-                updateUserData(url);
-              } else if (url.indexOf('?') > 0) {
-                let uri = url.substring(0, url.indexOf('?'));
-                setAdressbarURL(uri);
-                updateUserData(uri);
-              } else {
-                setAdressbarURL(url);
-                updateUserData(url);
-              }
-            }}
-            style={AuthViewStyle.webViewStyles}
-            source={{
-              uri: urls.GITHUB_AUTH,
-            }}
-            onLoadStart={() => {
-              setLoading(true);
-            }}
-            onLoadEnd={() => {
-              setLoading(false);
-            }}
-          />
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
   //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
