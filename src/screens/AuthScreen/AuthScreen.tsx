@@ -144,7 +144,7 @@ const AuthScreen = () => {
           }, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen
         ]);
       } else {
-        const dataJson = await data.json();
+        await data.json();
         Toast.show({
           type: 'error',
           text1: 'Something went wrong, please try again',
