@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 const message = 'Press Done button once you verify yourself from My-site';
 
-const CustomModal = ({ modalVisible, setModalVisible, qrCodeLogin}) => {
+const CustomModal = ({ modalVisible, setModalVisible, qrCodeLogin }) => {
   console.log('mess', message);
   return (
     <Modal
