@@ -24,6 +24,9 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
+// import { config } from '../../utils/config';
+
+import Config from 'react-native-config';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
@@ -91,7 +94,7 @@ const AuthScreen = () => {
         const userDetailsInfoJson = await userDetailsInfo.json();
         console.log('userDetailsInfoJson', userDetailsInfoJson);
         await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
-        const {picture,id,username,status} = userDetailsInfoJson.user
+        const { picture, id, username, status } = userDetailsInfoJson.user;
         setLoggedInUserData({
           id: id,
           name: username,
@@ -231,6 +234,8 @@ const AuthScreen = () => {
       </SafeAreaView>
     );
   }
+
+  console.log('=======>', Config);
   //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
@@ -242,10 +247,29 @@ const AuthScreen = () => {
       </View>
       <View style={[AuthViewStyle.constContainer]}>
         <Text style={AuthViewStyle.welcomeMsg}>{Strings.WELCOME_TO}</Text>
+        <Text style={AuthViewStyle.welcomeMsg}>{'Config.API_URL'}</Text>
+        <Text style={AuthViewStyle.welcomeMsg}>
+          {Config.API_URL?.toString()}
+        </Text>
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
+        <TouchableOpacity
+          style={AuthViewStyle.btnView}
+          onPress={() => {
+            Toast.show({
+              type: 'info',
+              text1: Config.API_URL?.toString(),
+              position: 'bottom',
+              bottomOffset: 80,
+            });
+          }}
+        >
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>config check</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={AuthViewStyle.btnContainer}>
-        <View style={AuthViewStyle.btnContainer}>
+        {/* <View style={AuthViewStyle.btnContainer}>
           <TouchableOpacity
             onPress={handleSignIn}
             style={AuthViewStyle.btnView}
@@ -259,7 +283,7 @@ const AuthScreen = () => {
               </Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <AuthScreenButton
           text={Strings.SIGN_IN_WITH_WEB}
           onPress={activateCamera}

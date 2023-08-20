@@ -2,6 +2,18 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 
+// add this block
+project.ext.envConfigFiles = [
+   productiondebug: ".env.production",
+   productionrelease: ".env.production",
+   developmentrelease: ".env.development",
+   developmentdebug: ".env.development",
+   stagingrelease: ".env.staging",
+   stagingdebug: ".env.staging"
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- add this line
+
 import com.android.build.OutputFile
 
 /**
@@ -132,6 +144,32 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    // add this block
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.rdsapp"
+            // applicationIdSuffix ".production"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.rdsapp"
+        }
+        staging {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.rdsapp"
+            // applicationIdSuffix ".staging"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.rdsapp"
+        }
+        development {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.rdsapp"
+            // applicationIdSuffix ".development"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.rdsapp"
+        }
+    }
+
     defaultConfig {
         applicationId "com.rdsapp"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -158,10 +196,17 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('release.keystore')
+            storePassword 'rdsapp'
+            keyAlias 'rdsapp'
+            keyPassword 'rdsapp'
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release']
             if (nativeArchitectures) {
                 ndk {
                     abiFilters nativeArchitectures.split(',')
@@ -171,7 +216,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
