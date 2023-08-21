@@ -1,5 +1,13 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import withHeader from '../../helpers/withHeader';
@@ -11,17 +19,17 @@ import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import { fetchContribution } from '../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
-
 import { useSelector } from 'react-redux';
+import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
+import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteWorthyContributions';
+import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
+import UserData from './User Data/UserData';
 
 const ProfileScreen = () => {
   const { data: userData } = useSelector((store) => store.user);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-  const [contributionData, setContributionData] = useState({
-    allData: [],
-    noteworthy: [],
-  });
+  const [contributionData, setContributionData] = useState([]);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
 
   const openModal = useCallback(() => {
@@ -49,13 +57,13 @@ const ProfileScreen = () => {
       (async () => {
         const userName = 'ankush';
         const contributionResponse = await fetchContribution(userName);
-        setContributionData(contributionResponse);
+        setContributionData(contributionResponse.noteworthy);
       })();
     }, []),
   );
 
   return (
-    <View style={ScreenViewContainer.container}>
+    <ScrollView contentContainerStyle={ScreenViewContainer.container}>
       <Pressable
         style={profileScreenStyles.logoutButton}
         onPress={() => {
@@ -82,11 +90,26 @@ const ProfileScreen = () => {
         )}
         <Text style={profileScreenStyles.titleText}>
           {loggedInUserData?.name}
+          <UserData userData={userData} />
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
+        <ScrollView style={styles.container}>
+          <NoteworthyContributionsDropdown />
+          <ActiveTaskDropDown />
+          <AllContributionsDropdown />
+        </ScrollView>
       </View>
-    </View>
+    </ScrollView>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginBottom: 10,
+  },
+  container2: {
+    margin: 20,
+  },
+});
 
 export default withHeader(ProfileScreen);
