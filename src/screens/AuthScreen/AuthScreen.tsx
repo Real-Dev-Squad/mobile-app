@@ -228,7 +228,6 @@ const AuthScreen = () => {
     );
   }
 
-  console.log('=======>', Config);
   //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
@@ -245,21 +244,6 @@ const AuthScreen = () => {
           {Config.API_URL?.toString()}
         </Text>
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
-        <TouchableOpacity
-          style={AuthViewStyle.btnView}
-          onPress={() => {
-            Toast.show({
-              type: 'info',
-              text1: Config.API_URL?.toString(),
-              position: 'bottom',
-              bottomOffset: 80,
-            });
-          }}
-        >
-          <View style={AuthViewStyle.signInTxtView}>
-            <Text style={AuthViewStyle.signInText}>config check</Text>
-          </View>
-        </TouchableOpacity>
       </View>
       <View style={AuthViewStyle.btnContainer}>
         {/* <View style={AuthViewStyle.btnContainer}>
