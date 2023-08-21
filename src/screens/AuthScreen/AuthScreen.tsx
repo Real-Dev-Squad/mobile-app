@@ -239,10 +239,6 @@ const AuthScreen = () => {
       </View>
       <View style={[AuthViewStyle.constContainer]}>
         <Text style={AuthViewStyle.welcomeMsg}>{Strings.WELCOME_TO}</Text>
-        <Text style={AuthViewStyle.welcomeMsg}>{'Config.API_URL'}</Text>
-        <Text style={AuthViewStyle.welcomeMsg}>
-          {Config.API_URL?.toString()}
-        </Text>
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
