@@ -24,9 +24,6 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
-// import { config } from '../../utils/config';
-
-import Config from 'react-native-config';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature

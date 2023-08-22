@@ -11,21 +11,16 @@
     "format-check": "prettier --check ./src",
     "format-fix": "prettier --write ./src",
     "precommit-check": "yarn run format-fix && yarn run lint && yarn run test",
-    "android:dev": "react-native run-android --variant=developmentdebug",
     "android:staging": "react-native run-android --variant=stagingdebug",
     "android:prod": "react-native run-android --variant=productiondebug",
-    "android:dev-release": "react-native run-android --variant=developmentrelease",
     "android:staging-release": "react-native run-android --variant=stagingrelease",
     "android:prod-release": "react-native run-android --variant=productionrelease",
     "android:prod-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleProductionDebug && cd ..",
     "android:staging-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleStagingDebug && cd ..",
-    "android:dev-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDevelopmentDebug && cd ..",
     "android:prod-release-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew assembleProductionRelease && cd ..",
     "android:stag-release-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew assembleStagingRelease && cd ..",
-    "android:dev-release-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew assembleRelease && cd ..",
     "android:prod-release-aab": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew bundleProductionRelease && cd ..",
-    "android:stag-release-aab": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew bundleStagingRelease && cd ..",
-    "android:dev-release-aab": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew bundleDevelopmentRelease && cd .."
+    "android:stag-release-aab": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew bundleStagingRelease && cd .."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.16",

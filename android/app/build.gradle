@@ -6,8 +6,6 @@ apply plugin: "kotlin-android-extensions"
 project.ext.envConfigFiles = [
    productiondebug: ".env.production",
    productionrelease: ".env.production",
-   developmentrelease: ".env.development",
-   developmentdebug: ".env.development",
    stagingrelease: ".env.staging",
    stagingdebug: ".env.staging"
 ]
@@ -158,13 +156,6 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rdsapp"
             // applicationIdSuffix ".staging"
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rdsapp"
-        }
-        development {
-            minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.rdsapp"
-            // applicationIdSuffix ".development"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rdsapp"
         }
