@@ -25,10 +25,19 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
-import { githubConfig } from '../../../config/config';
+import { clientId, githubConfig } from '../../../config/config';
 
-const githubAuthUrl =
-  'https://github.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=yourappname://oauth&scope=user';
+
+// baseUrl = "https://github.com/login/oauth/authorize",
+// responseType = "code",
+// redirectUri = "http://localhost:3000/auth/github/callback",
+// scope = "user:email",
+// state = "",
+// clientId = defaultClientId,
+
+const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=app://deeplink&scope=user:email`;
+// https://api.realdevsquad.com/auth/github/callback?error=redirect_uri_mismatch&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.&error_uri=https%3A%2F%2Fdocs.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch
+
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
@@ -39,12 +48,16 @@ const AuthScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+    console.log('inside useEffect');
+    Linking.getInitialURL();
     const handleDeepLink = async (event) => {
       console.log('handleDeep link', event);
-      if (event.url.startsWith('x-realdevsquad-rdsapp/oauth')) {
+      if (event.url.startsWith('app://deeplink')) {
         console.log('inside if ', event.url);
         const url = new URL(event.url);
+        console.log('url', url);
         const authorizationCode = url.searchParams.get('code');
+        console.log('aut code', authorizationCode);
         if (authorizationCode) {
           console.log('aut code', authorizationCode);
           // Call a function to exchange the code for an access token
@@ -53,11 +66,10 @@ const AuthScreen = () => {
       }
     };
     Linking.addEventListener('url', handleDeepLink);
-
     return () => {
       Linking.removeEventListener('url', handleDeepLink);
     };
-  }, []);
+  });
 
   const activateCamera = async () => {
     try {
