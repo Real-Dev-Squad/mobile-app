@@ -69,33 +69,6 @@ const HomeScreen = () => {
         ) : (
           <>
             <TouchableOpacity
-              key={loggedInUserData?.status || ''}
-              style={
-                loggedInUserData?.status === Strings.IDLE
-                  ? HomeViewStyle.idleBtn
-                  : HomeViewStyle.activeButton
-              }
-              onPress={() =>
-                changeStatus(
-                  loggedInUserData?.status === Strings.ACTIVE
-                    ? Strings.IDLE
-                    : Strings.ACTIVE,
-                )
-              }
-            >
-              <Text
-                style={
-                  loggedInUserData?.status === Strings.IDLE
-                    ? HomeViewStyle.idleBtnText
-                    : HomeViewStyle.activeBtnText
-                }
-              >
-                {loggedInUserData?.status === Strings.ACTIVE
-                  ? Strings.IdleBtn_Text
-                  : Strings.ActiveBtn_Text}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
               onPress={() => changeStatus(Strings.OUT_OF_OFFICE)}
             >
               <Text style={HomeViewStyle.oooBtn}>{Strings.OOOBtn1_Text}</Text>
