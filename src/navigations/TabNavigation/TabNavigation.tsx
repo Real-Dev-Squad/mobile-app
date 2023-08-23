@@ -10,6 +10,7 @@ import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
 import { TabViewStyle } from './style';
 import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
+import HomeScreen2 from '../../screens/HomeScreen/HomeScreen2';
 
 const tab = createBottomTabNavigator();
 
@@ -25,7 +26,7 @@ const TabNavigation = () => {
       >
         <tab.Screen
           name={Strings.Tab_Home}
-          component={HomeScreen}
+          component={HomeScreen2}
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => {

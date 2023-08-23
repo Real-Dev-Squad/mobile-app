@@ -1,0 +1,44 @@
+import { Button, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import Strings from '../../i18n/en';
+import OOOForm from '../../components/OOO/OOOForm';
+
+const HomeScreen2 = () => {
+  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+  const [fromDate, setFromDate] = useState<number>(Date.now());
+  const [toDate, setToDate] = useState<number>(Date.now());
+  const [description,setDescription] = useState<string>('');
+
+  const handleButtonPress = () => {
+    setIsFormVisible((prev) => !prev);
+  };
+
+  const handleFormSubmit = () => {
+    setIsFormVisible((prev) => !prev);
+  };
+
+  return (
+    <View>
+      <Text>You are Idle</Text>
+      <Button
+        title={Strings.UPDATE_STATUS_TO_OOO}
+        onPress={handleButtonPress}
+      />
+      {isFormVisible && (
+        <OOOForm
+          fromDate
+          toDate
+          description
+          setToDate
+          setFromDate
+          setDescription
+          handleFormSubmit={handleFormSubmit}
+        />
+      )}
+    </View>
+  );
+};
+
+export default HomeScreen2;
+
+const styles = StyleSheet.create({});
