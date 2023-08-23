@@ -64,4 +64,4 @@ buck-out/
 
 
 #env
-.env
+!.env
