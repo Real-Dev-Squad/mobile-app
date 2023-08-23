@@ -35,8 +35,20 @@ import { clientId, githubConfig } from '../../../config/config';
 // state = "",
 // clientId = defaultClientId,
 
-const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=app://deeplink&scope=user:email`;
+const githubAuthUrl = 'https://staging-api.realdevsquad.com/auth/github/login?redirectURL=https://my.realdevsquad.com';
 // https://api.realdevsquad.com/auth/github/callback?error=redirect_uri_mismatch&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.&error_uri=https%3A%2F%2Fdocs.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch
+
+//https://staging-api.realdevsquad.com/auth/github/login?redirectURL=https://staging-my.realdevsquad.com
+
+
+const linking = {
+  prefixes: [
+    /* your linking prefixes */
+  ],
+  config: {
+    /* configuration for matching screens with paths */
+  },
+};
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
@@ -46,6 +58,7 @@ const AuthScreen = () => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+ 
 
   useEffect(() => {
     console.log('inside useEffect');

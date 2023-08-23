@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const clientId = '23c78f66ab7964e5ef97';
 export const clientSecret = '65621db87076180ab274b6dbdc1a3dd95b9dd952';
-export const redirectUri = 'x-realdevsquad-rdsapp://oauth2/authorize';
+export const redirectUri = 'app://deeplink';
 export const tokenUrl = 'https://github.com/login/oauth/access_token';
 
 const githubConfig = async (authorizationCode) => {
