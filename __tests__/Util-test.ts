@@ -5,6 +5,9 @@ import {
   updateStatus,
 } from '../src/screens/AuthScreen/Util';
 import { urls } from '../src/constants/appConstant/url';
+import { fetchUserRequest } from '../src/sagas/handlers/user';
+import { fetchUserData } from '../src/sagas/requests/fetchUser';
+import { call, put } from 'redux-saga/effects';
 import Strings from '../src/i18n/en';
 import axios from 'axios';
 
@@ -132,4 +135,41 @@ test('check is otpcode of valid format', () => {
   expect(isValidTextInput('abcd')).toBeFalsy();
   expect(isValidTextInput('AB12')).toBeFalsy();
   expect(isValidTextInput('1%2B')).toBeFalsy();
+});
+
+describe('fetchUserRequest', () => {
+  const action = { type: 'GET_USER', payload: 'lDaUIVTP4sXRwPWh3Gn4' };
+  const generator = fetchUserRequest(action);
+
+  test('should call fetchUserData', () => {
+    expect(generator.next().value).toEqual(call(fetchUserData, action.payload));
+  });
+
+  test('should dispatch FETCH_USER action', () => {
+    const user = {
+      company: 'Deloitte',
+      designation: 'Frontend Developer',
+      githubUrl: 'https://twitter.combharati-21',
+      linkedInUrl: 'https://www.linkedin.com/in/bharati-subramanian-29734b152',
+      name: 'Bharati Subramanian',
+      profileUrl:
+        'https://res.cloudinary.com/realdevsquad/image/upload/v1687759892/profile/lDaUIVTP4sXRwPWh3Gn4/sqaq4clqiprmdwu2lyjk.jpg',
+      twitterUrl: 'https://github.com/_bhaaratii',
+      userName: 'bharati',
+    };
+    expect(generator.next(user).value).toEqual(
+      put({ type: 'FETCH_USER', user }),
+    );
+  });
+
+  test('should dispatch FETCH_USER_ERROR action on error', () => {
+    const error = new Error('Something went wrong');
+    expect(generator.throw(error).value).toEqual(
+      put({ type: 'FETCH_USER_ERROR', message: error.message }),
+    );
+  });
+
+  test('should be done', () => {
+    expect(generator.next().done).toBe(true);
+  });
 });

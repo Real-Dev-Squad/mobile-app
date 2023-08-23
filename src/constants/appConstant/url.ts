@@ -5,4 +5,9 @@ export const urls = {
   API_ENDPOINT: 'https://api.realdevsquad.com/',
   REDIRECT_URL: 'https://www.realdevsquad.com/goto',
   GET_USERS_DATA: 'https://api.realdevsquad.com/users/self',
+  GET_USER_DATA: 'https://api.realdevsquad.com/users?id=',
+  GET_CONTRIBUTIONS: 'https://api.realdevsquad.com/contributions/',
+  GITHUB: 'https://github.com/',
+  TWITTER: 'https://twitter.com',
+  LINKEDIN: 'https://www.linkedin.com/in/',
 };
