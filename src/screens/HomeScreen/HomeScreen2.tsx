@@ -15,6 +15,7 @@ const HomeScreen2 = (): JSX.Element => {
 
   const handleFormSubmit = () => {
     // patch api call (it should give loading , failed, error and success messages)
+    console.log(fromDate, toDate, description); // was giving lint issues, after api call please remove this log
     setIsFormVisible((prev) => !prev);
   };
 
@@ -27,12 +28,12 @@ const HomeScreen2 = (): JSX.Element => {
       />
       {isFormVisible && (
         <OOOForm
-          fromDate
-          toDate
-          description
-          setToDate
-          setFromDate
-          setDescription
+          fromDate={fromDate}
+          toDate={toDate}
+          description={description}
+          setToDate={setToDate}
+          setFromDate={setFromDate}
+          setDescription={setDescription}
           handleFormSubmit={handleFormSubmit}
         />
       )}
@@ -41,5 +42,3 @@ const HomeScreen2 = (): JSX.Element => {
 };
 
 export default HomeScreen2;
-
-const styles = StyleSheet.create({});

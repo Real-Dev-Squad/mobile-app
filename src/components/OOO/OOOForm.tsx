@@ -13,7 +13,7 @@ const OOOForm = ({
 }: OOOFormType) => {
   return (
     <View style={styles.formContainer}>
-     <TextInput
+      <TextInput
         style={styles.input}
         placeholder="From Date"
         value={fromDate}
