@@ -3,17 +3,18 @@ import React, { useState } from 'react';
 import Strings from '../../i18n/en';
 import OOOForm from '../../components/OOO/OOOForm';
 
-const HomeScreen2 = () => {
+const HomeScreen2 = (): JSX.Element => {
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
   const [fromDate, setFromDate] = useState<number>(Date.now());
   const [toDate, setToDate] = useState<number>(Date.now());
-  const [description,setDescription] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
 
   const handleButtonPress = () => {
     setIsFormVisible((prev) => !prev);
   };
 
   const handleFormSubmit = () => {
+    // patch api call (it should give loading , failed, error and success messages)
     setIsFormVisible((prev) => !prev);
   };
 
