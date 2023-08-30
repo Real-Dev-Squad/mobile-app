@@ -97,9 +97,9 @@ const ProfileScreen = () => {
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
         <ScrollView style={styles.container}>
-          <NoteworthyContributionsDropdown />
-          <ActiveTaskDropDown />
-          <AllContributionsDropdown />
+            <NoteworthyContributionsDropdown />
+            <ActiveTaskDropDown />
+            <AllContributionsDropdown />
         </ScrollView>
       </View>
     </ScrollView>
@@ -107,11 +107,14 @@ const ProfileScreen = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     marginBottom: 10,
+    paddingBottom: 30,
+    // borderWidth: 2,
+    // backgroundColor: 'pink',
   },
   container2: {
-    margin: 20,
+    borderWidth: 2,
   },
 });
 

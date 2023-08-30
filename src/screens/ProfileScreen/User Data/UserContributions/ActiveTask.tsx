@@ -5,44 +5,63 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  Image,
 } from 'react-native';
 
 const ActiveTaskDropDown = () => {
   const [clicked, setClicked] = useState(false);
   return (
-    <View>
+    <View style={{ marginBottom: 10, padding: 5 }}>
       <TouchableOpacity
         onPress={() => setClicked(!clicked)}
         style={styles.DropDownButton}
       >
         <Text style={styles.DropDownTitle}>Active tasks</Text>
+        {clicked ? (
+          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
+          //   -
+          // </Text>
+          <Image
+            style={{ height: 100, width: 100 }}
+            source={require('../../../../../assets/down.png')}
+          />
+        ) : (
+          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
+          //   +
+          // </Text>
+          <Image
+            style={{ height: 100, width: 100 }}
+            source={require('../../../../../assets/right.png')}
+          />
+        )}
       </TouchableOpacity>
-      {clicked ? (
+      {/* {clicked ? (
         <View>
           <Text>Hi Active Tasks here!</Text>
         </View>
-      ) : null}
+      ) : null} */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   DropDownButton: {
-    width: 400,
-    height: 50,
+    width: '100%',
+    height: 100,
     elevation: 5,
     borderRadius: 10,
     backgroundColor: 'white',
     alignSelf: 'center',
-    marginTop: 10,
+    // margin: 5,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingLeft: 25,
-    paddingRight: 25,
+    paddingLeft: 35,
+    // paddingRight: 25,
   },
   DropDownTitle: {
     fontWeight: '600',
+    fontSize: 30,
     color: 'black',
   },
   DropDownElement: {

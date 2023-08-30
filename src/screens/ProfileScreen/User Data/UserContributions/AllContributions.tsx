@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   Linking,
+  Image,
 } from 'react-native';
 import { fetchContribution } from '../../../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
@@ -24,65 +25,119 @@ const AllContributionsDropdown = () => {
     }, []),
   );
   return (
-    <View>
+    <View style={{ marginBottom: 10, padding: 5 }}>
       <TouchableOpacity
         onPress={() => setClicked(!clicked)}
         style={styles.DropDownButton}
       >
         <Text style={styles.DropDownTitle}>All Contributions</Text>
+        {clicked ? (
+          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
+          //   -
+          // </Text>
+          <Image
+            style={{ height: 100, width: 100 }}
+            source={require('../../../../../assets/down.png')}
+          />
+        ) : (
+          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
+          //   +
+          // </Text>
+          <Image
+            style={{ height: 100, width: 100 }}
+            source={require('../../../../../assets/right.png')}
+          />
+        )}
       </TouchableOpacity>
       {clicked
         ? allContributionsData.map((item, index) => (
-            <View key={index} style={styles.DropDownElement}>
-              <TouchableOpacity
-                style={styles.DropDownbackground}
-                onPress={
-                  item.task.featureUrl
-                    ? () => Linking.openURL(item.task.featureUrl)
-                    : null
-                }
-              >
-                <Text style={{ color: 'blue', fontSize: 18 }}>
-                  {item.task.title}
-                </Text>
-                <Text style={{ color: 'black', padding: 10 }}>
-                  {item.task.purpose}
-                </Text>
-                <>
-                  {item.task.featureUrl ? (
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 13,
-                        borderBottomColor: 'grey',
-                        borderBottomWidth: 1,
-                        padding: 10,
-                      }}
-                    >
-                      Estimated completion:{' '}
-                      {item.task.startedOn - item.task.endsOn}
-                    </Text>
+            <View key={index}>
+              <View style={styles.DropDownElement}>
+                <TouchableOpacity
+                  style={styles.DropDownbackground}
+                  onPress={
+                    item.task.featureUrl
+                      ? () => Linking.openURL(item.task.featureUrl)
+                      : null
+                  }
+                >
+                  {item.task.id ? (
+                    <React.Fragment>
+                      <Text style={{ color: 'blue', fontSize: 18 }}>
+                        Title: {item.task.title}
+                      </Text>
+                      <Text style={{ color: 'black', padding: 10 }}>
+                        {item.task.purpose}
+                      </Text>
+                      <>
+                        {item.task.featureUrl ? (
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: 13,
+                              borderBottomColor: 'grey',
+                              borderBottomWidth: 1,
+                              padding: 10,
+                            }}
+                          >
+                            Estimated completion:{' '}
+                            {item.task.startedOn - item.task.endsOn}
+                          </Text>
+                        ) : (
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontSize: 13,
+                              padding: 10,
+                            }}
+                          >
+                            Estimated completion:{' '}
+                            {item.task.startedOn - item.task.endsOn}
+                          </Text>
+                        )}
+                      </>
+                      <>
+                        {item.task.featureUrl ? (
+                          <Text style={{ color: 'grey' }}>
+                            Checkout this feature in action
+                          </Text>
+                        ) : null}
+                      </>
+                    </React.Fragment>
                   ) : (
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 13,
-                        padding: 10,
-                      }}
-                    >
-                      Estimated completion:{' '}
-                      {item.task.startedOn - item.task.endsOn}
-                    </Text>
+                    <React.Fragment>
+                      {item.prList.length > 0 && (
+                        <React.Fragment>
+                          <Text style={{ color: 'blue', fontSize: 18 }}>
+                            PR Title: {item.prList[0].title}
+                          </Text>
+                          <Text style={{ color: 'black', padding: 5 }}>
+                            Completed in
+                          </Text>
+                          <Text
+                            style={{
+                              color: 'black',
+                              borderBottomColor: 'grey',
+                              borderBottomWidth: 1,
+                              padding: 5,
+                            }}
+                          >
+                            Feature live on
+                          </Text>
+                          <>
+                            {item.prList[0].url ? (
+                              <Text style={{ color: 'grey' }}>
+                                Checkout this feature in action
+                              </Text>
+                            ) : null}
+                          </>
+                        </React.Fragment>
+                      )}
+                    </React.Fragment>
                   )}
-                </>
-                <>
-                  {item.task.featureUrl ? (
-                    <Text style={{ color: 'grey' }}>
-                      Checkout this feature in action
-                    </Text>
-                  ) : null}
-                </>
-              </TouchableOpacity>
+                </TouchableOpacity>
+                <Text>{item.prList.title}</Text>
+              </View>
             </View>
           ))
         : null}
@@ -92,45 +147,37 @@ const AllContributionsDropdown = () => {
 
 const styles = StyleSheet.create({
   DropDownButton: {
-    width: 400,
-    height: 50,
+    width: '100%',
+    height: 100,
     elevation: 5,
     borderRadius: 10,
     backgroundColor: 'white',
     alignSelf: 'center',
-    marginTop: 10,
+    // margin: 10,
+    fontStyle: 'Roboto',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingLeft: 25,
-    paddingRight: 25,
+    paddingLeft: 35,
+    // paddingRight: 25,
   },
   DropDownTitle: {
     fontWeight: '600',
+    fontSize: 30,
     color: 'black',
   },
   DropDownElement: {
     color: 'black',
     width: '100%',
     alignSelf: 'center',
-    height: 'auto',
-    // borderBottomWidth: 0.5,
   },
-  // DropDownElementt: {
-  //   width: '85%',
-  //   alignSelf: 'center',
-  //   height: 50,
-  //   justifyContent: 'center',
-  //   borderBottomWidth: 0.5,
-  // },
   DropDownbackground: {
     padding: 10,
-    marginTop: 10,
-    height: 'auto',
+    // height: 'auto',
     alignSelf: 'center',
     width: '90%',
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 5,
   },
 });
 

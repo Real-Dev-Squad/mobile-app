@@ -10,7 +10,6 @@ import {
 
 const UserData = ({ userData }) => {
   let twitterIcon = 'twitterUrl' in userData;
-  console.log(twitterIcon);
   return (
     <View>
       <Text style={styles.Name}>{userData.name}</Text>
