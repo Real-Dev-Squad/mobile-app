@@ -1,10 +1,18 @@
-import { StyleSheet, TextInput, View, Button } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Button,
+  Image,
+  Pressable,
+} from 'react-native';
 import React from 'react';
+import Images from '../../constants/images/Image';
 import { OOOFormType } from './OOOFormType';
 
 const OOOForm = ({
-  fromDate,
-  toDate,
+  // fromDate,
+  // toDate,
   description,
   setToDate,
   setFromDate,
@@ -13,26 +21,31 @@ const OOOForm = ({
 }: OOOFormType) => {
   return (
     <View style={styles.formContainer}>
-      <TextInput
-        style={styles.input}
-        placeholder="From Date"
-        value={fromDate}
-        onChangeText={setFromDate}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="To Date"
-        value={toDate}
-        onChangeText={setToDate}
-      />
-      <TextInput
-        style={[styles.input, styles.textArea]}
-        placeholder="Description"
-        value={description}
-        onChangeText={setDescription}
-        multiline
-        numberOfLines={4}
-      />
+      <>
+        <Pressable onPress={handleFormSubmit}>
+          <Image style={styles.cross} source={Images.closeIcon} />
+        </Pressable>
+        <TextInput
+          style={styles.input}
+          placeholder="From "
+          // value={fromDate}
+          onChangeText={setFromDate}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="To Date"
+          // value={toDate}
+          onChangeText={setToDate}
+        />
+        <TextInput
+          style={[styles.input, styles.textArea]}
+          placeholder="Description"
+          value={description}
+          onChangeText={setDescription}
+          multiline
+          numberOfLines={4}
+        />
+      </>
       <Button title="Submit" onPress={handleFormSubmit} />
     </View>
   );
@@ -61,5 +74,11 @@ const styles = StyleSheet.create({
   textArea: {
     height: 80,
     textAlignVertical: 'top', // To start text from the top in multiline input
+  },
+  cross: {
+    height: 20,
+    width: 20,
+    marginLeft: 'auto',
+    marginBottom: 10,
   },
 });
