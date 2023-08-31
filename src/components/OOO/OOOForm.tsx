@@ -1,6 +1,7 @@
-import { StyleSheet, TextInput, View, Button } from 'react-native';
-import React from 'react';
+import { StyleSheet, TextInput, View, Button} from 'react-native';
+import React, {useState} from 'react';
 import { OOOFormType } from './OOOFormType';
+import DatePicker from './OOOFormDatePicker';
 
 const OOOForm = ({
   fromDate,
@@ -11,20 +12,25 @@ const OOOForm = ({
   setDescription,
   handleFormSubmit,
 }: OOOFormType) => {
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+  // const handleDateChange = (event, date) => {
+  //   if (date !== undefined) {
+  //     setSelectedDate(date);
+  //   }
+  // };
+
+ 
   return (
     <View style={styles.formContainer}>
-      <TextInput
-        style={styles.input}
-        placeholder="From Date"
-        value={fromDate}
-        onChangeText={setFromDate}
-      />
-      <TextInput
+      <DatePicker name='From date' />
+      <DatePicker name='To date'/>
+
+      {/* <TextInput
         style={styles.input}
         placeholder="To Date"
         value={toDate}
         onChangeText={setToDate}
-      />
+      /> */}
       <TextInput
         style={[styles.input, styles.textArea]}
         placeholder="Description"
@@ -56,6 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     marginBottom: 10,
+    marginTop:20,
     paddingHorizontal: 10,
   },
   textArea: {
