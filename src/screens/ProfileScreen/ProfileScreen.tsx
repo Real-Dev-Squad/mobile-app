@@ -64,7 +64,7 @@ const ProfileScreen = () => {
   );
 
   return (
-    <View style={ScreenViewContainer.container}>
+    <ScrollView contentContainerStyle={ScreenViewContainer.container}>
       <Pressable
         style={profileScreenStyles.logoutButton}
         onPress={() => {
@@ -81,7 +81,7 @@ const ProfileScreen = () => {
         response={response}
         setResponse={setResponse}
       />
-      <ScrollView contentContainerStyle={profileScreenStyles.mainview}>
+      <View style={profileScreenStyles.mainview}>
         {response?.assets &&
           response.assets.map(({ uri }) => (
             <Avatar key={uri} uri={uri || ''} size={100} />
@@ -99,8 +99,8 @@ const ProfileScreen = () => {
           <ActiveTaskDropDown />
           <AllContributionsDropdown />
         </ScrollView>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
