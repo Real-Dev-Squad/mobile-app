@@ -2,17 +2,18 @@ import {
   StyleSheet,
   TextInput,
   View,
-  Button,
   Image,
   Pressable,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import Images from '../../constants/images/Image';
 import { OOOFormType } from './OOOFormType';
 
 const OOOForm = ({
-  // fromDate,
-  // toDate,
+  fromDate,
+  toDate,
   description,
   setToDate,
   setFromDate,
@@ -23,30 +24,55 @@ const OOOForm = ({
     <View style={styles.formContainer}>
       <>
         <Pressable onPress={handleFormSubmit}>
-          <Image style={styles.cross} source={Images.closeIcon} />
+          <Image style={styles.close} source={Images.closeIcon} />
         </Pressable>
+        <Text
+          aria-label="Label for From Date"
+          nativeID="labelFromDate"
+          style={styles.text}
+        >
+          From
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="From "
-          // value={fromDate}
+           value={fromDate}
           onChangeText={setFromDate}
         />
+        <Text
+          aria-label="Label for Untill Date"
+          nativeID="labelToDate"
+          style={styles.text}
+        >
+          Until
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="To Date"
-          // value={toDate}
+          value={toDate}
           onChangeText={setToDate}
         />
+        <Text
+          aria-label="Label for Description"
+          nativeID="labelDescription"
+          style={styles.text}
+        >
+          Description
+        </Text>
         <TextInput
           style={[styles.input, styles.textArea]}
-          placeholder="Description"
           value={description}
           onChangeText={setDescription}
           multiline
           numberOfLines={4}
         />
       </>
-      <Button title="Submit" onPress={handleFormSubmit} />
+      <TouchableOpacity
+        onPress={handleFormSubmit}
+        style={styles.SubmitButtonContainer}
+      >
+        <Text style={styles.SubmitButtonText}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -59,9 +85,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     backgroundColor: '#f9f9f9',
-    padding: 20,
+    padding: 30,
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 170,
+    marginLeft: 30,
+    marginRight: 30,
   },
   input: {
     height: 40,
@@ -75,10 +103,25 @@ const styles = StyleSheet.create({
     height: 80,
     textAlignVertical: 'top', // To start text from the top in multiline input
   },
-  cross: {
+  close: {
     height: 20,
     width: 20,
     marginLeft: 'auto',
     marginBottom: 10,
+  },
+  text: {
+    color: 'black',
+  },
+  SubmitButtonContainer: {
+    backgroundColor: '#808080',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: '30%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  SubmitButtonText: {
+    color: '#fff',
+    alignSelf: 'center',
   },
 });
