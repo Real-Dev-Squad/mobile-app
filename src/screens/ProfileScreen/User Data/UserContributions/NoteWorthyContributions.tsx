@@ -26,25 +26,49 @@ const NoteworthyContributionsDropdown = () => {
     }, []),
   );
 
+  const convertTimestampToReadableDate = (timestamp) => {
+    return new Date(timestamp * 1000);
+  };
+  const calculateTimeDifference = (startDate, endDate) => {
+    const timeDifference = endDate - startDate;
+    const secondsInMillisecond = 1000;
+    const minutesInMillisecond = 60 * secondsInMillisecond;
+    const hoursInMillisecond = 60 * minutesInMillisecond;
+    const daysInMillisecond = 24 * hoursInMillisecond;
+    const weeksInMillisecond = 7 * daysInMillisecond;
+    const monthsInMillisecond = 30.44 * daysInMillisecond; // Average month length
+    const yearsInMillisecond = 365 * daysInMillisecond;
+
+    if (timeDifference < minutesInMillisecond) {
+      return `${Math.floor(timeDifference / secondsInMillisecond)} seconds`;
+    } else if (timeDifference < hoursInMillisecond) {
+      return `${Math.floor(timeDifference / minutesInMillisecond)} minutes`;
+    } else if (timeDifference < daysInMillisecond) {
+      return `${Math.floor(timeDifference / hoursInMillisecond)} hours`;
+    } else if (timeDifference < weeksInMillisecond) {
+      return `${Math.floor(timeDifference / daysInMillisecond)} days`;
+    } else if (timeDifference < monthsInMillisecond) {
+      return `${Math.floor(timeDifference / weeksInMillisecond)} weeks`;
+    } else if (timeDifference < yearsInMillisecond) {
+      return `${Math.floor(timeDifference / monthsInMillisecond)} months`;
+    } else {
+      return `${Math.floor(timeDifference / yearsInMillisecond)} years`;
+    }
+  };
+
   return (
-    <View style={{ marginBottom: 10, padding: 5 }}>
+    <View style={{ padding: 5 }}>
       <TouchableOpacity
         onPress={() => setClicked(!clicked)}
         style={styles.DropDownButton}
       >
         <Text style={styles.DropDownTitle}>Noteworthy Contributions</Text>
         {clicked ? (
-          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
-          //   -
-          // </Text>
           <Image
             style={{ height: 100, width: 100 }}
             source={require('../../../../../assets/down.png')}
           />
         ) : (
-          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
-          //   +
-          // </Text>
           <Image
             style={{ height: 100, width: 100 }}
             source={require('../../../../../assets/right.png')}
@@ -67,7 +91,7 @@ const NoteworthyContributionsDropdown = () => {
                 </Text>
                 <>
                   {item.task.purpose ? (
-                    <Text style={{ color: 'black', padding: 10 }}>
+                    <Text style={{ color: 'black', marginTop: 5 }}>
                       {item.task.purpose}
                     </Text>
                   ) : null}
@@ -80,21 +104,28 @@ const NoteworthyContributionsDropdown = () => {
                         fontSize: 13,
                         borderBottomColor: 'grey',
                         borderBottomWidth: 1,
-                        padding: 10,
+                        marginTop: 5,
                       }}
                     >
-                      Estimated completion: {item.task.endsOn}
+                      Estimated completion:{' '}
+                      {calculateTimeDifference(
+                        convertTimestampToReadableDate(item.task.startedOn),
+                        convertTimestampToReadableDate(item.task.endsOn),
+                      )}
                     </Text>
                   ) : (
                     <Text
                       style={{
                         color: 'black',
                         fontSize: 13,
-                        padding: 10,
+                        marginBottom: 5,
                       }}
                     >
                       Estimated completion:{' '}
-                      {item.task.startedOn - item.task.endsOn}
+                      {calculateTimeDifference(
+                        convertTimestampToReadableDate(item.task.startedOn),
+                        convertTimestampToReadableDate(item.task.endsOn),
+                      )}
                     </Text>
                   )}
                 </>
@@ -147,12 +178,12 @@ const styles = StyleSheet.create({
   },
   DropDownbackground: {
     padding: 10,
-    marginTop: 10,
+    marginTop: 5,
     height: 'auto',
     alignSelf: 'center',
     width: '90%',
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 5,
   },
 });
 

@@ -24,8 +24,71 @@ const AllContributionsDropdown = () => {
       })();
     }, []),
   );
+
+  const convertTimestampToReadableDate = (timestamp) => {
+    return new Date(timestamp * 1000);
+  };
+  const calculateTimeDifference = (startDate, endDate) => {
+    const timeDifference = endDate - startDate;
+    const secondsInMillisecond = 1000;
+    const minutesInMillisecond = 60 * secondsInMillisecond;
+    const hoursInMillisecond = 60 * minutesInMillisecond;
+    const daysInMillisecond = 24 * hoursInMillisecond;
+    const weeksInMillisecond = 7 * daysInMillisecond;
+    const monthsInMillisecond = 30.44 * daysInMillisecond; // Average month length
+    const yearsInMillisecond = 365 * daysInMillisecond;
+
+    if (timeDifference < minutesInMillisecond) {
+      return `${Math.floor(timeDifference / secondsInMillisecond)} seconds`;
+    } else if (timeDifference < hoursInMillisecond) {
+      return `${Math.floor(timeDifference / minutesInMillisecond)} minutes`;
+    } else if (timeDifference < daysInMillisecond) {
+      return `${Math.floor(timeDifference / hoursInMillisecond)} hours`;
+    } else if (timeDifference < weeksInMillisecond) {
+      return `${Math.floor(timeDifference / daysInMillisecond)} days`;
+    } else if (timeDifference < monthsInMillisecond) {
+      return `${Math.floor(timeDifference / weeksInMillisecond)} weeks`;
+    } else if (timeDifference < yearsInMillisecond) {
+      return `${Math.floor(timeDifference / monthsInMillisecond)} months`;
+    } else {
+      return `${Math.floor(timeDifference / yearsInMillisecond)} years`;
+    }
+  };
+
+  const calculateISODateFormat = (isoDateString) => {
+    const date = new Date(isoDateString);
+    const formatDate = (date) => {
+      const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
+
+      return `${day} ${months[monthIndex]}, ${year}`;
+    };
+    const formattedDate = formatDate(date);
+    return formattedDate;
+  };
+
+  const parseISODate = (isoDateString) => {
+    return new Date(isoDateString);
+  };
+
   return (
-    <View style={{ marginBottom: 10, padding: 5 }}>
+    <View style={{ padding: 5 }}>
       <TouchableOpacity
         onPress={() => setClicked(!clicked)}
         style={styles.DropDownButton}
@@ -64,9 +127,9 @@ const AllContributionsDropdown = () => {
                   {item.task.id ? (
                     <React.Fragment>
                       <Text style={{ color: 'blue', fontSize: 18 }}>
-                        Title: {item.task.title}
+                        {item.task.title}
                       </Text>
-                      <Text style={{ color: 'black', padding: 10 }}>
+                      <Text style={{ color: 'grey', marginTop: 5 }}>
                         {item.task.purpose}
                       </Text>
                       <>
@@ -77,28 +140,38 @@ const AllContributionsDropdown = () => {
                               fontSize: 13,
                               borderBottomColor: 'grey',
                               borderBottomWidth: 1,
-                              padding: 10,
+                              marginTop: 5,
                             }}
                           >
                             Estimated completion:{' '}
-                            {item.task.startedOn - item.task.endsOn}
+                            {calculateTimeDifference(
+                              convertTimestampToReadableDate(
+                                item.task.startedOn,
+                              ),
+                              convertTimestampToReadableDate(item.task.endsOn),
+                            )}
                           </Text>
                         ) : (
                           <Text
                             style={{
                               color: 'black',
                               fontSize: 13,
-                              padding: 10,
+                              marginTop: 5,
                             }}
                           >
                             Estimated completion:{' '}
-                            {item.task.startedOn - item.task.endsOn}
+                            {calculateTimeDifference(
+                              convertTimestampToReadableDate(
+                                item.task.startedOn,
+                              ),
+                              convertTimestampToReadableDate(item.task.endsOn),
+                            )}
                           </Text>
                         )}
                       </>
                       <>
                         {item.task.featureUrl ? (
-                          <Text style={{ color: 'grey' }}>
+                          <Text style={{ color: 'grey', textAlign: 'center' }}>
                             Checkout this feature in action
                           </Text>
                         ) : null}
@@ -109,24 +182,31 @@ const AllContributionsDropdown = () => {
                       {item.prList.length > 0 && (
                         <React.Fragment>
                           <Text style={{ color: 'blue', fontSize: 18 }}>
-                            PR Title: {item.prList[0].title}
+                            {item.prList[0].title}
                           </Text>
-                          <Text style={{ color: 'black', padding: 5 }}>
-                            Completed in
+                          <Text style={{ color: 'black', marginTop: 5 }}>
+                            Completed in:{' '}
+                            {calculateTimeDifference(
+                              parseISODate(item.prList[0].createdAt),
+                              parseISODate(item.prList[0].updatedAt),
+                            )}
                           </Text>
                           <Text
                             style={{
                               color: 'black',
                               borderBottomColor: 'grey',
                               borderBottomWidth: 1,
-                              padding: 5,
+                              marginTop: 5,
                             }}
                           >
-                            Feature live on
+                            Feature live on:{' '}
+                            {calculateISODateFormat(item.prList[0].updatedAt)}
                           </Text>
                           <>
                             {item.prList[0].url ? (
-                              <Text style={{ color: 'grey' }}>
+                              <Text
+                                style={{ color: 'grey', textAlign: 'center' }}
+                              >
                                 Checkout this feature in action
                               </Text>
                             ) : null}
@@ -153,8 +233,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     alignSelf: 'center',
-    // margin: 10,
-    fontStyle: 'Roboto',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
@@ -170,10 +248,12 @@ const styles = StyleSheet.create({
     color: 'black',
     width: '100%',
     alignSelf: 'center',
+    height: 'auto',
   },
   DropDownbackground: {
     padding: 10,
-    // height: 'auto',
+    marginTop: 5,
+    height: 'auto',
     alignSelf: 'center',
     width: '90%',
     backgroundColor: '#fff',

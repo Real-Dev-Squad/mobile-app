@@ -33,8 +33,6 @@ const ProfileScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [contributionData, setContributionData] = useState([]);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
-  console.log('loggedIn', loggedInUserData);
-
   const openModal = useCallback(() => {
     setModalVisible(true);
   }, []);
@@ -66,7 +64,7 @@ const ProfileScreen = () => {
   );
 
   return (
-    <ScrollView contentContainerStyle={ScreenViewContainer.container}>
+    <View style={ScreenViewContainer.container}>
       <Pressable
         style={profileScreenStyles.logoutButton}
         onPress={() => {
@@ -83,7 +81,7 @@ const ProfileScreen = () => {
         response={response}
         setResponse={setResponse}
       />
-      <View style={profileScreenStyles.mainview}>
+      <ScrollView contentContainerStyle={profileScreenStyles.mainview}>
         {response?.assets &&
           response.assets.map(({ uri }) => (
             <Avatar key={uri} uri={uri || ''} size={100} />
@@ -97,12 +95,12 @@ const ProfileScreen = () => {
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
         <ScrollView style={styles.container}>
-            <NoteworthyContributionsDropdown />
-            <ActiveTaskDropDown />
-            <AllContributionsDropdown />
+          <NoteworthyContributionsDropdown />
+          <ActiveTaskDropDown />
+          <AllContributionsDropdown />
         </ScrollView>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({

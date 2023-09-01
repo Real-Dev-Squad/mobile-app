@@ -11,7 +11,7 @@ import {
 const ActiveTaskDropDown = () => {
   const [clicked, setClicked] = useState(false);
   return (
-    <View style={{ marginBottom: 10, padding: 5 }}>
+    <View style={{ padding: 5 }}>
       <TouchableOpacity
         onPress={() => setClicked(!clicked)}
         style={styles.DropDownButton}
