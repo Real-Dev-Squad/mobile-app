@@ -65,14 +65,14 @@ const ProfileScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
-      <Pressable
+      {/* <Pressable
         style={profileScreenStyles.logoutButton}
         onPress={() => {
           setLoggedInUserData(null);
         }}
       >
         <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
-      </Pressable>
+      </Pressable> */}
 
       <UploadImageModalView
         closeModal={closeModal}
@@ -90,7 +90,7 @@ const ProfileScreen = () => {
           <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
         )}
         <Text style={profileScreenStyles.titleText}>
-          {loggedInUserData?.name}
+          {/* {loggedInUserData?.name} */}
           <UserData userData={userData} />
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
@@ -98,6 +98,14 @@ const ProfileScreen = () => {
           <NoteworthyContributionsDropdown />
           <ActiveTaskDropDown />
           <AllContributionsDropdown />
+          <Pressable
+            style={profileScreenStyles.logoutButton}
+            onPress={() => {
+              setLoggedInUserData(null);
+            }}
+          >
+            <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
+          </Pressable>
         </ScrollView>
       </View>
     </ScrollView>

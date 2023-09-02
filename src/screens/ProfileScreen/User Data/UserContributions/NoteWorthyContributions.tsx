@@ -65,12 +65,12 @@ const NoteworthyContributionsDropdown = () => {
         <Text style={styles.DropDownTitle}>Noteworthy Contributions</Text>
         {clicked ? (
           <Image
-            style={{ height: 100, width: 100 }}
+            style={styles.ImageDimensions}
             source={require('../../../../../assets/down.png')}
           />
         ) : (
           <Image
-            style={{ height: 100, width: 100 }}
+            style={styles.ImageDimensions}
             source={require('../../../../../assets/right.png')}
           />
         )}
@@ -86,27 +86,17 @@ const NoteworthyContributionsDropdown = () => {
                     : null
                 }
               >
-                <Text style={{ color: 'blue', fontSize: 18 }}>
-                  {item.task.title}
-                </Text>
+                <Text style={styles.ItemTaskTitle}>{item.task.title}</Text>
                 <>
                   {item.task.purpose ? (
-                    <Text style={{ color: 'black', marginTop: 5 }}>
+                    <Text style={styles.ItemTaskPurpose}>
                       {item.task.purpose}
                     </Text>
                   ) : null}
                 </>
                 <>
                   {item.task.featureUrl ? (
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 13,
-                        borderBottomColor: 'grey',
-                        borderBottomWidth: 1,
-                        marginTop: 5,
-                      }}
-                    >
+                    <Text style={styles.EstimatedTimeChoice1}>
                       Estimated completion:{' '}
                       {calculateTimeDifference(
                         convertTimestampToReadableDate(item.task.startedOn),
@@ -114,13 +104,7 @@ const NoteworthyContributionsDropdown = () => {
                       )}
                     </Text>
                   ) : (
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 13,
-                        marginBottom: 5,
-                      }}
-                    >
+                    <Text style={styles.EstimatedTimeChoice2}>
                       Estimated completion:{' '}
                       {calculateTimeDifference(
                         convertTimestampToReadableDate(item.task.startedOn),
@@ -131,12 +115,7 @@ const NoteworthyContributionsDropdown = () => {
                 </>
                 <>
                   {item.task.featureUrl ? (
-                    <Text
-                      style={{
-                        color: 'grey',
-                        textAlign: 'center',
-                      }}
-                    >
+                    <Text style={styles.CheckoutLive}>
                       Checkout this feature in action
                     </Text>
                   ) : null}
@@ -152,9 +131,8 @@ const NoteworthyContributionsDropdown = () => {
 const styles = StyleSheet.create({
   DropDownButton: {
     width: '100%',
-    height: 100,
+    height: 80,
     elevation: 5,
-    // margin: 5,
     borderRadius: 10,
     backgroundColor: 'white',
     alignSelf: 'center',
@@ -162,11 +140,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingLeft: 35,
-    // paddingRight: 25,
   },
   DropDownTitle: {
     fontWeight: '600',
-    fontSize: 30,
+    fontSize: 20,
     color: 'black',
   },
   DropDownElement: {
@@ -174,16 +151,44 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     height: 'auto',
-    // borderBottomWidth: 0.5,
   },
   DropDownbackground: {
     padding: 10,
     marginTop: 5,
-    height: 'auto',
     alignSelf: 'center',
     width: '90%',
     backgroundColor: '#fff',
     borderRadius: 5,
+  },
+  ImageDimensions: {
+    height: 100,
+    width: 100,
+  },
+  EstimatedTimeChoice1: {
+    color: 'black',
+    fontSize: 15,
+    fontWeight: 'bold',
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1,
+    marginTop: 5,
+  },
+  EstimatedTimeChoice2: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 13,
+    marginTop: 5,
+  },
+  CheckoutLive: {
+    color: 'grey',
+    textAlign: 'center',
+  },
+  ItemTaskTitle: {
+    color: 'blue',
+    fontSize: 18,
+  },
+  ItemTaskPurpose: {
+    color: 'black',
+    marginTop: 5,
   },
 });
 

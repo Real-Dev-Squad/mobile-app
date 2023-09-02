@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  FlatList,
   Linking,
   Image,
 } from 'react-native';
@@ -95,19 +94,13 @@ const AllContributionsDropdown = () => {
       >
         <Text style={styles.DropDownTitle}>All Contributions</Text>
         {clicked ? (
-          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
-          //   -
-          // </Text>
           <Image
-            style={{ height: 100, width: 100 }}
+            style={styles.ImageDimensions}
             source={require('../../../../../assets/down.png')}
           />
         ) : (
-          // <Text style={{ color: 'black', fontSize: 50, paddingLeft: 20 }}>
-          //   +
-          // </Text>
           <Image
-            style={{ height: 100, width: 100 }}
+            style={styles.ImageDimensions}
             source={require('../../../../../assets/right.png')}
           />
         )}
@@ -126,23 +119,15 @@ const AllContributionsDropdown = () => {
                 >
                   {item.task.id ? (
                     <React.Fragment>
-                      <Text style={{ color: 'blue', fontSize: 18 }}>
+                      <Text style={styles.ItemTaskTitle}>
                         {item.task.title}
                       </Text>
-                      <Text style={{ color: 'grey', marginTop: 5 }}>
+                      <Text style={styles.ItemTaskPurpose}>
                         {item.task.purpose}
                       </Text>
                       <>
                         {item.task.featureUrl ? (
-                          <Text
-                            style={{
-                              color: 'black',
-                              fontSize: 13,
-                              borderBottomColor: 'grey',
-                              borderBottomWidth: 1,
-                              marginTop: 5,
-                            }}
-                          >
+                          <Text style={styles.EstimatedTimeChoice1}>
                             Estimated completion:{' '}
                             {calculateTimeDifference(
                               convertTimestampToReadableDate(
@@ -152,13 +137,7 @@ const AllContributionsDropdown = () => {
                             )}
                           </Text>
                         ) : (
-                          <Text
-                            style={{
-                              color: 'black',
-                              fontSize: 13,
-                              marginTop: 5,
-                            }}
-                          >
+                          <Text style={styles.EstimatedTimeChoice2}>
                             Estimated completion:{' '}
                             {calculateTimeDifference(
                               convertTimestampToReadableDate(
@@ -171,7 +150,7 @@ const AllContributionsDropdown = () => {
                       </>
                       <>
                         {item.task.featureUrl ? (
-                          <Text style={{ color: 'grey', textAlign: 'center' }}>
+                          <Text style={styles.CheckoutLive}>
                             Checkout this feature in action
                           </Text>
                         ) : null}
@@ -181,32 +160,23 @@ const AllContributionsDropdown = () => {
                     <React.Fragment>
                       {item.prList.length > 0 && (
                         <React.Fragment>
-                          <Text style={{ color: 'blue', fontSize: 18 }}>
+                          <Text style={styles.ItemTaskTitle}>
                             {item.prList[0].title}
                           </Text>
-                          <Text style={{ color: 'black', marginTop: 5 }}>
+                          <Text style={styles.CompletedIn}>
                             Completed in:{' '}
                             {calculateTimeDifference(
                               parseISODate(item.prList[0].createdAt),
                               parseISODate(item.prList[0].updatedAt),
                             )}
                           </Text>
-                          <Text
-                            style={{
-                              color: 'black',
-                              borderBottomColor: 'grey',
-                              borderBottomWidth: 1,
-                              marginTop: 5,
-                            }}
-                          >
+                          <Text style={styles.FeatureDate}>
                             Feature live on:{' '}
                             {calculateISODateFormat(item.prList[0].updatedAt)}
                           </Text>
                           <>
                             {item.prList[0].url ? (
-                              <Text
-                                style={{ color: 'grey', textAlign: 'center' }}
-                              >
+                              <Text style={styles.CheckoutLive}>
                                 Checkout this feature in action
                               </Text>
                             ) : null}
@@ -228,7 +198,7 @@ const AllContributionsDropdown = () => {
 const styles = StyleSheet.create({
   DropDownButton: {
     width: '100%',
-    height: 100,
+    height: 80,
     elevation: 5,
     borderRadius: 10,
     backgroundColor: 'white',
@@ -237,11 +207,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingLeft: 35,
-    // paddingRight: 25,
   },
   DropDownTitle: {
     fontWeight: '600',
-    fontSize: 30,
+    fontSize: 20,
     color: 'black',
   },
   DropDownElement: {
@@ -258,6 +227,48 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: '#fff',
     borderRadius: 5,
+  },
+  ImageDimensions: {
+    height: 100,
+    width: 100,
+  },
+  EstimatedTimeChoice1: {
+    color: 'black',
+    fontSize: 15,
+    fontWeight: 'bold',
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1,
+    marginTop: 5,
+  },
+  EstimatedTimeChoice2: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginTop: 5,
+  },
+  FeatureDate: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 15,
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1,
+    marginTop: 5,
+  },
+  CheckoutLive: {
+    color: 'grey',
+    textAlign: 'center',
+  },
+  ItemTaskTitle: {
+    color: 'blue',
+    fontSize: 18,
+  },
+  ItemTaskPurpose: {
+    color: 'black',
+    marginTop: 5,
+  },
+  CompletedIn: {
+    color: 'grey',
+    marginTop: 5,
   },
 });
 
