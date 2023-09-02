@@ -56,7 +56,7 @@ const AllContributionsDropdown = () => {
 
   const calculateISODateFormat = (isoDateString) => {
     const date = new Date(isoDateString);
-    const formatDate = (date) => {
+    const formatDate = (dateVar) => {
       const months = [
         'January',
         'February',
@@ -72,9 +72,9 @@ const AllContributionsDropdown = () => {
         'December',
       ];
 
-      const day = date.getDate();
-      const monthIndex = date.getMonth();
-      const year = date.getFullYear();
+      const day = dateVar.getDate();
+      const monthIndex = dateVar.getMonth();
+      const year = dateVar.getFullYear();
 
       return `${day} ${months[monthIndex]}, ${year}`;
     };
