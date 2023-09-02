@@ -65,15 +65,6 @@ const ProfileScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
-      {/* <Pressable
-        style={profileScreenStyles.logoutButton}
-        onPress={() => {
-          setLoggedInUserData(null);
-        }}
-      >
-        <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
-      </Pressable> */}
-
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
@@ -113,11 +104,8 @@ const ProfileScreen = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     marginBottom: 10,
     paddingBottom: 30,
-    // borderWidth: 2,
-    // backgroundColor: 'pink',
   },
   container2: {
     borderWidth: 2,

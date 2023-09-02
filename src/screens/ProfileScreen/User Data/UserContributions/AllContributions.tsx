@@ -109,15 +109,15 @@ const AllContributionsDropdown = () => {
         ? allContributionsData.map((item, index) => (
             <View key={index}>
               <View style={styles.DropDownElement}>
-                <TouchableOpacity
-                  style={styles.DropDownbackground}
-                  onPress={
-                    item.task.featureUrl
-                      ? () => Linking.openURL(item.task.featureUrl)
-                      : null
-                  }
-                >
-                  {item.task.id ? (
+                {item.task.id ? (
+                  <TouchableOpacity
+                    style={styles.DropDownbackground}
+                    onPress={
+                      item.task.featureUrl
+                        ? () => Linking.openURL(item.task.featureUrl)
+                        : null
+                    }
+                  >
                     <React.Fragment>
                       <Text style={styles.ItemTaskTitle}>
                         {item.task.title}
@@ -156,7 +156,16 @@ const AllContributionsDropdown = () => {
                         ) : null}
                       </>
                     </React.Fragment>
-                  ) : (
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity 
+                  style={styles.DropDownbackground}
+                    onPress={
+                      item.prList[0].url
+                        ? () => Linking.openURL(item.prList[0].url)
+                        : null
+                    }
+                  >
                     <React.Fragment>
                       {item.prList.length > 0 && (
                         <React.Fragment>
@@ -184,8 +193,9 @@ const AllContributionsDropdown = () => {
                         </React.Fragment>
                       )}
                     </React.Fragment>
-                  )}
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                )}
+                {/* </TouchableOpacity> */}
                 <Text>{item.prList.title}</Text>
               </View>
             </View>
