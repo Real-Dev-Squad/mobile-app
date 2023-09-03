@@ -10,6 +10,7 @@ const OOOForm = ({
   setFromDate,
   setDescription,
   handleFormSubmit,
+  isLoading,
 }: OOOFormType) => {
   return (
     <View style={styles.formContainer}>
@@ -33,7 +34,7 @@ const OOOForm = ({
         multiline
         numberOfLines={4}
       />
-      <Button title="Submit" onPress={handleFormSubmit} />
+      <Button title="Submit" onPress={handleFormSubmit} disabled={isLoading} />
     </View>
   );
 };

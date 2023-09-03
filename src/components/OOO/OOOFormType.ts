@@ -6,4 +6,5 @@ export type OOOFormType = {
   setFromDate: () => void;
   setDescription: () => void;
   handleFormSubmit: () => void;
+  isLoading: boolean;
 };

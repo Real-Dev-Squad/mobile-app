@@ -1,17 +1,17 @@
 import React from 'react';
-import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 
-function LoadingScreen() {
+const ErrorScreen = ({ error }: string) => {
   return (
     <Modal transparent={true}>
       <View style={styles.container}>
-        <ActivityIndicator size="large" />
+        <Text>{error}</Text>
       </View>
     </Modal>
   );
-}
+};
 
-export default LoadingScreen;
+export default ErrorScreen;
 
 const styles = StyleSheet.create({
   container: {
