@@ -19,6 +19,19 @@ export const getUserData = async (url: string) => {
   }
 };
 
+export const fetchContribution = async (userName: string): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GET_CONTRIBUTIONS + userName, {
+      headers: {
+        cookie: '',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const updateStatus = async (status: string) => {
   const res = await axios.patch(
     urls.GET_USERS_DATA,
