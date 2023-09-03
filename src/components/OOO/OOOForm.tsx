@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     backgroundColor: '#f9f9f9',
-    padding: 30,
+    paddingHorizontal:35,
+    paddingVertical:20,
     borderRadius: 8,
     marginTop: 170,
     marginLeft: 30,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   text: {
-    color: 'black',
+    color: '#000000',
   },
   SubmitButtonContainer: {
     backgroundColor: '#808080',
