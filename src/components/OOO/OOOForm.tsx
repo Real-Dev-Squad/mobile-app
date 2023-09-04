@@ -1,5 +1,5 @@
-import { StyleSheet, TextInput, View, Button} from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, TextInput, View, Button, Alert } from 'react-native';
+import React, { useState } from 'react';
 import { OOOFormType } from './OOOFormType';
 import DatePicker from './OOOFormDatePicker';
 
@@ -13,25 +13,41 @@ const OOOForm = ({
   handleFormSubmit,
   isLoading,
 }: OOOFormType) => {
-  // const [selectedDate, setSelectedDate] = useState(new Date());
-  // const handleDateChange = (event, date) => {
-  //   if (date !== undefined) {
-  //     setSelectedDate(date);
-  //   }
-  // };
+  const isFormValid = () => {
+    // Check if fromDate and toDate are not null or undefined
+    if (!fromDate || !toDate) {
+      Alert.alert('Error', 'Please select both From Date and To Date.');
+      return false;
+    }
 
- 
+    // Check if fromDate is less than toDate
+    if (fromDate >= toDate) {
+      Alert.alert('Error', 'From Date must be less than To Date.');
+      return false;
+    }
+
+    // Check if description is not empty
+    if (!description) {
+      Alert.alert('Error', 'Description is required.');
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <View style={styles.formContainer}>
-      <DatePicker name='From date' />
-      <DatePicker name='To date'/>
+      <DatePicker
+        title={`From date: ${fromDate.toLocaleString('en-US')}`}
+        onDateChange={(date) => setFromDate(date)}
+        selectedDate={fromDate}
+      />
+      <DatePicker
+        title={`To date: ${toDate.toLocaleString('en-US')}`}
+        onDateChange={(date) => setToDate(date)}
+        selectedDate={toDate}
+      />
 
-      {/* <TextInput
-        style={styles.input}
-        placeholder="To Date"
-        value={toDate}
-        onChangeText={setToDate}
-      /> */}
       <TextInput
         style={[styles.input, styles.textArea]}
         placeholder="Description"
@@ -40,7 +56,11 @@ const OOOForm = ({
         multiline
         numberOfLines={4}
       />
-      <Button title="Submit" onPress={handleFormSubmit} disabled={isLoading} />
+      <Button
+        title="Submit"
+        onPress={isFormValid() && handleFormSubmit}
+        disabled={isLoading}
+      />
     </View>
   );
 };
@@ -63,7 +83,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     marginBottom: 10,
-    marginTop:20,
+    marginTop: 20,
     paddingHorizontal: 10,
   },
   textArea: {

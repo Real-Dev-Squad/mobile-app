@@ -7,9 +7,12 @@ import { cancelOoo, getUsersStatus, submitOOOForm } from '../AuthScreen/Util';
 import LoadingScreen from '../../components/LoadingScreen';
 
 const HomeScreenV2 = (): JSX.Element => {
+  const currentDate = new Date();
+  const tomorrowDate = new Date(currentDate);
+  tomorrowDate.setDate(currentDate.getDate() + 1);
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
-  const [fromDate, setFromDate] = useState<number>(Date.now());
-  const [toDate, setToDate] = useState<number>(Date.now());
+  const [fromDate, setFromDate] = useState<Date>(currentDate);
+  const [toDate, setToDate] = useState<Date>(tomorrowDate);
   const [description, setDescription] = useState<string>('');
   const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
