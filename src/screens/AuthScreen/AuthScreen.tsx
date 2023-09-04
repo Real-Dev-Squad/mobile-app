@@ -15,7 +15,7 @@ import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
 import { getUserData } from './Util';
-import { Storage, storeData } from '../../utils/dataStore';
+import { storeData } from '../../utils/dataStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ActivityIndicator } from 'react-native';
 import Images from '../../constants/images/Image';
