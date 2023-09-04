@@ -32,6 +32,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^10.8.0",
     "react-native-element-dropdown": "^2.0.0",
+    "react-native-encrypted-storage": "^4.0.3",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-picker": "^4.7.1",
