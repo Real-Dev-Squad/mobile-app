@@ -29,7 +29,9 @@ const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
+  const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [loading, setLoading] = useState(false);
+  const [key, setKey] = useState(1);
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,17 +52,20 @@ const AuthScreen = () => {
   //TODO: add to constants
   const handleSignIn = () => {
     // NOTE: toast until sign in with Github is implemented
-    Toast.show({
-      type: 'info',
-      text1: 'Sign in with GitHub coming soon...',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
+    setGithubView(true);
+    // Toast.show({
+    //   type: 'info',
+    //   text1: 'Sign in with GitHub coming soon...',
+    //   position: 'bottom',
+    //   bottomOffset: 80,
+    // });
   };
 
   const updateUserData = async (url: string) => {
+    console.log('updated user data', url);
     try {
       const res = await getUserData(url);
+      console.log('updated user data 1', res);
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
         id: res?.id,
@@ -69,6 +74,8 @@ const AuthScreen = () => {
         status: res?.status,
       });
     } catch (err) {
+      console.log('updated user data 2', err);
+
       setLoggedInUserData(null);
     }
   };
@@ -170,58 +177,40 @@ const AuthScreen = () => {
 
   if (githubView) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={AuthViewStyle.container}>
-          <View style={AuthViewStyle.addressBarStyle}>
-            {loading ? (
-              <ActivityIndicator
-                style={{ marginLeft: 5 }}
-                size={25}
-                color="#fff"
-              />
-            ) : (
-              <TouchableOpacity onPress={() => setGithubView(false)}>
-                <Text style={AuthViewStyle.addressBarCancel}>Cancel</Text>
-              </TouchableOpacity>
-            )}
-            <Text style={AuthViewStyle.addressBarLink}>{addressbarURL}</Text>
-            {loading ? null : (
-              <TouchableOpacity onPress={() => setKey(key + 1)}>
-                <Image
-                  source={Images.refreshIcon}
-                  style={AuthViewStyle.addressBarIcon}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          <WebView
-            key={key}
-            onNavigationStateChange={({ url }) => {
-              if (url === urls.REDIRECT_URL) {
-                setAdressbarURL(url);
-                updateUserData(url);
-              } else if (url.indexOf('?') > 0) {
-                let uri = url.substring(0, url.indexOf('?'));
-                setAdressbarURL(uri);
-                updateUserData(uri);
-              } else {
-                setAdressbarURL(url);
-                updateUserData(url);
-              }
-            }}
-            style={AuthViewStyle.webViewStyles}
-            source={{
-              uri: urls.GITHUB_AUTH,
-            }}
-            onLoadStart={() => {
-              setLoading(true);
-            }}
-            onLoadEnd={() => {
-              setLoading(false);
-            }}
-          />
-        </ScrollView>
-      </SafeAreaView>
+      <WebView
+        key={key}
+        source={{
+          uri: urls.GITHUB_AUTH,
+        }}
+        onNavigationStateChange={({ url }) => {
+          console.log('url in auth screen', url);
+          if (url === urls.REDIRECT_URL) {
+            console.log('url in auth screen', 1);
+
+            setAdressbarURL(url);
+            updateUserData(url);
+          } else if (url.indexOf('?') > 0) {
+            let uri = url.substring(0, url.indexOf('?'));
+            console.log('url in auth screen', 2, uri);
+
+            setAdressbarURL(uri);
+            updateUserData(uri);
+          } else {
+            console.log('url in auth screen', 3);
+
+            setAdressbarURL(url);
+            updateUserData(url);
+          }
+        }}
+        // style={AuthViewStyle.webViewStyles}
+
+        // onLoadStart={() => {
+        //   setLoading(true);
+        // }}
+        // onLoadEnd={() => {
+        //   setLoading(false);
+        // }}
+      />
     );
   }
   //TODO: fix layout change on otp input

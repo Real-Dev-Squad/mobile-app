@@ -6,6 +6,7 @@ import AuthScreen from './screens/AuthScreen/AuthScreen';
 
 const Index = () => {
   const { isLoading, loggedInUserData } = useContext(AuthContext);
+  console.log('loggedInUserData', loggedInUserData);
   if (isLoading) {
     return <LoadingScreen />;
   }
