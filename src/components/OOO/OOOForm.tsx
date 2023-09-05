@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
   Button,
 } from 'react-native';
-import React from 'react';
 import Images from '../../constants/images/Image';
+import React, { useState } from 'react';
 import { OOOFormType } from './OOOFormType';
+import DatePicker from './OOOFormDatePicker';
 
 const OOOForm = ({
   fromDate,
@@ -22,6 +23,13 @@ const OOOForm = ({
   handleFormSubmit,
   isLoading,
 }: OOOFormType) => {
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+  // const handleDateChange = (event, date) => {
+  //   if (date !== undefined) {
+  //     setSelectedDate(date);
+  //   }
+  // };
+
   return (
     <View style={styles.formContainer}>
       <Pressable onPress={handleFormSubmit}>
@@ -34,12 +42,7 @@ const OOOForm = ({
       >
         From
       </Text>
-      <TextInput
-        style={styles.input}
-        placeholder="From "
-        value={fromDate}
-        onChangeText={setFromDate}
-      />
+      <DatePicker name="From Date" />
       <Text
         aria-label="Label for Untill Date"
         nativeID="labelToDate"
@@ -47,6 +50,8 @@ const OOOForm = ({
       >
         Until
       </Text>
+      <DatePicker name="To Date" />
+
       <TextInput
         style={styles.input}
         placeholder="To Date"
@@ -100,6 +105,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     marginBottom: 10,
+    marginTop: 20,
     paddingHorizontal: 10,
   },
   textArea: {
