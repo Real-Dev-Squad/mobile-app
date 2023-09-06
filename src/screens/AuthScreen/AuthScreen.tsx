@@ -24,9 +24,12 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
+  const dispatch = useDispatch();
+  const { API_BASE_URL } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -82,7 +85,7 @@ const AuthScreen = () => {
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
         const userDetailsInfo = await fetch(
-          `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
+          `${API_BASE_URL}users/userId/${scannedUserId}`,
         );
         const userDetailsInfoJson = await userDetailsInfo.json();
         await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
@@ -226,6 +229,7 @@ const AuthScreen = () => {
       </SafeAreaView>
     );
   }
+
   //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
@@ -258,6 +262,18 @@ const AuthScreen = () => {
         <AuthScreenButton
           text={Strings.SIGN_IN_WITH_WEB}
           onPress={activateCamera}
+        />
+        <AuthScreenButton
+          text={
+            API_BASE_URL === 'https://api.realdevsquad.com/'
+              ? 'switch to Stag'
+              : 'switch to prod'
+          }
+          onPress={() => {
+            API_BASE_URL === 'https://api.realdevsquad.com/'
+              ? dispatch({ type: 'STAGING' })
+              : dispatch({ type: 'PRODUCTION' });
+          }}
         />
       </View>
       {cameraActive && (

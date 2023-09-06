@@ -1,5 +1,6 @@
+import { featureFlagState } from '../../reducers/featureFlag.reducer';
+
 export const HomeApi = {
-  GET_USER_STATUS: 'https://api.realdevsquad.com/users/status/self',
-  UPDATE_STATUS:
-    'https://api.realdevsquad.com/users/status/self?userStatusFlag=true',
+  GET_USER_STATUS: `${featureFlagState.API_BASE_URL}users/status/self`,
+  UPDATE_STATUS: `${featureFlagState.API_BASE_URL}users/status/self?userStatusFlag=true`,
 };
