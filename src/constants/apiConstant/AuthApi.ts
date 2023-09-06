@@ -1,5 +1,7 @@
+import { featureFlagState } from '../../reducers/featureFlag.reducer';
+
 const AuthApis = {
-  QR_AUTH_API: 'https://api.realdevsquad.com/auth/qr-code-auth',
+  QR_AUTH_API: `${featureFlagState.API_BASE_URL}auth/qr-code-auth`,
 };
 
 export default AuthApis;
