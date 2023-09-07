@@ -63,6 +63,9 @@ const ProfileScreen = () => {
     }, []),
   );
 
+  const handleLogout = () => {
+    // please remove the token
+  };
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
       <UploadImageModalView
@@ -81,7 +84,6 @@ const ProfileScreen = () => {
           <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
         )}
         <Text style={profileScreenStyles.titleText}>
-          {/* {loggedInUserData?.name} */}
           <UserData userData={userData} />
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
@@ -95,7 +97,9 @@ const ProfileScreen = () => {
               setLoggedInUserData(null);
             }}
           >
-            <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
+            <Text style={profileScreenStyles.logoutText} onPress={handleLogout}>
+              {Strings.LOGOUT}
+            </Text>
           </Pressable>
         </ScrollView>
       </View>
