@@ -1,7 +1,15 @@
 // TODO: we wil remove this once we start using userData and contributionData
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import withHeader from '../../helpers/withHeader';
@@ -13,20 +21,18 @@ import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import { fetchContribution } from '../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
-
 import { useSelector } from 'react-redux';
+import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
+import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteWorthyContributions';
+import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
+import UserData from './User Data/UserData';
 
 const ProfileScreen = () => {
   const { data: userData } = useSelector((store) => store.user);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-  const [contributionData, setContributionData] = useState({
-    allData: [],
-    noteworthy: [],
-  });
+  const [contributionData, setContributionData] = useState([]);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
-  console.log('loggedIn', loggedInUserData);
-
   const openModal = useCallback(() => {
     setModalVisible(true);
   }, []);
@@ -52,22 +58,16 @@ const ProfileScreen = () => {
       (async () => {
         const userName = 'ankush';
         const contributionResponse = await fetchContribution(userName);
-        setContributionData(contributionResponse);
+        setContributionData(contributionResponse.noteworthy);
       })();
     }, []),
   );
 
+  const handleLogout = () => {
+    // please remove the token
+  };
   return (
-    <View style={ScreenViewContainer.container}>
-      <Pressable
-        style={profileScreenStyles.logoutButton}
-        onPress={() => {
-          setLoggedInUserData(null);
-        }}
-      >
-        <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
-      </Pressable>
-
+    <ScrollView contentContainerStyle={ScreenViewContainer.container}>
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
@@ -84,12 +84,36 @@ const ProfileScreen = () => {
           <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
         )}
         <Text style={profileScreenStyles.titleText}>
-          {loggedInUserData?.name}
+          <UserData userData={userData} />
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
+        <ScrollView style={styles.container}>
+          <NoteworthyContributionsDropdown />
+          <ActiveTaskDropDown />
+          <AllContributionsDropdown />
+          <Pressable
+            style={profileScreenStyles.logoutButton}
+            onPress={() => {
+              setLoggedInUserData(null);
+            }}
+          >
+            <Text style={profileScreenStyles.logoutText} onPress={handleLogout}>
+              {Strings.LOGOUT}
+            </Text>
+          </Pressable>
+        </ScrollView>
       </View>
-    </View>
+    </ScrollView>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 10,
+    paddingBottom: 30,
+  },
+  container2: {
+    borderWidth: 2,
+  },
+});
 
 export default withHeader(ProfileScreen);

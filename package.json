@@ -21,7 +21,9 @@
     "android:prod-release-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew assembleProductionRelease && cd ..",
     "android:stag-release-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew assembleStagingRelease && cd ..",
     "android:prod-release-aab": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew bundleProductionRelease && cd ..",
-    "android:stag-release-aab": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew bundleStagingRelease && cd .."
+    "android:stag-release-aab": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew bundleStagingRelease && cd ..",
+    "precommit-check": "yarn run format-fix && yarn run lint",
+    "build": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res; cd android ; ./gradlew assembleDebug"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.16",
@@ -43,6 +45,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^10.8.0",
     "react-native-element-dropdown": "^2.0.0",
+    "react-native-encrypted-storage": "^4.0.3",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-picker": "^4.7.1",

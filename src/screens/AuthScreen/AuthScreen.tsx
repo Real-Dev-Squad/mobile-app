@@ -164,7 +164,9 @@ const AuthScreen = () => {
   };
 
   useEffect(() => {
-    getAuthStatus();
+    if (scannedUserId != '') {
+      getAuthStatus();
+    }
     /* eslint-disable */
   }, [scannedUserId]);
 
@@ -259,7 +261,6 @@ const AuthScreen = () => {
           onPress={activateCamera}
         />
       </View>
-
       {cameraActive && (
         <CameraScreen
           style={StyleSheet.absoluteFill}
