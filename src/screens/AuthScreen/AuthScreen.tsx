@@ -164,7 +164,9 @@ const AuthScreen = () => {
   };
 
   useEffect(() => {
-    getAuthStatus();
+    if (scannedUserId != '') {
+      getAuthStatus();
+    }
     /* eslint-disable */
   }, [scannedUserId]);
 
