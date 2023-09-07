@@ -239,7 +239,7 @@ const AuthScreen = () => {
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
-        {/* <View style={AuthViewStyle.btnContainer}>
+        <View style={AuthViewStyle.btnContainer}>
           <TouchableOpacity
             onPress={handleSignIn}
             style={AuthViewStyle.btnView}
@@ -253,7 +253,7 @@ const AuthScreen = () => {
               </Text>
             </View>
           </TouchableOpacity>
-        </View> */}
+        </View>
         <AuthScreenButton
           text={Strings.SIGN_IN_WITH_WEB}
           onPress={activateCamera}
