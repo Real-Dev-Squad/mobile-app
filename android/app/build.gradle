@@ -2,7 +2,6 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 
-// add this block
 project.ext.envConfigFiles = [
     devdebug:".env",
     devreleases:".env",
@@ -12,7 +11,7 @@ project.ext.envConfigFiles = [
    stagingdebug: ".env.staging"
 ]
 
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- add this line
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" 
 
 import com.android.build.OutputFile
 
@@ -144,27 +143,23 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    // add this block
     flavorDimensions "default"
     productFlavors {
         production {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rdsapp"
-            // applicationIdSuffix ".production"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rdsapp"
         }
         staging {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rdsapp"
-            // applicationIdSuffix ".staging"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rdsapp"
         }
         dev {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rdsapp"
-            // applicationIdSuffix ".dev"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rdsapp"
         }
