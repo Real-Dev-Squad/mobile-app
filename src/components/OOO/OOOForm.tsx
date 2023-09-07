@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Text,
   Pressable,
+  Image,
 } from 'react-native';
 import React from 'react';
 import { OOOFormType } from './OOOFormType';
