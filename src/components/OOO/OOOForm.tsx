@@ -1,14 +1,5 @@
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Image,
-  Pressable,
-  Text,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
 import Images from '../../constants/images/Image';
+import { StyleSheet, TextInput, View, Button, Alert,TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { OOOFormType } from './OOOFormType';
 import DatePicker from './OOOFormDatePicker';
@@ -23,48 +14,41 @@ const OOOForm = ({
   handleFormSubmit,
   isLoading,
 }: OOOFormType) => {
-  // const [selectedDate, setSelectedDate] = useState(new Date());
-  // const handleDateChange = (event, date) => {
-  //   if (date !== undefined) {
-  //     setSelectedDate(date);
-  //   }
-  // };
+    
+  const isFormValid = () => {
+    // Check if fromDate and toDate are not null or undefined
+    if (!fromDate || !toDate) {
+      Alert.alert('Error', 'Please select both From Date and To Date.');
+      return false;
+    }
+
+    // Check if fromDate is less than toDate
+    if (fromDate >= toDate) {
+      Alert.alert('Error', 'From Date must be less than To Date.');
+      return false;
+    }
+
+    // Check if description is not empty
+    if (!description) {
+      Alert.alert('Error', 'Description is required.');
+      return false;
+    }
+
+    return true;
+  };
 
   return (
     <View style={styles.formContainer}>
-      <Pressable onPress={handleFormSubmit}>
-        <Image style={styles.close} source={Images.closeIcon} />
-      </Pressable>
-      <Text
-        aria-label="Label for From Date"
-        nativeID="labelFromDate"
-        style={styles.text}
-      >
-        From
-      </Text>
-      <DatePicker name="From Date" />
-      <Text
-        aria-label="Label for Untill Date"
-        nativeID="labelToDate"
-        style={styles.text}
-      >
-        Until
-      </Text>
-      <DatePicker name="To Date" />
-
-      <TextInput
-        style={styles.input}
-        placeholder="To Date"
-        value={toDate}
-        onChangeText={setToDate}
+      <DatePicker
+        title={`From date: ${fromDate.toLocaleString('en-US')}`}
+        onDateChange={(date) => setFromDate(date)}
+        selectedDate={fromDate}
       />
-      <Text
-        aria-label="Label for Description"
-        nativeID="labelDescription"
-        style={styles.text}
-      >
-        Description
-      </Text>
+      <DatePicker
+        title={`To date: ${toDate.toLocaleString('en-US')}`}
+        onDateChange={(date) => setToDate(date)}
+        selectedDate={toDate}
+      />
       <TextInput
         style={[styles.input, styles.textArea]}
         value={description}
@@ -74,7 +58,7 @@ const OOOForm = ({
       />
 
       <TouchableOpacity
-        onPress={handleFormSubmit}
+        onPress={isFormValid() && handleFormSubmit}
         style={styles.SubmitButtonContainer}
         disabled={isLoading}
       >

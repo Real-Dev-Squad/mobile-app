@@ -1,6 +1,6 @@
 export type OOOFormType = {
-  toDate: number;
-  fromDate: number;
+  toDate: Date;
+  fromDate: Date;
   description: string;
   setToDate: () => void;
   setFromDate: () => void;
