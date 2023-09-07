@@ -37,7 +37,8 @@ Note : Please delete the previous RDS app build if you have.
 
 - React Native setup
 - Android Studio
-- Node setup
+- JDK ( openjdk 11.0.20.1 2023-08-24 )
+- Node setup ( use version v16.*, tested on v16.20.2)
 - [Volta](https://docs.volta.sh/guide/getting-started) | [Why Volta?](https://docs.volta.sh/guide/#why-volta)
 
 ## **NOTE** : Make sure to set up the proper development environment required to run react-native applications.
