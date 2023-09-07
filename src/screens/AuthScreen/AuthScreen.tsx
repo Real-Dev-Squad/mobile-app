@@ -258,7 +258,6 @@ const AuthScreen = () => {
           onPress={activateCamera}
         />
       </View>
-
       {cameraActive && (
         <CameraScreen
           style={StyleSheet.absoluteFill}
