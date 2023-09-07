@@ -1,4 +1,5 @@
-import { StyleSheet, TextInput, View, Button, Alert } from 'react-native';
+import Images from '../../constants/images/Image';
+import { StyleSheet, TextInput, View, Button, Alert,TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { OOOFormType } from './OOOFormType';
 import DatePicker from './OOOFormDatePicker';
@@ -13,6 +14,7 @@ const OOOForm = ({
   handleFormSubmit,
   isLoading,
 }: OOOFormType) => {
+    
   const isFormValid = () => {
     // Check if fromDate and toDate are not null or undefined
     if (!fromDate || !toDate) {
@@ -47,20 +49,21 @@ const OOOForm = ({
         onDateChange={(date) => setToDate(date)}
         selectedDate={toDate}
       />
-
       <TextInput
         style={[styles.input, styles.textArea]}
-        placeholder="Description"
         value={description}
         onChangeText={setDescription}
         multiline
         numberOfLines={4}
       />
-      <Button
-        title="Submit"
+
+      <TouchableOpacity
         onPress={isFormValid() && handleFormSubmit}
+        style={styles.SubmitButtonContainer}
         disabled={isLoading}
-      />
+      >
+        <Text style={styles.SubmitButtonText}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -73,9 +76,12 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     backgroundColor: '#f9f9f9',
-    padding: 20,
+    paddingHorizontal: 35,
+    paddingVertical: 20,
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 170,
+    marginLeft: 30,
+    marginRight: 30,
   },
   input: {
     height: 40,
@@ -89,5 +95,26 @@ const styles = StyleSheet.create({
   textArea: {
     height: 80,
     textAlignVertical: 'top', // To start text from the top in multiline input
+  },
+  close: {
+    height: 20,
+    width: 20,
+    marginLeft: 'auto',
+    marginBottom: 10,
+  },
+  text: {
+    color: '#000000',
+  },
+  SubmitButtonContainer: {
+    backgroundColor: '#808080',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: '30%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  SubmitButtonText: {
+    color: '#fff',
+    alignSelf: 'center',
   },
 });

@@ -36,6 +36,8 @@ const HomeScreenV2 = (): JSX.Element => {
   };
 
   const handleFormSubmit = async () => {
+    console.log(fromDate, description, toDate);
+
     setIsLoading(true); // Set loading state while making API call
     let data = {
       currentStatus: {
