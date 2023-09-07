@@ -158,8 +158,8 @@ const AllContributionsDropdown = () => {
                     </React.Fragment>
                   </TouchableOpacity>
                 ) : (
-                  <TouchableOpacity 
-                  style={styles.DropDownbackground}
+                  <TouchableOpacity
+                    style={styles.DropDownbackground}
                     onPress={
                       item.prList[0].url
                         ? () => Linking.openURL(item.prList[0].url)

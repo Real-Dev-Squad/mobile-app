@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Strings from '../../i18n/en';
 import OOOForm from '../../components/OOO/OOOForm';
 import { AuthScreenButton } from '../AuthScreen/Button';
@@ -54,10 +54,10 @@ const HomeScreenV2 = (): JSX.Element => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <View>
-        <Text>{status}</Text>
-        <View style={{ marginTop: 20 }}>
+        <Text style={styles.text}>{status}</Text>
+        <View style={{ marginTop: 50 }}>
           <AuthScreenButton
             text={
               status === 'OOO'
@@ -77,6 +77,7 @@ const HomeScreenV2 = (): JSX.Element => {
             setDescription={setDescription}
             handleFormSubmit={handleFormSubmit}
             isLoading={isLoading}
+            setIsFormVisible={setIsFormVisible}
           />
         )}
       </View>
@@ -86,3 +87,18 @@ const HomeScreenV2 = (): JSX.Element => {
 };
 
 export default HomeScreenV2;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'blue',
+    textAlign: 'center',
+  },
+});

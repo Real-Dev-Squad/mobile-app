@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
+import { Modal, StyleSheet, View, Text } from 'react-native';
 
 const ErrorScreen = ({ error }: string) => {
   return (

@@ -22,6 +22,7 @@ const OOOForm = ({
   setDescription,
   handleFormSubmit,
   isLoading,
+  setIsFormVisible,
 }: OOOFormType) => {
   const isFormValid = () => {
     // Check if fromDate and toDate are not null or undefined
@@ -47,7 +48,7 @@ const OOOForm = ({
 
   return (
     <View style={styles.formContainer}>
-      <Pressable onPress={handleFormSubmit}>
+      <Pressable onPress={(prev) => setIsFormVisible(!prev)}>
         <Image style={styles.close} source={Images.closeIcon} />
       </Pressable>
       <DatePicker
@@ -69,7 +70,7 @@ const OOOForm = ({
       />
 
       <TouchableOpacity
-        onPress={isFormValid() && handleFormSubmit}
+        onPress={isFormValid && handleFormSubmit}
         style={styles.SubmitButtonContainer}
         disabled={isLoading}
       >
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 35,
     paddingVertical: 20,
     borderRadius: 8,
-    marginTop: 170,
+    marginTop: -30,
     marginLeft: 30,
     marginRight: 30,
   },

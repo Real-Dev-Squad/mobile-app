@@ -1,4 +1,4 @@
-import React, { useState, prop } from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
@@ -7,7 +7,6 @@ type DatePickerProps = {
   onDateChange: (date: Date) => void;
   selectedDate: Date;
 };
-
 
 const DeadLineDatePicker = (props: DatePickerProps) => {
   const [open, setOpen] = useState(false);

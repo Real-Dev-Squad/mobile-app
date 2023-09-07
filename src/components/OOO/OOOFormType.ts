@@ -7,4 +7,5 @@ export type OOOFormType = {
   setDescription: () => void;
   handleFormSubmit: () => void;
   isLoading: boolean;
+  setIsFormVisible: () => void;
 };
