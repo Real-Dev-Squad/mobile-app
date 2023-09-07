@@ -1,6 +1,14 @@
 import Images from '../../constants/images/Image';
-import { StyleSheet, TextInput, View, Button, Alert,TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Alert,
+  TouchableOpacity,
+  Text,
+  Pressable,
+} from 'react-native';
+import React from 'react';
 import { OOOFormType } from './OOOFormType';
 import DatePicker from './OOOFormDatePicker';
 
@@ -14,7 +22,6 @@ const OOOForm = ({
   handleFormSubmit,
   isLoading,
 }: OOOFormType) => {
-    
   const isFormValid = () => {
     // Check if fromDate and toDate are not null or undefined
     if (!fromDate || !toDate) {
@@ -39,6 +46,9 @@ const OOOForm = ({
 
   return (
     <View style={styles.formContainer}>
+      <Pressable onPress={handleFormSubmit}>
+        <Image style={styles.close} source={Images.closeIcon} />
+      </Pressable>
       <DatePicker
         title={`From date: ${fromDate.toLocaleString('en-US')}`}
         onDateChange={(date) => setFromDate(date)}
