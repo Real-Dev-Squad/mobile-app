@@ -265,12 +265,12 @@ const AuthScreen = () => {
         />
         <AuthScreenButton
           text={
-            API_BASE_URL === 'https://api.realdevsquad.com/'
+            API_BASE_URL === urls.PROD_BASE_URL
               ? 'switch to Stag'
               : 'switch to prod'
           }
           onPress={() => {
-            API_BASE_URL === 'https://api.realdevsquad.com/'
+            API_BASE_URL === urls.PROD_BASE_URL
               ? dispatch({ type: 'STAGING' })
               : dispatch({ type: 'PRODUCTION' });
           }}
