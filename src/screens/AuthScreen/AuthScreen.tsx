@@ -14,7 +14,7 @@ import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData } from './Util';
+import { getUserData, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ActivityIndicator } from 'react-native';
@@ -33,13 +33,15 @@ const AuthScreen = () => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [addressbarURL, setAdressbarURL] = useState<String>('');
+  const [key, setKey] = useState(1);
 
   const activateCamera = async () => {
     try {
-      // await Camera.requestCameraPermission(); // Request camera permission
-      setCameraActive(true); // Set cameraActive state to true
-    } catch (error) {
-      console.error('Error requesting camera permission:', error);
+      await requestCameraPermission();
+      setCameraActive((prev) => !prev); // Set cameraActive state to true
+    } catch (error: any) {
+      Alert.alert('Error requesting camera permission:', error);
     }
   };
 
@@ -197,17 +199,39 @@ const AuthScreen = () => {
           <WebView
             key={key}
             onNavigationStateChange={({ url }) => {
-              if (url === urls.REDIRECT_URL) {
-                setAdressbarURL(url);
-                updateUserData(url);
-              } else if (url.indexOf('?') > 0) {
-                let uri = url.substring(0, url.indexOf('?'));
-                setAdressbarURL(uri);
-                updateUserData(uri);
-              } else {
-                setAdressbarURL(url);
-                updateUserData(url);
-              }
+              (async function () {
+                if (url === urls.REDIRECT_URL) {
+                  setAdressbarURL(url);
+                  try {
+                    const res = await getUserData(url);
+                    await storeData('userData', JSON.stringify(res));
+
+                    setLoggedInUserData({
+                      id: res?.id,
+                      name: res?.name,
+                      profileUrl: res?.profileUrl,
+                      status: res?.status,
+                    });
+                  } catch (err) {
+                    setLoggedInUserData(null);
+                  }
+                } else if (url.indexOf('?') > 0) {
+                  let uri = url.substring(0, url.indexOf('?'));
+                  console.log(1, uri);
+                  setAdressbarURL(uri);
+                  setAdressbarURL(uri);
+                  updateUserData(uri);
+                  setAdressbarURL(uri);
+                  updateUserData(uri);
+                } else {
+                  console.log(2, url);
+                  setAdressbarURL(url);
+                  setAdressbarURL(url);
+                  updateUserData(url);
+                  setAdressbarURL(url);
+                  updateUserData(url);
+                }
+              })();
             }}
             style={AuthViewStyle.webViewStyles}
             source={{
