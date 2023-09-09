@@ -244,7 +244,11 @@ const AuthScreen = () => {
             style={AuthViewStyle.btnView}
           >
             <View style={AuthViewStyle.githubLogo}>
-              <Image source={require('../../../assets/github_logo.png')} />
+              <Image
+                source={require('../../../assets/githublogo.png')}
+                height={190}
+                width={190}
+              />
             </View>
             <View style={AuthViewStyle.signInTxtView}>
               <Text style={AuthViewStyle.signInText}>
