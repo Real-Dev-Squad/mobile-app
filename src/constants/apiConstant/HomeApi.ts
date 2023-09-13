@@ -1,6 +1,5 @@
-import { baseStoreState } from '../../reducers/store';
-
 export const HomeApi = {
-  GET_USER_STATUS: `${baseStoreState.localFeatureFlag.API_BASE_URL}users/status/self`,
-  UPDATE_STATUS: `${baseStoreState.localFeatureFlag.API_BASE_URL}users/status/self?userStatusFlag=true`,
+  GET_USER_STATUS: 'https://api.realdevsquad.com/users/status/self',
+  UPDATE_STATUS:
+    'https://api.realdevsquad.com/users/status/self?userStatusFlag=true',
 };

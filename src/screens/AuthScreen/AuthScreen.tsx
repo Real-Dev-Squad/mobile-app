@@ -29,7 +29,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const dispatch = useDispatch();
-  const { API_BASE_URL } = useSelector((store) => store.localFeatureFlag);
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ const AuthScreen = () => {
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
         const userDetailsInfo = await fetch(
-          `${API_BASE_URL}users/userId/${scannedUserId}`,
+          `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
         );
         const userDetailsInfoJson = await userDetailsInfo.json();
         await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
@@ -227,7 +227,6 @@ const AuthScreen = () => {
       </SafeAreaView>
     );
   }
-
   //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
@@ -242,6 +241,14 @@ const AuthScreen = () => {
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
+        <AuthScreenButton
+          text={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+          onPress={() => {
+            isProdEnvironment
+              ? dispatch({ type: 'DEV' })
+              : dispatch({ type: 'PROD' });
+          }}
+        />
         <View style={AuthViewStyle.btnContainer}>
           <TouchableOpacity
             onPress={handleSignIn}
@@ -260,18 +267,6 @@ const AuthScreen = () => {
         <AuthScreenButton
           text={Strings.SIGN_IN_WITH_WEB}
           onPress={activateCamera}
-        />
-        <AuthScreenButton
-          text={
-            API_BASE_URL === urls.PROD_BASE_URL
-              ? 'switch to Stag'
-              : 'switch to prod'
-          }
-          onPress={() => {
-            API_BASE_URL === urls.PROD_BASE_URL
-              ? dispatch({ type: 'STAGING' })
-              : dispatch({ type: 'PRODUCTION' });
-          }}
         />
       </View>
 

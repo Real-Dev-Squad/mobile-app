@@ -1,7 +1,5 @@
-import { baseStoreState } from '../../reducers/store';
-
 const GoalsApi = {
-  MEMBERS_API: `${baseStoreState.localFeatureFlag.API_BASE_URL}members`,
+  MEMBERS_API: 'https://api.realdevsquad.com/members',
   GET_TODO_S: 'https://backend-goals-production.up.railway.app/goal/',
 };
 

@@ -13,10 +13,12 @@ import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import { fetchContribution } from '../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
-
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { AuthScreenButton } from '../AuthScreen/Button';
 
 const ProfileScreen = () => {
+  const dispatch = useDispatch();
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { data: userData } = useSelector((store) => store.user);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -87,6 +89,14 @@ const ProfileScreen = () => {
           {loggedInUserData?.name}
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
+        <ButtonWidget
+          title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+          onPress={() => {
+            isProdEnvironment
+              ? dispatch({ type: 'DEV' })
+              : dispatch({ type: 'PROD' });
+          }}
+        />
       </View>
     </View>
   );
