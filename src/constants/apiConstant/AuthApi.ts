@@ -1,7 +1,5 @@
-import { baseStoreState } from '../../reducers/store';
-
 const AuthApis = {
-  QR_AUTH_API: `${baseStoreState.localFeatureFlag.API_BASE_URL}auth/qr-code-auth`,
+  QR_AUTH_API: 'https://api.realdevsquad.com/auth/qr-code-auth',
 };
 
 export default AuthApis;

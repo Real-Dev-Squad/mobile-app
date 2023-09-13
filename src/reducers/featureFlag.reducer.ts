@@ -1,26 +1,19 @@
-import { urls } from '../constants/appConstant/url';
-
-const prodUrl: string = urls.PROD_BASE_URL;
-const stageUrl: string = urls.STAGE_BASE_URL;
-
 // TODO: by default read from env file
 export const featureFlagState = {
-  API_BASE_URL: prodUrl,
+  isProdEnvironment: true,
 };
 
 const localFeatureFlag = (state = featureFlagState, action: any) => {
   switch (action.type) {
-    case 'STAGING':
+    case 'PROD':
       return {
         ...state,
-        API_BASE_URL: stageUrl,
+        isProdEnvironment: true,
       };
-    case 'PRODUCTION':
-      return { ...state, API_BASE_URL: prodUrl };
     case 'DEV':
       return {
         ...state,
-        API_BASE_URL: prodUrl,
+        isProdEnvironment: false,
       };
     default:
       return state;
