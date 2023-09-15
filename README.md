@@ -33,8 +33,14 @@ Feel free to download our RDS app by clicking on ➡️ [RDS App](https://drive.
 
 ## Prerequisites
 
+
 To contribute, make sure you have the following:
 
+- React Native setup
+- Android Studio
+- JDK ( openjdk 11.0.20.1 2023-08-24 )
+- Node setup ( use version v16.*, tested on v16.20.2)
+- [Volta](https://docs.volta.sh/guide/getting-started) | [Why Volta?](https://docs.volta.sh/guide/#why-volta)
 - React Native development environment set up
 - Android Studio installed
 - Node.js installed
