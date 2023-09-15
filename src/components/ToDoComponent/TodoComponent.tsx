@@ -46,7 +46,16 @@ const TodoComponent = () => {
           style={styles.CreateGoalButton}
           onPress={() => navigation.navigate('CreatingGoals')}
         >
-          <Text style={{ color: 'black', elevation: 10, paddingHorizontal:6, paddingVertical:6 }}>Add</Text>
+          <Text
+            style={{
+              color: 'black',
+              elevation: 10,
+              paddingHorizontal: 6,
+              paddingVertical: 6,
+            }}
+          >
+            Add
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={{ paddingVertical: 35 }}>

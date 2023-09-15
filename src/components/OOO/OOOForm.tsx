@@ -62,7 +62,7 @@ const OOOForm = ({
         selectedDate={toDate}
       />
       <TextInput
-        style={[styles.input, styles.textArea, styles.text,]}
+        style={[styles.input, styles.textArea, styles.text]}
         value={description}
         onChangeText={setDescription}
         multiline
