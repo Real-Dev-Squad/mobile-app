@@ -62,7 +62,7 @@ const OOOForm = ({
         selectedDate={toDate}
       />
       <TextInput
-        style={[styles.input, styles.textArea]}
+        style={[styles.input, styles.textArea, styles.text,]}
         value={description}
         onChangeText={setDescription}
         multiline
@@ -122,11 +122,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     width: '30%',
+    borderRadius: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
   },
   SubmitButtonText: {
     color: '#fff',
     alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: '#808080',
   },
 });
