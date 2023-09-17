@@ -243,14 +243,20 @@ const AuthScreen = () => {
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
-        <AuthScreenButton
-          text={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+        <TouchableOpacity
           onPress={() => {
             isProdEnvironment
               ? dispatch({ type: 'DEV' })
               : dispatch({ type: 'PROD' });
           }}
-        />
+          style={AuthViewStyle.btnView}
+        >
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View style={AuthViewStyle.btnContainer}>
           <TouchableOpacity
             onPress={handleSignIn}

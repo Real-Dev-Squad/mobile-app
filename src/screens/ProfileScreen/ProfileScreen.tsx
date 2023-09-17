@@ -89,6 +89,14 @@ const ProfileScreen = () => {
           <UserData userData={userData} />
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
+        <ButtonWidget
+          title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+          onPress={() => {
+            isProdEnvironment
+              ? dispatch({ type: 'DEV' })
+              : dispatch({ type: 'PROD' });
+          }}
+        />
         <ScrollView style={styles.container}>
           <NoteworthyContributionsDropdown />
           <ActiveTaskDropDown />
@@ -104,14 +112,6 @@ const ProfileScreen = () => {
             </Text>
           </Pressable>
         </ScrollView>
-        <ButtonWidget
-          title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
-          onPress={() => {
-            isProdEnvironment
-              ? dispatch({ type: 'DEV' })
-              : dispatch({ type: 'PROD' });
-          }}
-        />
       </View>
     </ScrollView>
   );
