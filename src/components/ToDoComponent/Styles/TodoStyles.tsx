@@ -30,6 +30,7 @@ export const TodoStyles = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
     position: 'relative',
+    color: '#000000',
     top: 10,
   },
   flex: {

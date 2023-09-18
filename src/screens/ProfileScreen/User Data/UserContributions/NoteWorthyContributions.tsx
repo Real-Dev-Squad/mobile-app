@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
   DropDownTitle: {
     fontWeight: '600',
     fontSize: 20,
+    flex: 1,
     color: 'black',
   },
   DropDownElement: {
