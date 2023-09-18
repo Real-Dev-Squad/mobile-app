@@ -89,8 +89,14 @@ export const submitOOOForm = async (data) => {
     },
   };
   const body = data;
-  const res = await axios.patch(HomeApi.UPDATE_STATUS, body, options);
-  return res;
+  try {
+    const res = await axios.patch(HomeApi.UPDATE_STATUS, body, options);
+    if (res.status === 200) {
+      return res;
+    }
+  } catch (err) {
+    console.log('error', err);
+  }
 };
 
 export const cancelOoo = async () => {

@@ -70,7 +70,9 @@ const OOOForm = ({
       />
 
       <TouchableOpacity
-        onPress={isFormValid && handleFormSubmit}
+        onPress={() => {
+          isFormValid() && handleFormSubmit();
+        }}
         style={styles.SubmitButtonContainer}
         disabled={isLoading}
       >
