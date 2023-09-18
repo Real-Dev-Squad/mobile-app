@@ -24,9 +24,12 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
+  const dispatch = useDispatch();
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -240,6 +243,20 @@ const AuthScreen = () => {
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            isProdEnvironment
+              ? dispatch({ type: 'DEV' })
+              : dispatch({ type: 'PROD' });
+          }}
+          style={AuthViewStyle.btnView}
+        >
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View style={AuthViewStyle.btnContainer}>
           <TouchableOpacity
             onPress={handleSignIn}

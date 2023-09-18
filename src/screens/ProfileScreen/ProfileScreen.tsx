@@ -21,13 +21,15 @@ import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import { fetchContribution } from '../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
 import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
 import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteWorthyContributions';
 import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
 import UserData from './User Data/UserData';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ProfileScreen = () => {
+  const dispatch = useDispatch();
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { data: userData } = useSelector((store) => store.user);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -87,6 +89,14 @@ const ProfileScreen = () => {
           <UserData userData={userData} />
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
+        <ButtonWidget
+          title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+          onPress={() => {
+            isProdEnvironment
+              ? dispatch({ type: 'DEV' })
+              : dispatch({ type: 'PROD' });
+          }}
+        />
         <ScrollView style={styles.container}>
           <NoteworthyContributionsDropdown />
           <ActiveTaskDropDown />
