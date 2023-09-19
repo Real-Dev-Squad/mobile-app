@@ -25,7 +25,6 @@ import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import { Button } from 'react-native-paper';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
