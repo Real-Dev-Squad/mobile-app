@@ -25,6 +25,7 @@ import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import { Button } from 'react-native-paper';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
@@ -306,17 +307,13 @@ const AuthScreen = () => {
           <Tooltip
             isVisible={toolTip}
             content={
-              <View>
-                <Text style={{ color: 'black' }}>
-                  Go to my-site scan QR code
-                </Text>
-              </View>
+              <Text style={styles.toolTip}>Go to my-site & scan QR code</Text>
             }
             placement="top"
             onClose={() => setToolTip(false)}
           >
             <TouchableOpacity onPress={() => setToolTip(true)}>
-              <Text> What to Do </Text>
+              <Text style={styles.toolButton}>What To Do </Text>
             </TouchableOpacity>
           </Tooltip>
         </View>
@@ -333,4 +330,21 @@ const AuthScreen = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  toolTip: {
+    color: 'blue',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  toolButton: {
+    fontSize: 20,
+    backgroundColor: '#483d8b',
+    marginBottom: 15,
+    borderRadius: 20,
+    height: 50,
+    padding: 10,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
 export default AuthScreen;
