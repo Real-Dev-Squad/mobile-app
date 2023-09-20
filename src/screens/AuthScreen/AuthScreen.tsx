@@ -34,10 +34,28 @@ import { clientId, githubConfig } from '../../../config/config';
 // state = "",
 // clientId = defaultClientId,
 
-// const githubAuthUrl = 'http://192.168.0.109:3000/auth/github/login';
-
-const githubAuthUrl =
+// const baseUrl = 'http://192.168.0.109:3000/auth/github/login';
+const baseUrl =
   'https://github.com/login/oauth/authorize?client_id=23c78f66ab7964e5ef97';
+// Define the query parameters
+const queryParams = {
+  source_utm: 'rds-mobile-app',
+  // Add other query parameters as needed
+};
+
+// Create a function to build the complete URL
+function buildUrl(baseUrl, queryParams) {
+  const queryString = Object.keys(queryParams)
+    .map(key => `${key}=${queryParams[key]}`)
+    .join('&');
+
+  return `${baseUrl}?${queryString}`;
+}
+
+// Call the buildUrl function to create the final URL
+const githubAuthUrl = buildUrl(baseUrl, queryParams);
+
+
 // https://api.realdevsquad.com/auth/github/callback?error=redirect_uri_mismatch&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.&error_uri=https%3A%2F%2Fdocs.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch
 
 //https://staging-api.realdevsquad.com/auth/github/login?redirectURL=https://staging-my.realdevsquad.com
