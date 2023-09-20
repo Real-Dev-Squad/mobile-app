@@ -27,7 +27,6 @@ import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import { clientId, githubConfig } from '../../../config/config';
 
-
 // baseUrl = "https://github.com/login/oauth/authorize",
 // responseType = "code",
 // redirectUri = "http://localhost:3000/auth/github/callback",
@@ -35,11 +34,13 @@ import { clientId, githubConfig } from '../../../config/config';
 // state = "",
 // clientId = defaultClientId,
 
-const githubAuthUrl = 'https://staging-api.realdevsquad.com/auth/github/login?redirectURL=https://my.realdevsquad.com';
+// const githubAuthUrl = 'http://192.168.0.109:3000/auth/github/login';
+
+const githubAuthUrl =
+  'https://github.com/login/oauth/authorize?client_id=23c78f66ab7964e5ef97';
 // https://api.realdevsquad.com/auth/github/callback?error=redirect_uri_mismatch&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.&error_uri=https%3A%2F%2Fdocs.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch
 
 //https://staging-api.realdevsquad.com/auth/github/login?redirectURL=https://staging-my.realdevsquad.com
-
 
 const linking = {
   prefixes: [
@@ -58,7 +59,6 @@ const AuthScreen = () => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
- 
 
   useEffect(() => {
     console.log('inside useEffect');
