@@ -24,6 +24,7 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
@@ -35,6 +36,7 @@ const AuthScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [key, setKey] = useState(1);
+  const [toolTip, setToolTip] = useState(false);
 
   const activateCamera = async () => {
     try {
@@ -47,6 +49,7 @@ const AuthScreen = () => {
 
   const handleQRCodeScanned = ({ nativeEvent }: any) => {
     setScannedUserID(nativeEvent.codeStringValue);
+    setToolTip(true);
   };
 
   //TODO: add to constants
@@ -298,6 +301,23 @@ const AuthScreen = () => {
         />
       )}
 
+      {cameraActive && (
+        <View>
+          <Tooltip
+            isVisible={toolTip}
+            content={
+              <Text style={styles.toolTip}>Go to my-site & scan QR code</Text>
+            }
+            placement="top"
+            onClose={() => setToolTip(false)}
+          >
+            <TouchableOpacity onPress={() => setToolTip(true)}>
+              <Text style={styles.toolButton}>What To Do </Text>
+            </TouchableOpacity>
+          </Tooltip>
+        </View>
+      )}
+
       {modalVisible && (
         <CustomModal
           modalVisible={modalVisible}
@@ -309,4 +329,21 @@ const AuthScreen = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  toolTip: {
+    color: 'blue',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  toolButton: {
+    fontSize: 20,
+    backgroundColor: '#483d8b',
+    marginBottom: 15,
+    borderRadius: 20,
+    height: 50,
+    padding: 10,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
 export default AuthScreen;
