@@ -27,38 +27,15 @@ import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import { clientId, githubConfig } from '../../../config/config';
 
-// baseUrl = "https://github.com/login/oauth/authorize",
 // responseType = "code",
 // redirectUri = "http://localhost:3000/auth/github/callback",
 // scope = "user:email",
 // state = "",
 // clientId = defaultClientId,
 
-// const baseUrl = 'http://192.168.0.109:3000/auth/github/login';
-const baseUrl =
-  'https://github.com/login/oauth/authorize?client_id=23c78f66ab7964e5ef97';
-// Define the query parameters
-const queryParams = {
-  source_utm: 'rds-mobile-app',
-  // Add other query parameters as needed
-};
-
-// Create a function to build the complete URL
-function buildUrl(baseUrl, queryParams) {
-  const queryString = Object.keys(queryParams)
-    .map(key => `${key}=${queryParams[key]}`)
-    .join('&');
-
-  return `${baseUrl}?${queryString}`;
-}
-
-// Call the buildUrl function to create the final URL
-const githubAuthUrl = buildUrl(baseUrl, queryParams);
-
-
-// https://api.realdevsquad.com/auth/github/callback?error=redirect_uri_mismatch&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.&error_uri=https%3A%2F%2Fdocs.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch
-
-//https://staging-api.realdevsquad.com/auth/github/login?redirectURL=https://staging-my.realdevsquad.com
+const baseUrl = 'http://192.168.0.109:3000/auth/github/login';
+// const baseUrl =
+//   'https://github.com/login/oauth/authorize?client_id=23c78f66ab7964e5ef97';
 
 const linking = {
   prefixes: [
@@ -78,19 +55,34 @@ const AuthScreen = () => {
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
+  const queryParams = {
+    sourceUtm: 'rds-mobile-app',
+    redirectURL: 'https://realdevsquad.com/',
+    // Add other query parameters as needed
+  };
+
+  // Create a function to build the complete URL
+  function buildUrl(baseUrl, queryParams) {
+    const queryString = Object.keys(queryParams)
+      .map((key) => `${key}=${queryParams[key]}`)
+      .join('&');
+
+    return `${baseUrl}?${queryString}`;
+  }
+
+  // Call the buildUrl function to create the final URL
+  const githubAuthUrl = buildUrl(baseUrl, queryParams);
   useEffect(() => {
     console.log('inside useEffect');
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
-      console.log('handleDeep link', event);
+      console.log('handleDeep linksss', event); // event.url
+      console.log('our awaited url', event.url);
+      console.log('our token', event.url.split('token=')[1]);
       if (event.url.startsWith('app://deeplink')) {
-        console.log('inside if ', event.url);
         const url = new URL(event.url);
-        console.log('url', url);
         const authorizationCode = url.searchParams.get('code');
-        console.log('aut code', authorizationCode);
         if (authorizationCode) {
-          console.log('aut code', authorizationCode);
           // Call a function to exchange the code for an access token
           githubConfig(authorizationCode);
         }
