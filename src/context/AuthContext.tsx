@@ -36,7 +36,7 @@ export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loggedInUserData, setLoggedInUserData] =
     useState<loggedInUserType | null>(null);
-  const [errorData, setErrorData] = useState({
+  const [errorData, setErrorData] = useState<ErrorData>({
     isError: false,
     errorMessage: '',
   });

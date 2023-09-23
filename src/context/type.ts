@@ -19,4 +19,5 @@ export interface User {
 export interface ErrorData {
   isError: boolean;
   errorMessage: string;
+  handleError?: () => void;
 }

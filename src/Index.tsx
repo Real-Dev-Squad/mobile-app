@@ -20,12 +20,15 @@ const Index = () => {
       <TabNavigation />
       {errorData.isError && (
         <ErrorPopup
-          buttonAction={() =>
+          buttonAction={() => {
+            if (errorData.handleError) {
+              errorData.handleError();
+            }
             setErrorData({
               isError: false,
               errorMessage: '',
-            })
-          }
+            });
+          }}
           displayMessage={errorData.errorMessage ?? 'something went wrong'}
         />
       )}
