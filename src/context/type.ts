@@ -15,3 +15,8 @@ export interface User {
   twitterUrl: string;
   githubUrl: string;
 }
+
+export interface ErrorData {
+  isError: boolean;
+  errorMessage: string;
+}

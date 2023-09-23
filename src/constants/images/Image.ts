@@ -31,6 +31,7 @@ const Images = {
 
   //LOGO
   rdsLogo: require('../../../assets/rdsLogo.png'),
+  errorLogo: require('../../../assets/warning.png'),
 
   //Default Image Url
   DEFAULT_IMAGE:
