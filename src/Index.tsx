@@ -11,7 +11,7 @@ const Index = () => {
     return <LoadingScreen />;
   }
 
-  if (loggedInUserData) {
+  if (!loggedInUserData) {
     return <AuthScreen />;
   }
 
