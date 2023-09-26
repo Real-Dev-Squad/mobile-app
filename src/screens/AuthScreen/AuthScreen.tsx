@@ -47,7 +47,9 @@ const AuthScreen = () => {
   useEffect(() => {
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
+      console.log('deeplink', event);
       const token = event.url.split('token=')[1];
+      console.log('token', token);
       token && updateUserData(token);
     };
     Linking.addEventListener('url', handleDeepLink);
