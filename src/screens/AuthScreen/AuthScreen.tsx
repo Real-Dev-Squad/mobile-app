@@ -17,39 +17,14 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
 import { getUserData } from './Util';
 import { storeData } from '../../utils/dataStore';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ActivityIndicator } from 'react-native';
-import Images from '../../constants/images/Image';
-import WebView from 'react-native-webview';
-import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
-import { clientId, githubConfig } from '../../../config/config';
 
-// responseType = "code",
-// redirectUri = "http://localhost:3000/auth/github/callback",
-// scope = "user:email",
-// state = "",
-// clientId = defaultClientId,
-
-const baseUrl = 'http://192.168.0.109:3000/auth/github/login';
-// const baseUrl =
-//   'https://github.com/login/oauth/authorize?client_id=23c78f66ab7964e5ef97';
-
-const linking = {
-  prefixes: [
-    /* your linking prefixes */
-  ],
-  config: {
-    /* configuration for matching screens with paths */
-  },
-};
+const baseUrl = AuthApis.GITHUB_AUTH_API;
 
 const AuthScreen = () => {
-  // TODO: will revamp github signIn feature
   const { setLoggedInUserData } = useContext(AuthContext);
-  const [githubView, setGithubView] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
@@ -58,10 +33,8 @@ const AuthScreen = () => {
   const queryParams = {
     sourceUtm: 'rds-mobile-app',
     redirectURL: 'https://realdevsquad.com/',
-    // Add other query parameters as needed
   };
 
-  // Create a function to build the complete URL
   function buildUrl(baseUrl, queryParams) {
     const queryString = Object.keys(queryParams)
       .map((key) => `${key}=${queryParams[key]}`)
@@ -70,23 +43,12 @@ const AuthScreen = () => {
     return `${baseUrl}?${queryString}`;
   }
 
-  // Call the buildUrl function to create the final URL
   const githubAuthUrl = buildUrl(baseUrl, queryParams);
   useEffect(() => {
-    console.log('inside useEffect');
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
-      console.log('handleDeep linksss', event); // event.url
-      console.log('our awaited url', event.url);
-      console.log('our token', event.url.split('token=')[1]);
-      if (event.url.startsWith('app://deeplink')) {
-        const url = new URL(event.url);
-        const authorizationCode = url.searchParams.get('code');
-        if (authorizationCode) {
-          // Call a function to exchange the code for an access token
-          githubConfig(authorizationCode);
-        }
-      }
+      const token = event.url.split('token=')[1];
+      token && updateUserData(token);
     };
     Linking.addEventListener('url', handleDeepLink);
     return () => {
@@ -107,14 +69,13 @@ const AuthScreen = () => {
     setScannedUserID(nativeEvent.codeStringValue);
   };
 
-  //TODO: add to constants
   const handleSignIn = () => {
     Linking.openURL(githubAuthUrl);
   };
 
-  const updateUserData = async (url: string) => {
+  const updateUserData = async (token: string) => {
     try {
-      const res = await getUserData(url);
+      const res = await getUserData(token);
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
         id: res?.id,

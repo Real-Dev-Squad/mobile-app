@@ -1,22 +1,18 @@
 import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 
-export const getUserData = async (url: string) => {
-  if (url === urls.REDIRECT_URL) {
-    const res = await axios.get(urls.GET_USERS_DATA, {
-      headers: {
-        cookie: '',
-      },
-    });
-    return {
-      id: res.data.id,
-      name: res.data.github_display_name,
-      profileUrl: res.data?.picture?.url,
-      status: res.data?.status,
-    };
-  } else {
-    return null;
-  }
+export const getUserData = async (token: string) => {
+  const res = await axios.get(urls.GET_USERS_DATA, {
+    headers: {
+      cookie: token,
+    },
+  });
+  return {
+    id: res.data.id,
+    name: res.data.github_display_name,
+    profileUrl: res.data?.picture?.url,
+    status: res.data?.status,
+  };
 };
 
 export const updateStatus = async (status: string) => {
