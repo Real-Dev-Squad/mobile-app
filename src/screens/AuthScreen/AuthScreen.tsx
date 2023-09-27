@@ -21,6 +21,7 @@ import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 
@@ -30,8 +31,6 @@ const AuthScreen = () => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [addressbarURL, setAdressbarURL] = useState<String>('');
-  const [key, setKey] = useState(1);
   const [toolTip, setToolTip] = useState(false);
 
   const queryParams = {
@@ -81,6 +80,7 @@ const AuthScreen = () => {
 
   const updateUserData = async (token: string) => {
     try {
+      setLoading(true);
       const res = await getUserData(token);
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
@@ -89,6 +89,7 @@ const AuthScreen = () => {
         profileUrl: res?.profileUrl,
         status: res?.status,
       });
+      setLoading(false);
     } catch (err) {
       setLoggedInUserData(null);
     }
@@ -103,7 +104,7 @@ const AuthScreen = () => {
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
         const userDetailsInfo = await fetch(
-          `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
+          `${AuthApis.USER_DETAIL}${scannedUserId}`,
         );
         const userDetailsInfoJson = await userDetailsInfo.json();
         await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
@@ -189,64 +190,6 @@ const AuthScreen = () => {
     /* eslint-disable */
   }, [scannedUserId]);
 
-
-  if (githubView) {
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={AuthViewStyle.container}>
-          <View style={AuthViewStyle.addressBarStyle}>
-            {loading ? (
-              <ActivityIndicator
-                style={{ marginLeft: 5 }}
-                size={25}
-                color="#fff"
-              />
-            ) : (
-              <TouchableOpacity onPress={() => setGithubView(false)}>
-                <Text style={AuthViewStyle.addressBarCancel}>Cancel</Text>
-              </TouchableOpacity>
-            )}
-            <Text style={AuthViewStyle.addressBarLink}>{addressbarURL}</Text>
-            {loading ? null : (
-              <TouchableOpacity onPress={() => setKey(key + 1)}>
-                <Image
-                  source={Images.refreshIcon}
-                  style={AuthViewStyle.addressBarIcon}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          <WebView
-            key={key}
-            onNavigationStateChange={({ url }) => {
-              if (url === urls.REDIRECT_URL) {
-                setAdressbarURL(url);
-                updateUserData(url);
-              } else if (url.indexOf('?') > 0) {
-                let uri = url.substring(0, url.indexOf('?'));
-                setAdressbarURL(uri);
-                updateUserData(uri);
-              } else {
-                setAdressbarURL(url);
-                updateUserData(url);
-              }
-            }}
-            style={AuthViewStyle.webViewStyles}
-            source={{
-              uri: urls.GITHUB_AUTH,
-            }}
-            onLoadStart={() => {
-              setLoading(true);
-            }}
-            onLoadEnd={() => {
-              setLoading(false);
-            }}
-          />
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-t  //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
@@ -320,6 +263,8 @@ t  //TODO: fix layout change on otp input
           qrCodeLogin={qrCodeLogin}
         />
       )}
+
+      {loading && <LoadingScreen />}
     </ScrollView>
   );
 };
@@ -331,14 +276,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   toolButton: {
-    fontSize: 20,
+    fontSize: 16,
     backgroundColor: '#483d8b',
+    color: '#fff',
     marginBottom: 15,
     borderRadius: 20,
     height: 50,
     padding: 10,
     textAlignVertical: 'center',
     textAlign: 'center',
+    margin: 8,
   },
 });
 export default AuthScreen;
