@@ -15,11 +15,12 @@ import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData } from './Util';
+import { getUserData, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 
@@ -29,6 +30,9 @@ const AuthScreen = () => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [addressbarURL, setAdressbarURL] = useState<String>('');
+  const [key, setKey] = useState(1);
+  const [toolTip, setToolTip] = useState(false);
 
   const queryParams = {
     sourceUtm: 'rds-mobile-app',
@@ -59,15 +63,16 @@ const AuthScreen = () => {
 
   const activateCamera = async () => {
     try {
-      // await Camera.requestCameraPermission(); // Request camera permission
-      setCameraActive(true); // Set cameraActive state to true
-    } catch (error) {
-      console.error('Error requesting camera permission:', error);
+      await requestCameraPermission();
+      setCameraActive((prev) => !prev); // Set cameraActive state to true
+    } catch (error: any) {
+      Alert.alert('Error requesting camera permission:', error);
     }
   };
 
   const handleQRCodeScanned = ({ nativeEvent }: any) => {
     setScannedUserID(nativeEvent.codeStringValue);
+    setToolTip(true);
   };
 
   const handleSignIn = () => {
@@ -160,7 +165,7 @@ const AuthScreen = () => {
           }, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen
         ]);
       } else {
-        const dataJson = await data.json();
+        await data.json();
         Toast.show({
           type: 'error',
           text1: 'Something went wrong, please try again',
@@ -184,7 +189,64 @@ const AuthScreen = () => {
     /* eslint-disable */
   }, [scannedUserId]);
 
-  //TODO: fix layout change on otp input
+
+  if (githubView) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={AuthViewStyle.container}>
+          <View style={AuthViewStyle.addressBarStyle}>
+            {loading ? (
+              <ActivityIndicator
+                style={{ marginLeft: 5 }}
+                size={25}
+                color="#fff"
+              />
+            ) : (
+              <TouchableOpacity onPress={() => setGithubView(false)}>
+                <Text style={AuthViewStyle.addressBarCancel}>Cancel</Text>
+              </TouchableOpacity>
+            )}
+            <Text style={AuthViewStyle.addressBarLink}>{addressbarURL}</Text>
+            {loading ? null : (
+              <TouchableOpacity onPress={() => setKey(key + 1)}>
+                <Image
+                  source={Images.refreshIcon}
+                  style={AuthViewStyle.addressBarIcon}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+          <WebView
+            key={key}
+            onNavigationStateChange={({ url }) => {
+              if (url === urls.REDIRECT_URL) {
+                setAdressbarURL(url);
+                updateUserData(url);
+              } else if (url.indexOf('?') > 0) {
+                let uri = url.substring(0, url.indexOf('?'));
+                setAdressbarURL(uri);
+                updateUserData(uri);
+              } else {
+                setAdressbarURL(url);
+                updateUserData(url);
+              }
+            }}
+            style={AuthViewStyle.webViewStyles}
+            source={{
+              uri: urls.GITHUB_AUTH,
+            }}
+            onLoadStart={() => {
+              setLoading(true);
+            }}
+            onLoadEnd={() => {
+              setLoading(false);
+            }}
+          />
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+t  //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
@@ -204,7 +266,11 @@ const AuthScreen = () => {
             style={AuthViewStyle.btnView}
           >
             <View style={AuthViewStyle.githubLogo}>
-              <Image source={require('../../../assets/github_logo.png')} />
+              <Image
+                source={require('../../../assets/githublogo.png')}
+                height={190}
+                width={190}
+              />
             </View>
             <View style={AuthViewStyle.signInTxtView}>
               <Text style={AuthViewStyle.signInText}>
@@ -230,6 +296,23 @@ const AuthScreen = () => {
         />
       )}
 
+      {cameraActive && (
+        <View>
+          <Tooltip
+            isVisible={toolTip}
+            content={
+              <Text style={styles.toolTip}>Go to my-site & scan QR code</Text>
+            }
+            placement="top"
+            onClose={() => setToolTip(false)}
+          >
+            <TouchableOpacity onPress={() => setToolTip(true)}>
+              <Text style={styles.toolButton}>What To Do </Text>
+            </TouchableOpacity>
+          </Tooltip>
+        </View>
+      )}
+
       {modalVisible && (
         <CustomModal
           modalVisible={modalVisible}
@@ -241,4 +324,21 @@ const AuthScreen = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  toolTip: {
+    color: 'blue',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  toolButton: {
+    fontSize: 20,
+    backgroundColor: '#483d8b',
+    marginBottom: 15,
+    borderRadius: 20,
+    height: 50,
+    padding: 10,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
 export default AuthScreen;

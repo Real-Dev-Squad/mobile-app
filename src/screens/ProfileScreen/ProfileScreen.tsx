@@ -1,3 +1,5 @@
+// TODO: we wil remove this once we start using userData and contributionData
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
@@ -9,10 +11,19 @@ import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
+import { fetchContribution } from '../AuthScreen/Util';
+import { useFocusEffect } from '@react-navigation/native';
+
+import { useSelector } from 'react-redux';
 
 const ProfileScreen = () => {
+  const { data: userData } = useSelector((store) => store.user);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
+  const [contributionData, setContributionData] = useState({
+    allData: [],
+    noteworthy: [],
+  });
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
   console.log('loggedIn', loggedInUserData);
 
@@ -35,6 +46,16 @@ const ProfileScreen = () => {
     }
     return true;
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const userName = 'ankush';
+        const contributionResponse = await fetchContribution(userName);
+        setContributionData(contributionResponse);
+      })();
+    }, []),
+  );
 
   return (
     <View style={ScreenViewContainer.container}>
