@@ -1,6 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"	
+apply plugin: "kotlin-android-extensions"
 
 import com.android.build.OutputFile
 
@@ -169,11 +169,11 @@ android {
             }
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.	
-            // see https://reactnative.dev/docs/signed-apk-android.	
-            signingConfig signingConfigs.debug	
-            minifyEnabled enableProguardInReleaseBuilds	
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"	
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.debug
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 
