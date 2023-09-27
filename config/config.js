@@ -1,16 +1,3 @@
-// const githubConfig = {
-//   redirectUrl: 'x-realdevsquad-rdsapp://oauth2/authorize',
-//   clientId: '23c78f66ab7964e5ef97',
-//   clientSecret: '65621db87076180ab274b6dbdc1a3dd95b9dd952',
-//   scopes: ['notifications', 'user', 'identity'],
-//   serviceConfiguration: {
-//     authorizationEndpoint: 'https://github.com/login/oauth/authorize',
-//     tokenEndpoint: 'https://github.com/login/oauth/access_token',
-//     revocationEndpoint:
-//       'https://github.com/settings/connections/applications/969f022b19e148218c41'
-//   },
-// };
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const clientId = '23c78f66ab7964e5ef97';
