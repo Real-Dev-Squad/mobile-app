@@ -6,7 +6,6 @@ export const redirectUri = 'app://deeplink';
 export const tokenUrl = 'https://github.com/login/oauth/access_token';
 
 const githubConfig = async (authorizationCode) => {
-
   // Make POST request and handle response as previously explained
   console.log('response in github config', authorizationCode);
 

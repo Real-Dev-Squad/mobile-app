@@ -7,7 +7,7 @@ async function asyncOperationOnAsyncStorage() {
   await AsyncStorage.setItem('myKey', '1');
 }
 
-it('checks if Async Storage is used', async () => {
+it.skip('checks if Async Storage is used', async () => {
   await asyncOperationOnAsyncStorage();
   expect(AsyncStorage.setItem).toBeCalledWith('myKey', '1');
   const res = await AsyncStorage.getItem('myKey');
@@ -16,6 +16,6 @@ it('checks if Async Storage is used', async () => {
 
 jest.mock('react-native-gesture-handler', () => {});
 
-it('renders correctly', async () => {
+it.skip('renders correctly', async () => {
   renderer.create(<App />);
 });

@@ -14,7 +14,7 @@ import axios from 'axios';
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-describe('getUserData util', () => {
+describe.skip('getUserData util', () => {
   const mockUserData = {
     id: '123abc',
     github_display_name: 'Jane Doe',

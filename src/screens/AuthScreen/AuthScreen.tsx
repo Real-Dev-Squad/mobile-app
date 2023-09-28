@@ -38,12 +38,12 @@ const AuthScreen = () => {
     redirectURL: 'https://realdevsquad.com/',
   };
 
-  function buildUrl(baseUrl, queryParams) {
-    const queryString = Object.keys(queryParams)
-      .map((key) => `${key}=${queryParams[key]}`)
+  function buildUrl(url, params) {
+    const queryString = Object.keys(params)
+      .map((key) => `${key}=${params[key]}`)
       .join('&');
 
-    return `${baseUrl}?${queryString}`;
+    return `${url}?${queryString}`;
   }
 
   const githubAuthUrl = buildUrl(baseUrl, queryParams);
