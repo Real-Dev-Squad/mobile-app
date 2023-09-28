@@ -2,11 +2,12 @@ import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 import { PermissionsAndroid } from 'react-native';
 
-export const getUserData = async (url: string) => {
-  if (url === urls.REDIRECT_URL) {
+export const getUserData = async (token: string) => {
+  try {
     const res = await axios.get(urls.GET_USERS_DATA, {
       headers: {
-        cookie: '',
+        'Content-Type': 'application/json',
+        Cookie: `rds-session=${token}`,
       },
     });
     return {
@@ -15,8 +16,8 @@ export const getUserData = async (url: string) => {
       profileUrl: res.data?.picture?.url,
       status: res.data?.status,
     };
-  } else {
-    return null;
+  } catch (e) {
+    console.log('err', e);
   }
 };
 
