@@ -102,18 +102,7 @@ const AuthScreen = () => {
       const userInfo = await fetch(url);
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
-        const userDetailsInfo = await fetch(
-          `${AuthApis.USER_DETAIL}${scannedUserId}`,
-        );
-        const userDetailsInfoJson = await userDetailsInfo.json();
-        await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
-        const { picture, id, username, status } = userDetailsInfoJson.user;
-        setLoggedInUserData({
-          id: id,
-          name: username,
-          profileUrl: picture?.url,
-          status: status,
-        });
+        updateUserData(userInfoJson.data.token);
       } else {
         Toast.show({
           type: 'error',
@@ -162,7 +151,7 @@ const AuthScreen = () => {
               setCameraActive(false);
               setModalVisible(true);
             },
-          }, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen
+          },
         ]);
       } else {
         await data.json();
@@ -176,7 +165,7 @@ const AuthScreen = () => {
     } catch (err) {
       Toast.show({
         type: 'error',
-        text1: 'Something went wrong, please try again later',
+        text1: err,
         position: 'bottom',
         bottomOffset: 80,
       });
