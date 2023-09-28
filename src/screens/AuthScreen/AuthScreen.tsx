@@ -51,7 +51,6 @@ const AuthScreen = () => {
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
       const token = event.url.split('token=')[1];
-
       token && updateUserData(token);
     };
     Linking.addEventListener('url', handleDeepLink);

@@ -3,17 +3,22 @@ import { urls } from '../../constants/appConstant/url';
 import { PermissionsAndroid } from 'react-native';
 
 export const getUserData = async (token: string) => {
-  const res = await axios.get(urls.GET_USERS_DATA, {
-    headers: {
-      cookie: token,
-    },
-  });
-  return {
-    id: res.data.id,
-    name: res.data.github_display_name,
-    profileUrl: res.data?.picture?.url,
-    status: res.data?.status,
-  };
+  try {
+    const res = await axios.get(urls.GET_USERS_DATA, {
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: `rds-session=${token}`,
+      },
+    });
+    return {
+      id: res.data.id,
+      name: res.data.github_display_name,
+      profileUrl: res.data?.picture?.url,
+      status: res.data?.status,
+    };
+  } catch (e) {
+    console.log('err', e);
+  }
 };
 
 export const fetchContribution = async (userName: string): Promise<any> => {
