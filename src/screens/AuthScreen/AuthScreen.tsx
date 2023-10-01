@@ -47,6 +47,7 @@ const AuthScreen = () => {
       const backAction = () => {
         console.log('backClicked');
         setCameraActive(false);
+        BackHandler.exitApp();
         return true;
       };
       const backHandler = BackHandler.addEventListener(
