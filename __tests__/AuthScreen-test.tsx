@@ -3,7 +3,6 @@ import { screen, render, fireEvent } from '@testing-library/react-native';
 import AuthScreen from '../src/screens/AuthScreen/AuthScreen';
 import Strings from '../src/i18n/en';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-
 it('AuthScreen is rendered', () => {
   render(<AuthScreen />);
   screen.getByText(/welcome to/i);
