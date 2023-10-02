@@ -16,7 +16,7 @@ it('Clicking on Sign in with Github shows a toast', async () => {
       <Toast />
     </>,
   );
-  const githubBtn = screen.getByText(Strings.SIGN_IN_BUTTON_TEXT);
+  const githubSignInBtn = screen.getByText(Strings.SIGN_IN_BUTTON_TEXT);
   fireEvent.press(githubSignInBtn);
   screen.getByText(/Sign in with GitHub coming soon/i);
 });
