@@ -8,19 +8,15 @@ import {
   ScrollView,
   StyleSheet,
   Alert,
+  Linking,
 } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData } from './Util';
+import { getUserData, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ActivityIndicator } from 'react-native';
-import Images from '../../constants/images/Image';
-import WebView from 'react-native-webview';
-import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
@@ -31,39 +27,60 @@ const AuthScreen = () => {
   const dispatch = useDispatch();
   const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData } = useContext(AuthContext);
-  const [githubView, setGithubView] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [toolTip, setToolTip] = useState(false);
+
+  const queryParams = {
+    sourceUtm: 'rds-mobile-app',
+    redirectURL: 'https://realdevsquad.com/',
+  };
+
+  function buildUrl(url, params) {
+    const queryString = Object.keys(params)
+      .map((key) => `${key}=${params[key]}`)
+      .join('&');
+
+    return `${url}?${queryString}`;
+  }
+
+  const githubAuthUrl = buildUrl(baseUrl, queryParams);
+  useEffect(() => {
+    Linking.getInitialURL();
+    const handleDeepLink = async (event) => {
+      const token = event.url.split('token=')[1];
+      token && updateUserData(token);
+    };
+    Linking.addEventListener('url', handleDeepLink);
+    return () => {
+      Linking.removeEventListener('url', handleDeepLink);
+    };
+  });
 
   const activateCamera = async () => {
     try {
-      // await Camera.requestCameraPermission(); // Request camera permission
-      setCameraActive(true); // Set cameraActive state to true
-    } catch (error) {
-      console.error('Error requesting camera permission:', error);
+      await requestCameraPermission();
+      setCameraActive((prev) => !prev); // Set cameraActive state to true
+    } catch (error: any) {
+      Alert.alert('Error requesting camera permission:', error);
     }
   };
 
   const handleQRCodeScanned = ({ nativeEvent }: any) => {
     setScannedUserID(nativeEvent.codeStringValue);
+    setToolTip(true);
   };
 
-  //TODO: add to constants
   const handleSignIn = () => {
-    // NOTE: toast until sign in with Github is implemented
-    Toast.show({
-      type: 'info',
-      text1: 'Sign in with GitHub coming soon...',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
+    Linking.openURL(githubAuthUrl);
   };
 
-  const updateUserData = async (url: string) => {
+  const updateUserData = async (token: string) => {
     try {
-      const res = await getUserData(url);
+      setLoading(true);
+      const res = await getUserData(token);
       await storeData('userData', JSON.stringify(res));
       setLoggedInUserData({
         id: res?.id,
@@ -71,6 +88,7 @@ const AuthScreen = () => {
         profileUrl: res?.profileUrl,
         status: res?.status,
       });
+      setLoading(false);
     } catch (err) {
       setLoggedInUserData(null);
     }
@@ -85,7 +103,7 @@ const AuthScreen = () => {
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
         const userDetailsInfo = await fetch(
-          `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
+          `${AuthApis.USER_DETAIL}${scannedUserId}`,
         );
         const userDetailsInfoJson = await userDetailsInfo.json();
         await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
@@ -173,63 +191,6 @@ const AuthScreen = () => {
     /* eslint-disable */
   }, [scannedUserId]);
 
-  if (githubView) {
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={AuthViewStyle.container}>
-          <View style={AuthViewStyle.addressBarStyle}>
-            {loading ? (
-              <ActivityIndicator
-                style={{ marginLeft: 5 }}
-                size={25}
-                color="#fff"
-              />
-            ) : (
-              <TouchableOpacity onPress={() => setGithubView(false)}>
-                <Text style={AuthViewStyle.addressBarCancel}>Cancel</Text>
-              </TouchableOpacity>
-            )}
-            <Text style={AuthViewStyle.addressBarLink}>{addressbarURL}</Text>
-            {loading ? null : (
-              <TouchableOpacity onPress={() => setKey(key + 1)}>
-                <Image
-                  source={Images.refreshIcon}
-                  style={AuthViewStyle.addressBarIcon}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          <WebView
-            key={key}
-            onNavigationStateChange={({ url }) => {
-              if (url === urls.REDIRECT_URL) {
-                setAdressbarURL(url);
-                updateUserData(url);
-              } else if (url.indexOf('?') > 0) {
-                let uri = url.substring(0, url.indexOf('?'));
-                setAdressbarURL(uri);
-                updateUserData(uri);
-              } else {
-                setAdressbarURL(url);
-                updateUserData(url);
-              }
-            }}
-            style={AuthViewStyle.webViewStyles}
-            source={{
-              uri: urls.GITHUB_AUTH,
-            }}
-            onLoadStart={() => {
-              setLoading(true);
-            }}
-            onLoadEnd={() => {
-              setLoading(false);
-            }}
-          />
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-  //TODO: fix layout change on otp input
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
@@ -248,7 +209,11 @@ const AuthScreen = () => {
             style={AuthViewStyle.btnView}
           >
             <View style={AuthViewStyle.githubLogo}>
-              <Image source={require('../../../assets/github_logo.png')} />
+              <Image
+                source={require('../../../assets/githublogo.png')}
+                height={190}
+                width={190}
+              />
             </View>
             <View style={AuthViewStyle.signInTxtView}>
               <Text style={AuthViewStyle.signInText}>
@@ -289,6 +254,23 @@ const AuthScreen = () => {
         />
       )}
 
+      {cameraActive && (
+        <View>
+          <Tooltip
+            isVisible={toolTip}
+            content={
+              <Text style={styles.toolTip}>Go to my-site & scan QR code</Text>
+            }
+            placement="top"
+            onClose={() => setToolTip(false)}
+          >
+            <TouchableOpacity onPress={() => setToolTip(true)}>
+              <Text style={styles.toolButton}>What To Do </Text>
+            </TouchableOpacity>
+          </Tooltip>
+        </View>
+      )}
+
       {modalVisible && (
         <CustomModal
           modalVisible={modalVisible}
@@ -296,8 +278,29 @@ const AuthScreen = () => {
           qrCodeLogin={qrCodeLogin}
         />
       )}
+
+      {loading && <LoadingScreen />}
     </ScrollView>
   );
 };
 
+const styles = StyleSheet.create({
+  toolTip: {
+    color: 'blue',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  toolButton: {
+    fontSize: 16,
+    backgroundColor: '#483d8b',
+    color: '#fff',
+    marginBottom: 15,
+    borderRadius: 20,
+    height: 50,
+    padding: 10,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    margin: 8,
+  },
+});
 export default AuthScreen;

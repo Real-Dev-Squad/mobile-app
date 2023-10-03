@@ -2,11 +2,12 @@ import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 import { HomeApi } from '../../constants/apiConstant/HomeApi';
 
-export const getUserData = async (url: string) => {
-  if (url === urls.REDIRECT_URL) {
+export const getUserData = async (token: string) => {
+  try {
     const res = await axios.get(urls.GET_USERS_DATA, {
       headers: {
-        cookie: '',
+        'Content-Type': 'application/json',
+        Cookie: `rds-session=${token}`,
       },
     });
     return {
@@ -15,8 +16,8 @@ export const getUserData = async (url: string) => {
       profileUrl: res.data?.picture?.url,
       status: res.data?.status,
     };
-  } else {
-    return null;
+  } catch (e) {
+    console.log('err', e);
   }
 };
 
@@ -123,3 +124,26 @@ export const cancelOoo = async () => {
 
 export const isValidTextInput = (code: string) =>
   Boolean(/^[\d]{1,4}$|^$/.test(code));
+
+export const requestCameraPermission = async () => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Accessing your camera to scan the QR code',
+        message:
+          'RDS App needs access to your camera ' + 'so you can scan QR code',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('You can use the camera');
+    } else {
+      console.log('Camera permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+};
