@@ -26,6 +26,7 @@ const HomeScreenV2 = (): JSX.Element => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
   const fetchData = async () => {
