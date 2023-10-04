@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Strings from '../../i18n/en';
 import OOOForm from '../../components/OOO/OOOForm';
 import { AuthScreenButton } from '../AuthScreen/Button';
-import { cancelOoo, getUsersStatus, submitOOOForm } from '../AuthScreen/Util';
+import {
+  cancelOoo,
+  formatTimeToUnix,
+  getUsersStatus,
+  submitOOOForm,
+} from '../AuthScreen/Util';
 import LoadingScreen from '../../components/LoadingScreen';
+import { AuthContext } from '../../context/AuthContext';
 
 const HomeScreenV2 = (): JSX.Element => {
   const currentDate = new Date();
@@ -16,38 +22,37 @@ const HomeScreenV2 = (): JSX.Element => {
   const [description, setDescription] = useState<string>('');
   const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { loggedInUserData } = useContext(AuthContext);
 
   useEffect(() => {
     fetchData();
   }, [isLoading]);
 
   const fetchData = async () => {
-    const userStatus = await getUsersStatus();
+    const userStatus = await getUsersStatus(loggedInUserData?.token);
     setStatus(userStatus);
   };
 
   const handleButtonPress = async () => {
     if (status === 'OOO') {
-      await cancelOoo();
+      await cancelOoo(loggedInUserData?.token);
     } else {
       setIsFormVisible((prev) => !prev);
     }
   };
 
   const handleFormSubmit = async () => {
-    console.log(fromDate, description, toDate);
-
     setIsLoading(true); // Set loading state while making API call
     let data = {
       currentStatus: {
-        from: fromDate,
+        from: formatTimeToUnix(fromDate),
         message: description,
         state: 'OOO',
-        until: toDate,
-        updateAt: 987937932,
+        until: formatTimeToUnix(toDate),
+        updateAt: formatTimeToUnix(Date.now),
       },
     };
-    await submitOOOForm(data);
+    await submitOOOForm(data, loggedInUserData?.token);
     setIsLoading(false); // Clear loading state after API call
     setIsFormVisible(false); // Hide the form after a successful submission
   };
