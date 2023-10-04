@@ -18,7 +18,6 @@ const HomeScreenV2 = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log('isload', isLoading);
     fetchData();
   }, [isLoading]);
 
