@@ -1,12 +1,15 @@
-import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 import { User } from '../../context/type';
+import { getApi } from '../../utils/apiRequests';
 
 export const fetchUserData = async (userId: string): Promise<User | null> => {
   try {
-    const response = await axios.get(urls.GET_USER_DATA + userId, {
-      headers: {
-        cookie: '',
+    const response = await getApi({
+      endPointName: `/users?id=${userId}`,
+      config: {
+        headers: {
+          cookie: '',
+        },
       },
     });
     const user = response.data.user;
