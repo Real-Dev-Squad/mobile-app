@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 import { HomeApi } from '../../constants/apiConstant/HomeApi';
+import { PermissionsAndroid } from 'react-native';
 
 export const getUserData = async (token: string) => {
   try {
@@ -19,6 +20,7 @@ export const getUserData = async (token: string) => {
       linkedin_id: res.data?.linkedin_id,
       github_id: res.data?.github_id,
       username: res?.data?.username,
+      token: token,
     };
   } catch (e) {
     console.log('err', e);
@@ -65,13 +67,12 @@ export const updateMarkYourSelfAs_ = async (markStatus: string) => {
   return res.data.status;
 };
 
-export const getUsersStatus = async () => {
+export const getUsersStatus = async (token) => {
   try {
     const res = await axios.get(HomeApi.GET_USER_STATUS, {
       headers: {
         'Content-type': 'application/json',
-        cookie:
-          'rds-session=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJUN0lMN01COFlyaW5pVHc0YnQzOSIsImlhdCI6MTY5MjYyMTQ2NCwiZXhwIjoxNjk1MjEzNDY0fQ.DAkTkEJmhEKz9-2w6bOoPLseH6jZA9kajxmkB64CqtTc25wPRa12OKhby5_CnWmTioz3adUwGFV1JWgjtZXLNSEt1j1PSDRo_wy_XEdH5-O1OkNYFIkc4TPnTXM-eUAcGVebmRGEaD326SYZ3Zm0euqFc1zcTHdFubukIVRhgmXC-y2GC9oEr8fpH1EvGJi_H93gkyvTYuU6Z84m7q2GEEKrrTdRdkE1lycS1l-vODSex1yGPu1y8lDmhR5zdc-GbDFv7uhMDPysasmM-jM1yTZE9fEfAj97Pei3YaT0BeL5L-IIEblELqpq0IfrlyxPsgNV10zyYPOnU4NQKl6ydg',
+        cookie: `rds-session=${token}`,
       },
     });
     if (res.data.data.currentStatus) {
@@ -84,13 +85,12 @@ export const getUsersStatus = async () => {
   }
 };
 
-export const submitOOOForm = async (data) => {
+export const submitOOOForm = async (data, token) => {
   console.log('data', data);
   const options = {
     headers: {
       'Content-type': 'application/json',
-      cookie:
-        'rds-session=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJUN0lMN01COFlyaW5pVHc0YnQzOSIsImlhdCI6MTY5MjYyMTQ2NCwiZXhwIjoxNjk1MjEzNDY0fQ.DAkTkEJmhEKz9-2w6bOoPLseH6jZA9kajxmkB64CqtTc25wPRa12OKhby5_CnWmTioz3adUwGFV1JWgjtZXLNSEt1j1PSDRo_wy_XEdH5-O1OkNYFIkc4TPnTXM-eUAcGVebmRGEaD326SYZ3Zm0euqFc1zcTHdFubukIVRhgmXC-y2GC9oEr8fpH1EvGJi_H93gkyvTYuU6Z84m7q2GEEKrrTdRdkE1lycS1l-vODSex1yGPu1y8lDmhR5zdc-GbDFv7uhMDPysasmM-jM1yTZE9fEfAj97Pei3YaT0BeL5L-IIEblELqpq0IfrlyxPsgNV10zyYPOnU4NQKl6ydg',
+      cookie: `rds-session=${token}`,
     },
   };
   const body = data;
@@ -104,12 +104,11 @@ export const submitOOOForm = async (data) => {
   }
 };
 
-export const cancelOoo = async () => {
+export const cancelOoo = async (token) => {
   const options = {
     headers: {
       'Content-type': 'application/json',
-      cookie:
-        'rds-session=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJUN0lMN01COFlyaW5pVHc0YnQzOSIsImlhdCI6MTY5MjYyMTQ2NCwiZXhwIjoxNjk1MjEzNDY0fQ.DAkTkEJmhEKz9-2w6bOoPLseH6jZA9kajxmkB64CqtTc25wPRa12OKhby5_CnWmTioz3adUwGFV1JWgjtZXLNSEt1j1PSDRo_wy_XEdH5-O1OkNYFIkc4TPnTXM-eUAcGVebmRGEaD326SYZ3Zm0euqFc1zcTHdFubukIVRhgmXC-y2GC9oEr8fpH1EvGJi_H93gkyvTYuU6Z84m7q2GEEKrrTdRdkE1lycS1l-vODSex1yGPu1y8lDmhR5zdc-GbDFv7uhMDPysasmM-jM1yTZE9fEfAj97Pei3YaT0BeL5L-IIEblELqpq0IfrlyxPsgNV10zyYPOnU4NQKl6ydg',
+      cookie: `rds-session=${token}`,
     },
   };
   const body = { cancelOoo: true };
@@ -150,4 +149,12 @@ export const requestCameraPermission = async () => {
   } catch (err) {
     console.warn(err);
   }
+};
+
+export const formatTimeToUnix = (date) => {
+  const newDate = new Date(date);
+
+  // Convert the date to Unix Epoch timestamp in seconds
+  const unixTimestampInSeconds = newDate.getTime() / 1000;
+  return unixTimestampInSeconds;
 };

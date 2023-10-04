@@ -100,6 +100,7 @@ const AuthScreen = () => {
         linkedinId: res?.linkedin_id,
         githubId: res?.github_id,
         discordUserName: res?.username,
+        token: token,
       });
       setLoading(false);
     } catch (err) {
