@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,15 +9,17 @@ import {
 } from 'react-native';
 import { fetchContribution } from '../../../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
+import { AuthContext } from '../../../../context/AuthContext';
 
 const AllContributionsDropdown = () => {
   const [clicked, setClicked] = useState(false);
   const [allContributionsData, setAllContributionData] = useState([]);
+  const { loggedInUserData } = useContext(AuthContext);
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const userName = 'ankush';
+        const userName = loggedInUserData?.discordUserName;
         const contributionResponse = await fetchContribution(userName);
         setAllContributionData(contributionResponse.all);
       })();

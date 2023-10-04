@@ -15,6 +15,10 @@ export const getUserData = async (token: string) => {
       name: res.data.github_display_name,
       profileUrl: res.data?.picture?.url,
       status: res.data?.status,
+      twitter_id: res.data?.twitter_id,
+      linkedin_id: res.data?.linkedin_id,
+      github_id: res.data?.github_id,
+      username: res?.data?.username,
     };
   } catch (e) {
     console.log('err', e);

@@ -19,8 +19,6 @@ import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-import { fetchContribution } from '../AuthScreen/Util';
-import { useFocusEffect } from '@react-navigation/native';
 import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
 import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteWorthyContributions';
 import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
@@ -30,11 +28,10 @@ import { useSelector, useDispatch } from 'react-redux';
 const ProfileScreen = () => {
   const dispatch = useDispatch();
   const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
-  const { data: userData } = useSelector((store) => store.user);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
-  const [contributionData, setContributionData] = useState([]);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+
   const openModal = useCallback(() => {
     setModalVisible(true);
   }, []);
@@ -54,16 +51,6 @@ const ProfileScreen = () => {
     }
     return true;
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      (async () => {
-        const userName = 'ankush';
-        const contributionResponse = await fetchContribution(userName);
-        setContributionData(contributionResponse.noteworthy);
-      })();
-    }, []),
-  );
 
   const handleLogout = () => {
     // please remove the token
@@ -86,7 +73,7 @@ const ProfileScreen = () => {
           <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
         )}
         <Text style={profileScreenStyles.titleText}>
-          <UserData userData={userData} />
+          <UserData userData={loggedInUserData} />
         </Text>
         <ButtonWidget title={'Update'} onPress={openModal} />
         <ButtonWidget
