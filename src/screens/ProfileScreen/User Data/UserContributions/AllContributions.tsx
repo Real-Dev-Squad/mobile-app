@@ -19,7 +19,7 @@ const AllContributionsDropdown = () => {
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const userName = loggedInUserData?.discordUserName;
+        const userName = loggedInUserData?.username;
         const contributionResponse = await fetchContribution(userName);
         setAllContributionData(contributionResponse.all);
       })();

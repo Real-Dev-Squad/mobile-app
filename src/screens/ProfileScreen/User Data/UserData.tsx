@@ -12,12 +12,14 @@ const UserData = ({ userData }) => {
   return (
     <View>
       <Text style={styles.Name}>{userData.name}</Text>
-      <Text style={styles.userName}>{'@' + userData.discordUserName}</Text>
+      <Text style={styles.userName}>{'@' + userData.username}</Text>
       <Text style={styles.designation}> {userData.designation}</Text>
       <Text style={styles.company}> {userData.company}</Text>
       <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
         <>
-          <TouchableOpacity onPress={() => Linking.openURL(userData.twitterId)}>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(userData.twitter_id)}
+          >
             <Image
               style={{ height: 30, width: 30, margin: 5 }}
               source={require('../../../../assets/twitter_logo.png')}
@@ -25,7 +27,7 @@ const UserData = ({ userData }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => Linking.openURL(userData.linkedinId)}
+            onPress={() => Linking.openURL(userData.linkedin_id)}
           >
             <Image
               style={{ height: 30, width: 30, margin: 5 }}
@@ -35,7 +37,7 @@ const UserData = ({ userData }) => {
 
           <TouchableOpacity
             onPress={() =>
-              Linking.openURL(`https://github.com/${userData.githubId}`)
+              Linking.openURL(`https://github.com/${userData.github_id}`)
             }
           >
             <Image

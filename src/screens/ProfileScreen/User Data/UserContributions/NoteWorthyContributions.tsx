@@ -14,12 +14,12 @@ import { AuthContext } from '../../../../context/AuthContext';
 const NoteworthyContributionsDropdown = () => {
   const [clicked, setClicked] = useState(false);
   const [userContributionData, setUserContributionData] = useState([]);
-  const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+  const { loggedInUserData } = useContext(AuthContext);
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const userName = loggedInUserData?.discordUserName;
+        const userName = loggedInUserData?.username;
         const contributionResponse = await fetchContribution(userName);
         setUserContributionData(contributionResponse.noteworthy);
       })();
