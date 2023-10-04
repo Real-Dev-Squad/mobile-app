@@ -15,7 +15,7 @@ import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData, requestCameraPermission } from './Util';
+import { getUserData } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
@@ -54,7 +54,7 @@ const AuthScreen = () => {
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
       const token = event.url.split('token=')[1];
-      token && updateUserData(token);
+      token && updateUserData(token); // store token in redux
     };
     Linking.addEventListener('url', handleDeepLink);
     return () => {
@@ -64,7 +64,7 @@ const AuthScreen = () => {
 
   const activateCamera = async () => {
     try {
-      await requestCameraPermission();
+      //await requestCameraPermission();
       setCameraActive((prev) => !prev); // Set cameraActive state to true
     } catch (error: any) {
       Alert.alert('Error requesting camera permission:', error);
