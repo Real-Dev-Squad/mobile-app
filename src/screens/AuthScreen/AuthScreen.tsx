@@ -63,7 +63,6 @@ const AuthScreen = () => {
   });
 
   const activateCamera = async () => {
-    console.log('ACTIVE____CAMERA');
     try {
       await requestCameraPermission();
       setCameraActive((prev) => !prev); // Set cameraActive state to true
