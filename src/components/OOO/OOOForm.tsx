@@ -68,7 +68,6 @@ const OOOForm = ({
         multiline
         numberOfLines={4}
       />
-
       <TouchableOpacity
         onPress={() => {
           isFormValid() && handleFormSubmit();
@@ -108,7 +107,6 @@ const styles = StyleSheet.create({
   },
   textArea: {
     height: 80,
-    textAlignVertical: 'top', // To start text from the top in multiline input
   },
   close: {
     height: 20,

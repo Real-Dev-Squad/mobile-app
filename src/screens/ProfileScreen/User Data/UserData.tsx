@@ -12,14 +12,12 @@ const UserData = ({ userData }) => {
   return (
     <View>
       <Text style={styles.Name}>{userData.name}</Text>
-      <Text style={styles.userName}>{'@' + userData.userName}</Text>
+      <Text style={styles.userName}>{'@' + userData.discordUserName}</Text>
       <Text style={styles.designation}> {userData.designation}</Text>
       <Text style={styles.company}> {userData.company}</Text>
       <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
         <>
-          <TouchableOpacity
-            onPress={() => Linking.openURL('https://twitter.com/_bhaaratii')}
-          >
+          <TouchableOpacity onPress={() => Linking.openURL(userData.twitterId)}>
             <Image
               style={{ height: 30, width: 30, margin: 5 }}
               source={require('../../../../assets/twitter_logo.png')}
@@ -27,11 +25,7 @@ const UserData = ({ userData }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() =>
-              Linking.openURL(
-                'https://www.linkedin.com/in/bharati-subramanian-29734b152/',
-              )
-            }
+            onPress={() => Linking.openURL(userData.linkedinId)}
           >
             <Image
               style={{ height: 30, width: 30, margin: 5 }}
@@ -40,11 +34,13 @@ const UserData = ({ userData }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => Linking.openURL('https://github.com/bharati-21')}
+            onPress={() =>
+              Linking.openURL(`https://github.com/${userData.githubId}`)
+            }
           >
             <Image
               style={{ height: 30, width: 30, margin: 5 }}
-              source={require('../../../../assets/github_logo.png')}
+              source={require('../../../../assets/githublogo.png')}
             />
           </TouchableOpacity>
         </>

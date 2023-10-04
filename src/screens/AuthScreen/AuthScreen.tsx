@@ -15,13 +15,16 @@ import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData, requestCameraPermission } from './Util';
+import { getUserData } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
+import LoadingScreen from '../../components/LoadingScreen';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
+const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const dispatch = useDispatch();
@@ -51,7 +54,7 @@ const AuthScreen = () => {
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
       const token = event.url.split('token=')[1];
-      token && updateUserData(token);
+      token && updateUserData(token); // store token in redux
     };
     Linking.addEventListener('url', handleDeepLink);
     return () => {
@@ -61,7 +64,7 @@ const AuthScreen = () => {
 
   const activateCamera = async () => {
     try {
-      await requestCameraPermission();
+      //await requestCameraPermission();
       setCameraActive((prev) => !prev); // Set cameraActive state to true
     } catch (error: any) {
       Alert.alert('Error requesting camera permission:', error);
@@ -73,6 +76,12 @@ const AuthScreen = () => {
     setToolTip(true);
   };
 
+  const handleToolTip = () => {
+    setTimeout(() => {
+      setToolTip(true);
+    }, 1000);
+    setToolTip(false);
+  };
   const handleSignIn = () => {
     Linking.openURL(githubAuthUrl);
   };
@@ -87,6 +96,10 @@ const AuthScreen = () => {
         name: res?.name,
         profileUrl: res?.profileUrl,
         status: res?.status,
+        twitterId: res?.twitter_id,
+        linkedinId: res?.linkedin_id,
+        githubId: res?.github_id,
+        discordUserName: res?.username,
       });
       setLoading(false);
     } catch (err) {
@@ -102,18 +115,7 @@ const AuthScreen = () => {
       const userInfo = await fetch(url);
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
-        const userDetailsInfo = await fetch(
-          `${AuthApis.USER_DETAIL}${scannedUserId}`,
-        );
-        const userDetailsInfoJson = await userDetailsInfo.json();
-        await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
-        const { picture, id, username, status } = userDetailsInfoJson.user;
-        setLoggedInUserData({
-          id: id,
-          name: username,
-          profileUrl: picture?.url,
-          status: status,
-        });
+        updateUserData(userInfoJson.data.token);
       } else {
         Toast.show({
           type: 'error',
@@ -204,25 +206,22 @@ const AuthScreen = () => {
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
-          <TouchableOpacity
-            onPress={handleSignIn}
-            style={AuthViewStyle.btnView}
-          >
-            <View style={AuthViewStyle.githubLogo}>
-              <Image
-                source={require('../../../assets/githublogo.png')}
-                height={190}
-                width={190}
-              />
-            </View>
-            <View style={AuthViewStyle.signInTxtView}>
-              <Text style={AuthViewStyle.signInText}>
-                {Strings.SIGN_IN_BUTTON_TEXT}
-              </Text>
-            </View>
-          </TouchableOpacity>
-  
-        <View style={[AuthViewStyle.btnView, {marginTop:20}]}>
+        <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
+          <View style={AuthViewStyle.githubLogo}>
+            <Image
+              source={require('../../../assets/githublogo.png')}
+              height={190}
+              width={190}
+            />
+          </View>
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {Strings.SIGN_IN_BUTTON_TEXT}
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <View style={[AuthViewStyle.btnView, { marginTop: 20 }]}>
           <AuthScreenButton
             text={Strings.SIGN_IN_WITH_WEB}
             onPress={activateCamera}
@@ -264,7 +263,7 @@ const AuthScreen = () => {
             placement="top"
             onClose={() => setToolTip(false)}
           >
-            <TouchableOpacity onPress={() => setToolTip(true)}>
+            <TouchableOpacity onPress={handleToolTip}>
               <Text style={styles.toolButton}>What To Do </Text>
             </TouchableOpacity>
           </Tooltip>
