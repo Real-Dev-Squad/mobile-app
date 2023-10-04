@@ -23,6 +23,7 @@ const AllContributionsDropdown = () => {
         const contributionResponse = await fetchContribution(userName);
         setAllContributionData(contributionResponse.all);
       })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 

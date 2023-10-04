@@ -23,6 +23,7 @@ const NoteworthyContributionsDropdown = () => {
         const contributionResponse = await fetchContribution(userName);
         setUserContributionData(contributionResponse.noteworthy);
       })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 
