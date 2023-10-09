@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, { useCallback, useContext, useState } from 'react';
 import {
-  StyleSheet,
   View,
-  TextInput,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   Linking,
-  Button,
   ScrollView,
-  FlatList,
 } from 'react-native';
 import { profileScreenStyles } from '../styles';
+import { fetchContribution } from '../../AuthScreen/Util';
+import { useFocusEffect } from '@react-navigation/native';
+import { AuthContext } from '../../../context/AuthContext';
 
 const Note = () => {
-  const [clicked, setClicked] = useState(false);
-  const [clicked2, setClicked2] = useState(false);
-  const [contributionData, setContributionData] = useState([]);
+  const [userContributionData, setUserContributionData] = useState([]);
+  const { loggedInUserData } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          'https://api.realdevsquad.com/contributions/ankush',
-        );
-        const jsonData = await response.json();
-        setContributionData(jsonData.noteworthy);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const userName = loggedInUserData?.username;
+        const contributionResponse = await fetchContribution(userName);
+        setUserContributionData(contributionResponse.noteworthy);
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
 
   const convertTimestampToReadableDate = (timestamp) => {
     return new Date(timestamp * 1000);
@@ -66,129 +59,89 @@ const Note = () => {
 
   return (
     <ScrollView style={{ padding: 10, elevation: 10 }}>
-      {/* <TouchableOpacity
-        style={styles.TouchButton}
-        onPress={() => setClicked(!clicked)}>
-        <Text style={styles.TouchButtonText}>
-          See how noteworthy contributions works.
-        </Text>
-      </TouchableOpacity>
-      {clicked ? ( */}
-      <View style={profileScreenStyles.container}>
-        {contributionData.map((item, index) => (
-          <View style={profileScreenStyles.DropDownElement} key={index}>
-            <TouchableOpacity
-              style={profileScreenStyles.DropDownbackground}
-              onPress={
-                item.task.featureUrl
-                  ? () => Linking.openURL(item.task.featureUrl)
-                  : null
-              }
-            >
-              <Text style={{ color: 'blue', fontSize: 18, fontWeight: 'bold' }}>
-                {item.task.title}
-              </Text>
-              <>
-                {item.task.purpose ? (
-                  <Text
-                    style={{
-                      paddingLeft: 15,
-                      paddingRight: 15,
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                      color: 'grey',
-                      fontSize: 15,
-                    }}
-                  >
-                    {item.task.purpose}
-                  </Text>
-                ) : (
-                  <View style={{ padding: 10 }} />
-                )}
-              </>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 15,
-                  paddingLeft: 15,
-                  paddingRight: 15,
-                  paddingBottom: 10,
-                }}
+      {userContributionData.task ? (
+        <View style={profileScreenStyles.container}>
+          {userContributionData.map((item, index) => (
+            <View style={profileScreenStyles.DropDownElement} key={index}>
+              <TouchableOpacity
+                style={profileScreenStyles.DropDownbackground}
+                onPress={
+                  item.task.featureUrl
+                    ? () => Linking.openURL(item.task.featureUrl)
+                    : null
+                }
               >
-                Estimated completion:{''}
-                <Text style={{ fontWeight: 'bold' }}>
-                  {calculateTimeDifference(
-                    convertTimestampToReadableDate(item.task.startedOn),
-                    convertTimestampToReadableDate(item.task.endsOn),
-                  )}
+                <Text
+                  style={{ color: 'blue', fontSize: 18, fontWeight: 'bold' }}
+                >
+                  {item.task.title}
                 </Text>
-              </Text>
-              <>
-                {item.task.featureUrl ? (
-                  <Text
-                    style={{
-                      color: 'grey',
-                      fontSize: 13,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Checkout this feature in action
+                <>
+                  {item.task.purpose ? (
+                    <Text
+                      style={{
+                        paddingLeft: 15,
+                        paddingRight: 15,
+                        paddingTop: 10,
+                        paddingBottom: 10,
+                        color: 'grey',
+                        fontSize: 15,
+                      }}
+                    >
+                      {item.task.purpose}
+                    </Text>
+                  ) : (
+                    <View style={{ padding: 10 }} />
+                  )}
+                </>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 15,
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    paddingBottom: 10,
+                  }}
+                >
+                  Estimated completion:{''}
+                  <Text style={{ fontWeight: 'bold' }}>
+                    {calculateTimeDifference(
+                      convertTimestampToReadableDate(item.task.startedOn),
+                      convertTimestampToReadableDate(item.task.endsOn),
+                    )}
                   </Text>
-                ) : null}
-              </>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
+                </Text>
+                <>
+                  {item.task.featureUrl ? (
+                    <Text
+                      style={{
+                        color: 'grey',
+                        fontSize: 13,
+                        textAlign: 'center',
+                      }}
+                    >
+                      Checkout this feature in action
+                    </Text>
+                  ) : null}
+                </>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      ) : (
+        <View
+          style={{
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={{ fontSize: 13, color: 'black' }}>
+            No noteworthy task yet!
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#fff',
-  },
-  container2: {
-    padding: 10,
-    backgroundColor: '#50DBB4',
-    borderWidth: 2,
-    borderRadius: 5,
-    borderEndColor: 'black',
-  },
-  DropDownElement: {
-    // padding: 5,
-    // color: 'black',
-    // width: '100%',
-    // alignSelf: 'center',
-    // height: 'auto',
-
-    color: 'black',
-    width: '100%',
-    alignSelf: 'center',
-    height: 'auto',
-  },
-  DropDownbackground: {
-    // padding: 10,
-    // height: 'auto',
-    // alignSelf: 'center',
-    // width: '100%',
-    // backgroundColor: '#fff',
-    // borderRadius: 10,
-    // elevation: 10,
-
-    padding: 5,
-    // elevation: 1,
-    height: 'auto',
-    alignSelf: 'center',
-    width: '100%',
-    // backgroundColor: '#fff',
-    // borderRadius: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: 'grey',
-    // elevation: 1,
-  },
-});
 
 export default Note;

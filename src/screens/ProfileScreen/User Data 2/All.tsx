@@ -1,38 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
-  StyleSheet,
   View,
-  TextInput,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   Linking,
-  Button,
   ScrollView,
-  FlatList,
-  Image,
 } from 'react-native';
 import { profileScreenStyles } from '../styles';
+import { fetchContribution } from '../../AuthScreen/Util';
+import { useFocusEffect } from '@react-navigation/native';
+import { AuthContext } from '../../../context/AuthContext';
 
 const All = () => {
-  const [clicked, setClicked] = useState(false);
-  const [contributionData, setContributionData] = useState([]);
+  const [allContributionsData, setAllContributionData] = useState([]);
+  const { loggedInUserData } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          'https://api.realdevsquad.com/contributions/ankush',
-        );
-        const jsonData = await response.json();
-        setContributionData(jsonData.all);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const userName = loggedInUserData?.username;
+        const contributionResponse = await fetchContribution(userName);
+        setAllContributionData(contributionResponse.all);
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
 
   const convertTimestampToReadableDate = (timestamp) => {
     return new Date(timestamp * 1000);
@@ -66,7 +58,7 @@ const All = () => {
 
   const calculateISODateFormat = (isoDateString) => {
     const date = new Date(isoDateString);
-    const formatDate = (date) => {
+    const formatDate = (d) => {
       const months = [
         'January',
         'February',
@@ -82,9 +74,9 @@ const All = () => {
         'December',
       ];
 
-      const day = date.getDate();
-      const monthIndex = date.getMonth();
-      const year = date.getFullYear();
+      const day = d.getDate();
+      const monthIndex = d.getMonth();
+      const year = d.getFullYear();
 
       return `${day} ${months[monthIndex]}, ${year}`;
     };
@@ -99,7 +91,7 @@ const All = () => {
   return (
     <ScrollView style={{ padding: 10, elevation: 10 }}>
       <View style={profileScreenStyles.container}>
-        {contributionData.map((item, index) => (
+        {allContributionsData.map((item, index) => (
           <View style={profileScreenStyles.DropDownElement} key={index}>
             <TouchableOpacity
               style={profileScreenStyles.DropDownbackground}
@@ -256,33 +248,5 @@ const All = () => {
     </ScrollView>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 10,
-//     backgroundColor: '#fff',
-//     // elevation: 1,
-//   },
-//   DropDownElement: {
-//     // padding: 2,
-//     color: 'black',
-//     width: '100%',
-//     alignSelf: 'center',
-//     height: 'auto',
-//   },
-//   DropDownbackground: {
-//     padding: 5,
-//     // elevation: 1,
-//     height: 'auto',
-//     alignSelf: 'center',
-//     width: '100%',
-//     // backgroundColor: '#fff',
-//     // borderRadius: 10,
-//     borderBottomWidth: 1,
-//     borderBottomColor: 'grey',
-//     // elevation: 1,
-//   },
-// });
 
 export default All;

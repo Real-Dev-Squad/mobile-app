@@ -26,6 +26,7 @@ import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteW
 import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
 import UserData from './User Data/UserData';
 import { useSelector, useDispatch } from 'react-redux';
+import { AuthViewStyle } from '../AuthScreen/styles';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -94,7 +95,7 @@ const ProfileScreen = () => {
               : dispatch({ type: 'PROD' });
           }}
         />
-        <ScrollView style={styles.container}>
+        <ScrollView style={AuthViewStyle.container}>
           <NoteworthyContributionsDropdown />
           <ActiveTaskDropDown />
           <AllContributionsDropdown />

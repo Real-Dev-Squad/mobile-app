@@ -6,7 +6,6 @@ import {
   Image,
   Linking,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 
 const UserData = ({ userData }) => {

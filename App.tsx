@@ -10,7 +10,9 @@ import rootSaga from './src/sagas/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
-export const store = compose(applyMiddleware(...middleware))(createStore)(reducers);
+export const store = compose(applyMiddleware(...middleware))(createStore)(
+  reducers,
+);
 sagaMiddleware.run(rootSaga);
 
 const App = () => {
