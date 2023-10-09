@@ -9,6 +9,8 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Button,
+  TouchableOpacity,
 } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
@@ -57,6 +59,14 @@ const ProfileScreen = () => {
   };
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
+      <Pressable
+        style={profileScreenStyles.logoutButton}
+        onPress={() => {
+          setLoggedInUserData(null);
+        }}
+      >
+        <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
+      </Pressable>
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
@@ -103,14 +113,5 @@ const ProfileScreen = () => {
     </ScrollView>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 10,
-    paddingBottom: 30,
-  },
-  container2: {
-    borderWidth: 2,
-  },
-});
 
 export default withHeader(ProfileScreen);

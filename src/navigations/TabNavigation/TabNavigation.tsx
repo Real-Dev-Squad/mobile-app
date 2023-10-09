@@ -11,6 +11,7 @@ import { TabViewStyle } from './style';
 import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
+import Example from '../../screens/ProfileScreen/ProfileScreen2';
 
 const tab = createBottomTabNavigator();
 
