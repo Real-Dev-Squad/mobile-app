@@ -41,7 +41,7 @@ jobs:
         run: cd android && chmod +x ./gradlew
 
       - name: build release
-        run: npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleDebug
+        run: npx react-native bundle --platform android --dev false --entry-file index.js cd android/app/src/main && mkdir assets --bundle-output index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleDebug
 
       - name: list files
         run: ls -lrt android/app/build/outputs/apk/debug
