@@ -24,6 +24,7 @@ export const AuthViewStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 0.4,
+    marginTop: 80,
   },
 
   btnView: {
@@ -35,6 +36,7 @@ export const AuthViewStyle = StyleSheet.create({
     minHeight: 60,
     minWidth: 200,
     width: '55%',
+    justifyContent: 'center',
   },
 
   logo: {
