@@ -11,7 +11,8 @@
     "format-check": "prettier --check ./src",
     "format-fix": "prettier --write ./src",
     "precommit-check": "yarn run format-fix && yarn run lint",
-    "build": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res; cd android ; ./gradlew assembleDebug"
+    "build-assets-folder": "cd android/app/src/main && if [ -d 'assets' ]; then rm -r assets; fi",
+    "build": "mkdir -p android/app/src/main/assets && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.16",

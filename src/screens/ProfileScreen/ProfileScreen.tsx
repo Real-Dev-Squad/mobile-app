@@ -21,12 +21,12 @@ import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
 import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteWorthyContributions';
 import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
 import UserData from './User Data/UserData';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthViewStyle } from '../AuthScreen/styles';
+import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
