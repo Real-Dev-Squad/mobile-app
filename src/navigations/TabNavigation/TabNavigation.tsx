@@ -6,14 +6,17 @@ import Colors from '../../constants/colors/Colors';
 import Fonts from '../../constants/fonts/TabFont';
 import Images from '../../constants/images/Image';
 import Strings from '../../i18n/en';
-import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
 import { TabViewStyle } from './style';
 import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
+import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
+import { useSelector } from 'react-redux';
 
 const tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+
   return (
     <NavigationContainer independent>
       <tab.Navigator
@@ -25,7 +28,7 @@ const TabNavigation = () => {
       >
         <tab.Screen
           name={Strings.Tab_Home}
-          component={HomeScreen}
+          component={HomeScreenV2}
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => {
@@ -52,36 +55,39 @@ const TabNavigation = () => {
             },
           }}
         />
-        <tab.Screen
-          name={Strings.Tab_Goal}
-          component={GoalsScreenStack}
-          options={{
-            headerShown: false,
 
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text
-                  style={{
-                    fontSize: Fonts.Tab_Text_Font,
-                    color: focused
-                      ? Colors.Tab_Active_Color
-                      : Colors.Tab_Inactive_Color,
-                  }}
-                >
-                  {Strings.Tab_Goal}
-                </Text>
-              );
-            },
-            tabBarIcon: ({ focused }) => {
-              return (
-                <Image
-                  style={TabViewStyle.tab_icon}
-                  source={focused ? Images.goalIcon : Images.goalIconUnF}
-                />
-              );
-            },
-          }}
-        />
+        {!isProdEnvironment && (
+          <tab.Screen
+            name={Strings.Tab_Goal}
+            component={GoalsScreenStack}
+            options={{
+              headerShown: false,
+
+              tabBarLabel: ({ focused }) => {
+                return (
+                  <Text
+                    style={{
+                      fontSize: Fonts.Tab_Text_Font,
+                      color: focused
+                        ? Colors.Tab_Active_Color
+                        : Colors.Tab_Inactive_Color,
+                    }}
+                  >
+                    {Strings.Tab_Goal}
+                  </Text>
+                );
+              },
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Image
+                    style={TabViewStyle.tab_icon}
+                    source={focused ? Images.goalIcon : Images.goalIconUnF}
+                  />
+                );
+              },
+            }}
+          />
+        )}
 
         <tab.Screen
           name={Strings.Tab_Profile}

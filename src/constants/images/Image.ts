@@ -20,6 +20,9 @@ const Images = {
   //AuthScreen Icon
   refreshIcon: require('../../../assets/refresh_icon.png'),
 
+  //OOO Form Icons
+  closeIcon: require('../../../assets/close.png'),
+
   // camera gallery options
 
   cameraIcon: require('../../../assets/camera.png'),

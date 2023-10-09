@@ -15,7 +15,7 @@ import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData, requestCameraPermission } from './Util';
+import { getUserData } from './Util';
 import { storeData } from '../../utils/dataStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ActivityIndicator } from 'react-native';
@@ -25,10 +25,15 @@ import { urls } from '../../constants/appConstant/url';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
+import { useDispatch, useSelector } from 'react-redux';
+import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
 
+const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
   // TODO: will revamp github signIn feature
+  const dispatch = useDispatch();
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData } = useContext(AuthContext);
   const [githubView, setGithubView] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -38,10 +43,36 @@ const AuthScreen = () => {
   const [addressbarURL, setAdressbarURL] = useState<String>('');
   const [key, setKey] = useState(1);
   const [toolTip, setToolTip] = useState(false);
+  
+  const queryParams = {
+    sourceUtm: 'rds-mobile-app',
+    redirectURL: 'https://realdevsquad.com/',
+  };
+
+  function buildUrl(url, params) {
+    const queryString = Object.keys(params)
+      .map((key) => `${key}=${params[key]}`)
+      .join('&');
+
+    return `${url}?${queryString}`;
+  }
+
+  const githubAuthUrl = buildUrl(baseUrl, queryParams);
+  useEffect(() => {
+    Linking.getInitialURL();
+    const handleDeepLink = async (event) => {
+      const token = event.url.split('token=')[1];
+      token && updateUserData(token); // store token in redux
+    };
+    Linking.addEventListener('url', handleDeepLink);
+    return () => {
+      Linking.removeEventListener('url', handleDeepLink);
+    };
+  });
 
   const activateCamera = async () => {
     try {
-      await requestCameraPermission();
+      //await requestCameraPermission();
       setCameraActive((prev) => !prev); // Set cameraActive state to true
 
       const backAction = () => {
@@ -73,7 +104,13 @@ const AuthScreen = () => {
     setToolTip(true);
   };
 
-  //TODO: add to constants
+  const handleToolTip = () => {
+    setTimeout(() => {
+      setToolTip(true);
+    }, 1000);
+    setToolTip(false);
+  };
+
   const handleSignIn = () => {
     // NOTE: toast until sign in with Github is implemented
     Toast.show({
@@ -93,6 +130,11 @@ const AuthScreen = () => {
         name: res?.name,
         profileUrl: res?.profileUrl,
         status: res?.status,
+        twitterId: res?.twitter_id,
+        linkedinId: res?.linkedin_id,
+        githubId: res?.github_id,
+        discordUserName: res?.username,
+        token: token,
       });
     } catch (err) {
       setLoggedInUserData(null);
@@ -107,18 +149,7 @@ const AuthScreen = () => {
       const userInfo = await fetch(url);
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
-        const userDetailsInfo = await fetch(
-          `https://api.realdevsquad.com/users/userId/${scannedUserId}`,
-        );
-        const userDetailsInfoJson = await userDetailsInfo.json();
-        await storeData('userData', JSON.stringify(userDetailsInfoJson.user));
-        const { picture, id, username, status } = userDetailsInfoJson.user;
-        setLoggedInUserData({
-          id: id,
-          name: username,
-          profileUrl: picture?.url,
-          status: status,
-        });
+        updateUserData(userInfoJson.data.token);
       } else {
         Toast.show({
           type: 'error',
@@ -167,7 +198,7 @@ const AuthScreen = () => {
               setCameraActive(false);
               setModalVisible(true);
             },
-          }, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen
+          },
         ]);
       } else {
         await data.json();
@@ -181,7 +212,7 @@ const AuthScreen = () => {
     } catch (err) {
       Toast.show({
         type: 'error',
-        text1: 'Something went wrong, please try again later',
+        text1: err,
         position: 'bottom',
         bottomOffset: 80,
       });
@@ -190,7 +221,9 @@ const AuthScreen = () => {
   };
 
   useEffect(() => {
-    getAuthStatus();
+    if (scannedUserId != '') {
+      getAuthStatus();
+    }
     /* eslint-disable */
   }, [scannedUserId]);
 
@@ -286,31 +319,42 @@ const AuthScreen = () => {
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
       <View style={AuthViewStyle.btnContainer}>
-        <View style={AuthViewStyle.btnContainer}>
-          <TouchableOpacity
-            onPress={handleSignIn}
-            style={AuthViewStyle.btnView}
-          >
-            <View style={AuthViewStyle.githubLogo}>
-              <Image
-                source={require('../../../assets/githublogo.png')}
-                height={190}
-                width={190}
-              />
-            </View>
-            <View style={AuthViewStyle.signInTxtView}>
-              <Text style={AuthViewStyle.signInText}>
-                {Strings.SIGN_IN_BUTTON_TEXT}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <AuthScreenButton
-          text={Strings.SIGN_IN_WITH_WEB}
-          onPress={activateCamera}
-        />
-      </View>
+        <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
+          <View style={AuthViewStyle.githubLogo}>
+            <Image
+              source={require('../../../assets/githublogo.png')}
+              height={190}
+              width={190}
+            />
+          </View>
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {Strings.SIGN_IN_BUTTON_TEXT}
+            </Text>
+          </View>
+        </TouchableOpacity>
 
+        <View style={[AuthViewStyle.btnView, { marginTop: 20 }]}>
+          <AuthScreenButton
+            text={Strings.SIGN_IN_WITH_WEB}
+            onPress={activateCamera}
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={() => {
+            isProdEnvironment
+              ? dispatch({ type: 'DEV' })
+              : dispatch({ type: 'PROD' });
+          }}
+        >
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
       {cameraActive && (
         <CameraScreen
           style={StyleSheet.absoluteFill}
@@ -332,7 +376,7 @@ const AuthScreen = () => {
             placement="top"
             onClose={() => setToolTip(false)}
           >
-            <TouchableOpacity onPress={() => setToolTip(true)}>
+            <TouchableOpacity onPress={handleToolTip}>
               <Text style={styles.toolButton}>What To Do </Text>
             </TouchableOpacity>
           </Tooltip>
