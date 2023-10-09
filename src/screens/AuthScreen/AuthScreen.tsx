@@ -165,7 +165,7 @@ const AuthScreen = () => {
               setCameraActive(false);
               setModalVisible(true);
             },
-          }, // ok -> Modal (press done button once you verify yourself from mysite) -> Done > loader? -> get call implementation =?> userdata => autorize -> if fail ? toast msgs  ? homscreen
+          },
         ]);
       } else {
         await data.json();
@@ -179,7 +179,7 @@ const AuthScreen = () => {
     } catch (err) {
       Toast.show({
         type: 'error',
-        text1: 'Something went wrong, please try again later',
+        text1: err,
         position: 'bottom',
         bottomOffset: 80,
       });
