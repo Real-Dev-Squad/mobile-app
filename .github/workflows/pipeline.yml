@@ -44,7 +44,7 @@ jobs:
         run: npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleDebug
 
       - name: list files
-        run: ls -lrt android/app/build/outputs/apk/release
+        run: ls -lrt android/app/build/outputs/apk/debug
 
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
