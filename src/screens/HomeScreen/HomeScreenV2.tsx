@@ -36,7 +36,9 @@ const HomeScreenV2 = (): JSX.Element => {
 
   const handleButtonPress = async () => {
     if (status === 'OOO') {
+      setIsLoading(true);
       await cancelOoo(loggedInUserData?.token);
+      setIsLoading(false);
     } else {
       setIsFormVisible((prev) => !prev);
     }
@@ -50,10 +52,11 @@ const HomeScreenV2 = (): JSX.Element => {
         message: description,
         state: 'OOO',
         until: formatTimeToUnix(toDate),
-        updateAt: formatTimeToUnix(Date.now),
+        updatedAt: formatTimeToUnix(currentDate),
       },
     };
-    await submitOOOForm(data, loggedInUserData?.token);
+    const res = await submitOOOForm(data, loggedInUserData?.token);
+    console.log(res);
     setIsLoading(false); // Clear loading state after API call
     setIsFormVisible(false); // Hide the form after a successful submission
   };
