@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
+import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
 
 export const getUserData = async (token: string) => {
@@ -15,6 +16,11 @@ export const getUserData = async (token: string) => {
       name: res.data.github_display_name,
       profileUrl: res.data?.picture?.url,
       status: res.data?.status,
+      twitter_id: res.data?.twitter_id,
+      linkedin_id: res.data?.linkedin_id,
+      github_id: res.data?.github_id,
+      username: res?.data?.username,
+      token: token,
     };
   } catch (e) {
     console.log('err', e);
@@ -61,6 +67,64 @@ export const updateMarkYourSelfAs_ = async (markStatus: string) => {
   return res.data.status;
 };
 
+export const getUsersStatus = async (token) => {
+  try {
+    const res = await axios.get(HomeApi.GET_USER_STATUS, {
+      headers: {
+        'Content-type': 'application/json',
+        cookie: `rds-session=${token}`,
+      },
+    });
+    if (res.data.data.currentStatus) {
+      return res.data.data.currentStatus.state;
+    } else {
+      return 'Something went wrong';
+    }
+  } catch (err) {
+    return 'Something went wrong';
+  }
+};
+
+export const submitOOOForm = async (data, token) => {
+  console.log('data', data);
+  const options = {
+    headers: {
+      'Content-type': 'application/json',
+      cookie: `rds-session=${token}`,
+    },
+  };
+  const body = data;
+  try {
+    const res = await axios.patch(HomeApi.UPDATE_STATUS, body, options);
+    if (res.status === 200) {
+      return res;
+    }
+  } catch (err) {
+    console.log('error', err);
+  }
+};
+
+export const cancelOoo = async (token) => {
+  const options = {
+    headers: {
+      'Content-type': 'application/json',
+      cookie: `rds-session=${token}`,
+    },
+  };
+  const body = { cancelOoo: true };
+  try {
+    const res = await axios.patch(HomeApi.UPDATE_STATUS, body, options);
+    if (res.status === 200) {
+      console.log('response in cancelling', res);
+      return res;
+    } else {
+      throw new Error('Api is failing');
+    }
+  } catch (err) {
+    console.log('error', err);
+  }
+};
+
 export const isValidTextInput = (code: string) =>
   Boolean(/^[\d]{1,4}$|^$/.test(code));
 
@@ -85,4 +149,12 @@ export const requestCameraPermission = async () => {
   } catch (err) {
     console.warn(err);
   }
+};
+
+export const formatTimeToUnix = (date) => {
+  const newDate = new Date(date);
+
+  // Convert the date to Unix Epoch timestamp in seconds
+  const unixTimestampInSeconds = newDate.getTime();
+  return unixTimestampInSeconds;
 };

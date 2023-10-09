@@ -39,6 +39,9 @@ const Strings = {
   OUT_OF_OFFICE: 'ooo',
   ACTIVE: 'active',
   IDLE: 'idle',
+
+  UPDATE_STATUS_TO_OOO: 'Change your status to OOO',
+  CANCEL_OOO: 'Cancel OOO',
 };
 
 export default Strings;

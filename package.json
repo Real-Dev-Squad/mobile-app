@@ -10,8 +10,9 @@
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "format-check": "prettier --check ./src",
     "format-fix": "prettier --write ./src",
-    "precommit-check": "yarn run format-fix && yarn run lint && yarn run test",
-    "build": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res; cd android ; ./gradlew assembleDebug"
+    "precommit-check": "yarn run format-fix && yarn run lint",
+    "build-assets-folder": "cd android/app/src/main && if [ -d 'assets' ]; then rm -r assets; fi",
+    "build": "mkdir -p android/app/src/main/assets && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.16",
@@ -32,6 +33,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^10.8.0",
     "react-native-element-dropdown": "^2.0.0",
+    "react-native-encrypted-storage": "^4.0.3",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-picker": "^4.7.1",

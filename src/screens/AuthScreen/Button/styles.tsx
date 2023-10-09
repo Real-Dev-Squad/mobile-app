@@ -7,7 +7,6 @@ export default StyleSheet.create({
     flex: 0.4,
   },
   btnView: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -30,7 +29,7 @@ export default StyleSheet.create({
   signInText: {
     textAlign: 'center',
     color: '#000000',
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
