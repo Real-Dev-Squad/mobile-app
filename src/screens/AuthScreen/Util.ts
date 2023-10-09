@@ -155,6 +155,6 @@ export const formatTimeToUnix = (date) => {
   const newDate = new Date(date);
 
   // Convert the date to Unix Epoch timestamp in seconds
-  const unixTimestampInSeconds = newDate.getTime() / 1000;
+  const unixTimestampInSeconds = newDate.getTime();
   return unixTimestampInSeconds;
 };
