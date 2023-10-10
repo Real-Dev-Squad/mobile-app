@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  BackHandler,
   ScrollView,
   StyleSheet,
   Alert,
@@ -66,6 +67,25 @@ const AuthScreen = () => {
     try {
       //await requestCameraPermission();
       setCameraActive((prev) => !prev); // Set cameraActive state to true
+
+      const backAction = () => {
+        console.log('backClicked');
+        setCameraActive(false);
+        Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          { text: 'YES', onPress: () => BackHandler.exitApp() },
+        ]);
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+      return () => backHandler.remove();
     } catch (error: any) {
       Alert.alert('Error requesting camera permission:', error);
     }
