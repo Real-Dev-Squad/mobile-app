@@ -1,32 +1,26 @@
-// TODO: we wil remove this once we start using userData and contributionData
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback, useContext } from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  FlatList,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
-import withHeader from '../../helpers/withHeader';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteWorthyContributions';
-import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
 import UserData from './User Data/UserData';
 import { useSelector, useDispatch } from 'react-redux';
-import { AuthViewStyle } from '../AuthScreen/styles';
-import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
+import All from './User Data 2/All';
+import Note from './User Data 2/NoteWorthy';
+import { Tabs } from 'react-native-collapsible-tab-view';
+
+const ActiveScreen = () => {
+  return (
+    <View style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+      <Text style={{ color: 'black' }}>Active task</Text>
+    </View>
+  );
+};
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -55,9 +49,6 @@ const ProfileScreen = () => {
     return true;
   };
 
-  const handleLogout = () => {
-    // please remove the token
-  };
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
       <Pressable
@@ -95,24 +86,31 @@ const ProfileScreen = () => {
               : dispatch({ type: 'PROD' });
           }}
         />
-        <ScrollView style={AuthViewStyle.container}>
-          <NoteworthyContributionsDropdown />
-          <ActiveTaskDropDown />
-          <AllContributionsDropdown />
-          <Pressable
-            style={profileScreenStyles.logoutButton}
-            onPress={() => {
-              setLoggedInUserData(null);
-            }}
-          >
-            <Text style={profileScreenStyles.logoutText} onPress={handleLogout}>
-              {Strings.LOGOUT}
-            </Text>
-          </Pressable>
-        </ScrollView>
       </View>
     </ScrollView>
   );
 };
 
-export default withHeader(ProfileScreen);
+const ProfileScreen2: React.FC = () => {
+  return (
+    <Tabs.Container renderHeader={ProfileScreen}>
+      <Tabs.Tab name="Noteworthy">
+        <Tabs.ScrollView style={{ flex: 1 }}>
+          <Note />
+        </Tabs.ScrollView>
+      </Tabs.Tab>
+      <Tabs.Tab name="Active">
+        <Tabs.ScrollView style={{ flex: 1 }}>
+          <ActiveScreen />
+        </Tabs.ScrollView>
+      </Tabs.Tab>
+      <Tabs.Tab name="All">
+        <Tabs.ScrollView style={{ flex: 1 }}>
+          <All />
+        </Tabs.ScrollView>
+      </Tabs.Tab>
+    </Tabs.Container>
+  );
+};
+
+export default ProfileScreen2;
