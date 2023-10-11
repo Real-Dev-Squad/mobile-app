@@ -56,15 +56,13 @@ const ProfileScreen = () => {
   };
 
   const handleLogout = () => {
-    // please remove the token
+    setLoggedInUserData(null);
   };
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
       <Pressable
         style={profileScreenStyles.logoutButton}
-        onPress={() => {
-          setLoggedInUserData(null);
-        }}
+        onPress={handleLogout}
       >
         <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
       </Pressable>
