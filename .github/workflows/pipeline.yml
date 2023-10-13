@@ -1,8 +1,4 @@
 name: Build Android
-on:
-  push:
-    branches:
-      - develop
 jobs:
   build-testing:
     runs-on: ubuntu-20.04
