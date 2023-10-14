@@ -1,12 +1,10 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { AuthContext } from '../../../../context/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchActiveTasks } from '../../../AuthScreen/Util';
 import DisplayContribution from '../../../../components/UserContibution/DisplayContribution';
 
 const ActiveTaskDropDown = () => {
-  const [clicked, setClicked] = useState(false);
   const [activeTasks, setActiveTasks] = useState([]);
   const { loggedInUserData } = useContext(AuthContext);
 
