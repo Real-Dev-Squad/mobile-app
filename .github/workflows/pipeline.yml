@@ -64,3 +64,10 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: ${{secrets.GROUPS}}
           file: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: send build updates
+      - env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+      - run: |
+        JSON_DATA= '{"content": "new version is out"}'
+        curl -X POST -H "Authorization: Bot MTEyMjExMDc1NjMxMDI0MTM0MA.GzqzNA.-pytnKpYG7UTOyROUNC1bRX2zYtMjbGSfRLfjY" -H "Content-Type: application/json " -d "$JSON_DATA" https://discord.com/api/v10/channels/1122146463741386774/messages
