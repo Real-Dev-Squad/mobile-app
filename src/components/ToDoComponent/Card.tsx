@@ -1,7 +1,8 @@
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import React, { useState, useEffect, memo } from 'react';
 import Animated, {
   Easing,
+  interpolate,
   runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -49,6 +50,11 @@ const Card = ({
     timerRef = setTimeout(() => deleteCardFunction(), 4000);
   };
 
+  const { width: SCREEN_WIDTH } = Dimensions.get('screen');
+  const SCREEN_WIDTH_30 = SCREEN_WIDTH / 3;
+  const ROTATION_DEG = 60;
+  const CARD_MOVEMENT_THRESHOLD = SCREEN_WIDTH / 2;
+
   useEffect(() => {
     // Clear the interval when the component unmounts
     return () => clearTimeout(timerRef);
@@ -62,16 +68,16 @@ const Card = ({
 
   const panGesture = useAnimatedGestureHandler({
     onActive: (event) => {
-      if (translateY.value < 150) {
+      if (translateY.value < CARD_MOVEMENT_THRESHOLD) {
         translateY.value = event.translationY;
       }
-      if (translateX.value < 150) {
+      if (translateX.value < CARD_MOVEMENT_THRESHOLD) {
         translateX.value = event.translationX;
       }
-      if (translateY.value < -150) {
+      if (translateY.value < -CARD_MOVEMENT_THRESHOLD) {
         translateY.value = event.translationY;
       }
-      if (translateX.value < -150) {
+      if (translateX.value < -CARD_MOVEMENT_THRESHOLD) {
         translateX.value = event.translationX;
       }
     },
@@ -79,11 +85,25 @@ const Card = ({
       translateY.value = withTiming(0, { easing: Easing.linear });
       translateX.value = withTiming(0, { easing: Easing.linear });
 
-      if (translateY.value > 100) {
+      if (
+        translateX.value > SCREEN_WIDTH_30 ||
+        translateX.value < -SCREEN_WIDTH_30
+      ) {
+        translateX.value = withTiming(
+          translateX.value > 0 ? SCREEN_WIDTH : -SCREEN_WIDTH,
+          { easing: Easing.linear },
+          (finished) => {
+            if (finished) {
+              return runOnJS(removeCard)(item.id);
+            }
+          },
+        );
+      }
+
+      if (translateY.value < -100 || translateY.value > 100) {
         // item.id required but after removing this the function is not getting called
         return runOnJS(changecard)(item.id);
       }
-      runOnJS(changecard)(item.id);
     },
   });
 
@@ -94,6 +114,13 @@ const Card = ({
       },
       {
         translateX: translateX.value,
+      },
+      {
+        rotate: `${interpolate(
+          translateX.value,
+          [-SCREEN_WIDTH, 0, SCREEN_WIDTH],
+          [-ROTATION_DEG, 0, ROTATION_DEG],
+        )} deg`,
       },
     ],
   }));
