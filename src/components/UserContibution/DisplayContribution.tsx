@@ -14,7 +14,7 @@ import {
 
 const DisplayContribution = ({ tasks }) => {
   const [clicked, setClicked] = useState(false);
-  
+
   return (
     <View style={{ padding: 5 }}>
       <TouchableOpacity

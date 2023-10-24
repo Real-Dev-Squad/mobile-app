@@ -117,10 +117,11 @@ const ProfileScreen = () => {
 const ProfileScreen2: React.FC = () => {
   const tabNames = ['Noteworthy', 'Active ', 'All'];
 
-  const renderTab = (name, active) => {
+  const renderTab = ({ _name, active }: { _name: string; active: boolean }) => {
     return (
+      // eslint-disable-next-line react/jsx-no-comment-textnodes
       <View style={styles.tab}>
-        {tabNames.map((name, index) => (
+        {tabNames.map((name) => (
           <Text style={[styles.tabName, active && styles.activeTabName]}>
             {name}
           </Text>
