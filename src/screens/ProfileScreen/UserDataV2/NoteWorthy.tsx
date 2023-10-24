@@ -8,7 +8,11 @@ import {
   ScrollView,
 } from 'react-native';
 import { profileScreenStyles } from '../styles';
-import { fetchContribution } from '../../AuthScreen/Util';
+import {
+  calculateTimeDifference,
+  convertTimestampToReadableDate,
+  fetchContribution,
+} from '../../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 
@@ -27,39 +31,9 @@ const Note = () => {
     }, []),
   );
 
-  const convertTimestampToReadableDate = (timestamp) => {
-    return new Date(timestamp * 1000);
-  };
-  const calculateTimeDifference = (startDate, endDate) => {
-    const timeDifference = endDate - startDate;
-    const secondsInMillisecond = 1000;
-    const minutesInMillisecond = 60 * secondsInMillisecond;
-    const hoursInMillisecond = 60 * minutesInMillisecond;
-    const daysInMillisecond = 24 * hoursInMillisecond;
-    const weeksInMillisecond = 7 * daysInMillisecond;
-    const monthsInMillisecond = 30.44 * daysInMillisecond; // Average month length
-    const yearsInMillisecond = 365 * daysInMillisecond;
-
-    if (timeDifference < minutesInMillisecond) {
-      return `${Math.floor(timeDifference / secondsInMillisecond)} seconds`;
-    } else if (timeDifference < hoursInMillisecond) {
-      return `${Math.floor(timeDifference / minutesInMillisecond)} minutes`;
-    } else if (timeDifference < daysInMillisecond) {
-      return `${Math.floor(timeDifference / hoursInMillisecond)} hours`;
-    } else if (timeDifference < weeksInMillisecond) {
-      return `${Math.floor(timeDifference / daysInMillisecond)} days`;
-    } else if (timeDifference < monthsInMillisecond) {
-      return `${Math.floor(timeDifference / weeksInMillisecond)} weeks`;
-    } else if (timeDifference < yearsInMillisecond) {
-      return `${Math.floor(timeDifference / monthsInMillisecond)} months`;
-    } else {
-      return `${Math.floor(timeDifference / yearsInMillisecond)} years`;
-    }
-  };
-
   return (
     <ScrollView style={{ padding: 10, elevation: 10 }}>
-      {userContributionData.task ? (
+      {userContributionData ? (
         <View style={profileScreenStyles.container}>
           {userContributionData.map((item, index) => (
             <View style={profileScreenStyles.DropDownElement} key={index}>

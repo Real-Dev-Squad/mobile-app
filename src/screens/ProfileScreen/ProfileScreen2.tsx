@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, createContext } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
@@ -14,8 +14,11 @@ import All from './UserDataV2/All';
 import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
 import { useFocusEffect } from '@react-navigation/native';
+import { fetchContribution } from '../AuthScreen/Util';
+import DisplayContribution from '../../components/DisplayContribution';
 
 const ActiveScreen = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTasks, setActiveTasks] = useState([]);
   const { loggedInUserData } = useContext(AuthContext);
 
@@ -24,14 +27,18 @@ const ActiveScreen = () => {
       (async () => {
         const userName = loggedInUserData?.username;
         const contributionResponse = await fetchContribution(userName);
-        setActiveTasks(contributionResponse.all);
+        setActiveTasks(
+          contributionResponse.all.filter(
+            (item) => item.task.status === 'ACTIVE',
+          ),
+        );
       })();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
   return (
     <View style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
-      <Text style={{ color: 'black' }}>Active task</Text>
+      <DisplayContribution tasks={activeTasks} />
     </View>
   );
 };
