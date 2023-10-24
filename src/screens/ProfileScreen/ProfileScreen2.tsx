@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     color: 'black', // Change the text color as needed
   },
   activeTabName: {
-    fontWeight: 'bold', // Add styles for the active tab
+    fontWeight: 'bold',
   },
 });
 export default ProfileScreen2;
