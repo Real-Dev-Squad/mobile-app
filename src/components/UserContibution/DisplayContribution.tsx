@@ -1,4 +1,3 @@
-import React, { useCallback, useContext, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,89 +6,72 @@ import {
   Linking,
   Image,
 } from 'react-native';
+import React, { useState } from 'react';
 import {
   calculateTimeDifference,
   convertTimestampToReadableDate,
-  fetchContribution,
-} from '../../../AuthScreen/Util';
-import { useFocusEffect } from '@react-navigation/native';
-import { AuthContext } from '../../../../context/AuthContext';
+} from '../../screens/AuthScreen/Util';
 
-const NoteworthyContributionsDropdown = () => {
+const DisplayContribution = ({ tasks }) => {
   const [clicked, setClicked] = useState(false);
-  const [userContributionData, setUserContributionData] = useState([]);
-  const { loggedInUserData } = useContext(AuthContext);
-
-  useFocusEffect(
-    useCallback(() => {
-      (async () => {
-        const userName = loggedInUserData?.username;
-        const contributionResponse = await fetchContribution(userName);
-        setUserContributionData(contributionResponse.noteworthy);
-      })();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
-  );
-
+  
   return (
     <View style={{ padding: 5 }}>
       <TouchableOpacity
         onPress={() => setClicked(!clicked)}
         style={styles.DropDownButton}
       >
-        <Text style={styles.DropDownTitle}>Noteworthy Contributions</Text>
+        <Text style={styles.DropDownTitle}>Active Tasks</Text>
         {clicked ? (
           <Image
             style={styles.ImageDimensions}
-            source={require('../../../../../assets/down.png')}
+            source={require('../../../assets/down.png')}
           />
         ) : (
           <Image
             style={styles.ImageDimensions}
-            source={require('../../../../../assets/right.png')}
+            source={require('../../../assets/right.png')}
           />
         )}
       </TouchableOpacity>
       {clicked
-        ? userContributionData.map((item, index) => (
+        ? tasks.map((item, index) => (
             <View style={styles.DropDownElement} key={index}>
               <TouchableOpacity
                 style={styles.DropDownbackground}
                 onPress={
-                  item.task.featureUrl
-                    ? () => Linking.openURL(item.task.featureUrl)
+                  item.github.issue.html_url
+                    ? () => Linking.openURL(item.github.issue.html_url)
                     : null
                 }
               >
-                <Text style={styles.ItemTaskTitle}>{item.task.title}</Text>
+                <Text style={styles.ItemTaskTitle}>{item.title}</Text>
                 <>
-                  {item.task.purpose ? (
-                    <Text style={styles.ItemTaskPurpose}>
-                      {item.task.purpose}
-                    </Text>
+                  {item.purpose ? (
+                    <Text style={styles.ItemTaskPurpose}>{item?.purpose}</Text>
                   ) : null}
                 </>
                 <>
-                  {item.task.featureUrl ? (
+                  {item.github ? (
                     <Text style={styles.EstimatedTimeChoice1}>
                       Estimated completion:{' '}
                       {calculateTimeDifference(
-                        convertTimestampToReadableDate(item.task.startedOn),
-                        convertTimestampToReadableDate(item.task.endsOn),
+                        convertTimestampToReadableDate(item.startedOn),
+                        convertTimestampToReadableDate(item.endsOn),
                       )}
                     </Text>
                   ) : (
                     <Text style={styles.EstimatedTimeChoice2}>
                       Estimated completion:{' '}
                       {calculateTimeDifference(
-                        convertTimestampToReadableDate(item.task.startedOn),
-                        convertTimestampToReadableDate(item.task.endsOn),
+                        convertTimestampToReadableDate(item.startedOn),
+                        convertTimestampToReadableDate(item.endsOn),
                       )}
                     </Text>
                   )}
                 </>
                 <>
-                  {item.task.featureUrl ? (
+                  {item.github ? (
                     <Text style={styles.CheckoutLive}>
                       Checkout this feature in action
                     </Text>
@@ -168,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoteworthyContributionsDropdown;
+export default DisplayContribution;

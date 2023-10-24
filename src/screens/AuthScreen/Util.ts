@@ -40,6 +40,19 @@ export const fetchContribution = async (userName: string): Promise<any> => {
   }
 };
 
+export const fetchActiveTasks = async (userName: string): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GET_ACTIVE_TASKS + userName, {
+      headers: {
+        Cookie: '',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const updateStatus = async (status: string) => {
   const res = await axios.patch(
     urls.GET_USERS_DATA,
@@ -162,6 +175,7 @@ export const formatTimeToUnix = (date) => {
 export const convertTimestampToReadableDate = (timestamp) => {
   return new Date(timestamp * 1000);
 };
+
 export const calculateTimeDifference = (startDate, endDate) => {
   const timeDifference = endDate - startDate;
   const secondsInMillisecond = 1000;

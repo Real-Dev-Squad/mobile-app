@@ -7,6 +7,7 @@ export const urls = {
   GET_USERS_DATA: 'https://api.realdevsquad.com/users/self',
   GET_USER_DATA: 'https://api.realdevsquad.com/users?id=',
   GET_CONTRIBUTIONS: 'https://api.realdevsquad.com/contributions/',
+  GET_ACTIVE_TASKS: `https://api.realdevsquad.com/tasks?dev=true&status=IN_PROGRESS&assignee=`,
   GITHUB: 'https://github.com/',
   TWITTER: 'https://twitter.com',
   LINKEDIN: 'https://www.linkedin.com/in/',
