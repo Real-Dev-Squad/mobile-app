@@ -171,6 +171,11 @@ export const formatTimeToUnix = (date) => {
   const unixTimestampInSeconds = newDate.getTime();
   return unixTimestampInSeconds;
 };
+
+export const convertTimestampToReadableDate = (timestamp) => {
+  return new Date(timestamp * 1000);
+};
+
 export const calculateTimeDifference = (startDate, endDate) => {
   const timeDifference = endDate - startDate;
   const secondsInMillisecond = 1000;
@@ -198,6 +203,34 @@ export const calculateTimeDifference = (startDate, endDate) => {
   }
 };
 
-export const convertTimestampToReadableDate = (timestamp) => {
-  return new Date(timestamp * 1000);
+export const calculateISODateFormat = (isoDateString) => {
+  const date = new Date(isoDateString);
+  const formatDate = (d) => {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const day = d.getDate();
+    const monthIndex = d.getMonth();
+    const year = d.getFullYear();
+
+    return `${day} ${months[monthIndex]}, ${year}`;
+  };
+  const formattedDate = formatDate(date);
+  return formattedDate;
+};
+
+export const parseISODate = (isoDateString) => {
+  return new Date(isoDateString);
 };

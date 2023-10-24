@@ -1,32 +1,47 @@
-// TODO: we wil remove this once we start using userData and contributionData
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback, useContext } from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  FlatList,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
-import withHeader from '../../helpers/withHeader';
 import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-import NoteworthyContributionsDropdown from './User Data/UserContributions/NoteWorthyContributions';
-import ActiveTaskDropDown from './User Data/UserContributions/ActiveTask';
 import UserData from './User Data/UserData';
 import { useSelector, useDispatch } from 'react-redux';
-import { AuthViewStyle } from '../AuthScreen/styles';
-import AllContributionsDropdown from './User Data/UserContributions/AllContributions';
+import All from './UserDataV2/All';
+import Note from './UserDataV2/NoteWorthy';
+import { Tabs } from 'react-native-collapsible-tab-view';
+import { useFocusEffect } from '@react-navigation/native';
+import { fetchContribution } from '../AuthScreen/Util';
+import DisplayContribution from '../../components/DisplayContribution';
+
+const ActiveScreen = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeTasks, setActiveTasks] = useState([]);
+  const { loggedInUserData } = useContext(AuthContext);
+
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const userName = loggedInUserData?.username;
+        const contributionResponse = await fetchContribution(userName);
+        setActiveTasks(
+          contributionResponse.all.filter(
+            (item) => item.task.status === 'ACTIVE',
+          ),
+        );
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
+  return (
+    <View style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+      <DisplayContribution tasks={activeTasks} />
+    </View>
+  );
+};
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -58,6 +73,7 @@ const ProfileScreen = () => {
   const handleLogout = () => {
     setLoggedInUserData(null);
   };
+
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
       <Pressable
@@ -93,24 +109,62 @@ const ProfileScreen = () => {
               : dispatch({ type: 'PROD' });
           }}
         />
-        <ScrollView style={AuthViewStyle.container}>
-          <NoteworthyContributionsDropdown />
-          <ActiveTaskDropDown />
-          <AllContributionsDropdown />
-          <Pressable
-            style={profileScreenStyles.logoutButton}
-            onPress={() => {
-              setLoggedInUserData(null);
-            }}
-          >
-            <Text style={profileScreenStyles.logoutText} onPress={handleLogout}>
-              {Strings.LOGOUT}
-            </Text>
-          </Pressable>
-        </ScrollView>
       </View>
     </ScrollView>
   );
 };
 
-export default withHeader(ProfileScreen);
+const ProfileScreen2: React.FC = () => {
+  const tabNames = ['Noteworthy', 'Active ', 'All'];
+
+  const renderTab = ({ _name, active }: { _name: string; active: boolean }) => {
+    return (
+      // eslint-disable-next-line react/jsx-no-comment-textnodes
+      <View style={styles.tab}>
+        {tabNames.map((name) => (
+          <Text style={[styles.tabName, active && styles.activeTabName]}>
+            {name}
+          </Text>
+        ))}
+      </View>
+    );
+  };
+
+  return (
+    <Tabs.Container renderHeader={ProfileScreen} renderTabBar={renderTab}>
+      <Tabs.Tab name="Noteworthy">
+        <Tabs.ScrollView style={{ flex: 1 }}>
+          <Note />
+        </Tabs.ScrollView>
+      </Tabs.Tab>
+      <Tabs.Tab name="Active">
+        <Tabs.ScrollView style={{ flex: 1 }}>
+          <ActiveScreen />
+        </Tabs.ScrollView>
+      </Tabs.Tab>
+      <Tabs.Tab name="All">
+        <Tabs.ScrollView style={{ flex: 1 }}>
+          <All />
+        </Tabs.ScrollView>
+      </Tabs.Tab>
+    </Tabs.Container>
+  );
+};
+const styles = StyleSheet.create({
+  tab: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  tabName: {
+    fontSize: 16, // You can adjust the font size and other styles
+    fontWeight: 'bold',
+    padding: 20,
+    color: 'black', // Change the text color as needed
+  },
+  activeTabName: {
+    fontWeight: 'bold', // Add styles for the active tab
+  },
+});
+export default ProfileScreen2;

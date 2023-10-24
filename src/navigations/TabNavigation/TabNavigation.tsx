@@ -6,11 +6,11 @@ import Colors from '../../constants/colors/Colors';
 import Fonts from '../../constants/fonts/TabFont';
 import Images from '../../constants/images/Image';
 import Strings from '../../i18n/en';
-import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
 import { TabViewStyle } from './style';
 import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
+import ProfileScreen2 from '../../screens/ProfileScreen/ProfileScreen2';
 
 const tab = createBottomTabNavigator();
 
@@ -91,7 +91,7 @@ const TabNavigation = () => {
 
         <tab.Screen
           name={Strings.Tab_Profile}
-          component={ProfileScreen}
+          component={ProfileScreen2}
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => {
