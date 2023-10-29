@@ -37,7 +37,7 @@ const ActiveScreen = () => {
     }, []),
   );
   return (
-    <View style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+    <View style={styles.profile}>
       <DisplayContribution tasks={activeTasks} />
     </View>
   );
@@ -135,5 +135,12 @@ const ProfileScreen2: React.FC = () => {
     </Tabs.Container>
   );
 };
+
+const styles = StyleSheet.create({
+  profile: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+});
 
 export default ProfileScreen2;
