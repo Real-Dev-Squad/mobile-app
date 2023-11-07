@@ -37,7 +37,7 @@ const ActiveScreen = () => {
     }, []),
   );
   return (
-    <View style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+    <View style={styles.profile}>
       <DisplayContribution tasks={activeTasks} />
     </View>
   );
@@ -115,56 +115,32 @@ const ProfileScreen = () => {
 };
 
 const ProfileScreen2: React.FC = () => {
-  const tabNames = ['Noteworthy', 'Active ', 'All'];
-
-  const renderTab = ({ _name, active }: { _name: string; active: boolean }) => {
-    return (
-      // eslint-disable-next-line react/jsx-no-comment-textnodes
-      <View style={styles.tab}>
-        {tabNames.map((name) => (
-          <Text style={[styles.tabName, active && styles.activeTabName]}>
-            {name}
-          </Text>
-        ))}
-      </View>
-    );
-  };
-
   return (
-    <Tabs.Container renderHeader={ProfileScreen} renderTabBar={renderTab}>
+    <Tabs.Container renderHeader={ProfileScreen}>
       <Tabs.Tab name="Noteworthy">
-        <Tabs.ScrollView style={{ flex: 1 }}>
+        <Tabs.ScrollView>
           <Note />
         </Tabs.ScrollView>
       </Tabs.Tab>
       <Tabs.Tab name="Active">
-        <Tabs.ScrollView style={{ flex: 1 }}>
+        <Tabs.ScrollView>
           <ActiveScreen />
         </Tabs.ScrollView>
       </Tabs.Tab>
       <Tabs.Tab name="All">
-        <Tabs.ScrollView style={{ flex: 1 }}>
+        <Tabs.ScrollView>
           <All />
         </Tabs.ScrollView>
       </Tabs.Tab>
     </Tabs.Container>
   );
 };
+
 const styles = StyleSheet.create({
-  tab: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+  profile: {
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  tabName: {
-    fontSize: 16, // You can adjust the font size and other styles
-    fontWeight: 'bold',
-    padding: 20,
-    color: 'black', // Change the text color as needed
-  },
-  activeTabName: {
-    fontWeight: 'bold',
-  },
 });
+
 export default ProfileScreen2;
