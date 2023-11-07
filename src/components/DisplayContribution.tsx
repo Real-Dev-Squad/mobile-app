@@ -11,8 +11,8 @@ import { profileScreenStyles } from '../screens/ProfileScreen/styles';
 const DisplayContribution = ({ tasks }) => {
   return (
     <View style={{ padding: 5 }}>
-      {tasks.length !== 0 ? (
-        tasks.map((item, index) => (
+      {tasks?.length !== 0 ? (
+        tasks?.map((item, index) => (
           <View style={profileScreenStyles.DropDownElement} key={index}>
             <TouchableOpacity
               style={profileScreenStyles.DropDownbackground}
