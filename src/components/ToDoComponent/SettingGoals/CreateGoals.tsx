@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import 'react-native-gesture-handler';
 import {
   Text,
@@ -11,17 +11,35 @@ import {
   FlatList
 } from 'react-native';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
+import { AuthContext } from '../../../context/AuthContext';
+import { getAllUsers } from '../../../screens/AuthScreen/Util';
 
 const MainScreen = ({ navigation }) => {
   const [selectedMember, setSelectedMember] = React.useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   const [isDropDownSelected, setIsDropDownSelected] =useState(false)
+  const [searchQuery, setSearchQuery] = useState('');
+  const [allUsers,setAllUsers] = useState([]);
+    const { loggedInUserData } = useContext(AuthContext);
+
 
 
   const selectDropDown =()=>{
     setIsDropDownSelected(!isDropDownSelected)
   }
+
+    useEffect(() => {
+    fetchData();
+    console.log("calling api")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchData = async () => {
+    const allUsers = await getAllUsers (loggedInUserData?.token);
+    console.log(allUsers)
+    setAllUsers(allUsers);
+  };
 
   const array=[
   {
@@ -201,31 +219,32 @@ const MainScreen = ({ navigation }) => {
                     {
               !isDropDownSelected?
               <View style={styles.dropDownArea}>
-        <TextInput
-          style={[styles.inputStyle,{marginTop:10,marginHorizontal:5}]}
-          value={descriptionText}
-          onChangeText={setDescriptionText}
-          maxLength={200}
-          placeholder="Search User"
-          // placeholderTextColor="red"
-        />
-              <FlatList data={array} renderItem={({item,index})=>{
-                return(
-                  <TouchableOpacity key={index}>
-
-                    <Text>
-                      {item.first_name}
-                    </Text>
-
-                  </TouchableOpacity>
-                )
-              }}/>
-          </View>
-              :null
+                <TextInput
+                  style={[styles.inputStyle, { marginTop: 10, marginHorizontal: 5 }]}
+                  value={searchQuery}
+                  onChangeText={(text) => setSearchQuery(text)}
+                  maxLength={200}
+                  placeholder="Search User"
+                />
+                <FlatList
+                  data={allUsers.filter(
+                    (item) =>
+                      item.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      item.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      item.github_id.toLowerCase().includes(searchQuery.toLowerCase())
+                  )}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <TouchableOpacity key={index} onPress={()=>console.log(item)}>
+                        <Text style={styles.userNameDropDown}>{item.first_name} {item.last_name}</Text>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
+            </View>
+            :null
             }
         </View>
-
-
         <Text style={styles.titles}>DeadLine</Text>
         <DeadLineDatePicker />
         <TouchableOpacity
@@ -311,10 +330,16 @@ const styles = StyleSheet.create({
     height:20,
   },
   dropDownArea:{
-    height:300,
+    height:250,
     backgroundColor:"grey",
     marginTop:10,
     borderRadius:5
+  },
+  userNameDropDown:{
+    padding:20,
+    borderBottomWidth:1,
+    borderBottomColor:'white',
+    width:"90%",alignSelf:"center"
   }
 
 });
