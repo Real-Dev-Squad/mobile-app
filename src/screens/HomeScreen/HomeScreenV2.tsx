@@ -57,6 +57,9 @@ const HomeScreenV2 = (): JSX.Element => {
     };
     const res = await submitOOOForm(data, loggedInUserData?.token);
     console.log(res);
+    setDescription('');
+    setToDate(tomorrowDate);
+    setFromDate(currentDate);
     setIsLoading(false); // Clear loading state after API call
     setIsFormVisible(false); // Hide the form after a successful submission
   };
