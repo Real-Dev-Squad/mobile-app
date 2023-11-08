@@ -55,8 +55,7 @@ const HomeScreenV2 = (): JSX.Element => {
         updatedAt: formatTimeToUnix(currentDate),
       },
     };
-    const res = await submitOOOForm(data, loggedInUserData?.token);
-    console.log(res);
+    await submitOOOForm(data, loggedInUserData?.token);
     setDescription('');
     setToDate(tomorrowDate);
     setFromDate(currentDate);
