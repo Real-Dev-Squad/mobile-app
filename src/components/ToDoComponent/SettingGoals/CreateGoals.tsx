@@ -21,7 +21,8 @@ const MainScreen = ({ navigation }) => {
   const [isDropDownSelected, setIsDropDownSelected] =useState(false)
   const [searchQuery, setSearchQuery] = useState('');
   const [allUsers,setAllUsers] = useState([]);
-    const { loggedInUserData } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const { loggedInUserData } = useContext(AuthContext);
 
 
 
@@ -30,122 +31,20 @@ const MainScreen = ({ navigation }) => {
   }
 
     useEffect(() => {
-    fetchData();
-    console.log("calling api")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      if (isLoading){
+        fetchData();
+      }
+    }, [isLoading]);
 
   const fetchData = async () => {
     const allUsers = await getAllUsers (loggedInUserData?.token);
     console.log(allUsers)
     setAllUsers(allUsers);
+    setIsLoading(false)
   };
 
-  const array=[
-  {
-    "first_name": "Eleanor",
-    "last_name": "Young",
-    "email": "eleanor.young@aol.com"
-  },
-  {
-    "first_name": "Mark",
-    "last_name": "Torres",
-    "email": "m.j.torres@yahoo.com"
-  },
-  {
-    "first_name": "Hannah",
-    "last_name": "Stewart",
-    "email": "hannah@hotmail.com"
-  },
-  {
-    "first_name": "Kayla",
-    "last_name": "Moore",
-    "email": "kayla67@hotmail.com"
-  },
-  {
-    "first_name": "Audrey",
-    "last_name": "Bennett",
-    "email": "a_bennett@gmail.com"
-  },
-  {
-    "first_name": "Joshua",
-    "last_name": "Bryant",
-    "email": "j_a@rocketmail.com"
-  },
-  {
-    "first_name": "Rebecca",
-    "last_name": "Hill",
-    "email": "rebecca.l74@outlook.com"
-  },
-  {
-    "first_name": "Joseph",
-    "last_name": "Davis",
-    "email": "josephedwarddavis@outlook.com"
-  },
-  {
-    "first_name": "Kelsey",
-    "last_name": "Carter",
-    "email": "kelsey@outlook.com"
-  },
-  {
-    "first_name": "Jeremy",
-    "last_name": "Ward",
-    "email": "jeremy.ward@outlook.com"
-  },
-    {
-    "first_name": "Eleanor",
-    "last_name": "Young",
-    "email": "eleanor.young@aol.com"
-  },
-  {
-    "first_name": "Mark",
-    "last_name": "Torres",
-    "email": "m.j.torres@yahoo.com"
-  },
-  {
-    "first_name": "Hannah",
-    "last_name": "Stewart",
-    "email": "hannah@hotmail.com"
-  },
-  {
-    "first_name": "Kayla",
-    "last_name": "Moore",
-    "email": "kayla67@hotmail.com"
-  },
-  {
-    "first_name": "Audrey",
-    "last_name": "Bennett",
-    "email": "a_bennett@gmail.com"
-  },
-  {
-    "first_name": "Joshua",
-    "last_name": "Bryant",
-    "email": "j_a@rocketmail.com"
-  },
-  {
-    "first_name": "Rebecca",
-    "last_name": "Hill",
-    "email": "rebecca.l74@outlook.com"
-  },
-  {
-    "first_name": "Joseph",
-    "last_name": "Davis",
-    "email": "josephedwarddavis@outlook.com"
-  },
-  {
-    "first_name": "Kelsey",
-    "last_name": "Carter",
-    "email": "kelsey@outlook.com"
-  },
-  {
-    "first_name": "Jeremy",
-    "last_name": "Ward",
-    "email": "jeremy.ward@outlook.com"
-  },
-]
-
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View
         style={{
           borderWidth: 3,
@@ -211,13 +110,13 @@ const MainScreen = ({ navigation }) => {
               Select User
             </Text>
             {
-              isDropDownSelected?           
+              !isDropDownSelected?           
               <Image source={require("./../../../../assets/dropdown.png")} style={styles.dropDownIcon}/>:
               <Image source={require("./../../../../assets/dropup.png")} style={styles.dropDownIcon}/>
             }  
         </TouchableOpacity>
                     {
-              !isDropDownSelected?
+              isDropDownSelected?
               <View style={styles.dropDownArea}>
                 <TextInput
                   style={[styles.inputStyle, { marginTop: 10, marginHorizontal: 5 }]}
@@ -226,21 +125,34 @@ const MainScreen = ({ navigation }) => {
                   maxLength={200}
                   placeholder="Search User"
                 />
-                <FlatList
-                  data={allUsers.filter(
-                    (item) =>
-                      item.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                      item.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                      item.github_id.toLowerCase().includes(searchQuery.toLowerCase())
-                  )}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <TouchableOpacity key={index} onPress={()=>console.log(item)}>
-                        <Text style={styles.userNameDropDown}>{item.first_name} {item.last_name}</Text>
-                      </TouchableOpacity>
-                    );
-                  }}
-                />
+                {
+                  isLoading?<Text>Loading...</Text>:
+                    <FlatList
+                      data={allUsers.filter(
+                        (item) =>
+                          item.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.github_id.toLowerCase().includes(searchQuery.toLowerCase())
+                      )}
+                      renderItem={({ item, index }) => {
+                        return (
+                          <TouchableOpacity key={index} onPress={() => console.log(item)} style={styles.userDetails}>
+                            {item.picture && item.picture.url ? (
+                              <Image source={{ uri: item.picture.url }} style={styles.userImageDropDown} />
+                            ) : (
+                              <View style={styles.defaultImageContainer}>
+                                <Text style={styles.defaultImageText}>
+                                  {item.first_name.charAt(0)} {item.last_name.charAt(0)}
+                                </Text>
+                              </View>
+                            )}
+                            <Text style={styles.userNameDropDown}>{item.first_name} {item.last_name}</Text>
+                          </TouchableOpacity>
+                        );
+                      }}
+                    />
+                }
+
             </View>
             :null
             }
@@ -254,7 +166,7 @@ const MainScreen = ({ navigation }) => {
           <Text style={styles.createButtonText}>Create</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -315,7 +227,6 @@ const styles = StyleSheet.create({
   titleText: {},
   dropDownSelector:{
     padding: 10,
-    // backgroundColor: 'silver',
     borderRadius: 5,
     elevation: 2,
     fontSize: 12,
@@ -337,10 +248,29 @@ const styles = StyleSheet.create({
   },
   userNameDropDown:{
     padding:20,
-    borderBottomWidth:1,
     borderBottomColor:'white',
     width:"90%",alignSelf:"center"
-  }
+  },
+  userDetails:{
+    display:"flex",
+    flexDirection:"row",
+    marginLeft:10
+  },
+  userImageDropDown:{
+    width:50,
+    height:50,
+    borderRadius:50
+
+  },
+  defaultImageContainer:{
+    width:50,
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    height:50,
+    backgroundColor:"rgb(29,18,131)",
+    borderRadius:50
+  },
 
 });
 
