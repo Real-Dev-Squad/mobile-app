@@ -25,7 +25,6 @@ const MembersPage = () => {
 
   useEffect(() => {
     callMembersApi();
-    console.log("calling members api")
   }, [selectedMember]);
 
   const callMembersApi = async () => {

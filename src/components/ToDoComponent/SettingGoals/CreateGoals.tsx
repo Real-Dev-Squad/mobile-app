@@ -38,7 +38,6 @@ const MainScreen = ({ navigation }) => {
 
   const fetchData = async () => {
     const allUsers = await getAllUsers (loggedInUserData?.token);
-    console.log(allUsers)
     setAllUsers(allUsers);
     setIsLoading(false)
   };
