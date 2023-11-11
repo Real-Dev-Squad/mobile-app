@@ -29,12 +29,12 @@ const ActiveScreen = () => {
         const contributionResponse = await fetchContribution(userName);
         setActiveTasks(
           contributionResponse.all.filter(
-            (item) => item.task.status === 'IN_PROGRESS',
+            (item) => item.task.status !== 'COMPLETED',
           ),
         );
       })();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
+    }, [loggedInUserData?.username]),
   );
   return (
     <View style={styles.profile}>
