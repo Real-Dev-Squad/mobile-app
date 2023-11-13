@@ -55,8 +55,10 @@ const HomeScreenV2 = (): JSX.Element => {
         updatedAt: formatTimeToUnix(currentDate),
       },
     };
-    const res = await submitOOOForm(data, loggedInUserData?.token);
-    console.log(res);
+    await submitOOOForm(data, loggedInUserData?.token);
+    setDescription('');
+    setToDate(tomorrowDate);
+    setFromDate(currentDate);
     setIsLoading(false); // Clear loading state after API call
     setIsFormVisible(false); // Hide the form after a successful submission
   };

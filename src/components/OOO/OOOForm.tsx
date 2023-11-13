@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   SubmitButtonContainer: {
-    backgroundColor: '#808080',
+    backgroundColor: '#0034a5',
     paddingVertical: 10,
     paddingHorizontal: 12,
     width: '30%',
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   SubmitButtonText: {
     color: '#fff',
     alignSelf: 'center',
-    borderWidth: 1,
+    fontWeight: 'bold',
     borderColor: '#808080',
   },
 });
