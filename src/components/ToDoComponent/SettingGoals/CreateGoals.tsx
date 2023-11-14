@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   View,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   Image,
@@ -37,8 +36,8 @@ const MainScreen = ({ navigation }) => {
     }, [isLoading]);
 
   const fetchData = async () => {
-    const allUsers = await getAllUsers (loggedInUserData?.token);
-    setAllUsers(allUsers);
+    const allUser = await getAllUsers (loggedInUserData?.token);
+    setAllUsers(allUser);
     setIsLoading(false)
   };
 
