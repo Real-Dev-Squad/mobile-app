@@ -30,10 +30,8 @@ const MainScreen = ({ navigation }) => {
   }
 
     useEffect(() => {
-      if (isLoading){
-        fetchData();
-      }
-    }, [isLoading]);
+        fetchData(); 
+    });
 
   const fetchData = async () => {
     const allUser = await getAllUsers (loggedInUserData?.token);
