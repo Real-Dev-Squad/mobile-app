@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import All from '../ProfileScreen/UserDataV2/All';
 import AllTaskDetailScreen from '../ProfileScreen/DetailsScreen/AllTaskDetailScreen';
 import React from 'react';
 import ProfileScreen2 from '../ProfileScreen/ProfileScreen2';

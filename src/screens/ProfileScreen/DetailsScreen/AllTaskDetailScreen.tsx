@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import React from 'react';
 
 const AllTaskDetailScreen = () => {
@@ -10,5 +10,3 @@ const AllTaskDetailScreen = () => {
 };
 
 export default AllTaskDetailScreen;
-
-const styles = StyleSheet.create({});
