@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import ButtonWidget from '../../components/ButtonWidget';
@@ -8,40 +8,12 @@ import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
-import UserData from './User Data/UserData';
 import { useSelector, useDispatch } from 'react-redux';
-import All from './UserDataV2/All';
+import All from './TaskScreens/All';
 // import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
-import { useFocusEffect } from '@react-navigation/native';
-import { fetchContribution } from '../AuthScreen/Util';
-import DisplayContribution from '../../components/DisplayContribution';
-
-const ActiveScreen = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeTasks, setActiveTasks] = useState([]);
-  const { loggedInUserData } = useContext(AuthContext);
-
-  useFocusEffect(
-    useCallback(() => {
-      (async () => {
-        const userName = loggedInUserData?.username;
-        const contributionResponse = await fetchContribution(userName);
-        setActiveTasks(
-          contributionResponse.all.filter(
-            (item) => item.task.status === 'ACTIVE',
-          ),
-        );
-      })();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
-  );
-  return (
-    <View style={styles.profile}>
-      <DisplayContribution tasks={activeTasks} />
-    </View>
-  );
-};
+import ActiveScreen from './TaskScreens/ActiveTask';
+import UserData from './User Data/UserData';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -130,12 +102,5 @@ const ProfileScreen2: React.FC = () => {
     </Tabs.Container>
   );
 };
-
-const styles = StyleSheet.create({
-  profile: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-});
 
 export default ProfileScreen2;
