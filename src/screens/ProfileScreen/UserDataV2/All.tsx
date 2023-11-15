@@ -39,11 +39,7 @@ const All = () => {
           <View style={profileScreenStyles.DropDownElement} key={index}>
             <TouchableOpacity
               style={profileScreenStyles.DropDownbackground}
-              onPress={
-                item.task.featureUrl
-                  ? () => Linking.openURL(item.task.featureUrl)
-                  : null
-              }
+              onPress={() => navigation.navigate('AllTaskDetail')}
             >
               {item.task.id ? (
                 <React.Fragment>
