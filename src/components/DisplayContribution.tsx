@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import {
   calculateISODateFormat,
@@ -7,8 +7,11 @@ import {
   parseISODate,
 } from '../screens/AuthScreen/Util';
 import { profileScreenStyles } from '../screens/ProfileScreen/styles';
+import { useNavigation } from '@react-navigation/native';
 
 const DisplayContribution = ({ tasks }) => {
+  const navigation = useNavigation();
+
   return (
     <View style={{ padding: 5 }}>
       {tasks?.length !== 0 ? (
@@ -16,11 +19,7 @@ const DisplayContribution = ({ tasks }) => {
           <View style={profileScreenStyles.DropDownElement} key={index}>
             <TouchableOpacity
               style={profileScreenStyles.DropDownbackground}
-              onPress={
-                item.task.featureUrl
-                  ? () => Linking.openURL(item.task.featureUrl)
-                  : null
-              }
+              onPress={() => navigation.navigate('ActiveTaskDetail')}
             >
               {item.task.id ? (
                 <React.Fragment>
@@ -173,3 +172,7 @@ const DisplayContribution = ({ tasks }) => {
 };
 
 export default DisplayContribution;
+
+{
+  /* <Stack.Screen name="UpdateActiveTask" component={UpdateActiveTask} /> */
+}

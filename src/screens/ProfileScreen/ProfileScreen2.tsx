@@ -13,15 +13,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import All from './UserDataV2/All';
 // import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { fetchContribution } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 
-const ActiveScreen = () => {
+export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTasks, setActiveTasks] = useState([]);
   const { loggedInUserData } = useContext(AuthContext);
 
+  // const navigation = useNavigation();
   useFocusEffect(
     useCallback(() => {
       (async () => {
@@ -38,7 +39,7 @@ const ActiveScreen = () => {
   );
   return (
     <View style={styles.profile}>
-      <DisplayContribution tasks={activeTasks} />
+      <DisplayContribution tasks={activeTasks} navigation={useNavigation} />
     </View>
   );
 };
@@ -114,12 +115,12 @@ const ProfileScreen = () => {
   );
 };
 
-const ProfileScreen2: React.FC = () => {
+const ProfileScreen2: React.FC = ({ navigation }) => {
   return (
     <Tabs.Container renderHeader={ProfileScreen}>
       <Tabs.Tab name="Active">
         <Tabs.ScrollView>
-          <ActiveScreen />
+          <ActiveScreen navigation={navigation} />
         </Tabs.ScrollView>
       </Tabs.Tab>
       <Tabs.Tab name="All">
@@ -137,5 +138,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
 export default ProfileScreen2;
