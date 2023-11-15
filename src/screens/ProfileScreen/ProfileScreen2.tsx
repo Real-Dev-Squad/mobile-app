@@ -11,7 +11,7 @@ import Strings from '../../i18n/en';
 import UserData from './User Data/UserData';
 import { useSelector, useDispatch } from 'react-redux';
 import All from './UserDataV2/All';
-import Note from './UserDataV2/NoteWorthy';
+// import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchContribution } from '../AuthScreen/Util';
@@ -117,11 +117,6 @@ const ProfileScreen = () => {
 const ProfileScreen2: React.FC = () => {
   return (
     <Tabs.Container renderHeader={ProfileScreen}>
-      <Tabs.Tab name="Noteworthy">
-        <Tabs.ScrollView>
-          <Note />
-        </Tabs.ScrollView>
-      </Tabs.Tab>
       <Tabs.Tab name="Active">
         <Tabs.ScrollView>
           <ActiveScreen />
