@@ -19,7 +19,9 @@ const DisplayContribution = ({ tasks }) => {
           <View style={profileScreenStyles.DropDownElement} key={index}>
             <TouchableOpacity
               style={profileScreenStyles.DropDownbackground}
-              onPress={() => navigation.navigate('ActiveTaskDetail')}
+              onPress={() =>
+                navigation.navigate('ActiveTaskDetail', { task: item.task })
+              }
             >
               {item.task.id ? (
                 <React.Fragment>
@@ -172,7 +174,3 @@ const DisplayContribution = ({ tasks }) => {
 };
 
 export default DisplayContribution;
-
-{
-  /* <Stack.Screen name="UpdateActiveTask" component={UpdateActiveTask} /> */
-}
