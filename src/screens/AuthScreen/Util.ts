@@ -98,6 +98,27 @@ export const getUsersStatus = async (token) => {
   }
 };
 
+export const getAllUsers = async (token) => {
+  try {
+    const res = await axios.get(HomeApi.GET_ALL_USERS, {
+      headers: {
+        'Content-type': 'application/json',
+        cookie: `rds-session=${token}`,
+      },
+    });
+    if (res?.data?.users) {
+      return res?.data?.users;
+    } 
+    else {
+      return 'Something went wrong';
+    }
+  }
+  
+  catch (err) {
+    return 'Something went wrong';
+  }
+};
+
 export const submitOOOForm = async (data, token) => {
   console.log('data', data);
   const options = {
