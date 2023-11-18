@@ -2,10 +2,10 @@ name: Build Android
 on:
   push:
     branches:
-      - develop
+      - main
 jobs:
   build-testing:
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
