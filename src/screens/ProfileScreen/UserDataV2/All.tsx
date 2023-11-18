@@ -1,19 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Linking,
-  ScrollView,
-} from 'react-native';
-import { profileScreenStyles } from '../styles';
-import {
-  calculateISODateFormat,
-  calculateTimeDifference,
-  convertTimestampToReadableDate,
-  fetchContribution,
-  parseISODate,
-} from '../../AuthScreen/Util';
+import { ScrollView } from 'react-native';
+import { fetchContribution } from '../../AuthScreen/Util';
 import { useFocusEffect } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
