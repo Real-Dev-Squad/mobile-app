@@ -10,7 +10,7 @@ import { profileScreenStyles } from '../screens/ProfileScreen/styles';
 
 const DisplayContribution = ({ tasks }) => {
   return (
-    <View style={{ padding: 5 }}>
+    <View style={{ padding: 5, width: "100%", alignItems: 'center' }}>
       {tasks?.length !== 0 ? (
         tasks?.map((item, index) => (
           <View style={profileScreenStyles.DropDownElement} key={index}>
@@ -166,7 +166,7 @@ const DisplayContribution = ({ tasks }) => {
           </View>
         ))
       ) : (
-        <Text>No Tasks Yet!</Text>
+        <Text style={{color: '#000'}}>No Tasks Yet!</Text>
       )}
     </View>
   );

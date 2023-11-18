@@ -29,7 +29,7 @@ const ActiveScreen = () => {
         const contributionResponse = await fetchContribution(userName);
         setActiveTasks(
           contributionResponse.all.filter(
-            (item) => item.task.status === 'ACTIVE',
+            (item) => item.task.status === 'IN_PROGRESS',
           ),
         );
       })();
