@@ -30,6 +30,7 @@
     "react-native-app-auth": "^6.4.2",
     "react-native-asset": "^2.1.1",
     "react-native-camera-kit": "^13.0.0",
+    "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-collapsible-tab-view": "^6.2.1",
     "react-native-date-picker": "^4.2.13",
     "react-native-datepicker": "^1.7.2",
