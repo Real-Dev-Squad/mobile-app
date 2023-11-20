@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Button, View, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';
 import CircularProgress from 'react-native-circular-progress-indicator';
