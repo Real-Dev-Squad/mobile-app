@@ -1,20 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import DropdownComponent from './TaskStatusDropdown';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import ProgressModal from '../../../components/Modal/ProgressModal';
+import DropdownPicker from 'react-native-dropdown-picker';
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
+  return formattedDate;
+};
 
 const ActiveTaskDetail = () => {
   const route = useRoute();
   const { task } = route.params;
   const navigation = useNavigation();
+  const [selectedStatus, setSelectedStatus] = useState(task.status);
 
-  const getApiDAta = () => {
-    console.warn('hello');
+  const updateStatus = (status) => {
+    setSelectedStatus(status);
   };
-  useEffect(() => {
-    getApiDAta();
-  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -30,33 +39,44 @@ const ActiveTaskDetail = () => {
           Active Task Details
         </Text>
 
-        <Text style={styles.titles}>task Detail</Text>
-        <TouchableOpacity
-        // style={styles.buttonStyle}
-        // onPress={() => setOpen(true)}
+        <ProgressModal />
+        <Text style={styles.titles}>Task Detail</Text>
+        {/* <TouchableOpacity
+          onPress={() => navigation.navigate('ActiveTaskDetail2')}
         >
-          <Text style={styles.buttonTextStyle}>{task.title}</Text>
-          <Text style={styles.buttonTextStyle}>{task.status}</Text>
-          <Text style={styles.buttonTextStyle}>{task.purpose}</Text>
-          <Text style={styles.buttonTextStyle}>{task.startedOn}</Text>
-          <Text style={styles.buttonTextStyle}>{task.progress}</Text>
-        </TouchableOpacity>
-
+          <Text style={styles.buttonTextStyle}>{`Title: ${task.title}`}</Text>
+        </TouchableOpacity> */}
+        <Text
+          style={styles.buttonTextStyle}
+        >{`Status: ${selectedStatus}`}</Text>
+        <Text style={styles.buttonTextStyle}>{`${task.createdAt}`}</Text>
+        <Text style={styles.buttonTextStyle}>
+          {`Started On: ${formatDate(task.startedOn)}`}
+        </Text>
+        <Text style={styles.buttonTextStyle}>{`Ends On: ${formatDate(
+          task.endsOn,
+        )}`}</Text>
         <Text style={styles.titles}>Status</Text>
-        {/* <Text style={styles.buttonTextStyle}>UpdateDropdown</Text> */}
-        <TouchableOpacity
-        // style={styles.buttonStyle}
-        // // onPress={() => setOpen(true)}
-        >
-          <DropdownComponent />
-        </TouchableOpacity>
+        <DropdownPicker
+          items={[
+            { label: 'In Progress', value: 'In Progress' },
+            { label: 'Completed', value: 'Completed' },
+          ]}
+          // defaultValue={selectedStatus}
+          containerStyle={styles.dropdownContainer}
+          style={styles.dropdown}
+          itemStyle={styles.dropdownItem}
+          dropDownStyle={styles.dropdownDropDown}
+          onChangeItem={(item) => updateStatus(item.value)}
+        />
         <Text style={styles.titles}>Extention</Text>
+
         <TouchableOpacity
           style={styles.buttonStyle}
           // onPress={() => setOpen(true)}
           onPress={() => navigation.navigate('ExtensionRequest')}
         >
-          <Text style={styles.buttonTextStyle}>Extention Request</Text>
+          <Text style={styles.buttonTextStyle}> Create Extention Request</Text>
         </TouchableOpacity>
         <View style={styles.buttoncontainer}>
           <TouchableOpacity
@@ -78,12 +98,11 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     paddingRight: 40,
     padding: 20,
-    borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#e7cfe7',
   },
 
   formHeading: {
-    color: '#2827CC',
+    color: '#7f7fd3',
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -98,11 +117,22 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
   },
   titles: {
-    fontSize: 15,
+    fontSize: 20,
     elevation: 2,
     marginBottom: 5,
     marginTop: 20,
     color: 'black',
+    fontWeight: 'bold',
+  },
+  viewStyle: {
+    borderWidth: 2,
+    paddingTop: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 40,
+    height: 650,
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   createButtonText: {
     fontSize: 15,
@@ -115,9 +145,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     borderRadius: 10,
-    backgroundColor: '#2827CC',
+    backgroundColor: '#72729b',
   },
-  titleText: {},
+
   buttonStyle: {
     width: '100%',
     height: 50,
@@ -134,10 +164,11 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   buttonTextStyle: {
-    fontWeight: '500',
+    fontWeight: '400',
     color: 'black',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
+    fontSize: 20,
   },
   buttoncontainer: {
     display: 'flex',
@@ -153,6 +184,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
   },
+
+  dropdownContainer: {
+    height: 40,
+    marginVertical: 10,
+  },
+  dropdown: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+  },
+  dropdownItem: {
+    justifyContent: 'flex-start',
+  },
+  dropdownDropDown: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+  },
 });
 
 export default ActiveTaskDetail;
+{
+  /* <Text style={styles.titles}>Status</Text>
+        <TouchableOpacity>
+          <DropdownComponent />
+        </TouchableOpacity> */
+}

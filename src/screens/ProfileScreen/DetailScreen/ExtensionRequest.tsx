@@ -1,29 +1,81 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { TextInput } from 'react-native-gesture-handler';
+// import axios from 'axios';
 
 export default function ExtensionRequest() {
   const navigation = useNavigation();
+
+  const [reason, setReason] = useState('');
+  const [title, setTitle] = useState('');
+  const [oldEndsOn, setOldEndsOn] = useState('');
+  const [newEndsOn, setNewEndsOn] = useState('');
+
+  const postApi = () => {
+    fetch('https://api.realdevsquad.com/extension-requests', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: reason,
+        title: title,
+        oldEndsOn: oldEndsOn,
+        body: newEndsOn,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(JSON.stringify(responseData));
+        console.log(JSON.stringify(responseData), 'PostApiCAlled');
+      })
+      .done();
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.form}>
+      <View>
         <Text style={styles.title}>Extension Request form</Text>
         <Text style={styles.paragraph}>Reason :</Text>
+        <TextInput
+          value={reason}
+          onChangeText={(text) => setReason(text)}
+          style={styles.input}
+          placeholder="Enter reason"
+        />
 
         <Text style={styles.paragraph}>Title :</Text>
-        {/* <View>
-          <TextInput style={styles.input} />
-        </View> */}
+        <TextInput
+          value={title}
+          onChangeText={(text) => setTitle(text)}
+          style={styles.input}
+          placeholder="Enter reason"
+        />
 
         <Text style={styles.paragraph}>Old Ends On :</Text>
-        {/* <View>
-          <Text style={styles.formchild}>Duration</Text>
-        </View> */}
+        <TextInput
+          value={oldEndsOn}
+          onChangeText={(text) => setOldEndsOn(text)}
+          style={styles.input}
+          placeholder="Old Ends On"
+        />
 
         <Text style={styles.paragraph}>New Ends On :</Text>
-        {/* <View>
-          <Text style={styles.formchild}>On status</Text>
-        </View> */}
+        <TextInput
+          value={newEndsOn}
+          onChangeText={(text) => setNewEndsOn(text)}
+          style={styles.input}
+          placeholder="New Date"
+        />
+      </View>
+
+      <View style={styles.buttoncontainer}>
+        <TouchableOpacity style={styles.button} onPress={postApi}>
+          {/* onPress={saveData} */}
+          <Text style={{ color: 'white' }}>Create Extension</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.buttoncontainer}>
@@ -45,11 +97,7 @@ const styles = StyleSheet.create({
     border: '2px solid black',
     padding: 30,
   },
-  form: {
-    border: '2px solid black',
-    padding: 10,
-    borderRadius: 15,
-  },
+
   paragraph: {
     margin: 5,
     fontSize: 18,
@@ -57,14 +105,7 @@ const styles = StyleSheet.create({
     color: 'blue',
     justifyContent: 'flex-start',
   },
-  input: {
-    height: 30,
-    margin: 10,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#ecf0f1',
-    fontSize: 12,
-  },
+
   formchild: {
     marginTop: 5,
     fontWeight: 'bold',
@@ -100,5 +141,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'blue',
     justifyContent: 'flex-start',
+  },
+  input: {
+    borderColor: 'skyBlue',
+    borderwidth: 2,
+    fontSize: 15,
+    backgroundColor: 'lightgrey',
   },
 });
