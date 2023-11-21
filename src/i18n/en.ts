@@ -1,6 +1,7 @@
 const Strings = {
   // TAB NAVIGATION
   Tab_Home: 'Home',
+  Tab_Notify: 'Notify',
   Tab_Profile: 'Profile',
   Tab_Goal: 'Goals',
   // HOME SCREEN
