@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreen2 from '../ProfileScreen/ProfileScreen2';
 import ActiveTaskDetail from '../ProfileScreen/DetailScreen/ActiveTaskDetail';
-import ExtensionRequest from '../ProfileScreen/DetailScreen/ExtensionRequest';
+import ExtensionRequest from '../../components/ProfileExtensionForm/ExtensionRequest';
 
 const Stack = createStackNavigator();
 function ActiveTaskScreenStack() {

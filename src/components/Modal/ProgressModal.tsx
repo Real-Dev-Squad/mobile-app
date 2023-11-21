@@ -15,22 +15,13 @@ function ProgressModal() {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity onPress={toggleModal}>
         <CircularProgress
-          value={30}
-          radius={90}
-          duration={1000}
-          progressValueColor={'cyan'}
-          titleFontSize={16}
-          titleColor={'#eeb3b3'}
-          titleStyle={{ fontWeight: 'bold' }}
-          circleBackgroundColor={'#6181b1'}
-          activeStrokeColor={'#2465FD'}
-          activeStrokeSecondaryColor={'#C3305D'}
-          inActiveStrokeColor={'white'}
-          progressFormatter={(value: number) => {
-            'worklet';
-
-            return value.toFixed(2);
-          }}
+          value={45}
+          inActiveStrokeColor={'#58a07c'}
+          inActiveStrokeOpacity={0.2}
+          progressValueColor={'#fff'}
+          strokeLinecap="round"
+          activeStrokeColor="#6a6bcf"
+          valueSuffix={'%'}
         />
       </TouchableOpacity>
 
@@ -58,7 +49,7 @@ const styles = StyleSheet.create({
     padding: 20,
     elevation: 5,
     width: 250,
-    height: 150,
+    height: 300,
     justifyContent: 'center',
   },
   Button: {

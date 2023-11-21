@@ -3,12 +3,13 @@ import { StyleSheet } from 'react-native';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ProgressModal from '../../../components/Modal/ProgressModal';
-import DropdownPicker from 'react-native-dropdown-picker';
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
 
-  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+  const currentYear = new Date().getFullYear();
+  const formattedDate = `${currentYear}-${(date.getMonth() + 1)
+
     .toString()
     .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
@@ -20,9 +21,25 @@ const ActiveTaskDetail = () => {
   const { task } = route.params;
   const navigation = useNavigation();
   const [selectedStatus, setSelectedStatus] = useState(task.status);
-
+  console.log(task.status);
+  console.log(task.startedOn), console.log(task.createdBy);
+  console.log(task.html_url, 'html_url');
+  console.log(task.percentCompleted, 'percentCompleted');
   const updateStatus = (status) => {
     setSelectedStatus(status);
+  };
+
+  const formatStatusText = (status) => {
+    // Split the status string by underscore
+    const words = status.split('_');
+
+    // Capitalize the first letter of each word
+    const formattedText = words.map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+    );
+
+    // Join the words with a space
+    return formattedText.join(' ');
   };
 
   return (
@@ -41,35 +58,18 @@ const ActiveTaskDetail = () => {
 
         <ProgressModal />
         <Text style={styles.titles}>Task Detail</Text>
-        {/* <TouchableOpacity
-          onPress={() => navigation.navigate('ActiveTaskDetail2')}
-        >
-          <Text style={styles.buttonTextStyle}>{`Title: ${task.title}`}</Text>
-        </TouchableOpacity> */}
-        <Text
-          style={styles.buttonTextStyle}
-        >{`Status: ${selectedStatus}`}</Text>
-        <Text style={styles.buttonTextStyle}>{`${task.createdAt}`}</Text>
+        <Text style={styles.buttonTextStyle}>{`Status: ${formatStatusText(
+          task.status,
+        )}`}</Text>
+
         <Text style={styles.buttonTextStyle}>
           {`Started On: ${formatDate(task.startedOn)}`}
         </Text>
         <Text style={styles.buttonTextStyle}>{`Ends On: ${formatDate(
           task.endsOn,
         )}`}</Text>
-        <Text style={styles.titles}>Status</Text>
-        <DropdownPicker
-          items={[
-            { label: 'In Progress', value: 'In Progress' },
-            { label: 'Completed', value: 'Completed' },
-          ]}
-          // defaultValue={selectedStatus}
-          containerStyle={styles.dropdownContainer}
-          style={styles.dropdown}
-          itemStyle={styles.dropdownItem}
-          dropDownStyle={styles.dropdownDropDown}
-          onChangeItem={(item) => updateStatus(item.value)}
-        />
-        <Text style={styles.titles}>Extention</Text>
+
+        <Text style={styles.titles}></Text>
 
         <TouchableOpacity
           style={styles.buttonStyle}
@@ -151,24 +151,19 @@ const styles = StyleSheet.create({
   buttonStyle: {
     width: '100%',
     height: 50,
-    elevation: 5,
-    borderRadius: 10,
     borderWidth: 1,
     backgroundColor: 'white',
     alignSelf: 'flex-start',
-    marginTop: 10,
     flexDirection: 'row',
+    borderRadius: 5,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
   },
   buttonTextStyle: {
-    fontWeight: '400',
     color: 'black',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
-    fontSize: 20,
+    fontSize: 15,
   },
   buttoncontainer: {
     display: 'flex',
@@ -207,9 +202,3 @@ const styles = StyleSheet.create({
 });
 
 export default ActiveTaskDetail;
-{
-  /* <Text style={styles.titles}>Status</Text>
-        <TouchableOpacity>
-          <DropdownComponent />
-        </TouchableOpacity> */
-}
