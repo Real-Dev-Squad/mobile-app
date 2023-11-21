@@ -1,11 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Linking,
-  ScrollView,
-} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { profileScreenStyles } from '../styles';
 import {
   calculateISODateFormat,
@@ -14,12 +8,13 @@ import {
   fetchContribution,
   parseISODate,
 } from '../../AuthScreen/Util';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 
 const All = () => {
   const [allContributionsData, setAllContributionData] = useState([]);
   const { loggedInUserData } = useContext(AuthContext);
+  const navigation = useNavigation();
 
   useFocusEffect(
     useCallback(() => {
@@ -39,11 +34,7 @@ const All = () => {
           <View style={profileScreenStyles.DropDownElement} key={index}>
             <TouchableOpacity
               style={profileScreenStyles.DropDownbackground}
-              onPress={
-                item.task.featureUrl
-                  ? () => Linking.openURL(item.task.featureUrl)
-                  : null
-              }
+              onPress={() => navigation.navigate('AllTaskDetail')}
             >
               {item.task.id ? (
                 <React.Fragment>
