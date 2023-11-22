@@ -34,6 +34,6 @@ jobs:
       - name: Prettier Check
         run: |
           yarn format-check
-      # - name: Running test
-      #   run: |
-      #     yarn test
+      - name: Running test
+        run: |
+          yarn test
