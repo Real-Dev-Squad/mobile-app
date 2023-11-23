@@ -1,45 +1,61 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from 'react-native';
 import React, { useState, useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import Images from '../../constants/images/Image';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
-import DatePicker from './ExtensionDatePicker';
-import { submitExtension } from '../../screens/AuthScreen/Util';
+import {
+  submitExtension,
+  getDateAndTimeFromUnix,
+} from '../../screens/AuthScreen/Util';
 import { AuthContext } from '../../context/AuthContext';
+import DeadLineDatePicker from '../OOO/OOOFormDatePicker';
 
 export default function ExtensionRequest() {
   const navigation = useNavigation();
 
   const [reason, setReason] = useState('');
   const [title, setTitle] = useState('');
-  const [newEndsOn, setNewEndsOn] = useState('');
+  const [newEndsOn, setNewEndsOn] = useState(null);
   const { loggedInUserData } = useContext(AuthContext);
+  const route = useRoute();
+  const { endsOn } = route.params;
+  const [toDate, setToDate] = useState(new Date());
 
   const handleFormSubmit = async () => {
+    if (!reason || !title || !newEndsOn) {
+      Alert.alert('Error', 'Please fill all fields');
+      return;
+    }
     const response = await submitExtension(
-      loggedInUserData?.token,
+      loggedInUserData?.id,
       reason,
       title,
       newEndsOn,
-      // oldEndsOn,
+      endsOn,
       // assignee,
       // status,
     );
     console.log('response', response);
+    console.log('Old Ends On:', endsOn);
     setReason('');
     setTitle('');
     setNewEndsOn('');
   };
-  const handleNewDateChange = (date) => {
-    setNewEndsOn(date);
-  };
 
-  console.log(handleFormSubmit, 'formSubmitted');
-  console.log(reason, 'reason');
-  console.log(title, 'title');
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.title}>Extension Request form</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image style={styles.close} source={Images.closeIcon} />
+        </TouchableOpacity>
+        <Text style={styles.titleText}>Extension Request form</Text>
         <Text style={styles.paragraph}>Reason :</Text>
         <TextInput
           value={reason}
@@ -53,28 +69,27 @@ export default function ExtensionRequest() {
           value={title}
           onChangeText={(text) => setTitle(text)}
           style={styles.input}
-          placeholder="Enter reason"
+          placeholder="Enter Title"
         />
 
         <Text style={styles.paragraph}>New Ends On :</Text>
-        <DatePicker value={newEndsOn} onDateChange={handleNewDateChange} />
-        {/* <TextInput style={styles.input} placeholder="New Date" /> */}
+        <Text style={{ color: 'black' }}>
+          OldsEndsOn : {getDateAndTimeFromUnix(endsOn)}`
+        </Text>
+
+        <DeadLineDatePicker
+          title={`New date: ${toDate.toLocaleString('en-US')}`}
+          value={newEndsOn}
+          onDateChange={(date) => {
+            setNewEndsOn(date);
+            setToDate(date);
+          }}
+        />
       </View>
 
       <View style={styles.buttoncontainer}>
         <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
-          {/* onPress={saveData} */}
-
-          <Text style={{ color: 'white' }}>Create Extension</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.buttoncontainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={{ color: 'white' }}>Go Back</Text>
+          <Text style={{ color: 'Whight' }}>Create Extension</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -85,7 +100,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    border: '2px solid black',
     padding: 30,
     justifyContent: 'center',
   },
@@ -98,23 +112,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  formchild: {
-    marginTop: 5,
-    fontWeight: 'bold',
-  },
-  toggle: {
-    display: 'flex',
-    flexDirection: 'row',
-    margin: 5,
-    padding: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  togglechild: {
-    margin: 5,
-  },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: 'grey',
     padding: 6,
     marginTop: 12,
     width: '40%',
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
+  titleText: {
     margin: 5,
     fontSize: 18,
     fontWeight: 'bold',
@@ -135,8 +134,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   input: {
-    borderwidth: 2,
+    borderWidth: 1,
     fontSize: 15,
-    backgroundColor: 'lightgrey',
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#718f9e',
+  },
+  close: {
+    height: 10,
+    width: 10,
+    padding: 15,
+    justifyContent: 'flex-start',
   },
 });
