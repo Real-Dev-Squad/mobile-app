@@ -1,33 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ProgressModal from '../../../components/Modal/ProgressModal';
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-
-  const currentYear = new Date().getFullYear();
-  const formattedDate = `${currentYear}-${(date.getMonth() + 1)
-
-    .toString()
-    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
-  return formattedDate;
-};
+import { getDateAndTimeFromUnix } from '../../AuthScreen/Util';
 
 const ActiveTaskDetail = () => {
   const route = useRoute();
   const { task } = route.params;
   const navigation = useNavigation();
-  const [selectedStatus, setSelectedStatus] = useState(task.status);
-  console.log(task.status);
-  console.log(task.startedOn), console.log(task.createdBy);
-  console.log(task.html_url, 'html_url');
+
   console.log(task.percentCompleted, 'percentCompleted');
-  const updateStatus = (status) => {
-    setSelectedStatus(status);
-  };
 
   const formatStatusText = (status) => {
     // Split the status string by underscore
@@ -45,38 +28,31 @@ const ActiveTaskDetail = () => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        <Text
-          style={{
-            color: '#2827CC',
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}
-        >
-          Active Task Details
-        </Text>
+        <Text style={styles.mainTitle}>Active Task Details</Text>
 
         <ProgressModal />
         <Text style={styles.titles}>Task Detail</Text>
+        <Text style={styles.buttonTextStyle}>{task.title}</Text>
         <Text style={styles.buttonTextStyle}>{`Status: ${formatStatusText(
           task.status,
         )}`}</Text>
 
         <Text style={styles.buttonTextStyle}>
-          {`Started On: ${formatDate(task.startedOn)}`}
+          {`Started On: ${getDateAndTimeFromUnix(task.startedOn)}`}
         </Text>
-        <Text style={styles.buttonTextStyle}>{`Ends On: ${formatDate(
-          task.endsOn,
-        )}`}</Text>
+        <Text
+          style={styles.buttonTextStyle}
+        >{`Ends On: ${getDateAndTimeFromUnix(task.endsOn)}`}</Text>
 
-        <Text style={styles.titles}></Text>
+        <Text style={styles.titles} />
 
         <TouchableOpacity
           style={styles.buttonStyle}
-          // onPress={() => setOpen(true)}
-          onPress={() => navigation.navigate('ExtensionRequest')}
+          onPress={() =>
+            navigation.navigate('ExtensionRequest', { endsOn: task.endsOn })
+          }
         >
-          <Text style={styles.buttonTextStyle}> Create Extention Request</Text>
+          <Text style={styles.buttonTextStyle}>Create Extension</Text>
         </TouchableOpacity>
         <View style={styles.buttoncontainer}>
           <TouchableOpacity
@@ -94,28 +70,17 @@ const ActiveTaskDetail = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
-    paddingLeft: 40,
-    paddingRight: 40,
     padding: 20,
     backgroundColor: '#e7cfe7',
+    alignContent: 'space-between',
   },
-
-  formHeading: {
-    color: '#7f7fd3',
+  mainTitle: {
+    color: '#2827CC',
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  inputStyle: {
-    padding: 10,
-    // backgroundColor: 'silver',
-    borderRadius: 5,
-    elevation: 2,
-    fontSize: 12,
-    borderWidth: 2,
-    fontStyle: 'normal',
-  },
+
   titles: {
     fontSize: 20,
     elevation: 2,
@@ -124,40 +89,14 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
-  viewStyle: {
-    borderWidth: 2,
-    paddingTop: 20,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 40,
-    height: 650,
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  createButtonText: {
-    fontSize: 15,
-    color: 'white',
-    alignSelf: 'center',
-  },
-  createButtonStyle: {
-    padding: 10,
-    width: '50%',
-    alignSelf: 'center',
-    marginTop: 20,
-    borderRadius: 10,
-    backgroundColor: '#72729b',
-  },
 
   buttonStyle: {
-    width: '100%',
-    height: 50,
-    borderWidth: 1,
-    backgroundColor: 'white',
-    alignSelf: 'flex-start',
-    flexDirection: 'row',
-    borderRadius: 5,
-    justifyContent: 'flex-start',
+    width: 150,
+    height: 40,
+    backgroundColor: '#9cb8b5',
+    padding: 5,
     alignItems: 'center',
+    borderRadius: 5,
   },
   buttonTextStyle: {
     color: 'black',
@@ -178,26 +117,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-  },
-
-  dropdownContainer: {
-    height: 40,
-    marginVertical: 10,
-  },
-  dropdown: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-  },
-  dropdownItem: {
-    justifyContent: 'flex-start',
-  },
-  dropdownDropDown: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
   },
 });
 
