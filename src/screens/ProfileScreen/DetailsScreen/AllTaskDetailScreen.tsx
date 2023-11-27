@@ -14,7 +14,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 const AllTaskDetailScreen = ({ route }) => {
   const navigation = useNavigation();
   const taskId = route.params.taskId;
-  console.log("id ", taskId)
+  console.log('id ', taskId);
   const [allTaskDetail, setAllTaskDetailData] = useState({});
   const [allTaskProgressDetail, setAllTaskProgressDetailData] = useState({});
   const [dialogState, setDialogState] = useState({
@@ -27,7 +27,7 @@ const AllTaskDetailScreen = ({ route }) => {
       (async () => {
         const taskDetailResponse = await fetchTaskDetails(taskId);
         setAllTaskDetailData(taskDetailResponse);
-        console.log("reponse ", taskDetailResponse)
+        console.log('reponse ', taskDetailResponse);
         const taskProgressDetailResponse = await fetchTaskProgressDetails(
           taskId,
         );

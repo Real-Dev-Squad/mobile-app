@@ -139,13 +139,10 @@ export const getAllUsers = async (token) => {
     });
     if (res?.data?.users) {
       return res?.data?.users;
-    } 
-    else {
+    } else {
       return 'Something went wrong';
     }
-  }
-  
-  catch (err) {
+  } catch (err) {
     return 'Something went wrong';
   }
 };

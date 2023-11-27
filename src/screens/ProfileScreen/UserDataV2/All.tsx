@@ -1,11 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Linking,
-  ScrollView,
-} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { profileScreenStyles } from '../styles';
 import {
   calculateISODateFormat,
@@ -40,7 +34,9 @@ const All = () => {
           <View style={profileScreenStyles.DropDownElement} key={index}>
             <TouchableOpacity
               style={profileScreenStyles.DropDownbackground}
-              onPress={() => navigation.navigate('AllTaskDetail', {taskId : item.task.id})}
+              onPress={() =>
+                navigation.navigate('AllTaskDetail', { taskId: item.task.id })
+              }
             >
               {item.task.id ? (
                 <React.Fragment>

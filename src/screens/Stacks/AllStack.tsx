@@ -8,12 +8,12 @@ const Stack = createNativeStackNavigator();
 export function AllTaskScreenStack() {
   return (
     <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Stack.Screen name="Profile" component={ProfileScreen2} />
-    <Stack.Screen
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Profile" component={ProfileScreen2} />
+      <Stack.Screen
         name="AllTaskDetail"
         component={AllTaskDetailScreen}
         initialParams={{ taskId: '' }}
