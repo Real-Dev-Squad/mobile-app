@@ -53,6 +53,37 @@ export const fetchActiveTasks = async (userName: string): Promise<any> => {
   }
 };
 
+export const fetchTaskDetails = async (taskId: String): Promise<any> => {
+  try {
+    const response = await axios.get(
+      urls.GET_TASK_DETAIL + taskId + '/details',
+      {
+        headers: {
+          Cookie: '',
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const fetchTaskProgressDetails = async (
+  taskId: String,
+): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GET_TASK_PROGRESS_DETAIL + taskId, {
+      headers: {
+        Cookie: '',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const updateStatus = async (status: string) => {
   const res = await axios.patch(
     urls.GET_USERS_DATA,
@@ -254,4 +285,50 @@ export const calculateISODateFormat = (isoDateString) => {
 
 export const parseISODate = (isoDateString) => {
   return new Date(isoDateString);
+};
+
+export const getDate = (date) => {
+  var day = new Date(date);
+  var weekDays = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  var date = day.getDate();
+  var month = day.getMonth();
+  var year = day.getFullYear();
+  return `${weekDays[day.getDay()]}, ${date} ${months[month]} ${year}`;
+};
+
+export const getDateAndTimeFromUnix = (unixTimestampSeconds) => {
+  const unixTimestampMilliseconds = unixTimestampSeconds * 1000;
+  const date = new Date(unixTimestampMilliseconds);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+  return `${day}/${month}/${year} ${hours <= 9 ? '0' + hours : hours}:${
+    minutes <= 9 ? '0' + minutes : minutes
+  }:${seconds <= 9 ? '0' + seconds : seconds}`;
 };

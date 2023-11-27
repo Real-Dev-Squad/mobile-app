@@ -9,7 +9,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import { useSelector, useDispatch } from 'react-redux';
-import All from './TaskScreens/All';
+import All from './UserDataV2/All';
 // import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
 import ActiveScreen from './TaskScreens/ActiveTask';
