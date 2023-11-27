@@ -4,7 +4,6 @@ import { profileScreenStyles } from '../styles';
 import { getDate } from '../../AuthScreen/Util';
 
 const TaskProgressDialog = ({ task, onClose }) => {
-
   return (
     <View>
       <Modal transparent={true}>

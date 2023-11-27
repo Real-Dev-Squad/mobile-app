@@ -63,6 +63,9 @@ export const profileScreenStyles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 20,
   },
+  progressListLeftPadding: {
+    marginLeft: 5,
+  },
   updateButtonContainer: {
     backgroundColor: '#0034a5',
     paddingVertical: 10,

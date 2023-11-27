@@ -11,6 +11,7 @@ import { profileScreenStyles } from '../styles';
 import { urls } from '../../../constants/appConstant/url';
 import { AuthContext } from '../../../context/AuthContext';
 import Toast from 'react-native-toast-message';
+import { validateTaskProgress } from '../../AuthScreen/Util';
 
 const AllTaskDetailProgessScreen = ({ route }) => {
   const [taskCompleted, setTaskCompleted] = useState('');
@@ -21,9 +22,7 @@ const AllTaskDetailProgessScreen = ({ route }) => {
 
   const isVisible = () => {
     setShoulDisable(
-      taskCompleted.trim() == '' ||
-        taskPlanned.trim() == '' ||
-        taskBlockers.trim() == '',
+      validateTaskProgress(taskCompleted, taskPlanned, taskBlockers),
     );
   };
 

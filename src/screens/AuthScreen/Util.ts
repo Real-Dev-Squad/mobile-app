@@ -53,6 +53,18 @@ export const fetchActiveTasks = async (userName: string): Promise<any> => {
   }
 };
 
+export const validateTaskProgress = (
+  taskCompleted,
+  taskPlanned,
+  taskBlockers,
+): Boolean => {
+  return (
+    taskCompleted.trim() == '' ||
+    taskPlanned.trim() == '' ||
+    taskBlockers.trim() == ''
+  );
+};
+
 export const fetchTaskDetails = async (taskId: String): Promise<any> => {
   try {
     const response = await axios.get(

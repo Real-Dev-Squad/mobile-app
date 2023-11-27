@@ -90,8 +90,7 @@ const AllTaskDetailScreen = ({ route }) => {
               })
             }
           >
-            <Text>
-              {' '}
+            <Text style={profileScreenStyles.progressListLeftPadding}>
               {'\u2B24'} {getDate(item?.date)}{' '}
             </Text>
           </TouchableOpacity>
