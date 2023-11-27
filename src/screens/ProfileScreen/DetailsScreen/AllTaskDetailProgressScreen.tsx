@@ -98,7 +98,7 @@ const AllTaskDetailProgessScreen = ({ route }) => {
       />
 
       <Text style={profileScreenStyles.taskUpdateQuestion}>
-        Task Progress after the previous update
+        Planned progress before the next update
       </Text>
       <TextInput
         style={profileScreenStyles.taskUpdateInput}
@@ -110,7 +110,7 @@ const AllTaskDetailProgessScreen = ({ route }) => {
       />
 
       <Text style={profileScreenStyles.taskUpdateQuestion}>
-        Task Progress after the previous update
+        List down any blockers that you have
       </Text>
       <TextInput
         style={profileScreenStyles.taskUpdateInput}
