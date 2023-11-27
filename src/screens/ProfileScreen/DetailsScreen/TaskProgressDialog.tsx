@@ -4,7 +4,6 @@ import { profileScreenStyles } from '../styles';
 import { getDate } from '../../AuthScreen/Util';
 
 const TaskProgressDialog = ({ task, onClose }) => {
-  React.useEffect(() => console.log('MODAL OPEN'), []);
 
   return (
     <View>

@@ -25,7 +25,6 @@ const AllTaskDetailProgessScreen = ({ route }) => {
         taskPlanned.trim() == '' ||
         taskBlockers.trim() == '',
     );
-    console.log('flag', shouldDisable);
   };
 
   const submitProgress = async () => {
@@ -92,7 +91,7 @@ const AllTaskDetailProgessScreen = ({ route }) => {
         style={profileScreenStyles.taskUpdateInput}
         multiline={true}
         onChangeText={(newText) => {
-          setTaskCompleted(newText), isVisible();
+          setTaskCompleted(newText.trim()), isVisible();
         }}
         defaultValue={taskCompleted}
       />
@@ -104,7 +103,7 @@ const AllTaskDetailProgessScreen = ({ route }) => {
         style={profileScreenStyles.taskUpdateInput}
         multiline={true}
         onChangeText={(newText) => {
-          setTaskPlanned(newText), isVisible();
+          setTaskPlanned(newText.trim()), isVisible();
         }}
         defaultValue={taskPlanned}
       />
@@ -116,7 +115,7 @@ const AllTaskDetailProgessScreen = ({ route }) => {
         style={profileScreenStyles.taskUpdateInput}
         multiline={true}
         onChangeText={(newText) => {
-          setTaskBlockers(newText), isVisible();
+          setTaskBlockers(newText.trim()), isVisible();
         }}
         defaultValue={taskBlockers}
       />
