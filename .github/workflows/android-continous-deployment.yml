@@ -45,3 +45,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: app-release.apk
+
+      - name: Update Pull Request File
+        run: |
+            echo "APK: \`app-release.apk\`" >> PULL_REQUEST.md
+            cat pull_request.md  # Display the updated file for verification

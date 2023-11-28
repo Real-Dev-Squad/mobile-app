@@ -11,6 +11,8 @@ import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
 import ActiveTaskScreenStack from '../../screens/Stack/ActiveStack';
+import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
+
 
 const tab = createBottomTabNavigator();
 
@@ -92,6 +94,7 @@ const TabNavigation = () => {
         <tab.Screen
           name={Strings.Tab_Profile}
           component={ActiveTaskScreenStack}
+
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => {
