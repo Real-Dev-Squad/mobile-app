@@ -12,8 +12,37 @@ import { useSelector, useDispatch } from 'react-redux';
 import All from './TaskScreens/All';
 // import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
-import ActiveScreen from './TaskScreens/ActiveTask';
-import UserData from './User Data/UserData';
+
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { fetchContribution } from '../AuthScreen/Util';
+import DisplayContribution from '../../components/DisplayContribution';
+
+export const ActiveScreen = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeTasks, setActiveTasks] = useState([]);
+  const { loggedInUserData } = useContext(AuthContext);
+
+  // const navigation = useNavigation();
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const userName = loggedInUserData?.username;
+        const contributionResponse = await fetchContribution(userName);
+        setActiveTasks(
+          contributionResponse.all.filter(
+            (item) => item.task.status !== 'COMPLETED',
+          ),
+        );
+      })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loggedInUserData?.username]),
+  );
+  return (
+    <View style={styles.profile}>
+      <DisplayContribution tasks={activeTasks} navigation={useNavigation} />
+    </View>
+  );
+};
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -86,12 +115,12 @@ const ProfileScreen = () => {
   );
 };
 
-const ProfileScreen2: React.FC = () => {
+const ProfileScreen2: React.FC = ({ navigation }) => {
   return (
     <Tabs.Container renderHeader={ProfileScreen}>
       <Tabs.Tab name="Active">
         <Tabs.ScrollView>
-          <ActiveScreen />
+          <ActiveScreen navigation={navigation} />
         </Tabs.ScrollView>
       </Tabs.Tab>
       <Tabs.Tab name="All">
@@ -102,5 +131,12 @@ const ProfileScreen2: React.FC = () => {
     </Tabs.Container>
   );
 };
+
+const styles = StyleSheet.create({
+  profile: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+});
 
 export default ProfileScreen2;
