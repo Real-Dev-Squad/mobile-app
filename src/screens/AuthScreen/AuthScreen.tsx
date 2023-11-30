@@ -16,7 +16,7 @@ import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData } from './Util';
+import { getUserData, goalsAuth } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
@@ -30,7 +30,7 @@ const AuthScreen = () => {
   // TODO: will revamp github signIn feature
   const dispatch = useDispatch();
   const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
-  const { setLoggedInUserData } = useContext(AuthContext);
+  const { setLoggedInUserData,setGoalsData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
@@ -109,8 +109,11 @@ const AuthScreen = () => {
   const updateUserData = async (token: string) => {
     try {
       setLoading(true);
-      const res = await getUserData(token);
+      const res = await getUserData(token)
+      console.log("auth screen");
+      const goals = await goalsAuth("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJRWmliTUhqSVNZQXhUM3VpQUowZiIsImlhdCI6MTY5OTM0NTQxNCwiZXhwIjoxNzMwNDQ5NDE0fQ.haUjRYueRBt5fcmyfyi-ii2D6j6kWLpTnUiiciYUhxkobYfMlT-sFqv_2_O16Ru8yhkFYgTh446r4RD7JBnlupr4AHlfMkYl2vCqUrnLYz_Hrw3J2ahUBuAB9KnbF8zdntoor7Zu4gqSJnh2I-v-qUMs4bprVckEaaDLvt71M4U")
       await storeData('userData', JSON.stringify(res));
+      await storeData('userGoalsData', JSON.stringify(goals))
       setLoggedInUserData({
         id: res?.id,
         name: res?.name,
@@ -122,6 +125,8 @@ const AuthScreen = () => {
         discordUserName: res?.username,
         token: token,
       });
+      console.log(goals,"goals in authscreen")
+      setGoalsData(goals)
       setLoading(false);
     } catch (err) {
       setLoggedInUserData(null);

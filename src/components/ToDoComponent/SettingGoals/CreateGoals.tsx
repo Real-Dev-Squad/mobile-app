@@ -7,21 +7,28 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  FlatList
+  FlatList,Alert
 } from 'react-native';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 import { AuthContext } from '../../../context/AuthContext';
-import { getAllUsers } from '../../../screens/AuthScreen/Util';
+import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
 
 const MainScreen = ({ navigation }) => {
   const [selectedMember, setSelectedMember] = React.useState('');
+  const [assignTo,setAssignTo]=useState("")
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   const [isDropDownSelected, setIsDropDownSelected] =useState(false)
   const [searchQuery, setSearchQuery] = useState('');
   const [allUsers,setAllUsers] = useState([]);
+  const [selectedUser,setSelectedUser]=useState("")
   const [isLoading, setIsLoading] = useState(true);
-  const { loggedInUserData } = useContext(AuthContext);
+  const { loggedInUserData,goalsData } = useContext(AuthContext);
+  const [titleError, setTitleError] = useState('');
+  const [descriptionError, setDescriptionError] = useState('');
+
+  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwOTkxNTA3LCJpYXQiOjE3MDA1NTk1MDcsImp0aSI6IjYxMWQwYTI4MTRiOTQ5NTlhZGVhZDFiMWE5YTljM2I3IiwidXNlcl9pZCI6IjFlNWZiNWEzLTM0ZWUtNDhlYy04ZjQyLTFhOTk5NGM5YjM2OCJ9.iwIdvBp07sKu3gO_IwnDfGKf-nQA5vDzDuxsQwHZ_EY"
+
 
 
 
@@ -31,13 +38,53 @@ const MainScreen = ({ navigation }) => {
 
     useEffect(() => {
         fetchData(); 
-    });
+        console.log(loggedInUserData,"data in logged")
+        console.log(goalsData.user.token.access,"data in logged")
+    },[]);
 
   const fetchData = async () => {
     const allUser = await getAllUsers (loggedInUserData?.token);
     setAllUsers(allUser);
     setIsLoading(false)
   };
+
+ const postNewGoal = async () => {
+    setTitleError('');
+    setDescriptionError('');
+
+    // Check if title is empty
+    if (!titleText.trim()) {
+      setTitleError('Title is required');
+      return;
+    }
+
+    // Check if description is empty
+    if (!descriptionText.trim()) {
+      setDescriptionError('Description is required');
+      return;
+    }
+
+    // Proceed with posting the goal
+    // PostGoal(goalsData?.user?.token?.access, titleText, descriptionText);
+   const response = await PostGoal(titleText, descriptionText,selectedUser?.id)
+      if (response) {
+        if (selectedUser?.first_name){
+          Alert.alert('Success', `Task has been created and assigned to ${selectedUser?.first_name}`, [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ]);
+        }
+        else{
+          Alert.alert('Success', `Task has been created successfully`, [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ]);
+        }
+
+      }
+ 
+  };
+
+  // console.log(selectedUser,"selectedUser")
+
 
   return (
     <View style={styles.container}>
@@ -63,47 +110,40 @@ const MainScreen = ({ navigation }) => {
         >
           Add New Goal
         </Text>
-        <Text style={styles.titles}>Title</Text>
-        <TextInput
-          style={styles.inputStyle}
-          maxLength={50}
-          value={titleText}
-          onChangeText={setTitleText}
-          placeholder="Enter title max of 50 characters."
-          placeholderTextColor="red"
-        />
-        <Text style={styles.titleText}>Description</Text>
-        <TextInput
-          style={styles.inputStyle}
-          value={descriptionText}
-          onChangeText={setDescriptionText}
-          maxLength={200}
-          placeholder="Enter max 200 characters."
-          placeholderTextColor="red"
-        />
-        {/* <Text style={styles.titles}>Duration</Text>
-        <DurationDropDown /> */}
-        <Text style={styles.titles}>Assign To</Text>
-        {/* <DurationDropDown /> */}
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Member's page", {
-              setSelectedMember,
-              selectedMember,
-            })
-          }
-        >
-          <Text style={styles.inputStyle}>
-            {selectedMember ? selectedMember : "Enter member's name"}
-          </Text>
-        </TouchableOpacity>
+      <Text style={styles.titles}>Title</Text>
+      <TextInput
+        style={styles.inputStyle}
+        maxLength={50}
+        value={titleText}
+        onChangeText={(text) => {
+          setTitleText(text);
+          setTitleError(''); // Clear error message on change
+        }}
+        placeholder="Enter title max of 50 characters."
+        placeholderTextColor="red"
+      />
+      {titleError ? <Text style={styles.error}>{titleError}</Text> : null}
+
+      <Text style={styles.titles}>Description</Text>
+      <TextInput
+        style={styles.inputStyle}
+        value={descriptionText}
+        onChangeText={(text) => {
+          setDescriptionText(text);
+          setDescriptionError(''); // Clear error message on change
+        }}
+        maxLength={200}
+        placeholder="Enter max 200 characters."
+        placeholderTextColor="red"
+      />
+      {descriptionError ? <Text style={styles.error}>{descriptionError}</Text> : null}
         <View>
 
 
         <Text style={styles.titles}>Assign To Dropdown</Text>
           <TouchableOpacity style={styles.dropDownSelector} onPress={selectDropDown}>
             <Text style={{color:"red"}}>
-              Select User
+              {selectedUser === "" ? 'Select User' : selectedUser?.first_name}
             </Text>
             {
               !isDropDownSelected?           
@@ -111,15 +151,16 @@ const MainScreen = ({ navigation }) => {
               <Image source={require("./../../../../assets/dropup.png")} style={styles.dropDownIcon}/>
             }  
         </TouchableOpacity>
-                    {
+              {
               isDropDownSelected?
               <View style={styles.dropDownArea}>
                 <TextInput
-                  style={[styles.inputStyle, { marginTop: 10, marginHorizontal: 5 }]}
+                  style={[styles.inputStyle, { marginTop: 10, marginHorizontal: 5,color:"white" }]}
                   value={searchQuery}
                   onChangeText={(text) => setSearchQuery(text)}
                   maxLength={200}
                   placeholder="Search User"
+
                 />
                 {
                   isLoading?<Text>Loading...</Text>:
@@ -132,7 +173,16 @@ const MainScreen = ({ navigation }) => {
                       )}
                       renderItem={({ item, index }) => {
                         return (
-                          <TouchableOpacity key={index} onPress={() => console.log(item)} style={styles.userDetails}>
+                          <TouchableOpacity key={index} onPress={() => 
+                          {
+                            console.log(item)
+                            setSelectedUser(item)
+                            setIsDropDownSelected(false)
+
+                          }
+                        }
+                          
+                          style={styles.userDetails}>
                             {item.picture && item.picture.url ? (
                               <Image source={{ uri: item.picture.url }} style={styles.userImageDropDown} />
                             ) : (
@@ -157,7 +207,7 @@ const MainScreen = ({ navigation }) => {
         <DeadLineDatePicker />
         <TouchableOpacity
           style={styles.createButtonStyle}
-          onPress={() => navigation.push('Form screen')}
+          onPress={postNewGoal}
         >
           <Text style={styles.createButtonText}>Create</Text>
         </TouchableOpacity>
@@ -199,6 +249,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     fontSize: 12,
     borderWidth: 2,
+    color:"grey",
   },
   titles: {
     fontSize: 12,
@@ -267,6 +318,10 @@ const styles = StyleSheet.create({
     backgroundColor:"rgb(29,18,131)",
     borderRadius:50
   },
+  error:{
+    color: "red",
+    fontSize:10,
+  }
 
 });
 
