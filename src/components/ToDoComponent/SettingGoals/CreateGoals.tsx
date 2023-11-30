@@ -14,9 +14,9 @@ import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 import { AuthContext } from '../../../context/AuthContext';
 import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
 
-const MainScreen = ({ navigation }) => {
-  const [selectedMember, setSelectedMember] = React.useState('');
-  const [assignTo, setAssignTo] = useState('');
+const MainScreen = ({}) => {
+  // const [selectedMember, setSelectedMember] = React.useState('');
+  // const [assignTo, setAssignTo] = useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   const [isDropDownSelected, setIsDropDownSelected] = useState(false);
@@ -24,24 +24,17 @@ const MainScreen = ({ navigation }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const { loggedInUserData, goalsData } = useContext(AuthContext);
+  const { loggedInUserData } = useContext(AuthContext);
   const [titleError, setTitleError] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwOTkxNTA3LCJpYXQiOjE3MDA1NTk1MDcsImp0aSI6IjYxMWQwYTI4MTRiOTQ5NTlhZGVhZDFiMWE5YTljM2I3IiwidXNlcl9pZCI6IjFlNWZiNWEzLTM0ZWUtNDhlYy04ZjQyLTFhOTk5NGM5YjM2OCJ9.iwIdvBp07sKu3gO_IwnDfGKf-nQA5vDzDuxsQwHZ_EY";
-
-
-
-
-  const selectDropDown = ()=>{
+  const selectDropDown = () => {
     setIsDropDownSelected(!isDropDownSelected);
   };
 
   useEffect(() => {
     fetchData();
-    console.log(loggedInUserData, 'data in logged');
-    console.log(goalsData.user.token.access, 'data in logged');
-  }, []);
+  });
 
   const fetchData = async () => {
     const allUser = await getAllUsers(loggedInUserData?.token);
@@ -200,8 +193,8 @@ const MainScreen = ({ navigation }) => {
                           setSelectedUser(item);
                           setIsDropDownSelected(false);
                         }}
-
-                          style={styles.userDetails}>
+                        style={styles.userDetails}
+                      >
                         {item.picture && item.picture.url ? (
                           <Image
                             source={{ uri: item.picture.url }}
@@ -319,7 +312,8 @@ const styles = StyleSheet.create({
   userNameDropDown: {
     padding: 20,
     borderBottomColor: 'white',
-    width:'90%',alignSelf:'center'
+    width: '90%',
+    alignSelf: 'center',
   },
   userDetails: {
     display: 'flex',
@@ -344,7 +338,6 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 10,
   },
-
 });
 
 export default MainScreen;
