@@ -95,7 +95,11 @@ export const goalsAuth = async (token: string): Promise<any> => {
   }
 };
 
-export const PostGoal = async (title:string,description:string,assigned_to:string) => {
+export const PostGoal = async (
+  title: string,
+  description: string,
+  assigned_to: string,
+) => {
   try {
     const apiUrl = GoalsApi.POST_TODO_S;
     const goalData = {
@@ -105,7 +109,7 @@ export const PostGoal = async (title:string,description:string,assigned_to:strin
           title: title,
           description: description,
           created_by: 'EYNHBSK7riBKY775OOMB',
-          assignedTo:assigned_to
+          assignedTo: assigned_to,
         },
       },
     };
@@ -114,21 +118,17 @@ export const PostGoal = async (title:string,description:string,assigned_to:strin
       headers: {
         'Content-Type': 'application/vnd.api+json',
         //  Authorization: `Bearer ${token}`, // Use Authorization instead of Cookie
-
       },
     });
 
     // Handle the response
     console.log('POST API response:', response.data);
-    return response.data
+    return response.data;
   } catch (error) {
     // Handle errors
     console.error('Error in POST API:', error.message);
   }
 };
-
-
-
 
 export const getUsersStatus = async (token) => {
   try {
@@ -158,13 +158,10 @@ export const getAllUsers = async (token) => {
     });
     if (res?.data?.users) {
       return res?.data?.users;
-    } 
-    else {
+    } else {
       return 'Something went wrong';
     }
-  }
-  
-  catch (err) {
+  } catch (err) {
     return 'Something went wrong';
   }
 };
@@ -234,7 +231,6 @@ export const requestCameraPermission = async () => {
     console.warn(err);
   }
 };
-
 
 export const formatTimeToUnix = (date) => {
   const newDate = new Date(date);

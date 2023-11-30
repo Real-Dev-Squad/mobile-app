@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import 'react-native-gesture-handler';
 import {
   Text,
@@ -7,7 +7,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  FlatList,Alert
+  FlatList,
+  Alert,
 } from 'react-native';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 import { AuthContext } from '../../../context/AuthContext';
@@ -15,40 +16,40 @@ import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
 
 const MainScreen = ({ navigation }) => {
   const [selectedMember, setSelectedMember] = React.useState('');
-  const [assignTo,setAssignTo]=useState("")
+  const [assignTo, setAssignTo] = useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
-  const [isDropDownSelected, setIsDropDownSelected] =useState(false)
+  const [isDropDownSelected, setIsDropDownSelected] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [allUsers,setAllUsers] = useState([]);
-  const [selectedUser,setSelectedUser]=useState("")
+  const [allUsers, setAllUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const { loggedInUserData,goalsData } = useContext(AuthContext);
+  const { loggedInUserData, goalsData } = useContext(AuthContext);
   const [titleError, setTitleError] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
 
-  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwOTkxNTA3LCJpYXQiOjE3MDA1NTk1MDcsImp0aSI6IjYxMWQwYTI4MTRiOTQ5NTlhZGVhZDFiMWE5YTljM2I3IiwidXNlcl9pZCI6IjFlNWZiNWEzLTM0ZWUtNDhlYy04ZjQyLTFhOTk5NGM5YjM2OCJ9.iwIdvBp07sKu3gO_IwnDfGKf-nQA5vDzDuxsQwHZ_EY"
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwOTkxNTA3LCJpYXQiOjE3MDA1NTk1MDcsImp0aSI6IjYxMWQwYTI4MTRiOTQ5NTlhZGVhZDFiMWE5YTljM2I3IiwidXNlcl9pZCI6IjFlNWZiNWEzLTM0ZWUtNDhlYy04ZjQyLTFhOTk5NGM5YjM2OCJ9.iwIdvBp07sKu3gO_IwnDfGKf-nQA5vDzDuxsQwHZ_EY";
 
 
 
 
-  const selectDropDown =()=>{
-    setIsDropDownSelected(!isDropDownSelected)
-  }
-
-    useEffect(() => {
-        fetchData(); 
-        console.log(loggedInUserData,"data in logged")
-        console.log(goalsData.user.token.access,"data in logged")
-    },[]);
-
-  const fetchData = async () => {
-    const allUser = await getAllUsers (loggedInUserData?.token);
-    setAllUsers(allUser);
-    setIsLoading(false)
+  const selectDropDown = ()=>{
+    setIsDropDownSelected(!isDropDownSelected);
   };
 
- const postNewGoal = async () => {
+  useEffect(() => {
+    fetchData();
+    console.log(loggedInUserData, 'data in logged');
+    console.log(goalsData.user.token.access, 'data in logged');
+  }, []);
+
+  const fetchData = async () => {
+    const allUser = await getAllUsers(loggedInUserData?.token);
+    setAllUsers(allUser);
+    setIsLoading(false);
+  };
+
+  const postNewGoal = async () => {
     setTitleError('');
     setDescriptionError('');
 
@@ -66,25 +67,27 @@ const MainScreen = ({ navigation }) => {
 
     // Proceed with posting the goal
     // PostGoal(goalsData?.user?.token?.access, titleText, descriptionText);
-   const response = await PostGoal(titleText, descriptionText,selectedUser?.id)
-      if (response) {
-        if (selectedUser?.first_name){
-          Alert.alert('Success', `Task has been created and assigned to ${selectedUser?.first_name}`, [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ]);
-        }
-        else{
-          Alert.alert('Success', `Task has been created successfully`, [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ]);
-        }
-
+    const response = await PostGoal(
+      titleText,
+      descriptionText,
+      selectedUser?.id,
+    );
+    if (response) {
+      if (selectedUser?.first_name) {
+        Alert.alert(
+          'Success',
+          `Task has been created and assigned to ${selectedUser?.first_name}`,
+          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        );
+      } else {
+        Alert.alert('Success', 'Task has been created successfully', [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ]);
       }
- 
+    }
   };
 
   // console.log(selectedUser,"selectedUser")
-
 
   return (
     <View style={styles.container}>
@@ -110,98 +113,118 @@ const MainScreen = ({ navigation }) => {
         >
           Add New Goal
         </Text>
-      <Text style={styles.titles}>Title</Text>
-      <TextInput
-        style={styles.inputStyle}
-        maxLength={50}
-        value={titleText}
-        onChangeText={(text) => {
-          setTitleText(text);
-          setTitleError(''); // Clear error message on change
-        }}
-        placeholder="Enter title max of 50 characters."
-        placeholderTextColor="red"
-      />
-      {titleError ? <Text style={styles.error}>{titleError}</Text> : null}
+        <Text style={styles.titles}>Title</Text>
+        <TextInput
+          style={styles.inputStyle}
+          maxLength={50}
+          value={titleText}
+          onChangeText={(text) => {
+            setTitleText(text);
+            setTitleError(''); // Clear error message on change
+          }}
+          placeholder="Enter title max of 50 characters."
+          placeholderTextColor="red"
+        />
+        {titleError ? <Text style={styles.error}>{titleError}</Text> : null}
 
-      <Text style={styles.titles}>Description</Text>
-      <TextInput
-        style={styles.inputStyle}
-        value={descriptionText}
-        onChangeText={(text) => {
-          setDescriptionText(text);
-          setDescriptionError(''); // Clear error message on change
-        }}
-        maxLength={200}
-        placeholder="Enter max 200 characters."
-        placeholderTextColor="red"
-      />
-      {descriptionError ? <Text style={styles.error}>{descriptionError}</Text> : null}
+        <Text style={styles.titles}>Description</Text>
+        <TextInput
+          style={styles.inputStyle}
+          value={descriptionText}
+          onChangeText={(text) => {
+            setDescriptionText(text);
+            setDescriptionError(''); // Clear error message on change
+          }}
+          maxLength={200}
+          placeholder="Enter max 200 characters."
+          placeholderTextColor="red"
+        />
+        {descriptionError ? (
+          <Text style={styles.error}>{descriptionError}</Text>
+        ) : null}
         <View>
-
-
-        <Text style={styles.titles}>Assign To Dropdown</Text>
-          <TouchableOpacity style={styles.dropDownSelector} onPress={selectDropDown}>
-            <Text style={{color:"red"}}>
-              {selectedUser === "" ? 'Select User' : selectedUser?.first_name}
+          <Text style={styles.titles}>Assign To Dropdown</Text>
+          <TouchableOpacity
+            style={styles.dropDownSelector}
+            onPress={selectDropDown}
+          >
+            <Text style={{ color: 'red' }}>
+              {selectedUser === '' ? 'Select User' : selectedUser?.first_name}
             </Text>
-            {
-              !isDropDownSelected?           
-              <Image source={require("./../../../../assets/dropdown.png")} style={styles.dropDownIcon}/>:
-              <Image source={require("./../../../../assets/dropup.png")} style={styles.dropDownIcon}/>
-            }  
-        </TouchableOpacity>
-              {
-              isDropDownSelected?
-              <View style={styles.dropDownArea}>
-                <TextInput
-                  style={[styles.inputStyle, { marginTop: 10, marginHorizontal: 5,color:"white" }]}
-                  value={searchQuery}
-                  onChangeText={(text) => setSearchQuery(text)}
-                  maxLength={200}
-                  placeholder="Search User"
+            {!isDropDownSelected ? (
+              <Image
+                source={require('./../../../../assets/dropdown.png')}
+                style={styles.dropDownIcon}
+              />
+            ) : (
+              <Image
+                source={require('./../../../../assets/dropup.png')}
+                style={styles.dropDownIcon}
+              />
+            )}
+          </TouchableOpacity>
+          {isDropDownSelected ? (
+            <View style={styles.dropDownArea}>
+              <TextInput
+                style={[
+                  styles.inputStyle,
+                  { marginTop: 10, marginHorizontal: 5, color: 'white' },
+                ]}
+                value={searchQuery}
+                onChangeText={(text) => setSearchQuery(text)}
+                maxLength={200}
+                placeholder="Search User"
+              />
+              {isLoading ? (
+                <Text>Loading...</Text>
+              ) : (
+                <FlatList
+                  data={allUsers.filter(
+                    (item) =>
+                      item.first_name
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase()) ||
+                      item.last_name
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase()) ||
+                      item.github_id
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase()),
+                  )}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => {
+                          console.log(item);
+                          setSelectedUser(item);
+                          setIsDropDownSelected(false);
+                        }}
 
-                />
-                {
-                  isLoading?<Text>Loading...</Text>:
-                    <FlatList
-                      data={allUsers.filter(
-                        (item) =>
-                          item.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          item.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          item.github_id.toLowerCase().includes(searchQuery.toLowerCase())
-                      )}
-                      renderItem={({ item, index }) => {
-                        return (
-                          <TouchableOpacity key={index} onPress={() => 
-                          {
-                            console.log(item)
-                            setSelectedUser(item)
-                            setIsDropDownSelected(false)
-
-                          }
-                        }
-                          
                           style={styles.userDetails}>
-                            {item.picture && item.picture.url ? (
-                              <Image source={{ uri: item.picture.url }} style={styles.userImageDropDown} />
-                            ) : (
-                              <View style={styles.defaultImageContainer}>
-                                <Text style={styles.defaultImageText}>
-                                  {item.first_name.charAt(0)} {item.last_name.charAt(0)}
-                                </Text>
-                              </View>
-                            )}
-                            <Text style={styles.userNameDropDown}>{item.first_name} {item.last_name}</Text>
-                          </TouchableOpacity>
-                        );
-                      }}
-                    />
-                }
-
+                        {item.picture && item.picture.url ? (
+                          <Image
+                            source={{ uri: item.picture.url }}
+                            style={styles.userImageDropDown}
+                          />
+                        ) : (
+                          <View style={styles.defaultImageContainer}>
+                            <Text style={styles.defaultImageText}>
+                              {item.first_name.charAt(0)}{' '}
+                              {item.last_name.charAt(0)}
+                            </Text>
+                          </View>
+                        )}
+                        <Text style={styles.userNameDropDown}>
+                          {item.first_name} {item.last_name}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
+              )}
             </View>
-            :null
-            }
+          ) : null}
         </View>
         <Text style={styles.titles}>DeadLine</Text>
         <DeadLineDatePicker />
@@ -249,7 +272,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     fontSize: 12,
     borderWidth: 2,
-    color:"grey",
+    color: 'grey',
   },
   titles: {
     fontSize: 12,
@@ -272,56 +295,55 @@ const styles = StyleSheet.create({
     backgroundColor: '#2827CC',
   },
   titleText: {},
-  dropDownSelector:{
+  dropDownSelector: {
     padding: 10,
     borderRadius: 5,
     elevation: 2,
     fontSize: 12,
     borderWidth: 2,
-    height:40,
-    display:"flex",
-    flexDirection:"row",
-    justifyContent:"space-between"
+    height: 40,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  dropDownIcon:{
-    width:20,
-    height:20,
+  dropDownIcon: {
+    width: 20,
+    height: 20,
   },
-  dropDownArea:{
-    height:250,
-    backgroundColor:"grey",
-    marginTop:10,
-    borderRadius:5
+  dropDownArea: {
+    height: 250,
+    backgroundColor: 'grey',
+    marginTop: 10,
+    borderRadius: 5,
   },
-  userNameDropDown:{
-    padding:20,
-    borderBottomColor:'white',
-    width:"90%",alignSelf:"center"
+  userNameDropDown: {
+    padding: 20,
+    borderBottomColor: 'white',
+    width:'90%',alignSelf:'center'
   },
-  userDetails:{
-    display:"flex",
-    flexDirection:"row",
-    marginLeft:10
+  userDetails: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginLeft: 10,
   },
-  userImageDropDown:{
-    width:50,
-    height:50,
-    borderRadius:50
-
+  userImageDropDown: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
   },
-  defaultImageContainer:{
-    width:50,
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-    height:50,
-    backgroundColor:"rgb(29,18,131)",
-    borderRadius:50
+  defaultImageContainer: {
+    width: 50,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    backgroundColor: 'rgb(29,18,131)',
+    borderRadius: 50,
   },
-  error:{
-    color: "red",
-    fontSize:10,
-  }
+  error: {
+    color: 'red',
+    fontSize: 10,
+  },
 
 });
 

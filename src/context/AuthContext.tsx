@@ -26,9 +26,8 @@ type authProviderProps = {
 export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loggedInUserData, setLoggedInUserData] =
-  useState<loggedInUserType | null>(null);
-  const [goalsData, setGoalsData] =
-  useState<loggedInUserType | null>(null);
+    useState<loggedInUserType | null>(null);
+  const [goalsData, setGoalsData] = useState<loggedInUserType | null>(null);
   useEffect(() => {
     getData('userData').then((res) => {
       console.log('res in auth context', res);
@@ -36,7 +35,7 @@ export const AuthProvider: FC<authProviderProps> = ({ children }) => {
     });
     getData('userGoalsData').then((res) => {
       console.log('res in goals data', res);
-      setGoalsData(res)
+      setGoalsData(res);
     });
   }, []);
 

@@ -1,19 +1,25 @@
-import { Text, TouchableOpacity, View, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 import Data from './Data';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
-import { useNavigation,useIsFocused } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 const TodoComponent = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
   // const [changed, setChanged] = useState<boolean>(false);
-  const [loader, setLoader] =useState<boolean>(true);
+  const [loader, setLoader] = useState<boolean>(true);
   const navigation = useNavigation();
-    const isFocused = useIsFocused();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
@@ -25,7 +31,7 @@ const TodoComponent = () => {
     const todos = await fetch(GoalsApi.GET_TODO_S);
     const todosJsonData = await todos.json();
     setTasks([...Data.data, ...todosJsonData.data]);
-        setLoader(false)
+    setLoader(false);
   };
   const changeCardFunction = () => {
     // setChanged(true);
@@ -63,34 +69,37 @@ const TodoComponent = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      {
-        loader?<ActivityIndicator size="large"/>:
+      {loader ? (
+        <ActivityIndicator size="large" />
+      ) : (
         <View style={{ paddingVertical: 35 }}>
-        {tasks?.length === 0 ? (
-          <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
-        ) : (
-          tasks
-            ?.map((task) => {
-              const { title, assigned_by } = task?.attributes;
-              return (
-                <Card
-                  posStyle={tasks.indexOf(task) !== 0 ? 'absolute' : 'relative'}
-                  key={task.id}
-                  item={task}
-                  changecard={changeCardFunction}
-                  removeCard={removeCard}
-                  disabled={disabled}
-                  setDisabled={setDisabled}
-                  title={title}
-                  assigned_by={assigned_by}
-                />
-              );
-            })
-            .reverse()
-        )}
-        <View style={TodoStyles.shodowcard} />
-      </View>
-      }
+          {tasks?.length === 0 ? (
+            <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
+          ) : (
+            tasks
+              ?.map((task) => {
+                const { title, assigned_by } = task?.attributes;
+                return (
+                  <Card
+                    posStyle={
+                      tasks.indexOf(task) !== 0 ? 'absolute' : 'relative'
+                    }
+                    key={task.id}
+                    item={task}
+                    changecard={changeCardFunction}
+                    removeCard={removeCard}
+                    disabled={disabled}
+                    setDisabled={setDisabled}
+                    title={title}
+                    assigned_by={assigned_by}
+                  />
+                );
+              })
+              .reverse()
+          )}
+          <View style={TodoStyles.shodowcard} />
+        </View>
+      )}
     </View>
   );
 };
