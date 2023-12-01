@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
-import Data from './Data';
+// import Data from './Data';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 
