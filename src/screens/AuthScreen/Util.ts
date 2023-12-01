@@ -98,6 +98,7 @@ export const goalsAuth = async (token: string): Promise<any> => {
 export const PostGoal = async (
   title: string,
   description: string,
+  created_by: string,
   assigned_to: string,
 ) => {
   try {
@@ -108,7 +109,7 @@ export const PostGoal = async (
         attributes: {
           title: title,
           description: description,
-          created_by: 'EYNHBSK7riBKY775OOMB',
+          created_by: created_by,
           assignedTo: assigned_to,
         },
       },

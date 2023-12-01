@@ -178,7 +178,11 @@ const Card = ({
               </View>
               <View style={CardStyles.assignedTextContainer}>
                 <Text style={{ fontWeight: 'bold' }}>Assigned By: </Text>
-                <Text>{assigned_by}</Text>
+                {assigned_by === '' ? (
+                  <Text style={{ color: 'gray' }}>Unknown</Text>
+                ) : (
+                  <Text style={{ color: 'grey' }}>{assigned_by}</Text>
+                )}
               </View>
             </View>
           </Animated.View>

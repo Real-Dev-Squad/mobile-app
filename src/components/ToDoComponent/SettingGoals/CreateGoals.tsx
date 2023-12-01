@@ -14,7 +14,7 @@ import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 import { AuthContext } from '../../../context/AuthContext';
 import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
 
-const MainScreen = ({}) => {
+const MainScreen = ({ navigation }) => {
   // const [selectedMember, setSelectedMember] = React.useState('');
   // const [assignTo, setAssignTo] = useState('');
   const [titleText, setTitleText] = useState('');
@@ -38,6 +38,7 @@ const MainScreen = ({}) => {
 
   const fetchData = async () => {
     const allUser = await getAllUsers(loggedInUserData?.token);
+    console.log(loggedInUserData);
     setAllUsers(allUser);
     setIsLoading(false);
   };
@@ -63,6 +64,7 @@ const MainScreen = ({}) => {
     const response = await PostGoal(
       titleText,
       descriptionText,
+      loggedInUserData?.id,
       selectedUser?.id,
     );
     if (response) {
@@ -70,11 +72,11 @@ const MainScreen = ({}) => {
         Alert.alert(
           'Success',
           `Task has been created and assigned to ${selectedUser?.first_name}`,
-          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+          [{ text: 'OK', onPress: () => navigation.navigate('GoalsScreen') }],
         );
       } else {
         Alert.alert('Success', 'Task has been created successfully', [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
+          { text: 'OK', onPress: () => navigation.navigate('GoalsScreen') },
         ]);
       }
     }
