@@ -29,8 +29,9 @@ const TodoComponent = () => {
 
   const getTodos = async () => {
     const todos = await fetch(GoalsApi.GET_TODO_S);
+    console.log(todos,"todos")
     const todosJsonData = await todos.json();
-    setTasks([...Data.data, ...todosJsonData.data]);
+    setTasks([...todosJsonData.data]);
     setLoader(false);
   };
   const changeCardFunction = () => {
