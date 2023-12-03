@@ -111,9 +111,8 @@ const AuthScreen = () => {
       setLoading(true);
       const res = await getUserData(token);
       console.log('auth screen');
-      const goals = await goalsAuth(
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJRWmliTUhqSVNZQXhUM3VpQUowZiIsImlhdCI6MTY5OTM0NTQxNCwiZXhwIjoxNzMwNDQ5NDE0fQ.haUjRYueRBt5fcmyfyi-ii2D6j6kWLpTnUiiciYUhxkobYfMlT-sFqv_2_O16Ru8yhkFYgTh446r4RD7JBnlupr4AHlfMkYl2vCqUrnLYz_Hrw3J2ahUBuAB9KnbF8zdntoor7Zu4gqSJnh2I-v-qUMs4bprVckEaaDLvt71M4U',
-      );
+      // this needs to be changed to prod token
+      const goals = await goalsAuth('token from prod');
       await storeData('userData', JSON.stringify(res));
       await storeData('userGoalsData', JSON.stringify(goals));
       setLoggedInUserData({

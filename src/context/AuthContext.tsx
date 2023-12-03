@@ -30,11 +30,9 @@ export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   const [goalsData, setGoalsData] = useState<loggedInUserType | null>(null);
   useEffect(() => {
     getData('userData').then((res) => {
-      console.log('res in auth context', res);
       setLoggedInUserData(res);
     });
     getData('userGoalsData').then((res) => {
-      console.log('res in goals data', res);
       setGoalsData(res);
     });
   }, []);

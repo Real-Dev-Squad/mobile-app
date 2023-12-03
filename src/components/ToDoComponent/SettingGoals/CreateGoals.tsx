@@ -15,8 +15,6 @@ import { AuthContext } from '../../../context/AuthContext';
 import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
 
 const MainScreen = ({ navigation }) => {
-  // const [selectedMember, setSelectedMember] = React.useState('');
-  // const [assignTo, setAssignTo] = useState('');
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   const [isDropDownSelected, setIsDropDownSelected] = useState(false);
@@ -38,7 +36,6 @@ const MainScreen = ({ navigation }) => {
 
   const fetchData = async () => {
     const allUser = await getAllUsers(loggedInUserData?.token);
-    console.log(loggedInUserData);
     setAllUsers(allUser);
     setIsLoading(false);
   };
@@ -81,8 +78,6 @@ const MainScreen = ({ navigation }) => {
       }
     }
   };
-
-  // console.log(selectedUser,"selectedUser")
 
   return (
     <View style={styles.container}>
@@ -191,7 +186,6 @@ const MainScreen = ({ navigation }) => {
                       <TouchableOpacity
                         key={index}
                         onPress={() => {
-                          console.log(item);
                           setSelectedUser(item);
                           setIsDropDownSelected(false);
                         }}

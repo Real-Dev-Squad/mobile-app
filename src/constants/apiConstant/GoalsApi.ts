@@ -1,4 +1,3 @@
-// const baseUrl="https://backend-goals-production.up.railway.app/api/"
 const baseUrl = 'https://staging-goals-api.realdevsquad.com/api/';
 
 const GoalsApi = {
