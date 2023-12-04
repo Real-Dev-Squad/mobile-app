@@ -27,7 +27,6 @@ const TodoComponent = () => {
 
   const getTodos = async () => {
     const todos = await fetch(GoalsApi.GET_TODO_S);
-    console.log(todos, 'todos');
     const todosJsonData = await todos.json();
     setTasks([...todosJsonData.data]);
     setLoader(false);
@@ -91,7 +90,7 @@ const TodoComponent = () => {
                     disabled={disabled}
                     setDisabled={setDisabled}
                     title={title}
-                    assigned_by={assigned_by === '' ? 'Unknown' : assigned_by}
+                    assigned_by={assigned_by}
                   />
                 );
               })

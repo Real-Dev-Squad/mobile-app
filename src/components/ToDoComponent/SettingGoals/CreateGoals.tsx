@@ -13,6 +13,8 @@ import {
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 import { AuthContext } from '../../../context/AuthContext';
 import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
+import dropUpImage from './../../../../assets/dropup.png';
+import dropDownImage from './../../../../assets/dropdown.png';
 
 const MainScreen = ({ navigation }) => {
   const [titleText, setTitleText] = useState('');
@@ -28,6 +30,11 @@ const MainScreen = ({ navigation }) => {
 
   const selectDropDown = () => {
     setIsDropDownSelected(!isDropDownSelected);
+  };
+
+  const handleDropDownPress = (item) => {
+    setSelectedUser(item);
+    setIsDropDownSelected(false);
   };
 
   useEffect(() => {
@@ -142,24 +149,15 @@ const MainScreen = ({ navigation }) => {
               {selectedUser === '' ? 'Select User' : selectedUser?.first_name}
             </Text>
             {!isDropDownSelected ? (
-              <Image
-                source={require('./../../../../assets/dropdown.png')}
-                style={styles.dropDownIcon}
-              />
+              <Image source={dropDownImage} style={styles.dropDownIcon} />
             ) : (
-              <Image
-                source={require('./../../../../assets/dropup.png')}
-                style={styles.dropDownIcon}
-              />
+              <Image source={dropUpImage} style={styles.dropDownIcon} />
             )}
           </TouchableOpacity>
           {isDropDownSelected ? (
             <View style={styles.dropDownArea}>
               <TextInput
-                style={[
-                  styles.inputStyle,
-                  { marginTop: 10, marginHorizontal: 5, color: 'white' },
-                ]}
+                style={[styles.inputStyle, styles.searchBar]}
                 value={searchQuery}
                 onChangeText={(text) => setSearchQuery(text)}
                 maxLength={200}
@@ -185,10 +183,7 @@ const MainScreen = ({ navigation }) => {
                     return (
                       <TouchableOpacity
                         key={index}
-                        onPress={() => {
-                          setSelectedUser(item);
-                          setIsDropDownSelected(false);
-                        }}
+                        onPress={() => handleDropDownPress(item)}
                         style={styles.userDetails}
                       >
                         {item.picture && item.picture.url ? (
@@ -333,6 +328,11 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     fontSize: 10,
+  },
+  searchBar: {
+    marginTop: 10,
+    marginHorizontal: 5,
+    color: 'white',
   },
 });
 
