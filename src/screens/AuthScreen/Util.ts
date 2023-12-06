@@ -2,6 +2,7 @@ import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
+import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
 export const getUserData = async (token: string) => {
   try {
@@ -80,6 +81,56 @@ export const updateMarkYourSelfAs_ = async (markStatus: string) => {
   return res.data.status;
 };
 
+export const goalsAuth = async (token: string): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GOALS_AUTH, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // Use Authorization instead of Cookie
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const PostGoal = async (
+  title: string,
+  description: string,
+  created_by: string,
+  assigned_to: string,
+) => {
+  try {
+    const apiUrl = GoalsApi.POST_TODO_S;
+    const goalData = {
+      data: {
+        type: 'Goal',
+        attributes: {
+          title: title,
+          description: description,
+          created_by: created_by,
+          assignedTo: assigned_to,
+        },
+      },
+    };
+
+    const response = await axios.post(apiUrl, goalData, {
+      headers: {
+        'Content-Type': 'application/vnd.api+json',
+        //  Authorization: `Bearer ${token}`, // Use Authorization instead of Cookie
+      },
+    });
+
+    // Handle the response
+    console.log('POST API response:', response.data);
+    return response.data;
+  } catch (error) {
+    // Handle errors
+    console.error('Error in POST API:', error.message);
+  }
+};
+
 export const getUsersStatus = async (token) => {
   try {
     const res = await axios.get(HomeApi.GET_USER_STATUS, {
@@ -108,13 +159,10 @@ export const getAllUsers = async (token) => {
     });
     if (res?.data?.users) {
       return res?.data?.users;
-    } 
-    else {
+    } else {
       return 'Something went wrong';
     }
-  }
-  
-  catch (err) {
+  } catch (err) {
     return 'Something went wrong';
   }
 };
