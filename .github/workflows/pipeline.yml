@@ -4,6 +4,19 @@ on:
     branches:
       - main
 jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+      - name: Prepare Outputs
+        id: prepare-step
+        run: |
+          echo "::set-output name=branch_name::${GITHUB_REF_SLUG}";
+    outputs:
+      branch_name: ${{ steps.prepare-step.outputs.branch_name }}
   build-testing:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-20.04
