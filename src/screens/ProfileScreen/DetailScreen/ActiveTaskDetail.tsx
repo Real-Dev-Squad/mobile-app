@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ProgressModal from '../../../components/Modal/ProgressModal';
-import { getDateAndTimeFromUnix } from '../../AuthScreen/Util';
+// import { getDateAndTimeFromUnix } from '../../AuthScreen/Util';
 
 const ActiveTaskDetail = () => {
   const route = useRoute();
@@ -37,19 +37,20 @@ const ActiveTaskDetail = () => {
           task.status,
         )}`}</Text>
 
-        <Text style={styles.buttonTextStyle}>
+        {/* <Text style={styles.buttonTextStyle}>
           {`Started On: ${getDateAndTimeFromUnix(task.startedOn)}`}
         </Text>
         <Text
           style={styles.buttonTextStyle}
         >{`Ends On: ${getDateAndTimeFromUnix(task.endsOn)}`}</Text>
-
+ */}
         <Text style={styles.titles} />
 
         <TouchableOpacity
           style={styles.buttonStyle}
           onPress={() =>
-            navigation.navigate('ExtensionRequest', { endsOn: task.endsOn })
+            // navigation.navigate('ExtensionRequest', { endsOn: task.endsOn })
+            console.log('here')
           }
         >
           <Text style={styles.buttonTextStyle}>Create Extension</Text>
