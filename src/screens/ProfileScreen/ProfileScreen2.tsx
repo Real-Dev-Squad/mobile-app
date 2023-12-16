@@ -16,15 +16,18 @@ import { Tabs } from 'react-native-collapsible-tab-view';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { fetchContribution } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
+import UserData from './User Data/UserData';
 
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTasks, setActiveTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { loggedInUserData } = useContext(AuthContext);
 
   // const navigation = useNavigation();
   useFocusEffect(
     useCallback(() => {
+      setLoading(true);
       (async () => {
         const userName = loggedInUserData?.username;
         const contributionResponse = await fetchContribution(userName);
@@ -33,13 +36,19 @@ export const ActiveScreen = () => {
             (item) => item.task.status !== 'COMPLETED',
           ),
         );
+        setLoading(false);
       })();
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUserData?.username]),
   );
   return (
     <View style={styles.profile}>
-      <DisplayContribution tasks={activeTasks} navigation={useNavigation} />
+      {loading ? (
+        <Text style={{ color: 'black' }}>Loading...</Text>
+      ) : (
+        <DisplayContribution tasks={activeTasks} />
+      )}
     </View>
   );
 };
