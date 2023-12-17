@@ -104,4 +104,4 @@ All PRs should have 100% test coverage. Before submitting PRs, run yarn test to 
 - For Android: `yarn react-native run-android`
 - For iOS: yarn `react-native run-ios`
 
-If the above commands fail, try building the Android app from Android Studio and the iOS app from Xcode.
+If the above commands fail, try building the Android app from Android Studio and the iOS app from Xcode
