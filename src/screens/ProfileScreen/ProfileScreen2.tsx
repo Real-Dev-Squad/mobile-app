@@ -16,6 +16,7 @@ import { Tabs } from 'react-native-collapsible-tab-view';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { fetchContribution } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
+import UserData from './User Data/UserData';
 
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
