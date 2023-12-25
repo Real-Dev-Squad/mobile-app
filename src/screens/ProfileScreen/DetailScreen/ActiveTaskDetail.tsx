@@ -10,7 +10,7 @@ const ActiveTaskDetail = () => {
   const { task } = route.params;
   const navigation = useNavigation();
 
-  console.log(task.percentCompleted, 'percentCompleted');
+  console.log(task, 'percentCompleted');
 
   const formatStatusText = (status) => {
     // Split the status string by underscore

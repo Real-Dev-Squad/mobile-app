@@ -2,6 +2,7 @@ import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
+import moment from 'moment';
 
 export const getUserData = async (token: string) => {
   try {
@@ -40,11 +41,23 @@ export const fetchContribution = async (userName: string): Promise<any> => {
   }
 };
 
-export const fetchActiveTasks = async (userName: string): Promise<any> => {
+// export const fetchActiveContributions = async (id: string): Promise<any> => {
+//   try {
+//     const response = await axios.get(urls.GET_ACTIVE_TASK, {
+//       headers: {
+//         cookie: '',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     return null;
+//   }
+// };
+export const fetchActiveTasks = async (token: string): Promise<any> => {
   try {
-    const response = await axios.get(urls.GET_ACTIVE_TASKS + userName, {
+    const response = await axios.get(urls.GET_ACTIVE_TASK, {
       headers: {
-        Cookie: '',
+        cookie: `rds-session=${token}`,
       },
     });
     return response.data;
@@ -108,13 +121,10 @@ export const getAllUsers = async (token) => {
     });
     if (res?.data?.users) {
       return res?.data?.users;
-    } 
-    else {
+    } else {
       return 'Something went wrong';
     }
-  }
-  
-  catch (err) {
+  } catch (err) {
     return 'Something went wrong';
   }
 };
@@ -254,4 +264,10 @@ export const calculateISODateFormat = (isoDateString) => {
 
 export const parseISODate = (isoDateString) => {
   return new Date(isoDateString);
+};
+
+export const formatTimeAgo = (timestamp) => {
+  const currentDate = moment();
+  const endDate = moment.unix(timestamp);
+  return endDate.from(currentDate);
 };

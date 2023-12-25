@@ -14,38 +14,60 @@ import All from './TaskScreens/All';
 import { Tabs } from 'react-native-collapsible-tab-view';
 
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { fetchContribution } from '../AuthScreen/Util';
+import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
 
+const dummyData = [
+  {
+    id: '0CZnoSLruyIihibT1F6m',
+    percentCompleted: 100,
+    endsOn: 1689206400,
+    isNoteworthy: true,
+    lossRate: { dinero: 250, neelam: 0 },
+    type: 'feature',
+    priority: 'HIGH',
+    completionAward: { dinero: 4000, neelam: 0 },
+    title: 'Test feature Test Test feature Test ',
+    createdAt: 1676944234,
+    createdBy: 'ankush',
+    assignee: 'shreya',
+    startedOn: 1676944233.827,
+    status: 'ASSIGNED',
+    updatedAt: 1702051343,
+    assigneeId: 'T7IL7MB8YriniTw4bt39',
+  },
+];
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTasks, setActiveTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const { loggedInUserData } = useContext(AuthContext);
 
-  // const navigation = useNavigation();
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
       (async () => {
-        const userName = loggedInUserData?.username;
-        const contributionResponse = await fetchContribution(userName);
-        setActiveTasks(
-          contributionResponse.all.filter(
-            (item) => item.task.status !== 'COMPLETED',
-          ),
+        const token = loggedInUserData?.token;
+
+        const tasksRes = await fetchActiveTasks(token);
+        const dummyTasks = [...tasksRes, ...dummyData];
+        const activeTaskRes = dummyTasks.filter(
+          (item) => item.status !== 'COMPLETED',
         );
+        setActiveTasks(activeTaskRes);
         setLoading(false);
       })();
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loggedInUserData?.username]),
+    }, [loggedInUserData?.token]),
   );
   return (
     <View style={styles.profile}>
       {loading ? (
-        <Text style={{ color: 'black' }}>Loading...</Text>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
       ) : (
         <DisplayContribution tasks={activeTasks} />
       )}
@@ -128,12 +150,12 @@ const ProfileScreen2: React.FC = ({ navigation }) => {
   return (
     <Tabs.Container renderHeader={ProfileScreen}>
       <Tabs.Tab name="Active">
-        <Tabs.ScrollView>
+        <Tabs.ScrollView style={{ flex: 1 }}>
           <ActiveScreen navigation={navigation} />
         </Tabs.ScrollView>
       </Tabs.Tab>
       <Tabs.Tab name="All">
-        <Tabs.ScrollView>
+        <Tabs.ScrollView style={{ flex: 1 }}>
           <All />
         </Tabs.ScrollView>
       </Tabs.Tab>
@@ -143,8 +165,14 @@ const ProfileScreen2: React.FC = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   profile: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingContainer: {
+    marginTop: 20,
+  },
+  loadingText: {
+    color: 'black',
   },
 });
 
