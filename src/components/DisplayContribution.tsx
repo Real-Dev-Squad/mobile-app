@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import moment from 'moment';
 import { TouchableOpacity } from 'react-native';
 // import Modal from 'react-native-modal';
 import Collapsible from 'react-native-collapsible';
 import ProgressBar from './ProgressBar';
+import { displayContributionType, taskType } from './UserContibution/Type';
 
-const DisplayContribution = ({ tasks }) => {
+const DisplayContribution = ({
+  tasks,
+  expand,
+}: {
+  tasks: taskType;
+  expand: boolean;
+}) => {
   const [isCollapsed, setCollapsed] = useState(true);
 
   const formatTimeAgo = (timestamp: number) => {
@@ -15,7 +22,7 @@ const DisplayContribution = ({ tasks }) => {
     return endDate.from(currentDate);
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item: displayContributionType }) => {
     return (
       <View style={styles.card}>
         <Text style={styles.title}>{item.title}</Text>
@@ -34,11 +41,14 @@ const DisplayContribution = ({ tasks }) => {
           <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
-          <Text style={styles.expandButton}>
-            {isCollapsed ? 'Expand' : 'Collapse'}
-          </Text>
-        </TouchableOpacity>
+        {expand && (
+          <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
+            <Text style={styles.expandButton}>
+              {isCollapsed ? 'Expand' : 'Collapse'}
+            </Text>
+          </TouchableOpacity>
+        )}
+
         <Collapsible collapsed={isCollapsed}>
           <View style={styles.expandableContent}>
             <ProgressBar />
