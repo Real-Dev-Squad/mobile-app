@@ -15,4 +15,6 @@ export const urls = {
   LINKEDIN: 'https://www.linkedin.com/in/',
   GET_ACTIVE_TASK: 'https://api.realdevsquad.com/tasks/self',
   GET_ALL_TASK: `${PROD_BASE_URL}/tasks`,
+
+  GOALS_AUTH: 'https://staging-api.realdevsquad.com/goals/token',
 };
