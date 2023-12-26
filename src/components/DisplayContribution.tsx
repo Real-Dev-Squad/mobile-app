@@ -34,11 +34,11 @@ const DisplayContribution = ({ tasks }) => {
           <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
+        {/* <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
           <Text style={styles.expandButton}>
             {isCollapsed ? 'Expand' : 'Collapse'}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Collapsible collapsed={isCollapsed}>
           <View style={styles.expandableContent}>
             <ProgressBar />

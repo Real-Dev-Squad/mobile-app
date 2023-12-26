@@ -43,11 +43,7 @@ export const ActiveScreen = () => {
   );
   return (
     <View style={styles.profile}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <DisplayContribution tasks={activeTasks} expand={true} />
-      )}
+      {loading ? <Loader /> : <DisplayContribution tasks={activeTasks} />}
     </View>
   );
 };
