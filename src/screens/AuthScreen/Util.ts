@@ -54,6 +54,18 @@ export const fetchContribution = async (userName: string): Promise<any> => {
 //     return null;
 //   }
 // };
+export const fetchAllTasks = async (token: string): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GET_ALL_TASK, {
+      headers: {
+        cookie: `rds-session=${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
 export const fetchActiveTasks = async (token: string): Promise<any> => {
   try {
     const response = await axios.get(urls.GET_ACTIVE_TASK, {
