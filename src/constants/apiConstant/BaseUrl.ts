@@ -1,1 +1,1 @@
-export const PROD_BASE_URL = 'https://api.realdevsquad';
+export const PROD_BASE_URL = 'https://api.realdevsquad.com';

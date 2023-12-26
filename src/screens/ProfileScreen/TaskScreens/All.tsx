@@ -1,9 +1,10 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
 import { fetchAllTasks } from '../../AuthScreen/Util';
+import Loader from '../../../components/Loader';
 
 const All = () => {
   const [allTask, setAllTask] = useState([]);
@@ -33,9 +34,7 @@ const All = () => {
   return (
     <View style={styles.profile}>
       {loading ? (
-        <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading...</Text>
-        </View>
+        <Loader />
       ) : (
         <DisplayContribution tasks={allTask} expand={false} />
       )}
@@ -46,12 +45,6 @@ const styles = StyleSheet.create({
   profile: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  loadingContainer: {
-    marginTop: 20,
-  },
-  loadingText: {
-    color: 'black',
   },
 });
 export default All;

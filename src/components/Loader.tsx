@@ -1,27 +1,33 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
-//change the color of the loader according to your choice
-const colorString = '#E30062';
-
-export default function Loader() {
+function Loader() {
+  // TODO: revert once UI gets fix
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size={50} color={colorString} />
+    <View style={styles.loadingContainer}>
+      <Text style={styles.loadingText}>Loading...</Text>
     </View>
   );
 }
 
+export default Loader;
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    position: 'absolute',
-    zIndex: 50,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
+    flex: 1,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: 'absolute',
+    zIndex: 1,
+  },
+  loadingContainer: {
+    marginTop: 20,
+  },
+  loadingText: {
+    color: 'black',
   },
 });
