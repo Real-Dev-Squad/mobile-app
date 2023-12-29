@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import ProgressBar from './ProgressBar';
 import { displayContributionType, taskType } from './UserContibution/Type';
+import { useNavigation } from '@react-navigation/native';
 
 const DisplayContribution = ({
   tasks,
@@ -15,16 +16,20 @@ const DisplayContribution = ({
   expand: boolean;
 }) => {
   const [isCollapsed, setCollapsed] = useState(true);
+  const navigation = useNavigation();
 
   const formatTimeAgo = (timestamp: number) => {
     const currentDate = moment();
     const endDate = moment.unix(timestamp);
     return endDate.from(currentDate);
   };
-
+  const navigationHandler = () => {
+    console.log('here');
+    navigation.navigate('AllTaskDetail');
+  };
   const renderItem = ({ item }: { item: displayContributionType }) => {
     return (
-      <View style={styles.card}>
+      <TouchableOpacity style={styles.card} onPress={navigationHandler}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>
           Created By: <Text style={styles.createdBy}>{item.createdBy}</Text>
@@ -54,7 +59,7 @@ const DisplayContribution = ({
             <ProgressBar />
           </View>
         </Collapsible>
-      </View>
+      </TouchableOpacity>
     );
   };
 

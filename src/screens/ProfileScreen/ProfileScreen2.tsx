@@ -13,7 +13,7 @@ import All from './TaskScreens/All';
 // import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
 
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
@@ -69,7 +69,7 @@ export const ActiveScreen = () => {
           <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
-        <DisplayContribution tasks={activeTasks} />
+        <DisplayContribution tasks={activeTasks} expand={false} />
       )}
     </View>
   );
