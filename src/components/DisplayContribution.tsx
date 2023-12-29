@@ -24,7 +24,6 @@ const DisplayContribution = ({
     return endDate.from(currentDate);
   };
   const navigationHandler = () => {
-    console.log('here');
     navigation.navigate('AllTaskDetail');
   };
   const renderItem = ({ item }: { item: displayContributionType }) => {
