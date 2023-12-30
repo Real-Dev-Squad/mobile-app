@@ -140,8 +140,9 @@ const MainScreen = ({ navigation }) => {
           <Text style={styles.error}>{descriptionError}</Text>
         ) : null}
         <View>
-          <Text style={styles.titles}>Assign To Dropdown</Text>
+          <Text style={styles.titles}>Assign To: </Text>
           <TouchableOpacity
+            testID="dropdown"
             style={styles.dropDownSelector}
             onPress={selectDropDown}
           >
@@ -155,7 +156,7 @@ const MainScreen = ({ navigation }) => {
             )}
           </TouchableOpacity>
           {isDropDownSelected ? (
-            <View style={styles.dropDownArea}>
+            <View testID="user-container" style={styles.dropDownArea}>
               <TextInput
                 style={[styles.inputStyle, styles.searchBar]}
                 value={searchQuery}
@@ -213,6 +214,7 @@ const MainScreen = ({ navigation }) => {
         <Text style={styles.titles}>DeadLine</Text>
         <DeadLineDatePicker />
         <TouchableOpacity
+          testID="createButton"
           style={styles.createButtonStyle}
           onPress={postNewGoal}
         >
