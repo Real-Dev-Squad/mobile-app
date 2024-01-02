@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import ButtonWidget from '../../components/ButtonWidget';
@@ -10,10 +10,43 @@ import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import { useSelector, useDispatch } from 'react-redux';
 import All from './TaskScreens/All';
-// import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
-import ActiveScreen from './TaskScreens/ActiveTask';
+
+import { useFocusEffect } from '@react-navigation/native';
+import { fetchActiveTasks } from '../AuthScreen/Util';
+import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
+import Loader from '../../components/Loader';
+
+export const ActiveScreen = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeTasks, setActiveTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { loggedInUserData } = useContext(AuthContext);
+
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+      (async () => {
+        const token = loggedInUserData?.token;
+
+        const tasksRes = await fetchActiveTasks(token);
+        const activeTaskRes = tasksRes.filter(
+          (item) => item.status !== 'COMPLETED',
+        );
+        setActiveTasks(activeTaskRes);
+        setLoading(false);
+      })();
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loggedInUserData?.token]),
+  );
+  return (
+    <View style={styles.profile}>
+      {loading ? <Loader /> : <DisplayContribution tasks={activeTasks} />}
+    </View>
+  );
+};
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -86,21 +119,28 @@ const ProfileScreen = () => {
   );
 };
 
-const ProfileScreen2: React.FC = () => {
+const ProfileScreen2: React.FC = ({ navigation }) => {
   return (
     <Tabs.Container renderHeader={ProfileScreen}>
       <Tabs.Tab name="Active">
-        <Tabs.ScrollView>
-          <ActiveScreen />
+        <Tabs.ScrollView style={{ flex: 1 }}>
+          <ActiveScreen navigation={navigation} />
         </Tabs.ScrollView>
       </Tabs.Tab>
       <Tabs.Tab name="All">
-        <Tabs.ScrollView>
+        <Tabs.ScrollView style={{ flex: 1 }}>
           <All />
         </Tabs.ScrollView>
       </Tabs.Tab>
     </Tabs.Container>
   );
 };
+
+const styles = StyleSheet.create({
+  profile: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default ProfileScreen2;

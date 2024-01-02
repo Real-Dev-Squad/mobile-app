@@ -16,6 +16,6 @@ it.skip('checks if Async Storage is used', async () => {
 
 jest.mock('react-native-gesture-handler', () => {});
 
-it.skip('renders correctly', async () => {
+it('renders correctly', async () => {
   renderer.create(<App />);
 });
