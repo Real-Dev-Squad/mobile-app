@@ -14,6 +14,7 @@ import All from './TaskScreens/All';
 import { Tabs } from 'react-native-collapsible-tab-view';
 import ActiveScreen from './TaskScreens/ActiveTask';
 import UserData from './User Data/UserData';
+import { removeDataFromAsyncStorage } from '../../utils';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const ProfileScreen = () => {
 
   const handleLogout = () => {
     setLoggedInUserData(null);
+    removeDataFromAsyncStorage('userData');
   };
 
   return (
