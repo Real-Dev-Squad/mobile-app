@@ -334,3 +334,37 @@ export const formatTimeAgo = (timestamp) => {
   const endDate = moment.unix(timestamp);
   return endDate.from(currentDate);
 };
+
+export const fetchTaskDetails = async (
+  token: string,
+  taskId: String,
+): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GET_ALL_TASK + taskId + '/details', {
+      headers: {
+        'Content-type': 'application/json',
+        cookie: `rds-session=${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+export const fetchTaskProgressDetails = async (
+  token: string,
+  taskId: String,
+): Promise<any> => {
+  try {
+    console.log('hey there ', token, taskId);
+    const response = await axios.get(urls.GET_TASK_PROGRESS_DETAIL + taskId, {
+      headers: {
+        'Content-type': 'application/json',
+        cookie: `rds-session=${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error) {
+    return null;
+  }
+};

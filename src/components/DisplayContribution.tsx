@@ -23,12 +23,17 @@ const DisplayContribution = ({
     const endDate = moment.unix(timestamp);
     return endDate.from(currentDate);
   };
-  const navigationHandler = () => {
-    navigation.navigate('AllTaskDetail');
+  const navigationHandler = (item: any) => {
+    if (!expand) {
+      navigation.navigate('AllTaskDetail', { taskId: item.id });
+    }
   };
   const renderItem = ({ item }: { item: displayContributionType }) => {
     return (
-      <TouchableOpacity style={styles.card} onPress={navigationHandler}>
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigationHandler(item)}
+      >
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>
           Created By: <Text style={styles.createdBy}>{item.createdBy}</Text>
