@@ -51,7 +51,6 @@ const AuthScreen = () => {
     return `${url}?${queryString}`;
   }
 
-  console.log(isProdEnvironment, 'auth environment');
 
   const githubAuthUrl = buildUrl(baseUrl, queryParams);
   useEffect(() => {
@@ -146,8 +145,6 @@ const AuthScreen = () => {
     const url = isProdEnvironment
       ? `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
       : `${AuthApis.QR_AUTH_API_STAGING}?device_id=${deviceId}`;
-    console.log(isProdEnvironment, 'auth environment inside qr login');
-    console.log(url, 'urls of the environment variables the url ');
     try {
       const userInfo = await fetch(url);
       console.log(userInfo, 'user info in rds app auth');
