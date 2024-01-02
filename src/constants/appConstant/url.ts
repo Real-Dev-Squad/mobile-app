@@ -12,5 +12,6 @@ export const urls = {
   GITHUB: 'https://github.com/',
   TWITTER: 'https://twitter.com',
   LINKEDIN: 'https://www.linkedin.com/in/',
+  GET_ACTIVE_TASK: 'https://api.realdevsquad.com/tasks/self',
   GOALS_AUTH: 'https://staging-api.realdevsquad.com/goals/token',
 };
