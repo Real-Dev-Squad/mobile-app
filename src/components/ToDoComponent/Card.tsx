@@ -82,6 +82,7 @@ const Card = ({
       }
     },
     onEnd: () => {
+      console.log('end');
       translateY.value = withTiming(0, { easing: Easing.linear });
       translateX.value = withTiming(0, { easing: Easing.linear });
 
