@@ -5,15 +5,13 @@ import { AuthContext } from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
 import { fetchAllTasks } from '../../AuthScreen/Util';
 import Loader from '../../../components/Loader';
-import AllTaskDetailScreen from '../DetailsScreen/AllTaskDetailScreen';
-import { useSelector } from 'react-redux';
 
 const All = () => {
   const [allTask, setAllTask] = useState([]);
   const { loggedInUserData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
   useFocusEffect(
     useCallback(() => {
@@ -23,7 +21,7 @@ const All = () => {
         const token = loggedInUserData?.token;
 
         const allTasks = await fetchAllTasks(token);
-        const idToMatch = loggedInUserData.id;
+        const idToMatch = loggedInUserData?.id;
         const myActiveTask = allTasks.tasks.filter(
           (task) => task.assigneeId === idToMatch,
         );
@@ -43,6 +41,7 @@ const All = () => {
         <DisplayContribution tasks={allTask} expand={false} />
       )}
     </View>
+    //TODO: to call AllTaskDetailScreen
     // <ScrollView style={{ padding: 10, elevation: 10 }}>
     //   {isProdEnvironment ? (
     //     <AllTaskDetailScreen />
