@@ -47,17 +47,16 @@ const DisplayContribution = ({
           <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        
-        {isProdEnvironment ? (
-          <></>
-        ) : (
-
-          <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
-            <Text style={styles.expandButton}>
-              {isCollapsed ? 'Expand' : 'Collapse'}
-            </Text>
-          </TouchableOpacity>
-        )}
+        {expand &&
+          (isProdEnvironment ? (
+            <></>
+          ) : (
+            <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
+              <Text style={styles.expandButton}>
+                {isCollapsed ? 'Expand' : 'Collapse'}
+              </Text>
+            </TouchableOpacity>
+          ))}
 
         <Collapsible collapsed={isCollapsed}>
           <View style={styles.expandableContent}>
