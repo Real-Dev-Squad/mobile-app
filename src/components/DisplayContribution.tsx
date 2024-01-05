@@ -9,9 +9,16 @@ import {
 import moment from 'moment';
 import Collapsible from 'react-native-collapsible';
 import ProgressBar from './ProgressBar';
+import { displayContributionType, taskType } from './UserContibution/Type';
 import { useSelector } from 'react-redux';
 
-const DisplayContribution = ({ tasks }) => {
+const DisplayContribution = ({
+  tasks,
+  expand,
+}: {
+  tasks: taskType;
+  expand: boolean;
+}) => {
   const [isCollapsed, setCollapsed] = useState(true);
   const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
@@ -21,7 +28,7 @@ const DisplayContribution = ({ tasks }) => {
     return endDate.from(currentDate);
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item: displayContributionType }) => {
     return (
       <View style={styles.card}>
         <Text style={styles.title}>{item.title}</Text>
@@ -40,15 +47,16 @@ const DisplayContribution = ({ tasks }) => {
           <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        {isProdEnvironment ? (
-          <></>
-        ) : (
-          <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
-            <Text style={styles.expandButton}>
-              {isCollapsed ? 'Expand' : 'Collapse'}
-            </Text>
-          </TouchableOpacity>
-        )}
+        {expand &&
+          (isProdEnvironment ? (
+            <></>
+          ) : (
+            <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
+              <Text style={styles.expandButton}>
+                {isCollapsed ? 'Expand' : 'Collapse'}
+              </Text>
+            </TouchableOpacity>
+          ))}
 
         <Collapsible collapsed={isCollapsed}>
           <View style={styles.expandableContent}>
@@ -59,12 +67,14 @@ const DisplayContribution = ({ tasks }) => {
     );
   };
 
-  return (
+  return tasks?.length > 0 ? (
     <FlatList
       data={tasks}
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
     />
+  ) : (
+    <Text style={{ color: 'black' }}>No tasks found...</Text>
   );
 };
 

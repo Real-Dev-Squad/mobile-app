@@ -26,7 +26,7 @@ const ActiveScreen = () => {
   );
   return (
     <View style={styles.profile}>
-      <DisplayContribution tasks={activeTasks} />
+      <DisplayContribution tasks={activeTasks} expand={true} />
     </View>
   );
 };

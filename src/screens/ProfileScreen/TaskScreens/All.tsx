@@ -1,37 +1,60 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { ScrollView } from 'react-native';
-
+import { View, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
-import AllTaskDetailScreen from '../DetailsScreen/AllTaskDetailScreen';
-import { useSelector } from 'react-redux';
+import { fetchAllTasks } from '../../AuthScreen/Util';
+import Loader from '../../../components/Loader';
 
 const All = () => {
-  const [allContributionsData, setAllContributionData] = useState([]);
+  const [allTask, setAllTask] = useState([]);
   const { loggedInUserData } = useContext(AuthContext);
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  const [loading, setLoading] = useState(false);
+
+  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
   useFocusEffect(
     useCallback(() => {
+      setLoading(true);
+
       (async () => {
-        const userName = loggedInUserData?.username;
-        const contributionResponse = await fetchContribution(userName);
-        setAllContributionData(contributionResponse.all);
+        const token = loggedInUserData?.token;
+
+        const allTasks = await fetchAllTasks(token);
+        const idToMatch = loggedInUserData?.id;
+        const myActiveTask = allTasks.tasks.filter(
+          (task) => task.assigneeId === idToMatch,
+        );
+
+        setAllTask(myActiveTask);
+        setLoading(false);
       })();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 
   return (
-    <ScrollView style={{ padding: 10, elevation: 10 }}>
-      {isProdEnvironment ? (
-        <AllTaskDetailScreen />
+    <View style={styles.profile}>
+      {loading ? (
+        <Loader />
       ) : (
-        <DisplayContribution tasks={allContributionsData} />
+        <DisplayContribution tasks={allTask} expand={false} />
       )}
-    </ScrollView>
+    </View>
+    //TODO: to call AllTaskDetailScreen
+    // <ScrollView style={{ padding: 10, elevation: 10 }}>
+    //   {isProdEnvironment ? (
+    //     <AllTaskDetailScreen />
+    //   ) : (
+    //     <DisplayContribution tasks={allContributionsData} />
+    //   )}
+    //   </ScrollView>
   );
 };
-
+const styles = StyleSheet.create({
+  profile: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 export default All;
