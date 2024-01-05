@@ -34,6 +34,10 @@ export const ActiveScreen = () => {
         const activeTaskRes = tasksRes.filter(
           (item) => item.status !== 'COMPLETED',
         );
+        console.log(
+          '🚀 ~ file: ProfileScreen2.tsx:37 ~ activeTaskRes:',
+          activeTaskRes,
+        );
         setActiveTasks(activeTaskRes);
         setLoading(false);
       })();
@@ -43,7 +47,11 @@ export const ActiveScreen = () => {
   );
   return (
     <View style={styles.profile}>
-      {loading ? <Loader /> : <DisplayContribution tasks={activeTasks} />}
+      {loading ? (
+        <Loader />
+      ) : (
+        <DisplayContribution tasks={activeTasks} expand={false} />
+      )}
     </View>
   );
 };

@@ -67,12 +67,14 @@ const DisplayContribution = ({
     );
   };
 
-  return (
+  return tasks?.length > 0 ? (
     <FlatList
       data={tasks}
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
     />
+  ) : (
+    <Text style={{ color: 'black' }}>No tasks found...</Text>
   );
 };
 

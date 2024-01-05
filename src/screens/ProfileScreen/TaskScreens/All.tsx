@@ -43,12 +43,13 @@ const All = () => {
         <DisplayContribution tasks={allTask} expand={false} />
       )}
     </View>
-    <ScrollView style={{ padding: 10, elevation: 10 }}>
-      {isProdEnvironment ? (
-        <AllTaskDetailScreen />
-      ) : (
-        <DisplayContribution tasks={allContributionsData} />
-      )}
+    // <ScrollView style={{ padding: 10, elevation: 10 }}>
+    //   {isProdEnvironment ? (
+    //     <AllTaskDetailScreen />
+    //   ) : (
+    //     <DisplayContribution tasks={allContributionsData} />
+    //   )}
+    //   </ScrollView>
   );
 };
 const styles = StyleSheet.create({
