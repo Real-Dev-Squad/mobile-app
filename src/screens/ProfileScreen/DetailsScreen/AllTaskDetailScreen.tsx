@@ -4,7 +4,7 @@ import React from 'react';
 const AllTaskDetailScreen = () => {
   return (
     <View>
-      <Text>AllTaskDetailScreen</Text>
+      <Text style={{ color: 'black' }}>AllTaskDetailScreen</Text>
     </View>
   );
 };

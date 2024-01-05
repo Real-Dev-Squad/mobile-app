@@ -5,11 +5,15 @@ import { AuthContext } from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
 import { fetchAllTasks } from '../../AuthScreen/Util';
 import Loader from '../../../components/Loader';
+import AllTaskDetailScreen from '../DetailsScreen/AllTaskDetailScreen';
+import { useSelector } from 'react-redux';
 
 const All = () => {
   const [allTask, setAllTask] = useState([]);
   const { loggedInUserData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
   useFocusEffect(
     useCallback(() => {
@@ -39,6 +43,12 @@ const All = () => {
         <DisplayContribution tasks={allTask} expand={false} />
       )}
     </View>
+    <ScrollView style={{ padding: 10, elevation: 10 }}>
+      {isProdEnvironment ? (
+        <AllTaskDetailScreen />
+      ) : (
+        <DisplayContribution tasks={allContributionsData} />
+      )}
   );
 };
 const styles = StyleSheet.create({

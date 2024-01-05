@@ -10,34 +10,14 @@ import { ImagePickerResponse } from 'react-native-image-picker';
 import Strings from '../../i18n/en';
 import { useSelector, useDispatch } from 'react-redux';
 import All from './TaskScreens/All';
-// import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
 
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
+import Loader from '../../components/Loader';
 
-const dummyData = [
-  {
-    id: '0CZnoSLruyIihibT1F6m',
-    percentCompleted: 100,
-    endsOn: 1689206400,
-    isNoteworthy: true,
-    lossRate: { dinero: 250, neelam: 0 },
-    type: 'feature',
-    priority: 'HIGH',
-    completionAward: { dinero: 4000, neelam: 0 },
-    title: 'Test feature Test Test feature Test ',
-    createdAt: 1676944234,
-    createdBy: 'ankush',
-    assignee: 'shreya',
-    startedOn: 1676944233.827,
-    status: 'ASSIGNED',
-    updatedAt: 1702051343,
-    assigneeId: 'T7IL7MB8YriniTw4bt39',
-  },
-];
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTasks, setActiveTasks] = useState([]);
@@ -51,8 +31,7 @@ export const ActiveScreen = () => {
         const token = loggedInUserData?.token;
 
         const tasksRes = await fetchActiveTasks(token);
-        const dummyTasks = [...tasksRes, ...dummyData];
-        const activeTaskRes = dummyTasks.filter(
+        const activeTaskRes = tasksRes.filter(
           (item) => item.status !== 'COMPLETED',
         );
         setActiveTasks(activeTaskRes);
@@ -64,13 +43,7 @@ export const ActiveScreen = () => {
   );
   return (
     <View style={styles.profile}>
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading...</Text>
-        </View>
-      ) : (
-        <DisplayContribution tasks={activeTasks} />
-      )}
+      {loading ? <Loader /> : <DisplayContribution tasks={activeTasks} />}
     </View>
   );
 };
@@ -167,12 +140,6 @@ const styles = StyleSheet.create({
   profile: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  loadingContainer: {
-    marginTop: 20,
-  },
-  loadingText: {
-    color: 'black',
   },
 });
 

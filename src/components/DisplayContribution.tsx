@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import moment from 'moment';
-import { TouchableOpacity } from 'react-native';
-// import Modal from 'react-native-modal';
 import Collapsible from 'react-native-collapsible';
 import ProgressBar from './ProgressBar';
 import { displayContributionType, taskType } from './UserContibution/Type';
+import { useSelector } from 'react-redux';
 
 const DisplayContribution = ({
   tasks,
@@ -15,6 +20,7 @@ const DisplayContribution = ({
   expand: boolean;
 }) => {
   const [isCollapsed, setCollapsed] = useState(true);
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
   const formatTimeAgo = (timestamp: number) => {
     const currentDate = moment();
@@ -41,7 +47,11 @@ const DisplayContribution = ({
           <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        {expand && (
+        
+        {isProdEnvironment ? (
+          <></>
+        ) : (
+
           <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
             <Text style={styles.expandButton}>
               {isCollapsed ? 'Expand' : 'Collapse'}
