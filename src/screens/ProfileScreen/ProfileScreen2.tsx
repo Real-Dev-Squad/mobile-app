@@ -17,6 +17,8 @@ import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
 import Loader from '../../components/Loader';
+import { removeDataFromAsyncStorage } from '../../utils';
+
 
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
