@@ -48,7 +48,7 @@ const TodoComponent = () => {
   };
 
   return (
-    <View style={TodoStyles.container}>
+    <View testID="todoComponent" style={TodoStyles.container}>
       <View style={TodoStyles.flex}>
         <Text style={TodoStyles.title}>To Do's</Text>
         <TouchableOpacity

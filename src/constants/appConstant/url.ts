@@ -1,4 +1,5 @@
 import { githubConfig } from '../../../config/config';
+import { PROD_BASE_URL } from '../apiConstant/BaseUrl';
 
 export const urls = {
   GITHUB_AUTH: `https://github.com/login/oauth/authorize?client_id=${githubConfig.clientId}`,
@@ -12,5 +13,7 @@ export const urls = {
   GITHUB: 'https://github.com/',
   TWITTER: 'https://twitter.com',
   LINKEDIN: 'https://www.linkedin.com/in/',
+  GET_ACTIVE_TASK: 'https://api.realdevsquad.com/tasks/self',
   GOALS_AUTH: 'https://staging-api.realdevsquad.com/goals/token',
+  GET_ALL_TASK: `${PROD_BASE_URL}/tasks/`,
 };
