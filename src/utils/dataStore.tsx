@@ -63,3 +63,12 @@ export const Storage = {
     }
   },
 };
+
+export const removeDataFromAsyncStorage = async (key: String) => {
+  try {
+    await AsyncStorage.removeItem(key);
+    console.log(`Data with key ${key} removed successfully.`);
+  } catch (error) {
+    console.error(`Error removing data with key ${key}: ${error.message}`);
+  }
+};
