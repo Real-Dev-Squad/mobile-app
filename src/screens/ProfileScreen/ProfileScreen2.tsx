@@ -17,7 +17,7 @@ import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
 import Loader from '../../components/Loader';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeDataFromAsyncStorage } from '../../utils';
 
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,10 +34,6 @@ export const ActiveScreen = () => {
         const tasksRes = await fetchActiveTasks(token);
         const activeTaskRes = tasksRes.filter(
           (item) => item.status !== 'COMPLETED',
-        );
-        console.log(
-          '🚀 ~ file: ProfileScreen2.tsx:37 ~ activeTaskRes:',
-          activeTaskRes,
         );
         setActiveTasks(activeTaskRes);
         setLoading(false);
@@ -87,6 +83,7 @@ const ProfileScreen = () => {
   const handleLogout = () => {
     setLoggedInUserData(null);
     AsyncStorage.removeItem('userData');
+    removeDataFromAsyncStorage('userData');
   };
 
   return (
