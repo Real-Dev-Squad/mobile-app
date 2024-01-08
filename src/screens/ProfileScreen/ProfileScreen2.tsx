@@ -17,6 +17,7 @@ import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
 import Loader from '../../components/Loader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -85,6 +86,7 @@ const ProfileScreen = () => {
 
   const handleLogout = () => {
     setLoggedInUserData(null);
+    AsyncStorage.removeItem('userData');
   };
 
   return (
