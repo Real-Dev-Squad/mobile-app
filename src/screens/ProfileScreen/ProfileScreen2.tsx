@@ -115,7 +115,7 @@ const ProfileScreen = () => {
         <Text style={profileScreenStyles.titleText}>
           <UserData userData={loggedInUserData} />
         </Text>
-        <ButtonWidget title={'Update'} onPress={openModal} />
+        {/* <ButtonWidget title={'Update'} onPress={openModal} /> */}
         <ButtonWidget
           title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
           onPress={() => {

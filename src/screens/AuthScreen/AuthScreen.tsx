@@ -254,7 +254,7 @@ const AuthScreen = () => {
           />
         </View>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             isProdEnvironment
               ? dispatch({ type: 'DEV' })
@@ -266,7 +266,7 @@ const AuthScreen = () => {
               {isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       {cameraActive && (
         <CameraScreen
