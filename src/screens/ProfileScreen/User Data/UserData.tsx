@@ -12,7 +12,7 @@ const UserData = ({ userData }) => {
   return (
     <View>
       <Text style={styles.Name}>{userData.name}</Text>
-      <Text style={styles.userName}>{'@' + userData.username}</Text>
+      <Text style={styles.userName}>{'@' + userData.github_id}</Text>
       <Text style={styles.designation}> {userData.designation}</Text>
       <Text style={styles.company}> {userData.company}</Text>
       <View style={{ justifyContent: 'center', flexDirection: 'row' }}>

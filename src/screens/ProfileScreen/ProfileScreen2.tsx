@@ -63,6 +63,7 @@ const ProfileScreen = () => {
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+  console.log('🚀 ~ ProfileScreen ~ loggedInUserData:', loggedInUserData);
 
   const openModal = useCallback(() => {
     setModalVisible(true);
@@ -112,9 +113,9 @@ const ProfileScreen = () => {
         {showDefaultAvatar() && (
           <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
         )}
-        <Text style={profileScreenStyles.titleText}>
+        <View style={profileScreenStyles.titleText}>
           <UserData userData={loggedInUserData} />
-        </Text>
+        </View>
         {/* <ButtonWidget title={'Update'} onPress={openModal} /> */}
         <ButtonWidget
           title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}

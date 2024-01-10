@@ -119,10 +119,10 @@ const AuthScreen = () => {
         name: res?.name,
         profileUrl: res?.profileUrl,
         status: res?.status,
-        twitterId: res?.twitter_id,
-        linkedinId: res?.linkedin_id,
-        githubId: res?.github_id,
-        discordUserName: res?.username,
+        twitter_id: res?.twitter_id,
+        linkedin_id: res?.linkedin_id,
+        github_id: res?.github_id,
+        username: res?.username,
         token: token,
       });
       console.log(goals, 'goals in authscreen');
