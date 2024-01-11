@@ -16,19 +16,18 @@ import { AuthViewStyle } from './styles';
 import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData, goalsAuth } from './Util';
+import { getUserData, goalsAuth, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
-  const dispatch = useDispatch();
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData, setGoalsData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
@@ -64,11 +63,10 @@ const AuthScreen = () => {
 
   const activateCamera = async () => {
     try {
-      //await requestCameraPermission();
+      await requestCameraPermission();
       setCameraActive((prev) => !prev); // Set cameraActive state to true
 
       const backAction = () => {
-        console.log('backClicked');
         setCameraActive(false);
         Alert.alert('Hold on!', 'Are you sure you want to go back?', [
           {
@@ -125,7 +123,6 @@ const AuthScreen = () => {
         username: res?.username,
         token: token,
       });
-      console.log(goals, 'goals in authscreen');
       setGoalsData(goals);
       setLoading(false);
     } catch (err) {

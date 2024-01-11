@@ -74,7 +74,7 @@ const DisplayContribution = ({
       renderItem={renderItem}
     />
   ) : (
-    <Text style={{ color: 'black' }}>No tasks found...</Text>
+    <Text style={styles.emptyView}>No tasks found...</Text>
   );
 };
 
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#333',
   },
+  emptyView: { color: 'black', marginTop: 20 },
 });
 
 export default DisplayContribution;
