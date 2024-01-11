@@ -62,7 +62,7 @@ const AuthScreen = () => {
   const activateCamera = async () => {
     try {
       await requestCameraPermission();
-      setCameraActive((prev) => !prev); // Set cameraActive state to true
+      setCameraActive(true); // Set cameraActive state to true
 
       const backAction = () => {
         setCameraActive(false);
