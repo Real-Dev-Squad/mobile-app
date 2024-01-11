@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
-import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
 import { getUserData, goalsAuth, requestCameraPermission } from './Util';
@@ -21,7 +20,6 @@ import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
-import { useSelector } from 'react-redux';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
 
@@ -107,7 +105,6 @@ const AuthScreen = () => {
     try {
       setLoading(true);
       const res = await getUserData(token);
-      console.log('auth screen');
       // this needs to be changed to prod token
       const goals = await goalsAuth('token from prod');
       await storeData('userData', JSON.stringify(res));
@@ -244,12 +241,16 @@ const AuthScreen = () => {
           </View>
         </TouchableOpacity>
 
-        <View style={[AuthViewStyle.btnView, { marginTop: 20 }]}>
-          <AuthScreenButton
-            text={Strings.SIGN_IN_WITH_WEB}
-            onPress={activateCamera}
-          />
-        </View>
+        <TouchableOpacity
+          style={[AuthViewStyle.btnView, { marginTop: 20 }]}
+          onPress={activateCamera}
+        >
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {Strings.SIGN_IN_WITH_WEB}
+            </Text>
+          </View>
+        </TouchableOpacity>
 
         {/* <TouchableOpacity
           onPress={() => {

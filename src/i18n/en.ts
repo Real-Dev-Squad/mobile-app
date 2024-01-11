@@ -40,7 +40,7 @@ const Strings = {
   ACTIVE: 'active',
   IDLE: 'idle',
 
-  UPDATE_STATUS_TO_OOO: 'Change your status to OOO',
+  UPDATE_STATUS_TO_OOO: 'Update your Status',
   CANCEL_OOO: 'Cancel OOO',
 };
 

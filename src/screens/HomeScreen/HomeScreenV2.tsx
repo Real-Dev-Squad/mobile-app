@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Strings from '../../i18n/en';
 import OOOForm from '../../components/OOO/OOOForm';
-import { AuthScreenButton } from '../AuthScreen/Button';
 import {
   cancelOoo,
   formatTimeToUnix,
@@ -11,6 +10,7 @@ import {
 } from '../AuthScreen/Util';
 import LoadingScreen from '../../components/LoadingScreen';
 import { AuthContext } from '../../context/AuthContext';
+import ButtonWidget from '../../components/ButtonWidget';
 
 const HomeScreenV2 = (): JSX.Element => {
   const currentDate = new Date();
@@ -66,10 +66,10 @@ const HomeScreenV2 = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.text}>{status}</Text>
+        <Text style={styles.text}>You are {status}</Text>
         <View style={{ marginTop: 50 }}>
-          <AuthScreenButton
-            text={
+          <ButtonWidget
+            title={
               status === 'OOO'
                 ? Strings.CANCEL_OOO
                 : Strings.UPDATE_STATUS_TO_OOO
