@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Alert,
   Linking,
+  Platform,
 } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
@@ -47,7 +48,10 @@ const AuthScreen = () => {
   }
 
   const githubAuthUrl = buildUrl(baseUrl, queryParams);
+
   useEffect(() => {
+    Platform.OS !== 'android' || requestCameraPermission();
+
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
       const token = event.url.split('token=')[1];
@@ -57,15 +61,16 @@ const AuthScreen = () => {
     return () => {
       Linking.removeEventListener('url', handleDeepLink);
     };
-  });
+  }, []);
 
   const activateCamera = async () => {
+    setCameraActive((prev) => !prev);
     try {
       await requestCameraPermission();
-      setCameraActive(true); // Set cameraActive state to true
+      // Set cameraActive state to true
 
       const backAction = () => {
-        setCameraActive(false);
+        setCameraActive((prev) => !prev);
         Alert.alert('Hold on!', 'Are you sure you want to go back?', [
           {
             text: 'Cancel',
@@ -269,11 +274,12 @@ const AuthScreen = () => {
       {cameraActive && (
         <CameraScreen
           style={StyleSheet.absoluteFill}
-          showFrame
+          showFrame={true}
           scanBarcode={true}
           onReadCode={handleQRCodeScanned}
           frameColor={'white'}
           laserColor={'white'}
+          hideControls
         />
       )}
 
