@@ -9,10 +9,11 @@ import {
 } from 'react-native';
 
 const UserData = ({ userData }) => {
-  const { twitter_id, linkedin_id, github_id, designation, company } = userData;
+  const { twitter_id, linkedin_id, github_id, designation, company, name } =
+    userData;
   return (
     <View>
-      <Text style={styles.Name}>Yash Raj</Text>
+      <Text style={styles.Name}>{name}</Text>
       {github_id && <Text style={styles.userName}>{'@' + github_id}</Text>}
       {designation && <Text style={styles.designation}> {designation}</Text>}
       {company && <Text style={styles.company}> {company}</Text>}
