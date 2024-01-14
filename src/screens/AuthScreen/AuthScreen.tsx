@@ -48,7 +48,6 @@ const AuthScreen = () => {
     return `${url}?${queryString}`;
   }
 
-
   const githubAuthUrl = buildUrl(baseUrl, queryParams);
 
   useEffect(() => {
@@ -63,6 +62,7 @@ const AuthScreen = () => {
     return () => {
       Linking.removeEventListener('url', handleDeepLink);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const activateCamera = async () => {
