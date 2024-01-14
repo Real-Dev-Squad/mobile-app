@@ -75,6 +75,7 @@ const HomeScreenV2 = (): JSX.Element => {
                 : Strings.UPDATE_STATUS_TO_OOO
             }
             onPress={handleButtonPress}
+            textColor={'#16A334'}
           />
         </View>
         {isFormVisible && (

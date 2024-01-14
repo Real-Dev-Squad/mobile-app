@@ -234,9 +234,9 @@ const AuthScreen = () => {
         <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
           <View style={AuthViewStyle.githubLogo}>
             <Image
-              source={require('../../../assets/githublogo.png')}
-              height={190}
-              width={190}
+              source={require('../../../assets/github_logo.png')}
+              height={2}
+              width={2}
             />
           </View>
           <View style={AuthViewStyle.signInTxtView}>
@@ -250,6 +250,13 @@ const AuthScreen = () => {
           style={[AuthViewStyle.btnView, { marginTop: 20 }]}
           onPress={activateCamera}
         >
+          <View style={AuthViewStyle.githubLogo}>
+            <Image
+              source={require('../../../assets/web.png')}
+              height={2}
+              width={2}
+            />
+          </View>
           <View style={AuthViewStyle.signInTxtView}>
             <Text style={AuthViewStyle.signInText}>
               {Strings.SIGN_IN_WITH_WEB}

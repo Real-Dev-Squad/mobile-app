@@ -165,7 +165,7 @@ export const getUsersStatus = async (token) => {
       },
     });
     if (res.data.data.currentStatus) {
-      return res.data.data.currentStatus.state;
+      return res?.data?.data?.currentStatus?.state;
     } else {
       return 'Something went wrong';
     }
