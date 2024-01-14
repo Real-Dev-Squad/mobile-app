@@ -298,13 +298,16 @@ const AuthScreen = () => {
           <Tooltip
             isVisible={toolTip}
             content={
-              <Text style={styles.toolTip}>Go to my-site & scan QR code</Text>
+              <Text style={styles.toolTip}>
+                Go to `https://my.realdevsquad.com/mobile` & scan QR code to
+                login
+              </Text>
             }
             placement="top"
             onClose={() => setToolTip(false)}
           >
             <TouchableOpacity onPress={handleToolTip}>
-              <Text style={styles.toolButton}>What To Do </Text>
+              <Text style={styles.toolButton}>What To Do ? </Text>
             </TouchableOpacity>
           </Tooltip>
         </View>
@@ -333,13 +336,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#483d8b',
     color: '#fff',
-    marginBottom: 15,
-    borderRadius: 20,
+    borderRadius: 16,
     height: 50,
     padding: 10,
     textAlignVertical: 'center',
     textAlign: 'center',
-    margin: 8,
+    margin: 25,
   },
 });
 export default AuthScreen;
