@@ -1,14 +1,11 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
-import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
-import Strings from '../../i18n/en';
-import { useSelector, useDispatch } from 'react-redux';
 import All from './TaskScreens/All';
 import { Tabs } from 'react-native-collapsible-tab-view';
 
@@ -18,6 +15,7 @@ import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
 import Loader from '../../components/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import EllipseComponent from '../../components/EllipseComponent';
 
 export const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,10 +32,6 @@ export const ActiveScreen = () => {
         const tasksRes = await fetchActiveTasks(token);
         const activeTaskRes = tasksRes.filter(
           (item) => item.status !== 'COMPLETED',
-        );
-        console.log(
-          '🚀 ~ file: ProfileScreen2.tsx:37 ~ activeTaskRes:',
-          activeTaskRes,
         );
         setActiveTasks(activeTaskRes);
         setLoading(false);
@@ -58,8 +52,8 @@ export const ActiveScreen = () => {
 };
 
 const ProfileScreen = () => {
-  const dispatch = useDispatch();
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  // const dispatch = useDispatch();
+  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
@@ -87,12 +81,13 @@ const ProfileScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={ScreenViewContainer.container}>
-      <Pressable
+      {/* <Pressable
         style={profileScreenStyles.logoutButton}
         onPress={handleLogout}
       >
         <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
-      </Pressable>
+      </Pressable> */}
+      <EllipseComponent handleLogout={handleLogout} />
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
@@ -112,14 +107,15 @@ const ProfileScreen = () => {
           <UserData userData={loggedInUserData} />
         </View>
         {/* <ButtonWidget title={'Update'} onPress={openModal} /> */}
-        <ButtonWidget
+        {/* TODO: Below we should do for admin not for all users */}
+        {/* <ButtonWidget
           title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
           onPress={() => {
             isProdEnvironment
               ? dispatch({ type: 'DEV' })
               : dispatch({ type: 'PROD' });
           }}
-        />
+        /> */}
       </View>
     </ScrollView>
   );
