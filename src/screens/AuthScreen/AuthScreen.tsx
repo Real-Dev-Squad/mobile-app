@@ -19,6 +19,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { getUserData, goalsAuth, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
+// import { AuthApisStaging } from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
@@ -46,6 +47,7 @@ const AuthScreen = () => {
 
     return `${url}?${queryString}`;
   }
+
 
   const githubAuthUrl = buildUrl(baseUrl, queryParams);
 
@@ -92,6 +94,7 @@ const AuthScreen = () => {
   };
 
   const handleQRCodeScanned = ({ nativeEvent }: any) => {
+    console.log(nativeEvent);
     setScannedUserID(nativeEvent.codeStringValue);
     setToolTip(true);
   };
@@ -135,9 +138,14 @@ const AuthScreen = () => {
   const qrCodeLogin = async () => {
     const deviceId = await DeviceInfo.getUniqueId();
 
-    const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`;
+    // const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
+
+    const url = isProdEnvironment
+      ? `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
+      : `${AuthApis.QR_AUTH_API_STAGING}?device_id=${deviceId}`;
     try {
       const userInfo = await fetch(url);
+      console.log(userInfo, 'user info in rds app auth');
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
         updateUserData(userInfoJson.data.token);
@@ -162,9 +170,12 @@ const AuthScreen = () => {
   const getAuthStatus = async () => {
     const deviceInfo = await DeviceInfo.getDeviceName();
     const deviceId = await DeviceInfo.getUniqueId();
+    const url = isProdEnvironment
+      ? AuthApis.QR_AUTH_API
+      : AuthApis.QR_AUTH_API_STAGING;
     setLoading(true);
     try {
-      const data = await fetch(AuthApis.QR_AUTH_API, {
+      const data = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -175,6 +186,8 @@ const AuthScreen = () => {
           device_id: deviceId,
         }),
       });
+
+      console.log(data, 'Auth Screen ');
 
       if (data.ok) {
         const dataJson = await data.json();
@@ -201,6 +214,7 @@ const AuthScreen = () => {
         });
       }
     } catch (err) {
+      console.log(err, 'Error QR login');
       Toast.show({
         type: 'error',
         text1: err,
