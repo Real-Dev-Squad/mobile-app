@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { TouchableOpacity, Modal } from 'react-native';
+import { TouchableOpacity, Modal, Image } from 'react-native';
+import Images from '../constants/images/Image';
 
 const EllipseComponent = ({ handleLogout }: { handleLogout: () => void }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -22,7 +23,12 @@ const EllipseComponent = ({ handleLogout }: { handleLogout: () => void }) => {
               onPress={() => setDropdownVisible(false)}
               style={styles.closeContainer}
             >
-              <Text style={styles.closeButton}>X</Text>
+              <Image
+                // height={10}
+                // width={10}
+                style={styles.close}
+                source={Images.closeIcon}
+              />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout}>
               <Text style={styles.dropdownOption}>Logout</Text>
@@ -56,10 +62,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     transform: [{ rotate: '90deg' }],
+    padding: 8,
   },
   dropdownContainer: {
     position: 'absolute',
-    top: 40, // Adjust the top position according to your layout
+    top: 10, // Adjust the top position according to your layout
     right: 10,
     backgroundColor: 'white',
     borderRadius: 5,
@@ -74,11 +81,15 @@ const styles = StyleSheet.create({
   closeContainer: {
     flex: 1,
     alignItems: 'flex-end',
-    padding: 8,
   },
   closeButton: {
     fontSize: 18,
     color: 'black',
+    padding: 2,
+  },
+  close: {
+    height: 20,
+    width: 20,
   },
 });
 
