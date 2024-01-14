@@ -28,7 +28,6 @@ import Tooltip from 'react-native-walkthrough-tooltip';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
-  // TODO: will revamp github signIn feature
   const dispatch = useDispatch();
   const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData, setGoalsData } = useContext(AuthContext);
