@@ -212,10 +212,10 @@ const AuthScreen = () => {
   };
 
   useEffect(() => {
-    if (scannedUserId != '') {
+    if (scannedUserId !== '') {
       getAuthStatus();
     }
-    /* eslint-disable */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scannedUserId]);
 
   return (
