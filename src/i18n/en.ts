@@ -16,8 +16,8 @@ const Strings = {
   Greet_User: 'Hello User',
   Img_Upload_Text: 'Upload your Profile Image',
   //LOGIN Screen
-  SIGN_IN_BUTTON_TEXT: 'Sign In with Github',
-  SIGN_IN_WITH_WEB: 'Sign In with Web',
+  SIGN_IN_BUTTON_TEXT: 'Github SignIn',
+  SIGN_IN_WITH_WEB: 'Web SignIn',
   SIGN_IN_ERROR: 'Unable to login at the moment',
   WELCOME_TO: 'Welcome to',
   REAL_DEV_SQUAD: 'Real Dev Squad',
@@ -40,7 +40,7 @@ const Strings = {
   ACTIVE: 'active',
   IDLE: 'idle',
 
-  UPDATE_STATUS_TO_OOO: 'Change your status to OOO',
+  UPDATE_STATUS_TO_OOO: 'Update your Status',
   CANCEL_OOO: 'Cancel OOO',
 };
 
