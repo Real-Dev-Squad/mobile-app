@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
@@ -22,6 +22,7 @@ const ProfileScreen = () => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleDropdown = () => {
+    console.log('BOOOOMMMMMMMMMMMMMM');
     setDropdownVisible((prev) => !prev);
   };
 
@@ -47,9 +48,9 @@ const ProfileScreen = () => {
   };
 
   return (
-    <TouchableWithoutFeedback
+    <ScrollView
       contentContainerStyle={ScreenViewContainer.container}
-      onPress={handleDropdown}
+      // onPress={handleDropdown}
     >
       <EllipseComponent
         handleLogout={handleLogout}
@@ -63,20 +64,24 @@ const ProfileScreen = () => {
         response={response}
         setResponse={setResponse}
       />
-      <View style={profileScreenStyles.mainview}>
-        {response?.assets &&
-          response.assets.map(({ uri }) => (
-            <Avatar key={uri} uri={uri || ''} size={100} />
-          ))}
-        {showDefaultAvatar() && (
-          <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
-        )}
-        <View style={profileScreenStyles.titleText}>
-          <UserData userData={loggedInUserData} />
-        </View>
-        {/* <ButtonWidget title={'Update'} onPress={openModal} /> */}
-        {/* TODO: Below we should do for admin not for all users */}
-        {/* <ButtonWidget
+      <TouchableWithoutFeedback
+        style={profileScreenStyles.mainview}
+        onPress={handleDropdown}
+      >
+        <>
+          {response?.assets &&
+            response.assets.map(({ uri }) => (
+              <Avatar key={uri} uri={uri || ''} size={100} />
+            ))}
+          {showDefaultAvatar() && (
+            <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
+          )}
+          <View style={profileScreenStyles.titleText}>
+            <UserData userData={loggedInUserData} />
+          </View>
+          {/* <ButtonWidget title={'Update'} onPress={openModal} /> */}
+          {/* TODO: Below we should do for admin not for all users */}
+          {/* <ButtonWidget
           title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
           onPress={() => {
             isProdEnvironment
@@ -84,8 +89,9 @@ const ProfileScreen = () => {
               : dispatch({ type: 'PROD' });
           }}
         /> */}
-      </View>
-    </TouchableWithoutFeedback>
+        </>
+      </TouchableWithoutFeedback>
+    </ScrollView>
   );
 };
 

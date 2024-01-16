@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableOpacity, Modal, Image } from 'react-native';
 import Images from '../constants/images/Image';
+import { useDispatch, useSelector } from 'react-redux';
 
 const EllipseComponent = ({
   handleLogout,
@@ -12,6 +13,8 @@ const EllipseComponent = ({
   isDropdownVisible: boolean;
   handleDropDown: () => void;
 }) => {
+  const dispatch = useDispatch();
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.optionsButton} onPress={handleDropDown}>
@@ -19,7 +22,11 @@ const EllipseComponent = ({
       </TouchableOpacity>
 
       {isDropdownVisible && (
-        <Modal transparent={true} animationType="slide">
+        <Modal
+          transparent={true}
+          animationType="slide"
+          onRequestClose={handleDropDown}
+        >
           <View style={styles.dropdownContainer}>
             <TouchableOpacity
               onPress={handleDropDown}
@@ -34,6 +41,19 @@ const EllipseComponent = ({
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout}>
               <Text style={styles.dropdownOption}>Logout</Text>
+              {/* Add more dropdown options as needed */}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                isProdEnvironment
+                  ? dispatch({ type: 'DEV' })
+                  : dispatch({ type: 'PROD' });
+                handleDropDown();
+              }}
+            >
+              <Text style={[styles.dropdownOption, { color: 'black' }]}>
+                {!isProdEnvironment ? 'Prod mode' : 'Dev mode'}
+              </Text>
               {/* Add more dropdown options as needed */}
             </TouchableOpacity>
           </View>
