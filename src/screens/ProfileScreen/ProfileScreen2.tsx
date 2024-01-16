@@ -14,15 +14,12 @@ import EllipseComponent from '../../components/EllipseComponent';
 import ActiveScreen from './TaskScreens/ActiveTask';
 
 const ProfileScreen = () => {
-  // const dispatch = useDispatch();
-  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleDropdown = () => {
-    console.log('BOOOOMMMMMMMMMMMMMM');
     setDropdownVisible((prev) => !prev);
   };
 
@@ -79,16 +76,6 @@ const ProfileScreen = () => {
           <View style={profileScreenStyles.titleText}>
             <UserData userData={loggedInUserData} />
           </View>
-          {/* <ButtonWidget title={'Update'} onPress={openModal} /> */}
-          {/* TODO: Below we should do for admin not for all users */}
-          {/* <ButtonWidget
-          title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
-          onPress={() => {
-            isProdEnvironment
-              ? dispatch({ type: 'DEV' })
-              : dispatch({ type: 'PROD' });
-          }}
-        /> */}
         </>
       </TouchableWithoutFeedback>
     </ScrollView>
