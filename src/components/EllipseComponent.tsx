@@ -3,16 +3,18 @@ import React, { useState } from 'react';
 import { TouchableOpacity, Modal, Image } from 'react-native';
 import Images from '../constants/images/Image';
 
-const EllipseComponent = ({ handleLogout }: { handleLogout: () => void }) => {
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
-
-  const handleDropdown = () => {
-    setDropdownVisible((prev) => !prev);
-  };
-
+const EllipseComponent = ({
+  handleLogout,
+  isDropdownVisible,
+  handleDropDown,
+}: {
+  handleLogout: () => void;
+  isDropdownVisible: boolean;
+  handleDropDown: () => void;
+}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.optionsButton} onPress={handleDropdown}>
+      <TouchableOpacity style={styles.optionsButton} onPress={handleDropDown}>
         <Text style={styles.verticalEllipse}>...</Text>
       </TouchableOpacity>
 
@@ -20,7 +22,7 @@ const EllipseComponent = ({ handleLogout }: { handleLogout: () => void }) => {
         <Modal transparent={true} animationType="slide">
           <View style={styles.dropdownContainer}>
             <TouchableOpacity
-              onPress={() => setDropdownVisible(false)}
+              onPress={handleDropDown}
               style={styles.closeContainer}
             >
               <Image

@@ -6554,7 +6554,14 @@ react-native-screens@^3.9.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
-react-native-svg@^14.0.0:
+react-native-svg-uri@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-svg-uri/-/react-native-svg-uri-1.2.3.tgz#2f67f30564068a0fee68a751845332a5185a1aab"
+  integrity sha512-yECSYs6KgX8XZj0IV3Z2fTOkldmtnG1dEDNoRXvJjPnQPTEzQ2VS1NXIgxukuGSN2jourVOvKLhhRo75QmRTaw==
+  dependencies:
+    xmldom "^0.1.22"
+
+react-native-svg@^14.1.0:
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-14.1.0.tgz#7903bddd3c71bf3a8a503918253c839e6edaa724"
   integrity sha512-HeseElmEk+AXGwFZl3h56s0LtYD9HyGdrpg8yd9QM26X+d7kjETrRQ9vCjtxuT5dCZEIQ5uggU1dQhzasnsCWA==
@@ -8182,6 +8189,11 @@ xmldoc@^1.1.2:
   integrity sha512-y7IRWW6PvEnYQZNZFMRLNJw+p3pezM4nKYPfr15g4OOW9i8VpeydycFuipE2297OvZnh3jSb2pxOt9QpkZUVng==
   dependencies:
     sax "^1.2.4"
+
+xmldom@^0.1.22:
+  version "0.1.31"
+  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.31.tgz#b76c9a1bd9f0a9737e5a72dc37231cf38375e2ff"
+  integrity sha512-yS2uJflVQs6n+CyjHoaBmVSqIDevTAWrzMmjG1Gc7h1qQ7uVozNhEPJAwZXWyGQ/Gafo3fCwrcaokezLPupVyQ==
 
 xtend@~4.0.1:
   version "4.0.2"

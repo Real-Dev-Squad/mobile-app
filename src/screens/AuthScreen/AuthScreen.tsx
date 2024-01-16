@@ -24,6 +24,7 @@ import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import SvgUri from 'react-native-svg-uri';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
@@ -247,10 +248,15 @@ const AuthScreen = () => {
       <View style={AuthViewStyle.btnContainer}>
         <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
           <View style={AuthViewStyle.githubLogo}>
-            <Image
+            {/* <Image
               source={require('../../../assets/github_logo.png')}
               height={2}
               width={2}
+            /> */}
+            <SvgUri
+              height={50}
+              width={50}
+              source={require('../../../assets/github_logo.svg')}
             />
           </View>
           <View style={AuthViewStyle.signInTxtView}>
@@ -265,10 +271,10 @@ const AuthScreen = () => {
           onPress={activateCamera}
         >
           <View style={AuthViewStyle.githubLogo}>
-            <Image
-              source={require('../../../assets/web.png')}
-              height={2}
-              width={2}
+            <SvgUri
+              height={50}
+              width={50}
+              source={require('../../../assets/web.svg')}
             />
           </View>
           <View style={AuthViewStyle.signInTxtView}>
