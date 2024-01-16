@@ -62,6 +62,7 @@ const OOOForm = ({
         selectedDate={toDate}
       />
       <TextInput
+        placeholder="add description"
         style={[styles.input, styles.textArea, styles.text]}
         value={description}
         onChangeText={setDescription}
@@ -88,13 +89,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   formContainer: {
-    backgroundColor: '#f9f9f9',
-    paddingHorizontal: 35,
-    paddingVertical: 20,
-    borderRadius: 8,
-    marginTop: -30,
-    marginLeft: 30,
-    marginRight: 30,
+    // backgroundColor: '#f9f9f9',
+    // paddingHorizontal: 35,
+    // paddingVertical: 20,
+    // borderRadius: 8,
+    // marginTop: -30,
+    // marginLeft: 30,
+    // marginRight: 30,
   },
   input: {
     height: 40,

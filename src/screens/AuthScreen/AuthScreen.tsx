@@ -253,11 +253,7 @@ const AuthScreen = () => {
               height={2}
               width={2}
             /> */}
-            <SvgUri
-              height={50}
-              width={50}
-              source={require('../../../assets/github_logo.svg')}
-            />
+            <SvgUri height={50} width={50} source={{}} />
           </View>
           <View style={AuthViewStyle.signInTxtView}>
             <Text style={AuthViewStyle.signInText}>
@@ -271,11 +267,8 @@ const AuthScreen = () => {
           onPress={activateCamera}
         >
           <View style={AuthViewStyle.githubLogo}>
-            <SvgUri
-              height={50}
-              width={50}
-              source={require('../../../assets/web.svg')}
-            />
+            {/* TODO: add source */}
+            <SvgUri height={50} width={50} source={{}} />
           </View>
           <View style={AuthViewStyle.signInTxtView}>
             <Text style={AuthViewStyle.signInText}>

@@ -24,11 +24,13 @@ const ButtonWidget = ({
   textColor,
   bgColor,
   fontSize,
+  style,
 }: IButtonWidget) => {
   const btnStyle = [
     styles.button,
     {
       backgroundColor: bgColor ? bgColor : 'white',
+      ...style,
     },
   ];
 
