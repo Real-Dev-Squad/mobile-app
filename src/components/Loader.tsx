@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadingText: {
     color: 'black',

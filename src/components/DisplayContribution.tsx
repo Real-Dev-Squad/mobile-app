@@ -154,7 +154,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#333',
   },
-  emptyView: { color: 'black', marginTop: 20 },
+  emptyView: {
+    color: 'black',
+    marginTop: 20,
+  },
 });
 
 export default DisplayContribution;
