@@ -29,7 +29,7 @@ const DisplayContribution = ({
   };
   const navigationHandler = (item: any) => {
     if (!expand) {
-      navigation.navigate('AllTaskDetail', { taskId: item.id });
+      navigation.navigate('TaskDetail', { taskId: item.id });
     }
   };
   const renderItem = ({ item }: { item: displayContributionType }) => {

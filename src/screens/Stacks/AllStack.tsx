@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AllTaskDetailScreen from '../ProfileScreen/DetailsScreen/AllTaskDetailScreen';
 import React from 'react';
 import ProfileScreen2 from '../ProfileScreen/ProfileScreen2';
+import TaskDetailScreen from '../ProfileScreen/DetailsScreen/TaskDetailScreen';
 const Stack = createNativeStackNavigator();
 
 export function AllTaskScreenStack() {
@@ -12,7 +12,7 @@ export function AllTaskScreenStack() {
       }}
     >
       <Stack.Screen name="Profile" component={ProfileScreen2} />
-      <Stack.Screen name="AllTaskDetail" component={AllTaskDetailScreen} />
+      <Stack.Screen name="TaskDetail" component={TaskDetailScreen} />
     </Stack.Navigator>
   );
 }
