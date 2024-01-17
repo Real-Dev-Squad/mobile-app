@@ -11,6 +11,8 @@ const All = () => {
   const { loggedInUserData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
+  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
@@ -19,7 +21,7 @@ const All = () => {
         const token = loggedInUserData?.token;
 
         const allTasks = await fetchAllTasks(token);
-        const idToMatch = loggedInUserData.id;
+        const idToMatch = loggedInUserData?.id;
         const myActiveTask = allTasks.tasks.filter(
           (task) => task.assigneeId === idToMatch,
         );
@@ -38,6 +40,14 @@ const All = () => {
         <DisplayContribution tasks={allTask} expand={false} />
       )}
     </View>
+    //TODO: to call AllTaskDetailScreen
+    // <ScrollView style={{ padding: 10, elevation: 10 }}>
+    //   {isProdEnvironment ? (
+    //     <AllTaskDetailScreen />
+    //   ) : (
+    //     <DisplayContribution tasks={allContributionsData} />
+    //   )}
+    //   </ScrollView>
   );
 };
 const styles = StyleSheet.create({

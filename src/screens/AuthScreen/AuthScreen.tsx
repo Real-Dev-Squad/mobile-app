@@ -10,26 +10,24 @@ import {
   StyleSheet,
   Alert,
   Linking,
+  Platform,
 } from 'react-native';
 import Strings from '../../i18n/en';
 import { AuthViewStyle } from './styles';
-import { AuthScreenButton } from './Button';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AuthContext } from '../../context/AuthContext';
-import { getUserData, goalsAuth } from './Util';
+import { getUserData, goalsAuth, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
+// import { AuthApisStaging } from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
-import { useDispatch, useSelector } from 'react-redux';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
-  // TODO: will revamp github signIn feature
-  const dispatch = useDispatch();
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData, setGoalsData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
@@ -51,7 +49,10 @@ const AuthScreen = () => {
   }
 
   const githubAuthUrl = buildUrl(baseUrl, queryParams);
+
   useEffect(() => {
+    Platform.OS !== 'android' || requestCameraPermission();
+
     Linking.getInitialURL();
     const handleDeepLink = async (event) => {
       const token = event.url.split('token=')[1];
@@ -61,16 +62,17 @@ const AuthScreen = () => {
     return () => {
       Linking.removeEventListener('url', handleDeepLink);
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const activateCamera = async () => {
+    setCameraActive((prev) => !prev);
     try {
-      //await requestCameraPermission();
-      setCameraActive((prev) => !prev); // Set cameraActive state to true
+      await requestCameraPermission();
+      // Set cameraActive state to true
 
       const backAction = () => {
-        console.log('backClicked');
-        setCameraActive(false);
+        setCameraActive((prev) => !prev);
         Alert.alert('Hold on!', 'Are you sure you want to go back?', [
           {
             text: 'Cancel',
@@ -92,6 +94,7 @@ const AuthScreen = () => {
   };
 
   const handleQRCodeScanned = ({ nativeEvent }: any) => {
+    console.log(nativeEvent);
     setScannedUserID(nativeEvent.codeStringValue);
     setToolTip(true);
   };
@@ -110,7 +113,6 @@ const AuthScreen = () => {
     try {
       setLoading(true);
       const res = await getUserData(token);
-      console.log('auth screen');
       // this needs to be changed to prod token
       const goals = await goalsAuth('token from prod');
       await storeData('userData', JSON.stringify(res));
@@ -120,13 +122,12 @@ const AuthScreen = () => {
         name: res?.name,
         profileUrl: res?.profileUrl,
         status: res?.status,
-        twitterId: res?.twitter_id,
-        linkedinId: res?.linkedin_id,
-        githubId: res?.github_id,
-        discordUserName: res?.username,
+        twitter_id: res?.twitter_id,
+        linkedin_id: res?.linkedin_id,
+        github_id: res?.github_id,
+        username: res?.username,
         token: token,
       });
-      console.log(goals, 'goals in authscreen');
       setGoalsData(goals);
       setLoading(false);
     } catch (err) {
@@ -137,9 +138,14 @@ const AuthScreen = () => {
   const qrCodeLogin = async () => {
     const deviceId = await DeviceInfo.getUniqueId();
 
-    const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`;
+    // const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
+
+    const url = isProdEnvironment
+      ? `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
+      : `${AuthApis.QR_AUTH_API_STAGING}?device_id=${deviceId}`;
     try {
       const userInfo = await fetch(url);
+      console.log(userInfo, 'user info in rds app auth');
       const userInfoJson = await userInfo.json();
       if (userInfoJson.data.token) {
         updateUserData(userInfoJson.data.token);
@@ -164,9 +170,12 @@ const AuthScreen = () => {
   const getAuthStatus = async () => {
     const deviceInfo = await DeviceInfo.getDeviceName();
     const deviceId = await DeviceInfo.getUniqueId();
+    const url = isProdEnvironment
+      ? AuthApis.QR_AUTH_API
+      : AuthApis.QR_AUTH_API_STAGING;
     setLoading(true);
     try {
-      const data = await fetch(AuthApis.QR_AUTH_API, {
+      const data = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -177,6 +186,8 @@ const AuthScreen = () => {
           device_id: deviceId,
         }),
       });
+
+      console.log(data, 'Auth Screen ');
 
       if (data.ok) {
         const dataJson = await data.json();
@@ -203,6 +214,7 @@ const AuthScreen = () => {
         });
       }
     } catch (err) {
+      console.log(err, 'Error QR login');
       Toast.show({
         type: 'error',
         text1: err,
@@ -214,10 +226,10 @@ const AuthScreen = () => {
   };
 
   useEffect(() => {
-    if (scannedUserId != '') {
+    if (scannedUserId !== '') {
       getAuthStatus();
     }
-    /* eslint-disable */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scannedUserId]);
 
   return (
@@ -236,9 +248,9 @@ const AuthScreen = () => {
         <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
           <View style={AuthViewStyle.githubLogo}>
             <Image
-              source={require('../../../assets/githublogo.png')}
-              height={190}
-              width={190}
+              source={require('../../../assets/github_logo.png')}
+              height={2}
+              width={2}
             />
           </View>
           <View style={AuthViewStyle.signInTxtView}>
@@ -248,14 +260,25 @@ const AuthScreen = () => {
           </View>
         </TouchableOpacity>
 
-        <View style={[AuthViewStyle.btnView, { marginTop: 20 }]}>
-          <AuthScreenButton
-            text={Strings.SIGN_IN_WITH_WEB}
-            onPress={activateCamera}
-          />
-        </View>
-
         <TouchableOpacity
+          style={[AuthViewStyle.btnView, { marginTop: 20 }]}
+          onPress={activateCamera}
+        >
+          <View style={AuthViewStyle.githubLogo}>
+            <Image
+              source={require('../../../assets/web.png')}
+              height={2}
+              width={2}
+            />
+          </View>
+          <View style={AuthViewStyle.signInTxtView}>
+            <Text style={AuthViewStyle.signInText}>
+              {Strings.SIGN_IN_WITH_WEB}
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity
           onPress={() => {
             isProdEnvironment
               ? dispatch({ type: 'DEV' })
@@ -267,16 +290,17 @@ const AuthScreen = () => {
               {isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       {cameraActive && (
         <CameraScreen
           style={StyleSheet.absoluteFill}
-          showFrame
+          showFrame={true}
           scanBarcode={true}
           onReadCode={handleQRCodeScanned}
           frameColor={'white'}
           laserColor={'white'}
+          hideControls
         />
       )}
 
@@ -285,13 +309,16 @@ const AuthScreen = () => {
           <Tooltip
             isVisible={toolTip}
             content={
-              <Text style={styles.toolTip}>Go to my-site & scan QR code</Text>
+              <Text style={styles.toolTip}>
+                Go to `https://my.realdevsquad.com/mobile` & scan QR code to
+                login
+              </Text>
             }
             placement="top"
             onClose={() => setToolTip(false)}
           >
             <TouchableOpacity onPress={handleToolTip}>
-              <Text style={styles.toolButton}>What To Do </Text>
+              <Text style={styles.toolButton}>What To Do ? </Text>
             </TouchableOpacity>
           </Tooltip>
         </View>
@@ -320,13 +347,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#483d8b',
     color: '#fff',
-    marginBottom: 15,
-    borderRadius: 20,
+    borderRadius: 16,
     height: 50,
     padding: 10,
     textAlignVertical: 'center',
     textAlign: 'center',
-    margin: 8,
+    margin: 25,
   },
 });
 export default AuthScreen;

@@ -46,12 +46,12 @@ export const AuthViewStyle = StyleSheet.create({
   githubLogo: {
     flex: 0.2,
     justifyContent: 'center',
-    paddingStart: 8,
+    padding: 4,
   },
   signInTxtView: {
-    flex: 0.7,
+    flex: 0.9,
     justifyContent: 'center',
-    paddingRight: 5,
+    paddingLeft: 2,
   },
   welcomeMsg: {
     fontSize: 35,
