@@ -19,7 +19,6 @@ const DisplayContribution = ({
   tasks: taskType;
   expand: boolean;
 }) => {
-  const [isCollapsed, setCollapsed] = useState(true);
   const navigation = useNavigation();
 
   const formatTimeAgo = (timestamp: number) => {
@@ -65,11 +64,11 @@ const DisplayContribution = ({
             </TouchableOpacity>
           ))} */}
 
-        <Collapsible collapsed={isCollapsed}>
+        {/* <Collapsible collapsed={isCollapsed}>
           <View style={styles.expandableContent}>
             <ProgressBar />
           </View>
-        </Collapsible>
+        </Collapsible> */}
       </TouchableOpacity>
     );
   };

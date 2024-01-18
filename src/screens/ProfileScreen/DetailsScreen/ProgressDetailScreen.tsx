@@ -6,18 +6,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
-import { AuthContext } from '../../../context/AuthContext';
+import React, { useState } from 'react';
 
 const ProgressDetailScreen = () => {
-  const route = useRoute();
+  // TODO: progress detail api call
+  // const route = useRoute();
 
-  const { taskId } = route.params;
+  // const { taskId } = route.params;
   const [taskCompleted, setTaskCompleted] = useState('');
   const [taskPlanned, setTaskPlanned] = useState('');
   const [taskBlockers, setTaskBlockers] = useState('');
-  const [shouldDisable, setShoulDisable] = useState(false);
+  // const [shouldDisable, setShoulDisable] = useState(false);
 
   const isVisible = () => {
     // setShoulDisable('');
@@ -86,7 +85,7 @@ const ProgressDetailScreen = () => {
 
       <TouchableOpacity
         style={styles.submitProgressContainer}
-        disabled={shouldDisable}
+        // disabled={shouldDisable}
         onPress={submitProgress}
       >
         <Text style={styles.updatebutton}>Submit</Text>

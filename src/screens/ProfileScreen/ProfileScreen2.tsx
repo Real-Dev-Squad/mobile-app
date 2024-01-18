@@ -6,10 +6,8 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
-import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
-import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import All from './TaskScreens/All';
@@ -22,22 +20,12 @@ import Modal from 'react-native-modal';
 import { TouchableOpacity } from 'react-native';
 
 const ProfileScreen = () => {
-  const [response, setResponse] = useState<ImagePickerResponse>({});
-  const [modalVisible, setModalVisible] = useState(false);
+  const [response] = useState<ImagePickerResponse>({});
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleDropdown = () => {
     setDropdownVisible((prev) => !prev);
-  };
-
-  const closeModal = useCallback(() => {
-    setModalVisible(false);
-  }, []);
-
-  const removePicture = () => {
-    setResponse({});
-    closeModal();
   };
 
   const showDefaultAvatar = () => {

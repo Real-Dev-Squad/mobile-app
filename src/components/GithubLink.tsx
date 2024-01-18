@@ -1,4 +1,4 @@
-import { Linking, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Linking, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { profileScreenStyles } from '../screens/ProfileScreen/styles';
 
@@ -26,5 +26,3 @@ const GithubLink = ({ issueUrl }: { issueUrl: string }) => {
 };
 
 export default GithubLink;
-
-const styles = StyleSheet.create({});
