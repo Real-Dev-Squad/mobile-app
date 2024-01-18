@@ -45,24 +45,23 @@ const OOOForm = ({
 
     return true;
   };
-
   return (
-    <View style={styles.formContainer}>
+    <View>
       <Pressable onPress={(prev) => setIsFormVisible(!prev)}>
         <Image style={styles.close} source={Images.closeIcon} />
       </Pressable>
       <DatePicker
-        title={`From date: ${fromDate.toLocaleString('en-US')}`}
+        title={`From date: ${fromDate.toLocaleDateString('en-US')}`}
         onDateChange={(date) => setFromDate(date)}
         selectedDate={fromDate}
       />
       <DatePicker
-        title={`To date: ${toDate.toLocaleString('en-US')}`}
+        title={`To date: ${toDate.toLocaleDateString('en-US')}`}
         onDateChange={(date) => setToDate(date)}
         selectedDate={toDate}
       />
       <TextInput
-        placeholder="add description"
+        placeholder={'add description'}
         style={[styles.input, styles.textArea, styles.text]}
         value={description}
         onChangeText={setDescription}
@@ -87,15 +86,6 @@ export default OOOForm;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-  },
-  formContainer: {
-    // backgroundColor: '#f9f9f9',
-    // paddingHorizontal: 35,
-    // paddingVertical: 20,
-    // borderRadius: 8,
-    // marginTop: -30,
-    // marginLeft: 30,
-    // marginRight: 30,
   },
   input: {
     height: 40,

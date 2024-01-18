@@ -257,7 +257,25 @@ export const requestCameraPermission = async () => {
     console.warn(err);
   }
 };
+export const unixToTimeStamp = (_date) => {
+  // Unix timestamp in seconds
+  const timestamp = _date;
 
+  // Create a new Date object using the timestamp
+  const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
+
+  // Get the components of the date
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+  const year = date.getFullYear();
+
+  // Create a formatted date string
+  const formattedDate = `${day < 10 ? '0' : ''}${day}-${
+    month < 10 ? '0' : ''
+  }${month}-${year}`;
+
+  return formattedDate;
+};
 export const formatTimeToUnix = (date) => {
   const newDate = new Date(date);
 
@@ -336,9 +354,14 @@ export const formatTimeAgo = (timestamp) => {
 };
 
 export const fetchTaskDetails = async (
-  token: string,
   taskId: String,
+  token: string,
 ): Promise<any> => {
+  console.log(
+    'token and taskid',
+    urls.GET_ALL_TASK + taskId + '/details',
+    taskId,
+  );
   try {
     const response = await axios.get(urls.GET_ALL_TASK + taskId + '/details', {
       headers: {
@@ -346,6 +369,7 @@ export const fetchTaskDetails = async (
         cookie: `rds-session=${token}`,
       },
     });
+    console.log(response.status);
     return response.data;
   } catch (error) {
     return null;
@@ -353,18 +377,33 @@ export const fetchTaskDetails = async (
 };
 export const fetchTaskProgressDetails = async (
   token: string,
-  taskId: String,
+  taskId: string,
 ): Promise<any> => {
+  console.log('URL>>>', urls.GET_TASK_PROGRESS_DETAIL + taskId);
   try {
-    console.log('hey there ', token, taskId);
     const response = await axios.get(urls.GET_TASK_PROGRESS_DETAIL + taskId, {
       headers: {
         'Content-type': 'application/json',
         cookie: `rds-session=${token}`,
       },
     });
-    return response?.data;
+
+    if (!response.ok) {
+      console.log('Error:', response.data);
+      return response.data;
+    } else {
+      console.log('res>>', response.status);
+      return response?.data;
+    }
   } catch (error) {
-    return null;
+    if (error.response && error.response.status === 404) {
+      // Handle 404 response here if needed
+      // For example, you can return a specific error object or a default value
+      return error.response.data;
+    } else {
+      console.log('Other Error:', error);
+      // Handle other errors here
+      return null;
+    }
   }
 };

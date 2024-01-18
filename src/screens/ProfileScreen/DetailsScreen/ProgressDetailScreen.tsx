@@ -1,66 +1,142 @@
-import { StyleSheet } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { useRoute } from '@react-navigation/native';
+import { AuthContext } from '../../../context/AuthContext';
 
-export const profileScreenStyles = StyleSheet.create({
+const ProgressDetailScreen = () => {
+  const route = useRoute();
+
+  const { taskId } = route.params;
+  const [taskCompleted, setTaskCompleted] = useState('');
+  const [taskPlanned, setTaskPlanned] = useState('');
+  const [taskBlockers, setTaskBlockers] = useState('');
+  const [shouldDisable, setShoulDisable] = useState(false);
+
+  const isVisible = () => {
+    // setShoulDisable('');
+    // validateTaskProgress(taskCompleted, taskPlanned, taskBlockers),
+  };
+
+  function submitProgress(): void {
+    // throw new Error('Function not implemented.');
+  }
+
+  return (
+    <ScrollView style={styles.mainContainer}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Task Detail</Text>
+      </View>
+      <View style={styles.progressUpdateBackground}>
+        <Text style={styles.progressText}>
+          You have {<Text style={styles.missedProgressCount}>0 missed </Text>}
+          Progress updates{'\n'}
+        </Text>
+        <Text style={styles.progressText}>
+          Let us try not to miss giving updates
+        </Text>
+      </View>
+      <Text style={styles.taskUpdateTitle}>Task Updates</Text>
+      {/* <Text style={styles.taskUpdateDateTitle}>On {new Date()}</Text> */}
+
+      <Text style={styles.taskUpdateQuestion}>
+        Task Progress after the previous update
+      </Text>
+      <TextInput
+        style={styles.taskUpdateInput}
+        multiline={true}
+        onChangeText={(newText) => {
+          setTaskCompleted(newText.trim());
+          isVisible();
+        }}
+        defaultValue={taskCompleted}
+      />
+
+      <Text style={styles.taskUpdateQuestion}>
+        Planned progress before the next update
+      </Text>
+      <TextInput
+        style={styles.taskUpdateInput}
+        multiline={true}
+        onChangeText={(newText) => {
+          setTaskPlanned(newText.trim());
+          isVisible();
+        }}
+        defaultValue={taskPlanned}
+      />
+
+      <Text style={styles.taskUpdateQuestion}>
+        List down any blockers that you have
+      </Text>
+      <TextInput
+        style={styles.taskUpdateInput}
+        multiline={true}
+        onChangeText={(newText) => {
+          setTaskBlockers(newText.trim());
+          isVisible();
+        }}
+        defaultValue={taskBlockers}
+      />
+
+      <TouchableOpacity
+        style={styles.submitProgressContainer}
+        disabled={shouldDisable}
+        onPress={submitProgress}
+      >
+        <Text style={styles.updatebutton}>Submit</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+};
+
+export default ProgressDetailScreen;
+
+const styles = StyleSheet.create({
   mainview: {
     flex: 1,
     paddingTop: 10,
     width: '100%',
     alignItems: 'center',
   },
-
+  // titleText: {
+  //   fontSize: 24,
+  //   padding: 5,
+  //   color: 'black',
+  // },
+  titleContainer: {
+    padding: 10,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   titleText: {
     color: '#041187', // You can customize the text color
     fontSize: 26,
     fontWeight: 'bold',
-    padding: 5,
-  },
-  linkText: {
-    color: '#0366d6',
-    textDecorationLine: 'underline',
-    fontWeight: 'bold',
   },
   subTitleText: {
-    fontSize: 20,
+    fontSize: 16,
     paddingBottom: 10,
     color: 'black',
-    fontWeight: 'bold', // You can add this if you want to make it bold
-  },
-  subTitleTypeText: {
-    fontSize: 16,
-    color: '#555',
-    marginBottom: 4,
-  },
-  subTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
-  },
-  descriptionText: {
-    fontSize: 16,
-    color: '#555',
   },
   smallTitle: {
+    paddingBottom: 10,
     color: 'black',
     fontWeight: '600',
-    paddingVertical: 8,
-    textAlign: 'left',
+    paddingVertical: 5,
   },
   imageView: {
     alignItems: 'center',
   },
-  stickyButtonContainer: {
-    position: 'absolute',
-    bottom: 16, // Adjust the value based on your preference
-    left: '20%', // Center the button horizontally
-    transform: [{ translateX: -50 }], // Center the button horizontally
-    width: '80%', // Adjust the width based on your preference
-    zIndex: 2, // Ensure the button is above other elements
-  },
   taskUpdateTitle: {
-    marginTop: 20,
+    marginTop: 18,
     color: '#041187',
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: '800',
   },
   taskUpdateDateTitle: {
@@ -96,7 +172,6 @@ export const profileScreenStyles = StyleSheet.create({
   },
   progressListLeftPadding: {
     marginLeft: 5,
-    color: 'black',
   },
   updateButtonContainer: {
     backgroundColor: '#0034a5',
@@ -135,17 +210,8 @@ export const profileScreenStyles = StyleSheet.create({
     alignItems: 'center',
   },
   mainContainer: {
-    // marginHorizontal: 24,
-    // marginVertical: 8,
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  card: {
-    backgroundColor: '#F7F7F7',
-    padding: 16,
-    borderRadius: 8,
-    marginTop: 16,
+    marginHorizontal: 24,
+    marginVertical: 8,
   },
   cardBackground: {
     backgroundColor: 'white',
@@ -157,18 +223,6 @@ export const profileScreenStyles = StyleSheet.create({
   },
   flexItemWidth: {
     width: '50%',
-  },
-  modal: {
-    justifyContent: 'flex-end',
-    margin: 0,
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
   },
   modalViewOld: {
     margin: 20,
