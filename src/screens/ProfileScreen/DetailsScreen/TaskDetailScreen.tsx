@@ -1,4 +1,11 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  BackHandler,
+  Alert,
+} from 'react-native';
 import React, { useCallback, useContext, useState } from 'react';
 import { profileScreenStyles } from '../styles';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -19,11 +26,12 @@ import { AuthContext } from '../../../context/AuthContext';
 import GithubLink from '../../../components/GithubLink';
 import PushUpModalContent from '../../../components/PushUpModalContent';
 import { useSelector } from 'react-redux';
+import ProgressBar from '../../../components/ProgressBar';
 
 const TaskDetailScreen = () => {
   const route = useRoute();
 
-  const { taskId } = route.params;
+  const { taskId, isActive } = route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [progress, setProgress] = useState();
   const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
@@ -64,11 +72,31 @@ const TaskDetailScreen = () => {
     }, [taskId]),
   );
 
+  const backAction = () => {
+    navigation.goBack();
+  };
+
   return (
+    // TODO:Back button, active task progress detail from all task navigation
     <ScrollView style={profileScreenStyles.mainContainer}>
+      <TouchableOpacity onPress={backAction}>
+        <Text style={{ color: 'black' }}>Click Back button!</Text>
+      </TouchableOpacity>
+
       <Text style={profileScreenStyles.titleText}>
         {allTaskDetail?.taskData.title ?? 'Title is unavailable'}
       </Text>
+      {isActive && (
+        <View style={profileScreenStyles.isActiveableContent}>
+          <ProgressBar
+            percCompleted={allTaskDetail?.taskData?.percentCompleted}
+            taskId={taskId}
+            startedOn={allTaskDetail?.taskData?.startedOn}
+            endsOn={allTaskDetail?.taskData?.endsOn}
+          />
+        </View>
+      )}
+
       <View style={profileScreenStyles.card}>
         <Text style={profileScreenStyles.subTitle}>Description</Text>
         <Text style={profileScreenStyles.descriptionText}>
@@ -110,7 +138,6 @@ const TaskDetailScreen = () => {
       </View>
       <View style={profileScreenStyles.card}>
         <Text style={profileScreenStyles.subTitleText}>Progress Updates</Text>
-        {/* {"count": 3, "data": [{"blockers": "no blocker as of now", "completed": "checked the API's and working from the my-site and planned what needed to be done", "createdAt": 1705539839198, "date": 1705536000000, "id": "KU5KHKRddWjaKgvWFrzQ", "planned": "Integrated task detail as well get progress update detail api, made the task detail screen and displayed data", "taskId": "D7mETGktpIgJlCOLd9fT", "type": "task", "userId": "T7IL7MB8YriniTw4bt39"}, {"blockers": "blocker1", "completed": "testing1", "createdAt": 1705493271180, "date": 1705449600000, "id": "CEw8hqlxLUkCYGIBn1Pz", "planned": "testing2", "taskId": "D7mETGktpIgJlCOLd9fT", "type": "task", "userId": "T7IL7MB8YriniTw4bt39"}, {"blockers": "no-blocker", "completed": "started working on Task detail feature", "createdAt": 1705449157569, "date": 1705363200000, "id": "FWbOQGxdtqJiIVQc0H77", "planned": "checking the API's and working from the my-site", "taskId": "D7mETGktpIgJlCOLd9fT", "type": "task", "userId": "T7IL7MB8YriniTw4bt39"}], "message": "Progress document retrieved successfully."} */}
 
         {allTaskProgressDetail?.data ? (
           allTaskProgressDetail?.data.map((item, index) => (
@@ -199,4 +226,18 @@ const TaskDetailScreen = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  progressGreen: {
+    backgroundColor: 'green',
+  },
+  progressOrange: {
+    backgroundColor: 'orange',
+  },
+  progressRed: {
+    backgroundColor: 'red',
+  },
+  progressYellow: {
+    backgroundColor: 'yellow',
+  },
+});
 export default TaskDetailScreen;

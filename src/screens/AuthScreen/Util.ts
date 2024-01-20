@@ -4,6 +4,9 @@ import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
 import moment from 'moment';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
+import { useEffect, useState } from 'react';
+import loadLocalRawResource from 'react-native-local-resource';
+import { SvgCss } from 'react-native-svg';
 
 export const getUserData = async (token: string) => {
   try {
@@ -405,5 +408,34 @@ export const fetchTaskProgressDetails = async (
       // Handle other errors here
       return null;
     }
+  }
+};
+
+export const overallTaskProgress = async (
+  token: string,
+  percentCompleted: number,
+  taskId: string,
+) => {
+  const options = {
+    headers: {
+      'Content-type': 'application/json',
+      cookie: `rds-session=${token}`,
+    },
+  };
+  const body = { percentCompleted: percentCompleted };
+  try {
+    const res = await axios.patch(
+      `${urls.GET_ACTIVE_TASK}/${taskId}?userStatusFlag=true`,
+      body,
+      options,
+    );
+    if (res.status === 200) {
+      console.log('Task updated successfully!', res.data);
+      return res.data;
+    } else {
+      throw new Error(`API Error: ${res.status} - ${res.statusText}`);
+    }
+  } catch (err) {
+    console.error('API error:', err);
   }
 };

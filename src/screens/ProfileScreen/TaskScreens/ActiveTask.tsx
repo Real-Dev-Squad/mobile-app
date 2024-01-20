@@ -34,7 +34,7 @@ const ActiveScreen = () => {
       {loading ? (
         <Loader />
       ) : (
-        <DisplayContribution tasks={activeTasks} expand={false} />
+        <DisplayContribution tasks={activeTasks} isActive={true} />
       )}
     </View>
   );

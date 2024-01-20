@@ -37,7 +37,7 @@ const All = () => {
       {loading ? (
         <Loader />
       ) : (
-        <DisplayContribution tasks={allTask} expand={false} />
+        <DisplayContribution tasks={allTask} isActive={false} />
       )}
     </View>
     //TODO: to call AllTaskDetailScreen
