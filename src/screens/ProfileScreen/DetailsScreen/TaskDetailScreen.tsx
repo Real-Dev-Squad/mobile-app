@@ -91,7 +91,8 @@ const TaskDetailScreen = () => {
         {allTaskDetail?.taskData.title ?? 'Title is unavailable'}
       </Text>
       {isActive && (
-        <View style={profileScreenStyles.isActiveableContent}>
+        <View style={profileScreenStyles.card}>
+          <Text style={profileScreenStyles.subTitle}>Overall Progress</Text>
           <ProgressBar
             percCompleted={allTaskDetail?.taskData?.percentCompleted}
             taskId={taskId}
