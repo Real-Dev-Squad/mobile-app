@@ -24,11 +24,15 @@ import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
-// import SvgUri from 'react-native-svg-uri';
+import { useSelector } from 'react-redux';
+// import Github from '../../constants/images/Image';
+import Images from '../../constants/images/Image';
+import GithubSvg from '../../../assets/github_logo.js';
+import WebSvg from '../../../assets/web';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
-  // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData, setGoalsData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
@@ -188,8 +192,6 @@ const AuthScreen = () => {
         }),
       });
 
-      console.log(data, 'Auth Screen ');
-
       if (data.ok) {
         const dataJson = await data.json();
         Alert.alert('Please Confirm', dataJson.message, [
@@ -236,25 +238,16 @@ const AuthScreen = () => {
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
-        <Image
-          source={require('../../../assets/rdsLogo.png')}
-          style={AuthViewStyle.logo}
-        />
+        <Image source={Images.rdsLogo} style={AuthViewStyle.logo} />
       </View>
       <View style={[AuthViewStyle.constContainer]}>
         <Text style={AuthViewStyle.welcomeMsg}>{Strings.WELCOME_TO}</Text>
         <Text style={AuthViewStyle.cmpnyName}>{Strings.REAL_DEV_SQUAD}</Text>
       </View>
+
       <View style={AuthViewStyle.btnContainer}>
         <TouchableOpacity onPress={handleSignIn} style={AuthViewStyle.btnView}>
-          <View style={AuthViewStyle.githubLogo}>
-            {/* <Image
-              source={require('../../../assets/github_logo.png')}
-              height={2}
-              width={2}
-            /> */}
-            {/* <SvgUri height={50} width={50} source={{}} /> */}
-          </View>
+          <GithubSvg height={30} width={30} />
           <View style={AuthViewStyle.signInTxtView}>
             <Text style={AuthViewStyle.signInText}>
               {Strings.SIGN_IN_BUTTON_TEXT}
@@ -263,14 +256,19 @@ const AuthScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[AuthViewStyle.btnView, { marginTop: 20 }]}
+          style={AuthViewStyle.btnView}
           onPress={activateCamera}
         >
-          <View style={AuthViewStyle.githubLogo}>
-            {/* TODO: add source */}
-            {/* <SvgUri height={50} width={50} source={{}} /> */}
-          </View>
-          <View style={AuthViewStyle.signInTxtView}>
+          <WebSvg
+            height={40}
+            width={40}
+            style={{
+              marginTop: 13,
+              marginLeft: 4,
+            }}
+          />
+
+          <View style={[AuthViewStyle.signInTxtView, { marginRight: 26 }]}>
             <Text style={AuthViewStyle.signInText}>
               {Strings.SIGN_IN_WITH_WEB}
             </Text>

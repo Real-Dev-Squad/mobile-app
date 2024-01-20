@@ -7,7 +7,9 @@ export const profileScreenStyles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
-
+  isActiveableContent: {
+    paddingBottom: 30,
+  },
   titleText: {
     color: '#041187', // You can customize the text color
     fontSize: 26,
