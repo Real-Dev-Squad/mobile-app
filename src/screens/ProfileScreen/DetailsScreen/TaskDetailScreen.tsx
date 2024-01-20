@@ -2,9 +2,9 @@ import {
   Text,
   View,
   TouchableOpacity,
-  StyleSheet,
-  BackHandler,
-  Alert,
+  // StyleSheet,
+  // BackHandler,
+  // Alert,
 } from 'react-native';
 import React, { useCallback, useContext, useState } from 'react';
 import { profileScreenStyles } from '../styles';
@@ -70,7 +70,7 @@ const TaskDetailScreen = () => {
           taskProgressDetailResponse && taskProgressDetailResponse,
         );
       })();
-    }, [taskId]),
+    }, [taskId, loggedInUserData?.token]),
   );
 
   const backAction = () => {
@@ -231,18 +231,18 @@ const TaskDetailScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  progressGreen: {
-    backgroundColor: 'green',
-  },
-  progressOrange: {
-    backgroundColor: 'orange',
-  },
-  progressRed: {
-    backgroundColor: 'red',
-  },
-  progressYellow: {
-    backgroundColor: 'yellow',
-  },
-});
+// const styles = StyleSheet.create({
+//   progressGreen: {
+//     backgroundColor: 'green',
+//   },
+//   progressOrange: {
+//     backgroundColor: 'orange',
+//   },
+//   progressRed: {
+//     backgroundColor: 'red',
+//   },
+//   progressYellow: {
+//     backgroundColor: 'yellow',
+//   },
+// });
 export default TaskDetailScreen;
