@@ -25,7 +25,6 @@ const All = () => {
         const myActiveTask = allTasks.tasks.filter(
           (task) => task.assigneeId === idToMatch,
         );
-
         setAllTask(myActiveTask);
         setLoading(false);
       })();
