@@ -1,14 +1,6 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import { Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import Collapsible from 'react-native-collapsible';
-import ProgressBar from './ProgressBar';
 import { displayContributionType, taskType } from './UserContibution/Type';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,7 +11,6 @@ const DisplayContribution = ({
   tasks: taskType;
   expand: boolean;
 }) => {
-  const [isCollapsed, setCollapsed] = useState(true);
   const navigation = useNavigation();
 
   const formatTimeAgo = (timestamp: number) => {
@@ -64,13 +55,6 @@ const DisplayContribution = ({
               </Text>
             </TouchableOpacity>
           ))} */}
-
-
-        <Collapsible collapsed={isCollapsed}>
-          <View style={styles.expandableContent}>
-            <ProgressBar />
-          </View>
-        </Collapsible>
       </TouchableOpacity>
     );
   };
