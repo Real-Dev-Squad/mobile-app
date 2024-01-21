@@ -20,6 +20,7 @@ import GithubLink from '../../../components/GithubLink';
 import PushUpModalContent from '../../../components/PushUpModalContent';
 import { useSelector } from 'react-redux';
 
+
 const TaskDetailScreen = () => {
   const route = useRoute();
 
