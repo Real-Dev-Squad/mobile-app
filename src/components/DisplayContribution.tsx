@@ -65,6 +65,7 @@ const DisplayContribution = ({
             </TouchableOpacity>
           ))} */}
 
+
         <Collapsible collapsed={isCollapsed}>
           <View style={styles.expandableContent}>
             <ProgressBar />
