@@ -28,6 +28,7 @@ import PushUpModalContent from '../../../components/PushUpModalContent';
 import { useSelector } from 'react-redux';
 import ProgressBar from '../../../components/ProgressBar';
 
+
 const TaskDetailScreen = () => {
   const route = useRoute();
 
