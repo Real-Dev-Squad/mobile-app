@@ -10,79 +10,18 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
-
-import { View, TouchableWithoutFeedback, ScrollView, Text } from 'react-native';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import All from './TaskScreens/All';
 import { Tabs } from 'react-native-collapsible-tab-view';
-import { useFocusEffect } from '@react-navigation/native';
-import { fetchActiveTasks } from '../AuthScreen/Util';
-import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
 import EllipseComponent from '../../components/EllipseComponent';
 import ActiveScreen from './TaskScreens/ActiveTask';
 import Modal from 'react-native-modal';
 import { TouchableOpacity } from 'react-native';
 
-const dummyData = [
-  {
-    id: '0CZnoSLruyIihibT1F6m',
-    percentCompleted: 100,
-    endsOn: 1689206400,
-    isNoteworthy: true,
-    lossRate: { dinero: 250, neelam: 0 },
-    type: 'feature',
-    priority: 'HIGH',
-    completionAward: { dinero: 4000, neelam: 0 },
-    title: 'Test feature Test Test feature Test ',
-    createdAt: 1676944234,
-    createdBy: 'ankush',
-    assignee: 'shreya',
-    startedOn: 1676944233.827,
-    status: 'ASSIGNED',
-    updatedAt: 1702051343,
-    assigneeId: 'T7IL7MB8YriniTw4bt39',
-  },
-];
-export const ActiveScreen = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeTasks, setActiveTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const { loggedInUserData } = useContext(AuthContext);
-
-  useFocusEffect(
-    useCallback(() => {
-      setLoading(true);
-      (async () => {
-        const token = loggedInUserData?.token;
-
-        const tasksRes = await fetchActiveTasks(token);
-        const dummyTasks = [...tasksRes, ...dummyData];
-        const activeTaskRes = dummyTasks.filter(
-          (item) => item.status !== 'COMPLETED',
-        );
-        setActiveTasks(activeTaskRes);
-        setLoading(false);
-      })();
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loggedInUserData?.token]),
-  );
-  return (
-    <View style={styles.profile}>
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading...</Text>
-        </View>
-      ) : (
-        <DisplayContribution tasks={activeTasks} expand={false} />
-      )}
-    </View>
-  );
-};
 const ProfileScreen = () => {
   const [response] = useState<ImagePickerResponse>({});
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);

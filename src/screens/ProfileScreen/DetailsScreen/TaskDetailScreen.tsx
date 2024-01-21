@@ -20,7 +20,7 @@ import GithubLink from '../../../components/GithubLink';
 import PushUpModalContent from '../../../components/PushUpModalContent';
 import { useSelector } from 'react-redux';
 import ProgressBar from '../../../components/ProgressBar';
-import BackSvg from '../../../../assets/back';
+import BackSvg from '../../../../assets/svgs/back';
 
 const TaskDetailScreen = () => {
   const route = useRoute();
