@@ -1,4 +1,8 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, {
+  useState,
+  // useCallback,
+  useContext,
+} from 'react';
 import {
   View,
   TouchableWithoutFeedback,

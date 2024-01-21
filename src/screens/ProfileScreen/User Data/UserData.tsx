@@ -3,10 +3,12 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   Linking,
   TouchableOpacity,
 } from 'react-native';
+import GithubSvg from '../../../../assets/github_logo';
+import LinkedInSvg from '../../../../assets/linkedIn';
+import TwitterSvg from '../../../../assets/twitter';
 
 const UserData = ({ userData }) => {
   const { twitter_id, linkedin_id, github_id, designation, company, name } =
@@ -20,28 +22,19 @@ const UserData = ({ userData }) => {
       <View style={styles.contactView}>
         {twitter_id && (
           <TouchableOpacity onPress={() => Linking.openURL(twitter_id)}>
-            <Image
-              style={{ height: 30, width: 30, margin: 5 }}
-              source={require('../../../../assets/twitter_logo.png')}
-            />
+            <TwitterSvg height={30} width={30} />
           </TouchableOpacity>
         )}
         {linkedin_id && (
           <TouchableOpacity onPress={() => Linking.openURL(linkedin_id)}>
-            <Image
-              style={{ height: 30, width: 30, margin: 5 }}
-              source={require('../../../../assets/linkedIn_logo.png')}
-            />
+            <LinkedInSvg height={30} width={30} />
           </TouchableOpacity>
         )}
         {github_id && (
           <TouchableOpacity
             onPress={() => Linking.openURL(`https://github.com/${github_id}`)}
           >
-            <Image
-              style={{ height: 30, width: 30, margin: 5 }}
-              source={require('../../../../assets/githublogo.png')}
-            />
+            <GithubSvg height={28} width={28} />
           </TouchableOpacity>
         )}
       </View>
