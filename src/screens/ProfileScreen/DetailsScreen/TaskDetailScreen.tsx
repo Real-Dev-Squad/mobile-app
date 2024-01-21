@@ -1,11 +1,4 @@
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  BackHandler,
-  Alert,
-} from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useCallback, useContext, useState } from 'react';
 import { profileScreenStyles } from '../styles';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -27,7 +20,6 @@ import GithubLink from '../../../components/GithubLink';
 import PushUpModalContent from '../../../components/PushUpModalContent';
 import { useSelector } from 'react-redux';
 import ProgressBar from '../../../components/ProgressBar';
-
 
 const TaskDetailScreen = () => {
   const route = useRoute();
@@ -227,18 +219,4 @@ const TaskDetailScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  progressGreen: {
-    backgroundColor: 'green',
-  },
-  progressOrange: {
-    backgroundColor: 'orange',
-  },
-  progressRed: {
-    backgroundColor: 'red',
-  },
-  progressYellow: {
-    backgroundColor: 'yellow',
-  },
-});
 export default TaskDetailScreen;

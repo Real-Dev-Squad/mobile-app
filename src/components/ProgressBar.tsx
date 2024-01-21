@@ -94,6 +94,7 @@ function ProgressBar({
       useNativeDriver: false,
     }).start();
     updateProgressValue(progressValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progress, progressValue]);
 
   const updateProgressValue = async (progressVal: number) => {
