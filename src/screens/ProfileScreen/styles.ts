@@ -45,8 +45,9 @@ export const profileScreenStyles = StyleSheet.create({
   smallTitle: {
     color: 'black',
     fontWeight: '600',
-    paddingVertical: 8,
+    // paddingVertical: 8,
     textAlign: 'left',
+    flex: 1,
   },
   imageView: {
     alignItems: 'center',
@@ -166,9 +167,9 @@ export const profileScreenStyles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: 'white',
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 30,
+    // justifyContent: 'center',
+    // alignItems: 'center',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },

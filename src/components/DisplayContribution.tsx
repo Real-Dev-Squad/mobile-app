@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react'; // useState
 import {
-  View,
+  // View,
   Text,
   FlatList,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
-import Collapsible from 'react-native-collapsible';
-import ProgressBar from './ProgressBar';
+// import Collapsible from 'react-native-collapsible';
+// import ProgressBar from './ProgressBar';
 import { displayContributionType, taskType } from './UserContibution/Type';
 import { useNavigation } from '@react-navigation/native';
 type TaskItem = {

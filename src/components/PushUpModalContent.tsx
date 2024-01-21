@@ -9,21 +9,15 @@ const PushUpModalContent = ({ task }) => {
       <Text style={styles.dateText}>{calculateISODateFormat(task?.date)}</Text>
       <View style={styles.content}>
         <View style={styles.block}>
-          <Text style={[profileScreenStyles.smallTitle, styles.textTitle]}>
-            Completed:{' '}
-          </Text>
+          <Text style={profileScreenStyles.smallTitle}>Completed: </Text>
           <Text style={styles.textTitle}>{task?.completed}</Text>
         </View>
         <View style={styles.block}>
-          <Text style={[profileScreenStyles.smallTitle, styles.textTitle]}>
-            Planned:{' '}
-          </Text>
+          <Text style={profileScreenStyles.smallTitle}>Planned: </Text>
           <Text style={styles.textTitle}>{task?.planned}</Text>
         </View>
         <View style={styles.block}>
-          <Text style={[profileScreenStyles.smallTitle, styles.textTitle]}>
-            Blockers:{' '}
-          </Text>
+          <Text style={profileScreenStyles.smallTitle}>Blockers: </Text>
           <Text style={styles.textTitle}>{task?.blockers}</Text>
         </View>
         {/* <TouchableOpacity onPress={onClose}>
@@ -43,8 +37,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   content: {
-    margin: 4,
-    alignSelf: 'center',
+    // margin: 4,
+    // alignSelf: 'center',
   },
   modalView: {
     justifyContent: 'center',
@@ -57,10 +51,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   block: {
+    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 8,
+    marginTop: 8,
+    alignItems: 'flex-start',
   },
   buttonBg: {
     width: '100%',
@@ -73,8 +67,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   textTitle: {
-    textAlign: 'center',
+    flex: 2,
     color: '#000000',
+    flexWrap: 'wrap',
   },
   dateText: {
     fontSize: 24,

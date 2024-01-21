@@ -23,10 +23,13 @@ function ProgressBar({
   startedOn: string;
   endsOn: string;
 }) {
-  const [progressValue, setProgressValue] = useState(percCompleted || 0);
+  const [progressValue, setProgressValue] = useState(0);
   const progress = useRef(new Animated.Value(0)).current;
   const { loggedInUserData } = useContext(AuthContext);
   const [progressColor, setProgressColor] = useState('#3498db');
+  useEffect(() => {
+    setProgressValue(percCompleted);
+  }, [percCompleted]);
   useEffect(() => {
     handleProgressColor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,20 +71,18 @@ function ProgressBar({
   }
 
   const panResponder = useRef(
+    //TODO: on decreasing it sets value to 0
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-      // {"_accountsForMovesUpTo": 374642505, "dx": 56.208335876464844, "dy": -1.375, "moveX": 113.33333587646484, "moveY": 78.66666412353516, "numberActiveTouches": 1, "stateID": 0.6602985413932952, "vx": 0, "vy": 0, "x0": 57.125, "y0": 80.04166412353516}
-
       onPanResponderMove: (event, gestureState) => {
-        // console.log('🚀 ~ ProgressBar ~ gestureState:', event, gestureState);
         const newValue = Math.max(
           0,
           Math.min(progressValue + gestureState.dx, 100),
         );
         const roundedValue = Math.round(newValue / 10) * 10;
-
         setProgressValue(roundedValue);
+        updateProgressValue(roundedValue);
         progress.setValue(roundedValue);
       },
     }),
@@ -93,7 +94,7 @@ function ProgressBar({
       duration: 300,
       useNativeDriver: false,
     }).start();
-    updateProgressValue(progressValue);
+    // updateProgressValue(progressValue);
   }, [progress, progressValue]);
 
   const updateProgressValue = async (progressVal: number) => {
@@ -130,11 +131,13 @@ function ProgressBar({
   const handleIncrement = () => {
     const newValue = Math.min(progressValue + 10, 100);
     setProgressValue(newValue);
+    updateProgressValue(newValue);
   };
 
   const handleDecrement = () => {
     const newValue = Math.max(progressValue - 10, 0);
     setProgressValue(newValue);
+    updateProgressValue(newValue);
   };
 
   return (
@@ -143,12 +146,13 @@ function ProgressBar({
         style={[
           styles.bar,
           {
-            width: progressValue + '%',
+            width: progressValue ? progressValue + '%' : 0 + '%',
             backgroundColor: progressColor,
           },
         ]}
         {...panResponder.panHandlers}
       />
+
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button} onPress={handleDecrement}>
           <Text style={styles.buttonText}>-</Text>

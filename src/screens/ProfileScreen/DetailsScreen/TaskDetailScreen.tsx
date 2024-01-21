@@ -2,9 +2,9 @@ import {
   Text,
   View,
   TouchableOpacity,
-  StyleSheet,
-  BackHandler,
-  Alert,
+  // StyleSheet,
+  // BackHandler,
+  // Alert,
 } from 'react-native';
 import React, { useCallback, useContext, useState } from 'react';
 import { profileScreenStyles } from '../styles';
@@ -27,6 +27,7 @@ import GithubLink from '../../../components/GithubLink';
 import PushUpModalContent from '../../../components/PushUpModalContent';
 import { useSelector } from 'react-redux';
 import ProgressBar from '../../../components/ProgressBar';
+import BackSvg from '../../../../assets/back';
 
 const TaskDetailScreen = () => {
   const route = useRoute();
@@ -69,25 +70,29 @@ const TaskDetailScreen = () => {
           taskProgressDetailResponse && taskProgressDetailResponse,
         );
       })();
-    }, [taskId]),
+    }, [taskId, loggedInUserData?.token]),
   );
 
   const backAction = () => {
     navigation.goBack();
   };
+  console.log(
+    'allTaskDetail?.taskData?.percentCompleted',
+    allTaskDetail?.taskData,
+  );
 
   return (
-    // TODO:Back button, active task progress detail from all task navigation
     <ScrollView style={profileScreenStyles.mainContainer}>
       <TouchableOpacity onPress={backAction}>
-        <Text style={{ color: 'black' }}>Click Back button!</Text>
+        <BackSvg width={30} height={30} />
       </TouchableOpacity>
 
       <Text style={profileScreenStyles.titleText}>
         {allTaskDetail?.taskData.title ?? 'Title is unavailable'}
       </Text>
       {isActive && (
-        <View style={profileScreenStyles.isActiveableContent}>
+        <View style={profileScreenStyles.card}>
+          <Text style={profileScreenStyles.subTitle}>Overall Progress</Text>
           <ProgressBar
             percCompleted={allTaskDetail?.taskData?.percentCompleted}
             taskId={taskId}
@@ -226,18 +231,18 @@ const TaskDetailScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  progressGreen: {
-    backgroundColor: 'green',
-  },
-  progressOrange: {
-    backgroundColor: 'orange',
-  },
-  progressRed: {
-    backgroundColor: 'red',
-  },
-  progressYellow: {
-    backgroundColor: 'yellow',
-  },
-});
+// const styles = StyleSheet.create({
+//   progressGreen: {
+//     backgroundColor: 'green',
+//   },
+//   progressOrange: {
+//     backgroundColor: 'orange',
+//   },
+//   progressRed: {
+//     backgroundColor: 'red',
+//   },
+//   progressYellow: {
+//     backgroundColor: 'yellow',
+//   },
+// });
 export default TaskDetailScreen;
