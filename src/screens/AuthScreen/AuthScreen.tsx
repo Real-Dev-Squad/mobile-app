@@ -24,7 +24,7 @@ import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import SvgUri from 'react-native-svg-uri';
+// import SvgUri from 'react-native-svg-uri';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
@@ -253,7 +253,7 @@ const AuthScreen = () => {
               height={2}
               width={2}
             /> */}
-            <SvgUri height={50} width={50} source={{}} />
+            {/* <SvgUri height={50} width={50} source={{}} /> */}
           </View>
           <View style={AuthViewStyle.signInTxtView}>
             <Text style={AuthViewStyle.signInText}>
@@ -268,7 +268,7 @@ const AuthScreen = () => {
         >
           <View style={AuthViewStyle.githubLogo}>
             {/* TODO: add source */}
-            <SvgUri height={50} width={50} source={{}} />
+            {/* <SvgUri height={50} width={50} source={{}} /> */}
           </View>
           <View style={AuthViewStyle.signInTxtView}>
             <Text style={AuthViewStyle.signInText}>

@@ -16,4 +16,5 @@ export const urls = {
   GET_ACTIVE_TASK: 'https://api.realdevsquad.com/tasks/self',
   GOALS_AUTH: 'https://staging-api.realdevsquad.com/goals/token',
   GET_ALL_TASK: `${PROD_BASE_URL}/tasks/`,
+  GET_TASK_PROGRESS_DETAIL: `${PROD_BASE_URL}/progresses?taskId=`,
 };

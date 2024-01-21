@@ -17,8 +17,80 @@ export const profileScreenStyles = StyleSheet.create({
     paddingBottom: 10,
     color: 'black',
   },
+  smallTitle: {
+    paddingBottom: 10,
+    color: 'black',
+    fontWeight: '600',
+    paddingVertical: 5,
+  },
   imageView: {
     alignItems: 'center',
+  },
+  taskUpdateTitle: {
+    marginTop: 20,
+    color: '#041187',
+    fontSize: 26,
+    fontWeight: '800',
+  },
+  taskUpdateDateTitle: {
+    marginTop: 8,
+    fontSize: 20,
+    fontWeight: '800',
+    marginBottom: 20,
+  },
+  taskUpdateQuestion: {
+    marginTop: 16,
+    color: '#616161',
+    fontSize: 16,
+  },
+  taskUpdateInput: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    marginBottom: 10,
+    marginTop: 10,
+    paddingHorizontal: 10,
+  },
+  progressUpdateBackground: {
+    borderRadius: 8,
+    backgroundColor: '#1C315E',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  progressText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 20,
+  },
+  progressListLeftPadding: {
+    marginLeft: 5,
+  },
+  updateButtonContainer: {
+    backgroundColor: '#0034a5',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: '45%',
+    borderRadius: 10,
+  },
+  updatebutton: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: '800',
+  },
+  missedProgressCount: {
+    color: 'red',
+    fontWeight: '700',
+    fontSize: 18,
+    textDecorationLine: 'underline',
+  },
+  submitProgressContainer: {
+    backgroundColor: '#0034a5',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: '30%',
+    borderRadius: 10,
+    marginTop: 16,
   },
   image: {
     width: 100,
@@ -30,7 +102,21 @@ export const profileScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  mainContainer: {
+    marginHorizontal: 24,
+    marginVertical: 8,
+  },
+  cardBackground: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderWidth: 1,
+    marginTop: 10,
+    borderColor: '#F0F0F0',
+    borderRadius: 8,
+  },
+  flexItemWidth: {
+    width: '50%',
+  },
   modalViewOld: {
     margin: 20,
     backgroundColor: 'white',
@@ -45,6 +131,11 @@ export const profileScreenStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  flexContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   modalView: {
     position: 'absolute',

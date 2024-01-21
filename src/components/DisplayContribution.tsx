@@ -1,14 +1,6 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import { Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import Collapsible from 'react-native-collapsible';
-import ProgressBar from './ProgressBar';
 import { displayContributionType, taskType } from './UserContibution/Type';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,7 +11,6 @@ const DisplayContribution = ({
   tasks: taskType;
   expand: boolean;
 }) => {
-  const [isCollapsed, setCollapsed] = useState(true);
   const navigation = useNavigation();
 
   const formatTimeAgo = (timestamp: number) => {
@@ -27,12 +18,17 @@ const DisplayContribution = ({
     const endDate = moment.unix(timestamp);
     return endDate.from(currentDate);
   };
-  const navigationHandler = () => {
-    navigation.navigate('AllTaskDetail');
+  const navigationHandler = (item: any) => {
+    if (!expand) {
+      navigation.navigate('TaskDetail', { taskId: item.id });
+    }
   };
   const renderItem = ({ item }: { item: displayContributionType }) => {
     return (
-      <TouchableOpacity style={styles.card} onPress={navigationHandler}>
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigationHandler(item)}
+      >
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>
           Created By: <Text style={styles.createdBy}>{item.createdBy}</Text>
@@ -49,19 +45,16 @@ const DisplayContribution = ({
           <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        {expand && (
+        {/* {expand &&
+          (isProdEnvironment ? (
+            <></>
+          ) : (
             <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
               <Text style={styles.expandButton}>
                 {isCollapsed ? 'Expand' : 'Collapse'}
               </Text>
             </TouchableOpacity>
-          )}
-
-        <Collapsible collapsed={isCollapsed}>
-          <View style={styles.expandableContent}>
-            <ProgressBar />
-          </View>
-        </Collapsible>
+          ))} */}
       </TouchableOpacity>
     );
   };
