@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { View, TouchableWithoutFeedback, ScrollView, Text } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
@@ -12,6 +12,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
+import EllipseComponent from '../../components/EllipseComponent';
 
 const dummyData = [
   {
