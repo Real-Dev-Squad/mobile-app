@@ -4,9 +4,6 @@ import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
 import moment from 'moment';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
-import { useEffect, useState } from 'react';
-import loadLocalRawResource from 'react-native-local-resource';
-import { SvgCss } from 'react-native-svg';
 
 export const getUserData = async (token: string) => {
   try {
