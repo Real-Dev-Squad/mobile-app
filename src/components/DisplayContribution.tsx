@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import moment from 'moment';
-import { TouchableOpacity } from 'react-native';
-// import Modal from 'react-native-modal';
 import Collapsible from 'react-native-collapsible';
 import ProgressBar from './ProgressBar';
 import { displayContributionType, taskType } from './UserContibution/Type';
@@ -46,12 +50,12 @@ const DisplayContribution = ({
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
         {expand && (
-          <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
-            <Text style={styles.expandButton}>
-              {isCollapsed ? 'Expand' : 'Collapse'}
-            </Text>
-          </TouchableOpacity>
-        )}
+            <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
+              <Text style={styles.expandButton}>
+                {isCollapsed ? 'Expand' : 'Collapse'}
+              </Text>
+            </TouchableOpacity>
+          )}
 
         <Collapsible collapsed={isCollapsed}>
           <View style={styles.expandableContent}>
@@ -62,12 +66,14 @@ const DisplayContribution = ({
     );
   };
 
-  return (
+  return tasks?.length > 0 ? (
     <FlatList
       data={tasks}
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
     />
+  ) : (
+    <Text style={styles.emptyView}>No tasks found...</Text>
   );
 };
 
@@ -139,6 +145,10 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 18,
     color: '#333',
+  },
+  emptyView: {
+    color: 'black',
+    marginTop: 20,
   },
 });
 

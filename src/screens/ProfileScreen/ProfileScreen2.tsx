@@ -1,18 +1,13 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
-import ButtonWidget from '../../components/ButtonWidget';
 import Avatar from '../../components/Avatar';
 import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
-import Strings from '../../i18n/en';
-import { useSelector, useDispatch } from 'react-redux';
 import All from './TaskScreens/All';
-// import Note from './UserDataV2/NoteWorthy';
 import { Tabs } from 'react-native-collapsible-tab-view';
-
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
@@ -74,17 +69,15 @@ export const ActiveScreen = () => {
     </View>
   );
 };
-
 const ProfileScreen = () => {
-  const dispatch = useDispatch();
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const [response, setResponse] = useState<ImagePickerResponse>({});
   const [modalVisible, setModalVisible] = useState(false);
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
 
-  const openModal = useCallback(() => {
-    setModalVisible(true);
-  }, []);
+  const handleDropdown = () => {
+    setDropdownVisible((prev) => !prev);
+  };
 
   const closeModal = useCallback(() => {
     setModalVisible(false);
@@ -104,16 +97,19 @@ const ProfileScreen = () => {
 
   const handleLogout = () => {
     setLoggedInUserData(null);
+    AsyncStorage.removeItem('userData');
   };
 
   return (
-    <ScrollView contentContainerStyle={ScreenViewContainer.container}>
-      <Pressable
-        style={profileScreenStyles.logoutButton}
-        onPress={handleLogout}
-      >
-        <Text style={profileScreenStyles.logoutText}>{Strings.LOGOUT}</Text>
-      </Pressable>
+    <ScrollView
+      contentContainerStyle={ScreenViewContainer.container}
+      // onPress={handleDropdown}
+    >
+      <EllipseComponent
+        handleLogout={handleLogout}
+        isDropdownVisible={isDropdownVisible}
+        handleDropDown={handleDropdown}
+      />
       <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
@@ -121,27 +117,23 @@ const ProfileScreen = () => {
         response={response}
         setResponse={setResponse}
       />
-      <View style={profileScreenStyles.mainview}>
-        {response?.assets &&
-          response.assets.map(({ uri }) => (
-            <Avatar key={uri} uri={uri || ''} size={100} />
-          ))}
-        {showDefaultAvatar() && (
-          <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
-        )}
-        <Text style={profileScreenStyles.titleText}>
-          <UserData userData={loggedInUserData} />
-        </Text>
-        <ButtonWidget title={'Update'} onPress={openModal} />
-        <ButtonWidget
-          title={isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
-          onPress={() => {
-            isProdEnvironment
-              ? dispatch({ type: 'DEV' })
-              : dispatch({ type: 'PROD' });
-          }}
-        />
-      </View>
+      <TouchableWithoutFeedback
+        style={profileScreenStyles.mainview}
+        onPress={handleDropdown}
+      >
+        <>
+          {response?.assets &&
+            response.assets.map(({ uri }) => (
+              <Avatar key={uri} uri={uri || ''} size={100} />
+            ))}
+          {showDefaultAvatar() && (
+            <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
+          )}
+          <View style={profileScreenStyles.titleText}>
+            <UserData userData={loggedInUserData} />
+          </View>
+        </>
+      </TouchableWithoutFeedback>
     </ScrollView>
   );
 };
@@ -162,18 +154,5 @@ const ProfileScreen2: React.FC = ({ navigation }) => {
     </Tabs.Container>
   );
 };
-
-const styles = StyleSheet.create({
-  profile: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingContainer: {
-    marginTop: 20,
-  },
-  loadingText: {
-    color: 'black',
-  },
-});
 
 export default ProfileScreen2;

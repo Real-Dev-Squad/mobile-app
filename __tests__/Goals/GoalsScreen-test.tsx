@@ -14,13 +14,13 @@ import { NavigationContainer } from '@react-navigation/native';
 // });
 
 describe('GoalScreen', () => {
-  test.skip('renders GoalScreen correctly', () => {
+  test('renders GoalScreen correctly', () => {
     const { getByTestId } = render(
       <NavigationContainer>
         <GoalScreen />
       </NavigationContainer>,
     );
-    const todoComponent = getByTestId('todo-component');
+    const todoComponent = getByTestId('todoComponent');
     expect(todoComponent).toBeTruthy();
   });
 });

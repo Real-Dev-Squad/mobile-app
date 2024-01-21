@@ -24,11 +24,13 @@ const ButtonWidget = ({
   textColor,
   bgColor,
   fontSize,
+  style,
 }: IButtonWidget) => {
   const btnStyle = [
     styles.button,
     {
       backgroundColor: bgColor ? bgColor : 'white',
+      ...style,
     },
   ];
 
@@ -55,8 +57,8 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
     marginVertical: 4,
-    borderColor: 'black',
-    borderWidth: 0.5,
+    borderColor: '#16A334',
+    borderWidth: 1,
     padding: 10,
     elevation: 2,
     color: 'white',
