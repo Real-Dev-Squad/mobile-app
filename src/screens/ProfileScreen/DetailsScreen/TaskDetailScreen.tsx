@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import React, { useCallback, useContext, useState } from 'react';
 import { profileScreenStyles } from '../styles';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -34,7 +34,6 @@ const TaskDetailScreen = () => {
     setIsModalVisible((prev) => !prev);
 
     setProgress(item);
-    // {"blockers": "no blocker as of now", "completed": "checked the API's and working from the my-site and planned what needed to be done", "createdAt": 1705539839198, "date": 1705536000000, "id": "KU5KHKRddWjaKgvWFrzQ", "planned": "Integrated task detail as well get progress update detail api, made the task detail screen and displayed data", "taskId": "D7mETGktpIgJlCOLd9fT", "type": "task", "userId": "T7IL7MB8YriniTw4bt39"}
   };
 
   const [allTaskDetail, setAllTaskDetailData] = useState();
@@ -62,6 +61,7 @@ const TaskDetailScreen = () => {
           taskProgressDetailResponse && taskProgressDetailResponse,
         );
       })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [taskId]),
   );
 

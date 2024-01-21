@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import { View, TouchableWithoutFeedback, ScrollView, Text } from 'react-native';
-import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
 import { AuthContext } from '../../context/AuthContext';
@@ -23,7 +22,6 @@ import EllipseComponent from '../../components/EllipseComponent';
 import ActiveScreen from './TaskScreens/ActiveTask';
 import Modal from 'react-native-modal';
 import { TouchableOpacity } from 'react-native';
-
 
 const dummyData = [
   {
