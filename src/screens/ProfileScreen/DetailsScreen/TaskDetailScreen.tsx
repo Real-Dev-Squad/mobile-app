@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import React from 'react';
 import { useRoute } from '@react-navigation/native';
 
@@ -15,5 +15,3 @@ const TaskDetailScreen = () => {
 };
 
 export default TaskDetailScreen;
-
-const styles = StyleSheet.create({});
