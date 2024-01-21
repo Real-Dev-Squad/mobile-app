@@ -6,9 +6,9 @@ import {
   Linking,
   TouchableOpacity,
 } from 'react-native';
-import GithubSvg from '../../../../assets/github_logo';
-import LinkedInSvg from '../../../../assets/linkedIn';
-import TwitterSvg from '../../../../assets/twitter';
+import GithubSvg from '../../../../assets/svgs/github_logo';
+import LinkedInSvg from '../../../../assets/svgs/linkedIn';
+import TwitterSvg from '../../../../assets/svgs/twitter';
 
 const UserData = ({ userData }) => {
   const { twitter_id, linkedin_id, github_id, designation, company, name } =
