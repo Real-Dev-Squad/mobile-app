@@ -1,9 +1,15 @@
 import React, { useState, useCallback, useContext } from 'react';
+import {
+  View,
+  TouchableWithoutFeedback,
+  ScrollView,
+  StyleSheet,
+  Text,
+} from 'react-native';
+
 import { View, TouchableWithoutFeedback, ScrollView, Text } from 'react-native';
-import { ScreenViewContainer } from '../../styles/GlobalStyle';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
-import UploadImageModalView from '../../components/GalleryModal';
 import { AuthContext } from '../../context/AuthContext';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import All from './TaskScreens/All';
@@ -13,6 +19,9 @@ import { fetchActiveTasks } from '../AuthScreen/Util';
 import DisplayContribution from '../../components/DisplayContribution';
 import UserData from './User Data/UserData';
 import EllipseComponent from '../../components/EllipseComponent';
+import ActiveScreen from './TaskScreens/ActiveTask';
+import Modal from 'react-native-modal';
+import { TouchableOpacity } from 'react-native';
 
 const dummyData = [
   {
@@ -71,22 +80,12 @@ export const ActiveScreen = () => {
   );
 };
 const ProfileScreen = () => {
-  const [response, setResponse] = useState<ImagePickerResponse>({});
-  const [modalVisible, setModalVisible] = useState(false);
+  const [response] = useState<ImagePickerResponse>({});
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleDropdown = () => {
     setDropdownVisible((prev) => !prev);
-  };
-
-  const closeModal = useCallback(() => {
-    setModalVisible(false);
-  }, []);
-
-  const removePicture = () => {
-    setResponse({});
-    closeModal();
   };
 
   const showDefaultAvatar = () => {
@@ -102,22 +101,36 @@ const ProfileScreen = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={ScreenViewContainer.container}
-      // onPress={handleDropdown}
-    >
-      <EllipseComponent
-        handleLogout={handleLogout}
-        isDropdownVisible={isDropdownVisible}
-        handleDropDown={handleDropdown}
-      />
-      <UploadImageModalView
+    <ScrollView>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.optionsButton} onPress={handleDropdown}>
+          <Text style={styles.verticalEllipse}>...</Text>
+        </TouchableOpacity>
+      </View>
+      {isDropdownVisible && (
+        <Modal
+          isVisible={isDropdownVisible}
+          onBackdropPress={handleDropdown}
+          onBackButtonPress={handleDropdown}
+          backdropOpacity={0.7}
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          style={profileScreenStyles.modal}
+        >
+          <EllipseComponent
+            handleLogout={handleLogout}
+            isDropdownVisible={isDropdownVisible}
+            handleDropDown={handleDropdown}
+          />
+        </Modal>
+      )}
+      {/* <UploadImageModalView
         closeModal={closeModal}
         modalVisible={modalVisible}
         removePicture={removePicture}
         response={response}
         setResponse={setResponse}
-      />
+      /> */}
       <TouchableWithoutFeedback
         style={profileScreenStyles.mainview}
         onPress={handleDropdown}
@@ -157,3 +170,21 @@ const ProfileScreen2: React.FC = ({ navigation }) => {
 };
 
 export default ProfileScreen2;
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  optionsButton: {
+    padding: 4,
+  },
+  verticalEllipse: {
+    color: 'black',
+    fontSize: 24,
+    marginTop: 4,
+    fontWeight: 'bold',
+    transform: [{ rotate: '90deg' }],
+  },
+});

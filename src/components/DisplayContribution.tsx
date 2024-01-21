@@ -3,14 +3,11 @@ import { Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import { displayContributionType, taskType } from './UserContibution/Type';
 import { useNavigation } from '@react-navigation/native';
-
-const DisplayContribution = ({
-  tasks,
-  expand,
-}: {
-  tasks: taskType;
-  expand: boolean;
-}) => {
+type TaskItem = {
+  taskId: string;
+  isActive: string;
+};
+const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
   const navigation = useNavigation();
 
   const formatTimeAgo = (timestamp: number) => {
@@ -18,10 +15,11 @@ const DisplayContribution = ({
     const endDate = moment.unix(timestamp);
     return endDate.from(currentDate);
   };
-  const navigationHandler = (item: any) => {
-    if (!expand) {
-      navigation.navigate('TaskDetail', { taskId: item.id });
-    }
+  const navigationHandler = (item: TaskItem) => {
+    navigation.navigate('TaskDetail', {
+      taskId: item.id,
+      isActive: item.status !== 'COMPLETED',
+    });
   };
   const renderItem = ({ item }: { item: displayContributionType }) => {
     return (
@@ -45,13 +43,13 @@ const DisplayContribution = ({
           <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        {/* {expand &&
+        {/* {isActive &&
           (isProdEnvironment ? (
             <></>
           ) : (
             <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
-              <Text style={styles.expandButton}>
-                {isCollapsed ? 'Expand' : 'Collapse'}
+              <Text style={styles.isActiveButton}>
+                {isCollapsed ? 'isActive' : 'Collapse'}
               </Text>
             </TouchableOpacity>
           ))} */}
@@ -109,12 +107,12 @@ const styles = StyleSheet.create({
     color: '#3498db',
   },
 
-  expandButton: {
+  isActiveButton: {
     color: '#3498db',
     marginTop: 10,
   },
 
-  expandableContent: {
+  isActiveableContent: {
     paddingBottom: 30,
   },
 
