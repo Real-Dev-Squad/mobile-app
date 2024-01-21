@@ -69,10 +69,6 @@ const TaskDetailScreen = () => {
   const backAction = () => {
     navigation.goBack();
   };
-  console.log(
-    'allTaskDetail?.taskData?.percentCompleted',
-    allTaskDetail?.taskData,
-  );
 
   return (
     <ScrollView style={profileScreenStyles.mainContainer}>
