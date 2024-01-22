@@ -25,7 +25,6 @@ import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import { useSelector } from 'react-redux';
-// import Github from '../../constants/images/Image';
 import Images from '../../constants/images/Image';
 import GithubSvg from '../../../assets/svgs/github_logo.js';
 import WebSvg from '../../../assets/svgs/web';
