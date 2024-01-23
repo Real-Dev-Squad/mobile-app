@@ -11,6 +11,10 @@ import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
 import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
+import HomeIcon from '../../../assets/svgs/homeIcon';
+import ProfileIcon from '../../../assets/svgs/profileIcon';
+import UnfocusedProfileSvg from '../../../assets/svgs/unfocusedProfile';
+import UnFocusedHome from '../../../assets/svgs/unfocusedHome';
 
 const tab = createBottomTabNavigator();
 
@@ -46,12 +50,7 @@ const TabNavigation = () => {
               );
             },
             tabBarIcon: ({ focused }) => {
-              return (
-                <Image
-                  style={TabViewStyle.tab_icon}
-                  source={focused ? Images.homeIcon : Images.homeIconUnF}
-                />
-              );
+              return focused ? <HomeIcon /> : <UnFocusedHome />;
             },
           }}
         />
@@ -109,12 +108,7 @@ const TabNavigation = () => {
               );
             },
             tabBarIcon: ({ focused }) => {
-              return (
-                <Image
-                  style={TabViewStyle.tab_icon}
-                  source={focused ? Images.profileIcon : Images.profileIconUnF}
-                />
-              );
+              return focused ? <ProfileIcon /> : <UnfocusedProfileSvg />;
             },
           }}
         />

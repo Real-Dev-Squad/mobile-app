@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   BackHandler,
   ScrollView,
   StyleSheet,
@@ -25,9 +24,9 @@ import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import { useSelector } from 'react-redux';
-import Images from '../../constants/images/Image';
 import GithubSvg from '../../../assets/svgs/github_logo.js';
 import WebSvg from '../../../assets/svgs/web';
+import RDSLogoSvg from '../../../assets/svgs/RDSLogo';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
@@ -237,7 +236,9 @@ const AuthScreen = () => {
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
-        <Image source={Images.rdsLogo} style={AuthViewStyle.logo} />
+        {' '}
+        {/* <Image source={Images.rdsLogo} style={AuthViewStyle.logo} /> */}
+        <RDSLogoSvg />
       </View>
       <View style={[AuthViewStyle.constContainer]}>
         <Text style={AuthViewStyle.welcomeMsg}>{Strings.WELCOME_TO}</Text>

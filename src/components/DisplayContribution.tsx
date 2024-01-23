@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
   emptyView: {
     color: 'black',
     marginTop: 20,
+    padding: 20,
   },
 });
 
