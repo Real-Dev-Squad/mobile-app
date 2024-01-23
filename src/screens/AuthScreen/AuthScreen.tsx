@@ -236,8 +236,6 @@ const AuthScreen = () => {
   return (
     <ScrollView contentContainerStyle={AuthViewStyle.container}>
       <View style={[AuthViewStyle.imageContainer]}>
-        {' '}
-        {/* <Image source={Images.rdsLogo} style={AuthViewStyle.logo} /> */}
         <RDSLogoSvg />
       </View>
       <View style={[AuthViewStyle.constContainer]}>
