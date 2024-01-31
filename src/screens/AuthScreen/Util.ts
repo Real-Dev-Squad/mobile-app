@@ -258,6 +258,9 @@ export const requestCameraPermission = async () => {
   }
 };
 export const unixToTimeStamp = (_date) => {
+  if (!_date) {
+    return 'NA';
+  }
   // Unix timestamp in seconds
   const timestamp = _date;
 
@@ -277,6 +280,9 @@ export const unixToTimeStamp = (_date) => {
   return formattedDate;
 };
 export const formatTimeToUnix = (date) => {
+  if (!date) {
+    return 'NA';
+  }
   const newDate = new Date(date);
 
   // Convert the date to Unix Epoch timestamp in seconds

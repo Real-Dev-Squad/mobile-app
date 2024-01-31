@@ -3,6 +3,9 @@ import React from 'react';
 import { profileScreenStyles } from '../screens/ProfileScreen/styles';
 
 const GithubLink = ({ issueUrl }: { issueUrl: string }) => {
+  if (!issueUrl) {
+    return <Text>NA</Text>;
+  }
   const match =
     issueUrl &&
     issueUrl.match(/https:\/\/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
