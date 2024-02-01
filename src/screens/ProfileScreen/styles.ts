@@ -1,20 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const profileScreenStyles = StyleSheet.create({
-  skeltonContainer: {
-    backgroundColor: '#F6F6F6',
-    borderRadius: 13,
-    padding: 16,
-    marginBottom: 16,
-    marginTop: 50,
-  },
-  skeltonPlaceholder: {
-    backgroundColor: '#ccc',
-    height: 16,
-    borderRadius: 4,
-    marginBottom: 8,
-  },
-  progressStyle:{
+  progressStyle: {
     backgroundColor: '#ffff',
     padding: 4,
     borderRadius: 5,

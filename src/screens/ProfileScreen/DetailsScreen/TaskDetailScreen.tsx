@@ -21,6 +21,7 @@ import PushUpModalContent from '../../../components/PushUpModalContent';
 import { useSelector } from 'react-redux';
 import ProgressBar from '../../../components/ProgressBar';
 import BackSvg from '../../../../assets/svgs/back';
+import Skelton from '../../../components/Skelton';
 
 const TaskDetailScreen = () => {
   const route = useRoute();
@@ -62,9 +63,7 @@ const TaskDetailScreen = () => {
 
         setAllTaskDetailData(taskDetailResponse);
 
-        setAllTaskProgressDetailData(
-          taskProgressDetailResponse && taskProgressDetailResponse,
-        );
+        setAllTaskProgressDetailData(taskProgressDetailResponse);
         setIsLoading(false);
       })();
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,13 +79,7 @@ const TaskDetailScreen = () => {
       <TouchableOpacity onPress={backAction}>
         <BackSvg width={30} height={30} />
       </TouchableOpacity>
-      {isLoading ? (
-        <View style={profileScreenStyles.skeltonContainer}>
-          <View style={profileScreenStyles.skeltonPlaceholder} />
-          <View style={profileScreenStyles.skeltonPlaceholder} />
-          <View style={profileScreenStyles.skeltonPlaceholder} />
-        </View>
-      ) : (
+      <Skelton isLoading={isLoading}>
         <>
           <Text style={profileScreenStyles.titleText}>
             {allTaskDetail?.taskData.title ?? 'Title is unavailable'}
@@ -232,7 +225,7 @@ const TaskDetailScreen = () => {
             </Modal>
           )}
         </>
-      )}
+      </Skelton>
     </ScrollView>
   );
 };

@@ -280,9 +280,6 @@ export const unixToTimeStamp = (_date) => {
   return formattedDate;
 };
 export const formatTimeToUnix = (date) => {
-  if (!date) {
-    return 'NA';
-  }
   const newDate = new Date(date);
 
   // Convert the date to Unix Epoch timestamp in seconds
