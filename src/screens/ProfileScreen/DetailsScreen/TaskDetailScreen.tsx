@@ -52,7 +52,6 @@ const TaskDetailScreen = () => {
         const taskDetailPromise = fetchTaskDetails(
           taskId,
           loggedInUserData?.token,
-          taskId,
         );
         const taskProgressPromise = fetchTaskProgressDetails(
           loggedInUserData?.token,
