@@ -21,6 +21,7 @@ import EllipseComponent from '../../components/EllipseComponent';
 import ActiveScreen from './TaskScreens/ActiveTask';
 import Modal from 'react-native-modal';
 import { TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileScreen = () => {
   const [response] = useState<ImagePickerResponse>({});
@@ -42,6 +43,8 @@ const ProfileScreen = () => {
     setLoggedInUserData(null);
     AsyncStorage.removeItem('userData');
   };
+
+  console.log(loggedInUserData, 'data');
 
   return (
     <ScrollView>

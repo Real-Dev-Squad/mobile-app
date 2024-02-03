@@ -119,12 +119,13 @@ export const goalsAuth = async (token: string): Promise<any> => {
     return null;
   }
 };
-
 export const PostGoal = async (
   title: string,
   description: string,
   created_by: string,
   assigned_to: string,
+  ends_on: string,
+  assigned_by: string,
 ) => {
   try {
     const apiUrl = GoalsApi.POST_TODO_S;
@@ -135,7 +136,9 @@ export const PostGoal = async (
           title: title,
           description: description,
           created_by: created_by,
-          assignedTo: assigned_to,
+          assigned_to: assigned_to,
+          ends_on: ends_on,
+          assigned_by: assigned_by,
         },
       },
     };

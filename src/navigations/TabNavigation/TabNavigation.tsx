@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { Image, Text, Platform } from 'react-native';
 import Colors from '../../constants/colors/Colors';
 import Fonts from '../../constants/fonts/TabFont';
 import Images from '../../constants/images/Image';
@@ -11,6 +11,7 @@ import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
 import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
+import { scale } from '../../utils/utils';
 
 const tab = createBottomTabNavigator();
 
@@ -23,7 +24,17 @@ const TabNavigation = () => {
         initialRouteName={Strings.Tab_Home}
         screenOptions={() => ({
           headerShown: false,
-          tabBarStyle: TabViewStyle.tab_bar,
+          // tabBarStyle: TabViewStyle.tab_bar,
+          tabBarStyle: {
+            paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+            // backgroundColor: StyleConfig.colors.greyLabel,
+            height: scale(55),
+            borderTopRightRadius: 25,
+            borderTopLeftRadius: 25,
+            // borderTopColor:"#0A0A0A",
+            // borderWidth:2,
+            // marginTop:useBottomTabBarHeight()
+          },
         })}
       >
         <tab.Screen

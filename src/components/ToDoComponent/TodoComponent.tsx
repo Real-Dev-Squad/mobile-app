@@ -5,12 +5,13 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import Card from './Card';
 import { TodoStyles } from './Styles/TodoStyles';
 import Task from './taskType';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { AuthContext } from '../../context/AuthContext';
 
 const TodoComponent = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -18,19 +19,22 @@ const TodoComponent = () => {
   const [loader, setLoader] = useState<boolean>(true);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const { loggedInUserData } = useContext(AuthContext);
 
   useEffect(() => {
     if (isFocused) {
       getTodos();
     }
-  }, [isFocused]);
+  }, [isFocused, getTodos]);
 
-  const getTodos = async () => {
-    const todos = await fetch(GoalsApi.GET_TODO_S);
+  const getTodos = useCallback(async () => {
+    const url = GoalsApi.GET_USER_GOALS + loggedInUserData?.id;
+    const todos = await fetch(url);
     const todosJsonData = await todos.json();
     setTasks([...todosJsonData.data]);
     setLoader(false);
-  };
+  }, [loggedInUserData?.id]);
+
   const changeCardFunction = () => {
     // setChanged(true);
     const item = tasks.shift() as Task;

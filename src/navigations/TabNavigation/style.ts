@@ -9,7 +9,7 @@ export const TabViewStyle = StyleSheet.create({
     borderColor: 'grey',
   },
   tab_icon: {
-    height: 20,
-    width: 20,
+    height: 26,
+    width: 26,
   },
 });
