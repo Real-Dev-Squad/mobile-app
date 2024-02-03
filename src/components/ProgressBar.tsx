@@ -159,7 +159,9 @@ function ProgressBar({
         </TouchableOpacity>
 
         <View style={styles.progressContainer}>
-          <Text style={styles.progressText}>{Math.round(progressValue)}%</Text>
+          <Text style={styles.progressText}>
+            {progressValue ? Math.round(progressValue) : 0}%
+          </Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleIncrement}>
           <Text style={styles.buttonText}>+</Text>

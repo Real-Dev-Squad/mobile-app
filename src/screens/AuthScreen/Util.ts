@@ -258,6 +258,9 @@ export const requestCameraPermission = async () => {
   }
 };
 export const unixToTimeStamp = (_date) => {
+  if (!_date) {
+    return 'NA';
+  }
   // Unix timestamp in seconds
   const timestamp = _date;
 

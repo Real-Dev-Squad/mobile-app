@@ -1,6 +1,7 @@
 import {
   getUserData,
   isValidTextInput,
+  unixToTimeStamp,
   updateMarkYourSelfAs_,
   updateStatus,
 } from '../src/screens/AuthScreen/Util';
@@ -184,5 +185,11 @@ describe('fetchUserRequest', () => {
 
   test('should be done', () => {
     expect(generator.next().done).toBe(true);
+  });
+  test('unixToTimeStamp function should return NA if no date is supplied', () => {
+    expect(unixToTimeStamp('')).toBe('NA');
+  });
+  test('unixToTimeStamp function should return date in dd-mm-yyyy format on passing seconds', () => {
+    expect(unixToTimeStamp('1700000000')).toBe('14-11-2023');
   });
 });
