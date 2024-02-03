@@ -12,7 +12,7 @@ describe('MainScreen', () => {
     const { getByText, getByPlaceholderText } = render(
       <CreateGoals navigation={navigationProp} />,
     );
-    const titleText = getByText('Add New Goal');
+    const titleText = getByText('Create New Goal');
     const titleInput = getByPlaceholderText(
       'Enter title max of 50 characters.',
     );
