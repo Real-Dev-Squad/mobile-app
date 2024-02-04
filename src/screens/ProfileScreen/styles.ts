@@ -1,6 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 export const profileScreenStyles = StyleSheet.create({
+  progressStyle: {
+    backgroundColor: '#ffff',
+    padding: 4,
+    borderRadius: 5,
+    elevation: 2,
+    marginTop: 8,
+  },
   mainview: {
     flex: 1,
     paddingTop: 10,
