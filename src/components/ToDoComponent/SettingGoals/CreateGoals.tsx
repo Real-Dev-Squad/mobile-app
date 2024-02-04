@@ -235,14 +235,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   formView: {
-    // borderWidth: 3,
-    // paddingTop: 20,
-    // paddingLeft: 30,
-    // paddingRight: 30,
-    // paddingBottom: 40,
-    // height: 650,
-    // borderRadius: 20,
-    // overflow: 'hidden',
   },
   formContainer: {
     // borderWidth: 3,
