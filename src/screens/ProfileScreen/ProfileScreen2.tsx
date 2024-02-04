@@ -44,8 +44,6 @@ const ProfileScreen = () => {
     AsyncStorage.removeItem('userData');
   };
 
-  console.log(loggedInUserData, 'data');
-
   return (
     <ScrollView>
       <View style={styles.container}>
