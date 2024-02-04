@@ -38,7 +38,7 @@ const MainScreen = ({ navigation }) => {
     setIsDropDownSelected(!isDropDownSelected);
   };
 
-  // console.log(selectedUser)
+
 
   const handleDropDownPress = (item) => {
     setSelectedUser(item);
@@ -159,11 +159,12 @@ const MainScreen = ({ navigation }) => {
           {isDropDownSelected ? (
             <View testID="user-container" style={styles.dropDownArea}>
               <TextInput
-                style={[styles.searchBar]}
+                style={styles.searchBar}
                 value={searchQuery}
                 onChangeText={(text) => setSearchQuery(text)}
                 maxLength={200}
                 placeholder="Search User"
+                placeholderTextColor={StyleConfig.colors.placeholderText}
               />
               {isLoading ? (
                 <Text>Loading...</Text>
@@ -234,27 +235,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(30),
     backgroundColor: 'white',
   },
-  formView: {
-    // borderWidth: 3,
-    // paddingTop: 20,
-    // paddingLeft: 30,
-    // paddingRight: 30,
-    // paddingBottom: 40,
-    // height: 650,
-    // borderRadius: 20,
-    // overflow: 'hidden',
-  },
-  formContainer: {
-    // borderWidth: 3,
-    // padding:scale(30),
-    // borderRadius: 20,
-    // overflow: 'hidden',
-  },
   formHeading: {
     color: '#2827CC',
     fontSize: 25,
     fontWeight: 'bold',
-    // textAlign: 'center',
   },
   inputStyle: {
     padding: scale(10),
@@ -276,9 +260,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   createButtonStyle: {
-    // padding: 10,
-    // width: '50%',
-    // alignSelf: 'center',
     padding: scale(14),
     marginTop: scale(25),
     borderRadius: 10,
@@ -297,7 +278,6 @@ const styles = StyleSheet.create({
   },
   dropDownArea: {
     height: scale(250),
-    // backgroundColor: 'grey',
     borderWidth: 0.5,
     marginTop: 10,
     borderRadius: 8,
@@ -307,6 +287,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
     width: '90%',
     alignSelf: 'center',
+    color: StyleConfig.colors.darkGrey,
   },
   userDetails: {
     display: 'flex',
@@ -335,9 +316,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 5,
     borderBottomWidth: 0.5,
-    // backgroundColor:StyleConfig.colors.whiteInput,
     fontSize: scale(12),
-    // borderWidth: 0.5,
     color: StyleConfig.colors.darkGrey,
   },
 });
