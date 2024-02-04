@@ -27,13 +27,7 @@ const TabNavigation = () => {
           // tabBarStyle: TabViewStyle.tab_bar,
           tabBarStyle: {
             paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-            // backgroundColor: StyleConfig.colors.greyLabel,
             height: scale(55),
-            borderTopRightRadius: 25,
-            borderTopLeftRadius: 25,
-            // borderTopColor:"#0A0A0A",
-            // borderWidth:2,
-            // marginTop:useBottomTabBarHeight()
           },
         })}
       >
