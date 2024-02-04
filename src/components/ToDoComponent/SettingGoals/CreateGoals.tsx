@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   searchBar: {
-    marginBottom: 20,
+    marginBottom: scale(20),
     marginHorizontal: 5,
     borderBottomWidth: 0.5,
     fontSize: scale(12),
