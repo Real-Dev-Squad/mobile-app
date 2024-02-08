@@ -9,12 +9,16 @@ import {
   Image,
   FlatList,
   Alert,
+  Keyboard,
+  ScrollView,
 } from 'react-native';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
 import { AuthContext } from '../../../context/AuthContext';
 import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
 import dropUpImage from './../../../../assets/dropup.png';
 import dropDownImage from './../../../../assets/dropdown.png';
+import StyleConfig from '../../../utils/StyleConfig';
+import { scale } from '../../../utils/utils';
 
 const MainScreen = ({ navigation }) => {
   const [titleText, setTitleText] = useState('');
@@ -27,10 +31,14 @@ const MainScreen = ({ navigation }) => {
   const { loggedInUserData } = useContext(AuthContext);
   const [titleError, setTitleError] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
+  const [date, setDate] = useState(new Date());
 
   const selectDropDown = () => {
+    Keyboard.dismiss();
     setIsDropDownSelected(!isDropDownSelected);
   };
+
+
 
   const handleDropDownPress = (item) => {
     setSelectedUser(item);
@@ -64,12 +72,14 @@ const MainScreen = ({ navigation }) => {
     }
 
     // Proceed with posting the goal
-    // PostGoal(goalsData?.user?.token?.access, titleText, descriptionText);
+    // PostGoal(goalsData?.user?.token?.access, titleText, descriptionText)
     const response = await PostGoal(
       titleText,
       descriptionText,
       loggedInUserData?.id,
       selectedUser?.id,
+      date,
+      loggedInUserData?.name,
     );
     if (response) {
       if (selectedUser?.first_name) {
@@ -88,28 +98,12 @@ const MainScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          borderWidth: 3,
-          paddingTop: 20,
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingBottom: 40,
-          height: 650,
-          borderRadius: 20,
-          overflow: 'hidden',
-        }}
+      <ScrollView
+        nestedScrollEnabled
+        showsVerticalScrollIndicator={false}
+        style={styles.formContainer}
       >
-        <Text
-          style={{
-            color: '#2827CC',
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}
-        >
-          Add New Goal
-        </Text>
+        <Text style={styles.formHeading}>Create New Goal</Text>
         <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
@@ -120,7 +114,7 @@ const MainScreen = ({ navigation }) => {
             setTitleError(''); // Clear error message on change
           }}
           placeholder="Enter title max of 50 characters."
-          placeholderTextColor="red"
+          placeholderTextColor={StyleConfig.colors.placeholderText}
         />
         {titleError ? <Text style={styles.error}>{titleError}</Text> : null}
 
@@ -134,7 +128,7 @@ const MainScreen = ({ navigation }) => {
           }}
           maxLength={200}
           placeholder="Enter max 200 characters."
-          placeholderTextColor="red"
+          placeholderTextColor={StyleConfig.colors.placeholderText}
         />
         {descriptionError ? (
           <Text style={styles.error}>{descriptionError}</Text>
@@ -143,10 +137,17 @@ const MainScreen = ({ navigation }) => {
           <Text style={styles.titles}>Assign To: </Text>
           <TouchableOpacity
             testID="dropdown"
-            style={styles.dropDownSelector}
+            style={[styles.dropDownSelector, styles.inputStyle]}
             onPress={selectDropDown}
           >
-            <Text style={{ color: 'red' }}>
+            <Text
+              style={{
+                color:
+                  selectedUser === ''
+                    ? StyleConfig.colors.placeholderText
+                    : StyleConfig.colors.darkGrey,
+              }}
+            >
               {selectedUser === '' ? 'Select User' : selectedUser?.first_name}
             </Text>
             {!isDropDownSelected ? (
@@ -158,16 +159,18 @@ const MainScreen = ({ navigation }) => {
           {isDropDownSelected ? (
             <View testID="user-container" style={styles.dropDownArea}>
               <TextInput
-                style={[styles.inputStyle, styles.searchBar]}
+                style={styles.searchBar}
                 value={searchQuery}
                 onChangeText={(text) => setSearchQuery(text)}
                 maxLength={200}
                 placeholder="Search User"
+                placeholderTextColor={StyleConfig.colors.placeholderText}
               />
               {isLoading ? (
                 <Text>Loading...</Text>
               ) : (
                 <FlatList
+                  nestedScrollEnabled
                   data={allUsers.filter(
                     (item) =>
                       item.first_name
@@ -212,15 +215,15 @@ const MainScreen = ({ navigation }) => {
           ) : null}
         </View>
         <Text style={styles.titles}>DeadLine</Text>
-        <DeadLineDatePicker />
+        <DeadLineDatePicker date={date} setDate={setDate} />
         <TouchableOpacity
           testID="createButton"
           style={styles.createButtonStyle}
           onPress={postNewGoal}
         >
-          <Text style={styles.createButtonText}>Create</Text>
+          <Text style={styles.createButtonText}>Create Goal</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -228,44 +231,28 @@ const MainScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
-    paddingLeft: 40,
-    paddingRight: 40,
-    padding: 20,
-    borderRadius: 20,
+    paddingTop: scale(30),
+    paddingHorizontal: scale(30),
     backgroundColor: 'white',
-  },
-  formView: {
-    borderWidth: 3,
-    paddingTop: 20,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 40,
-    height: 650,
-    borderRadius: 20,
-    overflow: 'hidden',
   },
   formHeading: {
     color: '#2827CC',
     fontSize: 25,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   inputStyle: {
-    padding: 10,
-    // backgroundColor: 'silver',
-    borderRadius: 5,
-    elevation: 2,
-    fontSize: 12,
-    borderWidth: 2,
-    color: 'grey',
+    padding: scale(10),
+    borderRadius: 8,
+    backgroundColor: StyleConfig.colors.whiteInput,
+    fontSize: scale(12),
+    borderWidth: 0.5,
+    color: StyleConfig.colors.darkGrey,
   },
   titles: {
-    fontSize: 12,
-    elevation: 2,
-    marginBottom: 10,
-    marginTop: 20,
-    color: 'black',
+    fontSize: scale(12),
+    marginBottom: scale(4),
+    marginTop: scale(20),
+    color: StyleConfig.colors.greyLabel,
   },
   createButtonText: {
     fontSize: 15,
@@ -273,22 +260,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   createButtonStyle: {
-    padding: 10,
-    width: '50%',
-    alignSelf: 'center',
-    marginTop: 20,
+    padding: scale(14),
+    marginTop: scale(25),
     borderRadius: 10,
     backgroundColor: '#2827CC',
   },
   titleText: {},
   dropDownSelector: {
     padding: 10,
-    borderRadius: 5,
-    elevation: 2,
-    fontSize: 12,
-    borderWidth: 2,
-    height: 40,
-    display: 'flex',
+    borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -297,16 +277,17 @@ const styles = StyleSheet.create({
     height: 20,
   },
   dropDownArea: {
-    height: 250,
-    backgroundColor: 'grey',
+    height: scale(250),
+    borderWidth: 0.5,
     marginTop: 10,
-    borderRadius: 5,
+    borderRadius: 8,
   },
   userNameDropDown: {
     padding: 20,
     borderBottomColor: 'white',
     width: '90%',
     alignSelf: 'center',
+    color: StyleConfig.colors.darkGrey,
   },
   userDetails: {
     display: 'flex',
@@ -324,7 +305,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-    backgroundColor: 'rgb(29,18,131)',
+    backgroundColor: StyleConfig.colors.placeholderText,
     borderRadius: 50,
   },
   error: {
@@ -332,9 +313,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   searchBar: {
-    marginTop: 10,
+    marginBottom: scale(20),
     marginHorizontal: 5,
-    color: 'white',
+    borderBottomWidth: 0.5,
+    fontSize: scale(12),
+    color: StyleConfig.colors.darkGrey,
   },
 });
 

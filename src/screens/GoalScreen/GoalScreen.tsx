@@ -11,7 +11,7 @@ import MembersPage from '../MemberScreen/MembersPage';
 const Stack = createNativeStackNavigator();
 const GoalScreen = () => {
   return (
-    <ScrollView>
+    <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <TodoComponent />
       {/* TODO: moving to v2
       <ShortGoalsComponent />
