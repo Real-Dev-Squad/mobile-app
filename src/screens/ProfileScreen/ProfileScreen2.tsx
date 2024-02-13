@@ -45,7 +45,7 @@ const ProfileScreen = () => {
   };
 
   return (
-    <ScrollView>
+    <View pointerEvents="box-none">
       <View style={styles.container}>
         <TouchableOpacity style={styles.optionsButton} onPress={handleDropdown}>
           <Text style={styles.verticalEllipse}>...</Text>
@@ -92,7 +92,7 @@ const ProfileScreen = () => {
           </View>
         </>
       </TouchableWithoutFeedback>
-    </ScrollView>
+    </View>
   );
 };
 
