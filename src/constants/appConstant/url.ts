@@ -18,4 +18,6 @@ export const urls = {
   GET_ALL_TASK: `${PROD_BASE_URL}/tasks/`,
   GET_TASK_PROGRESS_DETAIL: `${PROD_BASE_URL}/progresses?taskId=`,
   UPDATE_OVERALL_TASK_PROGRESS: `${PROD_BASE_URL}/tasks/self/`,
+  POST_FCM_TOKEN: `${PROD_BASE_URL}/v1/fcm-tokens`,
+  GET_NOTIFICATION: `${PROD_BASE_URL}/v1/notifications`,
 };

@@ -66,6 +66,44 @@ export const fetchAllTasks = async (token: string): Promise<any> => {
     return null;
   }
 };
+
+export const postFcmToken = async (token: string, fcmToken: string) => {
+  try {
+    const data = { fcmToken: fcmToken };
+    const response = await axios.post(urls.POST_FCM_TOKEN, data, {
+      headers: {
+        cookie: `rds-session=${token}`,
+      },
+    });
+    console.log('🚀 ~ postFcmToken ~ response:', response);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const getNotifications = async (
+  id: string,
+  title: string,
+  description: string,
+  token: string,
+) => {
+  try {
+    const data = {
+      title: title,
+      body: description,
+      userId: id,
+    };
+    const response = await axios.post(urls.GET_NOTIFICATION, data, {
+      headers: {
+        cookie: `rds-session=${token}`,
+      },
+    });
+    console.log('🚀 ~ response:', response);
+  } catch (error) {
+    console.log('🚀 ~ error:', error);
+  }
+};
 export const fetchActiveTasks = async (token: string): Promise<any> => {
   try {
     const response = await axios.get(urls.GET_ACTIVE_TASK, {

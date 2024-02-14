@@ -15,3 +15,9 @@ export interface User {
   twitterUrl: string;
   githubUrl: string;
 }
+
+export interface InputBoxProps {
+  label: string;
+  title: string;
+  onChangeHandler: (text: string) => void;
+}

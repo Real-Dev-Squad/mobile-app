@@ -12,6 +12,7 @@ import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
 import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
 import { scale } from '../../utils/utils';
+import NotifyScreen from '../../screens/Notify/NotifyScreen';
 
 const tab = createBottomTabNavigator();
 
@@ -94,6 +95,37 @@ const TabNavigation = () => {
           />
         )}
 
+        {/* {isProdEnvironment && ( */}
+        <tab.Screen
+          name={Strings.Tab_Notify}
+          component={NotifyScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text
+                  style={{
+                    fontSize: Fonts.Tab_Text_Font,
+                    color: focused
+                      ? Colors.Tab_Active_Color
+                      : Colors.Tab_Inactive_Color,
+                  }}
+                >
+                  {Strings.Tab_Notify}
+                </Text>
+              );
+            },
+            tabBarIcon: ({ focused }) => {
+              return (
+                <Image
+                  style={TabViewStyle.tab_icon}
+                  source={focused ? Images.goalIcon : Images.goalIconUnF}
+                />
+              );
+            },
+          }}
+        />
+        {/* )} */}
         <tab.Screen
           name={Strings.Tab_Profile}
           component={AllTaskScreenStack}
