@@ -3,13 +3,7 @@ import React, {
   // useCallback,
   useContext,
 } from 'react';
-import {
-  View,
-  TouchableWithoutFeedback,
-  ScrollView,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import { View, TouchableWithoutFeedback, StyleSheet, Text } from 'react-native';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
 import { AuthContext } from '../../context/AuthContext';
@@ -87,7 +81,7 @@ const ProfileScreen = () => {
           {showDefaultAvatar() && (
             <Avatar uri={loggedInUserData?.profileUrl || ''} size={100} />
           )}
-          <View style={profileScreenStyles.titleText}>
+          <View style={profileScreenStyles.titleText} pointerEvents="box-none">
             <UserData userData={loggedInUserData} />
           </View>
         </>
@@ -99,12 +93,12 @@ const ProfileScreen = () => {
 const ProfileScreen2: React.FC = ({ navigation }) => {
   return (
     <Tabs.Container renderHeader={ProfileScreen}>
-      <Tabs.Tab name="Active">
+      <Tabs.Tab name="Active" key="2">
         <Tabs.ScrollView style={{ flex: 1 }}>
           <ActiveScreen navigation={navigation} />
         </Tabs.ScrollView>
       </Tabs.Tab>
-      <Tabs.Tab name="All">
+      <Tabs.Tab name="All" key="1">
         <Tabs.ScrollView style={{ flex: 1 }}>
           <All />
         </Tabs.ScrollView>
