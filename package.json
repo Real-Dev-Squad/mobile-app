@@ -18,6 +18,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.16",
     "@react-native-community/slider": "^4.4.3",
+    "@react-native-firebase/app": "^18.8.0",
     "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/drawer": "^6.1.8",
@@ -47,7 +48,6 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-picker": "^4.7.1",
     "react-native-keychain": "^8.1.2",
-    "react-native-local-resource": "^0.1.6",
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.2.1",
     "react-native-paper": "^5.11.2",
