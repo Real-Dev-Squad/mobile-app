@@ -20,4 +20,5 @@ export interface InputBoxProps {
   label: string;
   title: string;
   onChangeHandler: (text: string) => void;
+  error: string;
 }

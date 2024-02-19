@@ -6,7 +6,6 @@ import { postFcmToken } from '../AuthScreen/Util';
 
 const NotifyScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
-  console.log('🚀 ~ NotifyScreen ~ loggedInUserData:', loggedInUserData.id);
 
   useEffect(() => {
     getFCMToken();
@@ -16,7 +15,8 @@ const NotifyScreen = () => {
     try {
       const token = loggedInUserData?.token;
       const fcmToken = '123';
-      postFcmToken(token, fcmToken);
+      const res = await postFcmToken(token, fcmToken);
+      console.log('🚀 ~ getFCMToken ~ res:', res);
     } catch (e) {
       console.log(e);
     }

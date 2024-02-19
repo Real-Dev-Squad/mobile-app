@@ -62,7 +62,7 @@ const TabNavigation = () => {
           }}
         />
 
-        {!isProdEnvironment && (
+        {isProdEnvironment && (
           <tab.Screen
             name={Strings.Tab_Goal}
             component={GoalsScreenStack}
@@ -95,7 +95,6 @@ const TabNavigation = () => {
           />
         )}
 
-        {/* {isProdEnvironment && ( */}
         <tab.Screen
           name={Strings.Tab_Notify}
           component={NotifyScreen}
@@ -125,7 +124,6 @@ const TabNavigation = () => {
             },
           }}
         />
-        {/* )} */}
         <tab.Screen
           name={Strings.Tab_Profile}
           component={AllTaskScreenStack}

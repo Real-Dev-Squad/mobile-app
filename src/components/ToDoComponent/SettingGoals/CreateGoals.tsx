@@ -38,8 +38,6 @@ const MainScreen = ({ navigation }) => {
     setIsDropDownSelected(!isDropDownSelected);
   };
 
-
-
   const handleDropDownPress = (item) => {
     setSelectedUser(item);
     setIsDropDownSelected(false);
@@ -98,11 +96,7 @@ const MainScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        nestedScrollEnabled
-        showsVerticalScrollIndicator={false}
-        style={styles.formContainer}
-      >
+      <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
         <Text style={styles.formHeading}>Create New Goal</Text>
         <Text style={styles.titles}>Title</Text>
         <TextInput

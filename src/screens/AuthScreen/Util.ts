@@ -99,7 +99,8 @@ export const getNotifications = async (
         cookie: `rds-session=${token}`,
       },
     });
-    console.log('🚀 ~ response:', response);
+    //TO  check notification response
+    console.log('🚀 ~ response:', response.data);
   } catch (error) {
     console.log('🚀 ~ error:', error);
   }
