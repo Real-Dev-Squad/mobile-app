@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux';
 import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
 import { scale } from '../../utils/utils';
 import NotifyScreen from '../../screens/Notify/NotifyScreen';
+import CalendarInviteScreen from '../../screens/CalendarInvite/CalendarInviteScreen';
+import CalendarIcon from '../../../assets/svgs/calendar';
 
 const tab = createBottomTabNavigator();
 
@@ -62,7 +64,7 @@ const TabNavigation = () => {
           }}
         />
 
-        {!isProdEnvironment && (
+        {isProdEnvironment && (
           <tab.Screen
             name={Strings.Tab_Goal}
             component={GoalsScreenStack}
@@ -95,7 +97,7 @@ const TabNavigation = () => {
           />
         )}
         {/* TODO: Update icon */}
-        {!isProdEnvironment && (
+        {isProdEnvironment && (
           <tab.Screen
             name={Strings.Tab_Notify}
             component={NotifyScreen}
@@ -126,6 +128,36 @@ const TabNavigation = () => {
             }}
           />
         )}
+        <tab.Screen
+          name={Strings.Tab_Calendar}
+          component={CalendarInviteScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text
+                  style={{
+                    fontSize: Fonts.Tab_Text_Font,
+                    color: focused
+                      ? Colors.Tab_Active_Color
+                      : Colors.Tab_Inactive_Color,
+                  }}
+                >
+                  {Strings.Tab_Calendar}
+                </Text>
+              );
+            },
+            tabBarIcon: ({ focused }) => {
+              return (
+                // <Image
+                //   style={TabViewStyle.tab_icon}
+                //   source={focused ? Images.profileIcon : Images.profileIconUnF}
+                // />
+                <CalendarIcon width={30} height={30} />
+              );
+            },
+          }}
+        />
         <tab.Screen
           name={Strings.Tab_Profile}
           component={AllTaskScreenStack}
