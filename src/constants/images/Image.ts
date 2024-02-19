@@ -32,6 +32,10 @@ const Images = {
   //LOGO
   rdsLogo: require('../../../assets/rdsLogo.png'),
 
+  // dropIcon
+  dropup: require('../../../assets/dropup.png'),
+  dropdown: require('../../../assets/dropdown.png'),
+
   //Default Image Url
   DEFAULT_IMAGE:
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
