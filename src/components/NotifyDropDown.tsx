@@ -7,13 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import StyleConfig from '../utils/StyleConfig';
 import { scale } from '../utils/utils';
@@ -55,6 +49,7 @@ const NotifyDropDown = ({
     setIsLoading(false);
   };
   // TODO: refactor dropdown
+  // TODO: show discord groups as well for group notification
   return (
     <View>
       {error ? (
