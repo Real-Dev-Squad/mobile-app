@@ -70,7 +70,6 @@ const Calendar = ({ users, setNewDataSlot, userData }) => {
     useState(false);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [selectedTime, setSelectedTime] = useState(new Date().toISOString());
-  const [showClock, setShowClock] = useState(false);
   const [refreshKey, setRefreshKey] = useState(Math.random());
 
   useEffect(() => {
@@ -272,32 +271,6 @@ const Calendar = ({ users, setNewDataSlot, userData }) => {
             />
           </View>
         </Modal>
-      )}
-
-      {showClock && (
-        <View
-          style={{
-            height: screenHeight,
-            backgroundColor: 'red',
-          }}
-        >
-          <DatePicker
-            modal
-            mode="time"
-            open={selectedTime}
-            date={date}
-            onConfirm={(time) => {
-              setShowClock(false);
-              // setDate(date);
-              // setSelectedDate(formatDate(date));
-              setSelectedTime(time);
-              handleNewDataSlot(time);
-            }}
-            onCancel={() => {
-              setIsDatePickerVisible(false);
-            }}
-          />
-        </View>
       )}
       {showInviteForm && (
         <Modal
