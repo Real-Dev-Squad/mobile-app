@@ -59,13 +59,13 @@ const Time_Slots = [
   '23:00',
 ];
 
-const Calendar = ({ users, setNewDataSlot, setUsers, userData }) => {
+const Calendar = ({ users, setNewDataSlot, userData }) => {
   const [showInviteForm, setShowInviteForm] = useState(false);
   const windowWidth = Dimensions.get('window').width;
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(formatDate(date)); // dd/mm/yy
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const [widthArr, setWidthArr] = useState([80, windowWidth - 80]);
+  const [widthArr] = useState([80, windowWidth - 80]);
   const [showSelectedUsersDetails, setShowSelectedUsersDetails] =
     useState(false);
   const [selectedSlots, setSelectedSlots] = useState([]);
@@ -79,27 +79,9 @@ const Calendar = ({ users, setNewDataSlot, setUsers, userData }) => {
 
   const generateTableData = () => {
     console.log('users>>>>', users);
-    // console.log('SELECTED DATE', selectedDate, typeof selectedDate); //23/02/24
-
     const tableData = Time_Slots.map((slot) => {
       const matchingUsers = users.filter((user) => {
-        console.log(
-          'Date checking >>>>>',
-          // new Date(user.startTime),
-          // formatTimeSlotTime(user.startTime).split(':')[0],
-          // unixToTimeStampYYMMDD(user.startTime),
-          // selectedDate,
-          slot.split(':')[0],
-          user.startTime,
-          formatTimeSlotTime(user.startTime).split(':')[0], // yy/mm/dd
-          unixToTimeStampYYMMDD(user.startTime),
-          selectedDate, //23/02/24
-        );
-        const [dd, mm, yy] = selectedDate.split('/');
         return (
-          // 8 === formatTimeSlotTime(1677245400).split(':')[0]&&
-          //formatTimeSlotDate(1677245400) === 23/02/24
-
           slot.split(':')[0] ===
             formatTimeSlotTime(user.startTime).split(':')[0] &&
           unixToTimeStampYYMMDD(user.startTime) === selectedDate
@@ -192,21 +174,14 @@ const Calendar = ({ users, setNewDataSlot, setUsers, userData }) => {
   const mergePostInvite = (users, postInvite) => {
     const mergedData = [...users, postInvite];
     const tranform = tranformObj(mergedData);
-    console.log('🚀 ~ mergePostInvite ~ tranform:', tranform);
     return tranform;
   };
 
   // Example usage: Merge postInvite into calendarData
   const handleNewDataSlot = (postInvite_) => {
     setShowInviteForm((prev) => !prev);
-
     const updatedCalendarData = mergePostInvite(users, postInvite_);
-    console.log(
-      '🚀 ~ handleNewDataSlot ~ updatedCalendarData:',
-      updatedCalendarData,
-    );
     setNewDataSlot(updatedCalendarData);
-
     setTimeout(() => {
       setRefreshKey(Math.random());
     }, 300);

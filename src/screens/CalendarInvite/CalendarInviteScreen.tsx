@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import NotifyDropDown from '../../components/NotifyDropDown';
 import DisplayProfile from '../../components/DisplayProfile';
 import Calendar from './Calendar';
-import { calendarData, event } from './dummy';
+import { event } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export type UserInfoType = {
@@ -29,7 +29,6 @@ export type UserInfoType = {
 const CalendarInviteScreen = () => {
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
-  const [data, setData] = useState(calendarData);
   useEffect(() => {
     getMatchingTimeSlots();
   }, [users]);
@@ -64,19 +63,15 @@ const CalendarInviteScreen = () => {
         return null;
       }
     });
-    // setUsersWithTimeSlots(matchingTimeSlots);
-
     setUsersWithTimeSlots(() =>
       matchingTimeSlots.filter((item) => item !== null),
     );
   };
 
   const handleUserIdChange = (info: UserInfoType) => {
-    console.log('🚀 ~ handleUserIdChange ~ info:', info);
     const userExists = users.some((user) => user.id === info.id);
 
     if (!userExists) {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>');
       setUsers((prevUsers: any) => [...prevUsers, info]);
     } else {
       Alert.alert('user already exist');
