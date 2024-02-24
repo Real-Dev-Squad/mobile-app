@@ -299,6 +299,28 @@ export const requestCameraPermission = async () => {
     console.warn(err);
   }
 };
+export const unixToTimeStampYYMMDD = (_date) => {
+  if (!_date) {
+    return 'NA';
+  }
+  // Unix timestamp in seconds
+  const timestamp = _date;
+
+  // Create a new Date object using the timestamp
+  const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
+
+  // Get the components of the date
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+  const year = String(date.getFullYear()).slice(-2);
+
+  // Create a formatted date string
+  const formattedDate = `${day < 10 ? '0' : ''}${day}/${
+    month < 10 ? '0' : ''
+  }${month}/${year}`;
+
+  return formattedDate;
+};
 export const unixToTimeStamp = (_date) => {
   if (!_date) {
     return 'NA';

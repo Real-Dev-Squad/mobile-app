@@ -64,7 +64,7 @@ const TabNavigation = () => {
           }}
         />
 
-        {isProdEnvironment && (
+        {!isProdEnvironment && (
           <tab.Screen
             name={Strings.Tab_Goal}
             component={GoalsScreenStack}
@@ -97,7 +97,7 @@ const TabNavigation = () => {
           />
         )}
         {/* TODO: Update icon */}
-        {isProdEnvironment && (
+        {!isProdEnvironment && (
           <tab.Screen
             name={Strings.Tab_Notify}
             component={NotifyScreen}
@@ -153,7 +153,11 @@ const TabNavigation = () => {
                 //   style={TabViewStyle.tab_icon}
                 //   source={focused ? Images.profileIcon : Images.profileIconUnF}
                 // />
-                <CalendarIcon width={30} height={30} />
+                focused ? (
+                  <CalendarIcon width={30} height={30} />
+                ) : (
+                  <CalendarIcon width={30} height={30} focused />
+                )
               );
             },
           }}

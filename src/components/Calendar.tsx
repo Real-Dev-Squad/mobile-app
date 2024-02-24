@@ -5,7 +5,7 @@ import * as Permissions from 'react-native-permissions';
 
 const Calendar = () => {
   const eventConfig = {
-    title: 'Meeting with Client',
+    title: '  Meeting with Client',
     startDate: '2024-02-20T10:00:00.000Z',
     endDate: '2024-02-20T11:00:00.000Z',
     location: 'Office',

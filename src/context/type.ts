@@ -21,4 +21,5 @@ export interface InputBoxProps {
   title: string;
   onChangeHandler: (text: string) => void;
   error: string;
+  disabled: boolean;
 }

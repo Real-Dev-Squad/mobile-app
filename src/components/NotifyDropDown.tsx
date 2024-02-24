@@ -7,20 +7,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { SetStateAction, useContext, useEffect, useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import StyleConfig from '../utils/StyleConfig';
 import { scale } from '../utils/utils';
 import { AuthContext } from '../context/AuthContext';
 import { getAllUsers } from '../screens/AuthScreen/Util';
 import Images from '../constants/images/Image';
+import { UserInfoType } from '../screens/CalendarInvite/CalendarInviteScreen';
 
 const NotifyDropDown = ({
   handleUserId,
   error,
+  title = 'Notify To',
 }: {
-  handleUserId: (id: string) => void;
+  handleUserId: (info: UserInfoType) => void;
   error: string;
+  title: string;
 }) => {
   const [isDropDownSelected, setIsDropDownSelected] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,7 +39,9 @@ const NotifyDropDown = ({
 
   const handleDropDownPress = (item: { id: string }) => {
     setSelectedUser(item);
-    handleUserId(item.id);
+    // handleUserId(item.id);
+    handleUserId(item);
+
     setIsDropDownSelected(false);
   };
   useEffect(() => {
@@ -51,11 +56,11 @@ const NotifyDropDown = ({
   // TODO: refactor dropdown
   // TODO: show discord groups as well for group notification
   return (
-    <View>
+    <View style={{ margin: 10 }}>
       {error ? (
         <Text style={[styles.titles, { color: 'red' }]}>{error}</Text>
       ) : (
-        <Text style={styles.titles}>Notify To: </Text>
+        <Text style={styles.titles}>{title}</Text>
       )}
       <TouchableOpacity
         testID="dropdown"
