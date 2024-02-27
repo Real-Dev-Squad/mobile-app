@@ -39,9 +39,7 @@ const NotifyDropDown = ({
 
   const handleDropDownPress = (item: { id: string }) => {
     setSelectedUser(item);
-    // handleUserId(item.id);
     handleUserId(item);
-
     setIsDropDownSelected(false);
   };
   useEffect(() => {

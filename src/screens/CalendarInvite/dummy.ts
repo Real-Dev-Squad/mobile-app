@@ -10,12 +10,58 @@
 //   startTime:
 //   endTime:
 // }
+import firestore, { Filter } from '@react-native-firebase/firestore';
+import moment from 'moment';
+
+const usersCollection = firestore().collection('events');
 
 export const durations = [15, 30, 45, 60];
 
+const getUserTimezone = (utcTimestamp) => {
+  let date = new Date(utcTimestamp);
+
+  // Get the timezone offset in minutes
+  let offsetInMinutes = date.getTimezoneOffset();
+
+  // Add the user's timezone offset to the timestamp
+  let timestampWithOffset = utcTimestamp + offsetInMinutes * 60 * 1000;
+
+  return timestampWithOffset;
+};
+
+export const fetchEvents = async () => {
+  let eventSnapshot = await usersCollection.get();
+
+  const events: any = [];
+  eventSnapshot.forEach((event: any) => {
+    events.push({
+      id: event.id,
+      ...event.data(),
+      // startTime: getUserTimezone(event.startTime),
+      // endTime: getUserTimezone(event.endTime),
+      // startTime: Number(event.data().startTime),
+      // endTime: Number(event.data().endTime),
+    });
+  });
+  console.log('EVENT in dummy td', events);
+  return events;
+};
+
+export const postEvent = async (eventData) => {
+  return usersCollection
+    .add(eventData)
+    .then((docRef) => {
+      console.log('Data posted successfully with ID:', docRef.id);
+      return Promise.resolve();
+    })
+    .catch((error) => {
+      console.error('Error posting data:', error);
+      return Promise.reject();
+    });
+};
 export const event = [
   {
-    userId: 'kpBV5NrcHYb88xzgiC0u',
+    userId: ['kpBV5NrcHYb88xzgiC0u'],
     eventType: 'public',
     eventName: 'test1 event',
     eventScheduledBy: 'shreya',

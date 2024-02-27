@@ -4,7 +4,13 @@ import { InputBoxProps } from '../context/type';
 import { scale } from '../utils/utils';
 import StyleConfig from '../utils/StyleConfig';
 
-const InputBox = ({ label, title, onChangeHandler, error }: InputBoxProps) => {
+const InputBox = ({
+  label,
+  title,
+  onChangeHandler,
+  error,
+  disabled,
+}: InputBoxProps) => {
   return (
     <>
       {error ? (
@@ -13,6 +19,7 @@ const InputBox = ({ label, title, onChangeHandler, error }: InputBoxProps) => {
         <Text style={styles.titles}>{label}</Text>
       )}
       <TextInput
+        editable={disabled}
         style={styles.inputStyle}
         maxLength={50}
         placeholder={label}

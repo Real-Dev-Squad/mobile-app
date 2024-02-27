@@ -11,7 +11,6 @@ const Button_ = ({
   submitHandler: () => void;
   disabled: boolean;
 }) => {
-  console.log('disabled >>>', disabled);
   return (
     <TouchableOpacity
       style={[styles.createButtonStyle, disabled && styles.disabledButtonStyle]}

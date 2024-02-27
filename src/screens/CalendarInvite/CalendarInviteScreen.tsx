@@ -1,11 +1,14 @@
-import { Alert, Button, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 import NotifyDropDown from '../../components/NotifyDropDown';
 import DisplayProfile from '../../components/DisplayProfile';
 import Calendar from './Calendar';
-import { event } from './dummy';
+import { event, fetchEvents } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
+import { formatDate } from '../../helpers/SiteUtils';
+import { unixToTimeStampYYMMDD } from '../AuthScreen/Util';
+import TimeZone from './TimeZone';
 
 export type UserInfoType = {
   created_at: number;
@@ -29,54 +32,70 @@ export type UserInfoType = {
 const CalendarInviteScreen = () => {
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
+  const [selectedDate, setSelectedDate] = useState(formatDate(new Date())); // dd/mm/yy
+
   useEffect(() => {
     getMatchingTimeSlots();
-  }, [users]);
-  const getMatchingTimeSlots = () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [users, selectedDate]);
+
+  const getMatchingTimeSlots = async () => {
+    const event_ = await fetchEvents();
     const matchingTimeSlots = users.map((selectedItem) => {
-      const matchingCalendarItem = event.find(
-        (item) => item?.userId === selectedItem.id,
-      );
+      const matchingCalendarItem = event_.filter((item) => {
+        // console.log(
+        //   'idhrrrrrr',
+        //   unixToTimeStampYYMMDD(item.startTime),
+        //   selectedDate,
+        //   item?.userId,
+        //   selectedItem.id,
+        // );
+        // console.log(
+        //   'selectedDateNE',
+        //   item,
+        //   selectedItem.id,
+        //   unixToTimeStampYYMMDD(item.startTime),
+        //   selectedDate,
+        // );
+        return (
+          (item?.userId).includes(selectedItem.id) &&
+          unixToTimeStampYYMMDD(item.startTime) === selectedDate
+        );
+      });
+
       // convert here without timezone
       if (matchingCalendarItem) {
-        const {
-          userId,
-          endTime,
-          startTime,
-          eventName,
-          eventScheduledBy,
-          eventType,
-        } = matchingCalendarItem;
-
         return {
-          id: userId,
-          first_name: selectedItem.first_name,
-          last_name: selectedItem.last_name,
-          picture: { url: selectedItem?.picture?.url },
-          startTime,
-          endTime,
-          eventName,
-          eventScheduledBy,
-          eventType,
+          matchingCalendarItem: matchingCalendarItem.map((ev) => ({
+            ...ev,
+            id: selectedItem.id,
+            first_name: selectedItem.first_name,
+            last_name: selectedItem.last_name,
+            picture: { url: selectedItem?.picture?.url },
+          })),
         };
       } else {
         return null;
       }
     });
-    setUsersWithTimeSlots(() =>
-      matchingTimeSlots.filter((item) => item !== null),
-    );
+    let eventt: any[] = [];
+    matchingTimeSlots.forEach((item) => {
+      if (item?.matchingCalendarItem?.length > 0) {
+        eventt = [...eventt, ...item?.matchingCalendarItem];
+      }
+    });
+    setUsersWithTimeSlots(eventt);
   };
 
   const handleUserIdChange = (info: UserInfoType) => {
     const userExists = users.some((user) => user.id === info.id);
-
     if (!userExists) {
       setUsers((prevUsers: any) => [...prevUsers, info]);
     } else {
       Alert.alert('user already exist');
     }
   };
+
   // how do i clear selected user
   return (
     <ScrollView>
@@ -85,14 +104,18 @@ const CalendarInviteScreen = () => {
         handleUserId={handleUserIdChange}
         error={''}
       />
-      <DisplayProfile selectedUsers={users} />
+      <TimeZone />
 
-      {/* <Calendar /> */}
+      <DisplayProfile setSelectedUsers={setUsers} selectedUsers={users} />
+
       <Calendar
         userData={users}
-        users={usersWithTimeSlots}
         setUsers={setUsers}
+        users={usersWithTimeSlots}
         setNewDataSlot={setUsersWithTimeSlots}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        getMatchingTimeSlots={getMatchingTimeSlots}
       />
     </ScrollView>
   );
