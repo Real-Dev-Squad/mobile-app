@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import Animated from 'react-native-reanimated';
+import { Circle, Svg } from 'react-native-svg';
+import Slider from '@react-native-community/slider';
 
 const ProgressToZoom = ({
   progressVal,
@@ -24,7 +26,7 @@ const ProgressToZoom = ({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderMove: (event, gestureState) => {
         const newValue = Math.max(
-          0,
+          20,
           Math.min(progressVal + gestureState.dx, 100),
         );
         const roundedValue = Math.round(newValue / 10) * 10;
@@ -35,14 +37,14 @@ const ProgressToZoom = ({
     }),
   ).current;
 
-  useEffect(() => {
-    Animated.timing(progress, {
-      toValue: progressVal,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [progress, progressVal]);
+  // useEffect(() => {
+  //   Animated.timing(progress, {
+  //     toValue: progressVal,
+  //     duration: 300,
+  //     useNativeDriver: false,
+  //   }).start();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [progress, progressVal]);
 
   const updateProgressValue = (newVal: any) => {
     setProgressVal(newVal);
@@ -59,33 +61,68 @@ const ProgressToZoom = ({
     setProgressVal(newValue);
     updateProgressValue(newValue);
   };
+  const handleIconMove = (event, panResponderMove) => {
+    const gestureState = event.gestureState;
+
+    const newValue = Math.max(20, Math.min(progressVal + gestureState.dx, 100));
+    const roundedValue = Math.round(newValue / 10) * 10;
+    setProgressVal(roundedValue);
+    updateProgressValue(roundedValue);
+    progress.setValue(roundedValue);
+  };
+  const handleValueChange = (value: number) => {
+    const newVal = value + 10;
+    setProgressVal((prev) => prev + 10);
+    updateProgressValue(newVal);
+  };
+
   return (
     <View style={styles.container}>
-      <Animated.View
+      {/* <Animated.View
         style={[
           styles.bar,
           {
-            width: progressVal ? progressVal + '%' : 0 + '%',
+            width: progressVal ? progressVal + '%' : 20 + '%',
             backgroundColor: 'blue',
           },
         ]}
         {...panResponder.panHandlers}
+      >
+        <Svg
+          height="40"
+          width="40"
+          style={{ position: 'absolute', left: `${progressVal}%` }}
+          onTouchMove={(event) =>
+            handleIconMove(
+              event.nativeEvent,
+              panResponder.panHandlers.onPanResponderMove,
+            )
+          }
+        >
+          <Circle cx="20" cy="20" r="18" fill="green" />
+        </Svg>
+      </Animated.View> */}
+      <Slider
+        value={progressVal}
+        onValueChange={handleValueChange}
+        minimumValue={10}
+        maximumValue={90}
+        step={10}
       />
-
-      <View style={styles.buttonsContainer}>
+      <View style={styles.progressContainer}>
+        <Text style={styles.progressText}>
+          {progressVal ? Math.round(progressVal) : 20}%
+        </Text>
+      </View>
+      {/* <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button} onPress={handleDecrement}>
           <Text style={styles.buttonText}>-</Text>
         </TouchableOpacity>
 
-        <View style={styles.progressContainer}>
-          <Text style={styles.progressText}>
-            {progressVal ? Math.round(progressVal) : 0}%
-          </Text>
-        </View>
         <TouchableOpacity style={styles.button} onPress={handleIncrement}>
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -136,5 +173,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  cursor: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: 'red',
+    position: 'absolute',
+    top: '50%',
+    marginLeft: -10,
   },
 });

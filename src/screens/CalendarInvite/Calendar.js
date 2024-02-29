@@ -51,7 +51,7 @@ const Calendar = ({
   setSelectedDate,
   progressVal,
 }) => {
-  console.log('🚀 ~ progressVal inside calendar.js:', users);
+  console.log('🚀 ~ progressVal inside calendar.js:', progressVal);
   // progressVal = progressVal - 5;
   const [showInviteForm, setShowInviteForm] = useState(false);
   const windowWidth = Dimensions.get('window').width;
@@ -335,7 +335,7 @@ const Calendar = ({
               return (
                 <TableWrapper
                   key={index}
-                  borderStyle={{ borderWidth: 1, borderColor: 'red' }}
+                  borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}
                   style={[
                     styles.row,
                     {
