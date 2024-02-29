@@ -30,6 +30,7 @@ import {
   formatDate,
   formatTimeSlotDate,
   formatTimeSlotTime,
+  getColonTime,
   randomColor,
   screenHeight,
   screenWidth,
@@ -48,7 +49,10 @@ const Calendar = ({
   userData,
   selectedDate,
   setSelectedDate,
+  progressVal,
 }) => {
+  console.log('🚀 ~ progressVal inside calendar.js:', users);
+  // progressVal = progressVal - 5;
   const [showInviteForm, setShowInviteForm] = useState(false);
   const windowWidth = Dimensions.get('window').width;
   const [date, setDate] = useState(new Date());
@@ -93,24 +97,14 @@ const Calendar = ({
 
   const element = (data, index, j) => {
     const { picture, first_name, last_name, startTime, endTime } = data;
-    console.log('DATA START TIME END TIME AND J', startTime, endTime, j);
-
-    // [6 - 7 , 6:30 - 7:00 ]
-    // [6,6:30,7,7]
-
-    // when j = 6 (time 6)
-    // [6-6:30 , 6:15 - 7:15]
-    // [6(solid),6:15(grey),6:30] 7:15
-
-    // when j=7
-    // [6:15 - 7:15]
-    //
+    console.log('Start Time ENd tme', startTime, endTime);
     let timePairs = [];
 
     for (let i = 0; i < startTime.length; i++) {
       timePairs.push([startTime[i], endTime[i]]);
     }
-    console.log('🚀 ~ element ~ resultArray:', timePairs);
+    console.log('🚀 ~ element ~ timePairs:', timePairs);
+
     const resultArray = timePairs.map((pair) => {
       const startHour = new Date(pair[0] * 1000).getHours();
       const endHour = new Date(pair[1] * 1000).getHours();
@@ -123,8 +117,6 @@ const Calendar = ({
 
     const displayName = (picture, resultArray) => {
       const condition = [];
-      // [[4, 15, 4, 30], [4, 20, 4, 35],[4,30,4,40],[4,35,5,0],[4,45,5,0]] => 4.30>4:20
-
       for (let i = 0; i < resultArray.length - 1; i++) {
         if (
           resultArray[i + 1][0] * 60 + resultArray[i + 1][1] <
@@ -132,42 +124,71 @@ const Calendar = ({
         ) {
           condition.push(resultArray[i]);
         }
-        // condition.push(resultArray[i][0] * 60 + resultArray[i][1]);
-        // condition.push(resultArray[i][2] * 60 + resultArray[i][3]);
       }
       condition.sort();
-      if (condition.length > 0) {
-        console.log(
-          '~~~~~~~~~~~~condition',
-          condition,
-          2 * (condition[0][3] - condition[0][1]) + condition[0][1] * 2,
-        );
-      }
-      //[4, 15, 4, 30, 4, 20, 4, 35, 4, 30, 4, 40, 4, 35, 5, 0, 4, 45, 5, 0]
+      const getHeight = (i) => {
+        let h =
+          (resultArray[i][2] || 1) * 60 +
+          resultArray[i][3] -
+          (resultArray[i][0] * 60 + resultArray[i][1]);
+        if (condition.length === 0 && j === resultArray[i][2]) {
+          h =
+            h -
+            (resultArray[i][2] * 60 -
+              (resultArray[i][0] * 60 + resultArray[i][1]));
+        }
+
+        return (h * (12 * progressVal)) / 60;
+      };
+
+      const getTopWidth = (i) => {
+        return condition.length === 0 &&
+          resultArray[i][0] !== resultArray[i][2] &&
+          resultArray[i][2] === j
+          ? 0
+          : 1;
+      };
       return (
         <View>
           {picture.map((item, i) => {
             const randomCol = 'black';
+
             return (
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('FOCUS>>>>', item, i, j);
+                  Alert.alert(
+                    resultArray[i][0] +
+                      ':' +
+                      resultArray[i][1] +
+                      ' to ' +
+                      resultArray[i][2] +
+                      ':' +
+                      resultArray[i][3],
+                  );
+                }}
                 style={[
                   styles.dashedLine,
                   {
-                    height:
-                      j !== resultArray[i][2]
-                        ? 100
-                        : 2 * (resultArray[i][3] - resultArray[i][1]), //calculated
-                    width: 80,
+                    height: getHeight(i),
+                    width: 100,
                     position: 'absolute',
-                    top: j !== resultArray[i][0] ? 0 : resultArray[i][1] * 2,
+                    top:
+                      j !== resultArray[i][0]
+                        ? 0
+                        : resultArray[i][1] * 0.2 * progressVal,
                     borderWidth: 1,
+                    borderTopWidth: getTopWidth(i),
+                    opacity: 0.5,
                     borderColor: randomCol,
+                    // backgroundColor: 'yellow',
                     borderStyle:
                       condition.length > 0 &&
+                      resultArray[i][2] === condition[0][2] &&
                       resultArray[i][3] === condition[0][3]
                         ? 'dashed'
                         : 'solid',
-                    // borderColor: 'white',
+
                     borderBottomColor:
                       condition.length > 0 &&
                       resultArray[i][2] === condition[0][2] &&
@@ -177,28 +198,6 @@ const Calendar = ({
                   },
                 ]}
               >
-                {condition.length > 0 && resultArray[i][3] === condition[0][3] && (
-                  <View
-                    style={{
-                      bottom: 0,
-                      // top:
-                      //   j !== resultArray[i][2]
-                      //     ? 100
-                      //     : 2 * (resultArray[i][3] - resultArray[i][1]), //calculated
-                      zIndex: 10,
-                      position: 'absolute',
-                      borderStyle: 'dashed',
-                      borderColor: 'white',
-                      borderBottomColor: 'red',
-                      borderWidth: 2,
-                    }}
-                  >
-                    {/* <Text style={{ color: 'grey', fontWeight: 'bold' }}>
-                      --------------
-                    </Text> */}
-                  </View>
-                )}
-
                 {j === resultArray[i][2] && (
                   <Profile
                     selectedUser={{
@@ -210,23 +209,9 @@ const Calendar = ({
                     profileWidth={30}
                   />
                 )}
-              </View>
+              </TouchableOpacity>
             );
           })}
-          {condition.map((ele, k) => (
-            <View
-              style={{
-                position: 'absolute',
-                top: ele[3] * 2,
-                zIndex: 10,
-                width: 180,
-              }}
-            >
-              {/* <Text style={{ color: 'grey', fontWeight: 'bold' }}>
-                --------------
-              </Text> */}
-            </View>
-          ))}
         </View>
       );
     };
@@ -250,12 +235,6 @@ const Calendar = ({
             position: 'absolute',
             top: 0,
           }}
-          borderStyle={
-            {
-              // borderWidth: 1,
-              // borderColor: 'white',
-            }
-          }
         />
       )
     );
@@ -344,69 +323,62 @@ const Calendar = ({
             />
           </Table>
         </TouchableOpacity>
-        <ScrollView>
+        <ScrollView style={{ marginTop: -1 }}>
           <Table
-            borderStyle={{
-              borderWidth: 1,
-            }}
+          // borderStyle={{
+          //   borderWidth: 1,
+          //   backgroundColor: 'red',
+          // }}
           >
-            {generateTableData().map((rowData, index) => (
-              <TableWrapper
-                key={index}
-                style={[
-                  styles.row,
-                  { height: rowData[1].startTime.length > 0 ? 120 : 80 },
-                ]}
-              >
-                {rowData.map((cellData, cellIndex) => {
-                  return (
-                    <Cell
-                      key={cellIndex}
-                      data={
-                        typeof cellData === 'string'
-                          ? cellElement(cellData)
-                          : has(cellData, 'first_name')
-                          ? element(cellData, cellIndex, index)
-                          : ''
-                      }
-                      style={
-                        {
-                          // display: 'flex',
-                          // height: has(cellData, 'first_name') ? 200 : 80,
-                          // height: 15, //to mention specific
-                          // color: 'black',
-                          // flexDirection: 'column',
-                          // backgroundColor: has(cellData, 'first_name')
-                          //   ? 'red'
-                          //   : '',
+            {generateTableData().map((rowData, index) => {
+              console.log('logic:>>>', progressVal, (120 * progressVal) / 10);
+              return (
+                <TableWrapper
+                  key={index}
+                  borderStyle={{ borderWidth: 1, borderColor: 'red' }}
+                  style={[
+                    styles.row,
+                    {
+                      height: (120 * progressVal) / 10,
+                    },
+                  ]}
+                >
+                  {rowData.map((cellData, cellIndex) => {
+                    return (
+                      <Cell
+                        key={cellIndex}
+                        data={
+                          typeof cellData === 'string'
+                            ? cellElement(cellData)
+                            : has(cellData, 'first_name')
+                            ? element(cellData, cellIndex, index)
+                            : ''
                         }
-                      }
-                      borderStyle={{
-                        borderWidth: has(cellData, 'first_name') ? 0 : 1,
-                      }}
-                      textStyle={styles.text}
-                    />
-                  );
-                })}
-              </TableWrapper>
-            ))}
-
-            {/* <TableWrapper>
-              <Col
-                data={generateTableData()}
-                heightArr={[28, 28]}
-                textStyle={styles.text}
-              />
-            </TableWrapper> */}
+                        style={
+                          {
+                            // display: 'flex',
+                            // height: has(cellData, 'first_name') ? 200 : 80,
+                            // height: 15, //to mention specific
+                            // color: 'black',
+                            // flexDirection: 'column',
+                            // backgroundColor: has(cellData, 'first_name')
+                            //   ? 'red'
+                            //   : '',
+                          }
+                        }
+                        borderStyle={{
+                          borderWidth: has(cellData, 'first_name') ? 0 : 1,
+                        }}
+                        textStyle={styles.text}
+                      />
+                    );
+                  })}
+                </TableWrapper>
+              );
+            })}
           </Table>
         </ScrollView>
       </View>
-      {/* <TouchableOpacity
-        onPress={() => {
-          setSelectedSlots(data);
-          setShowSelectedUsersDetails((prev) => !prev);
-        }}
-      > */}
       {showSelectedUsersDetails && (
         <Modal
           transparent={true}
@@ -464,7 +436,10 @@ const Calendar = ({
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30 },
+  container: {
+    // flex: 1
+    backgroundColor: 'red',
+  },
   header: { height: 50, backgroundColor: '#537791' },
   text: { textAlign: 'center', fontWeight: '500', color: 'black' },
   dataWrapper: { marginTop: -1 },

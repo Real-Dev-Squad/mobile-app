@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { formatDate } from '../../helpers/SiteUtils';
 import { unixToTimeStampYYMMDD } from '../AuthScreen/Util';
 import TimeZone from './TimeZone';
+import ProgressToZoom from './ProgressToZoom';
 
 export type UserInfoType = {
   created_at: number;
@@ -30,6 +31,7 @@ export type UserInfoType = {
   username: string;
 };
 const CalendarInviteScreen = () => {
+  const [progressVal, setProgressVal] = useState(20);
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState(formatDate(new Date())); // dd/mm/yy
@@ -98,7 +100,11 @@ const CalendarInviteScreen = () => {
 
   // how do i clear selected user
   return (
-    <ScrollView>
+    <View style={{ flex: 1 }}>
+      <ProgressToZoom
+        progressVal={progressVal}
+        setProgressVal={setProgressVal}
+      />
       <NotifyDropDown
         title={'Select To invite'}
         handleUserId={handleUserIdChange}
@@ -116,8 +122,9 @@ const CalendarInviteScreen = () => {
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
         getMatchingTimeSlots={getMatchingTimeSlots}
+        progressVal={progressVal}
       />
-    </ScrollView>
+    </View>
   );
 };
 

@@ -60,22 +60,28 @@ const InviteForm = ({
   const handleSubmitTime = () => {
     // dd/mm/yy
     // convert from dd/mm/yy to yy/mm/dd
+    console.log('selectedDate', selectedDate); // 29/02/24
     let convertFromDDMMYYTOYYMMDD = selectedDate.split('/').reverse().join('-');
 
-    const formatDD = `20${convertFromDDMMYYTOYYMMDD}T${selectedTime}`;
+    const formatDD = `20${convertFromDDMMYYTOYYMMDD}T${selectedTime}`; // 2024-02-29T10:00
 
-    const correctTime = Number(selectedTime.split(':')[1]) + duration;
+    console.log('🚀 ~ handleSubmitTime ~ formatDD:', formatDD);
+    const correctTime = Number(selectedTime.split(':')[1]) + duration; //15
+    console.log('🚀 ~ handleSubmitTime ~ correctTime:', correctTime);
     const endHour =
       Math.floor(correctTime / 60) + Number(selectedTime.split(':')[0]);
+    console.log('🚀 ~ handleSubmitTime ~ endHour:', endHour);
     let endMin = correctTime % 60;
     const formatEndDD_ = `20${convertFromDDMMYYTOYYMMDD}T${
-      endHour > 10 ? endHour : '0' + endHour
-    }:${endMin > 10 ? endMin : '0' + endMin}`;
+      endHour >= 10 ? endHour : '0' + endHour
+    }:${endMin >= 10 ? endMin : '0' + endMin}`;
+    console.log('🚀 ~ handleSubmitTime ~ endMin:', endMin);
 
     //TODO:
     const formatStartDD = toUnix(formatDD);
 
     const formatEndDD = toUnix(formatEndDD_);
+    console.log('🚀 ~ handleSubmitTime ~ formatEndDD:', formatEndDD);
 
     return { formatStartDD, formatEndDD };
   };
@@ -94,6 +100,7 @@ const InviteForm = ({
       endTime: Number(endUT),
     };
     console.log('🚀 ~ handleButtonHandler ~ data:', data);
+    // if (data.endTime === null) return;
     postEvent(data)
       .then(() => {
         handleEventSubmit(data);

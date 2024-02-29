@@ -54,7 +54,7 @@ const NotifyDropDown = ({
   // TODO: refactor dropdown
   // TODO: show discord groups as well for group notification
   return (
-    <View style={{ margin: 10 }}>
+    <View style={{ marginHorizontal: 10, position: 'relative' }}>
       {error ? (
         <Text style={[styles.titles, { color: 'red' }]}>{error}</Text>
       ) : (
@@ -82,7 +82,18 @@ const NotifyDropDown = ({
         )}
       </TouchableOpacity>
       {isDropDownSelected ? (
-        <View testID="user-container" style={styles.dropDownArea}>
+        <View
+          testID="user-container"
+          style={[
+            styles.dropDownArea,
+            {
+              position: 'absolute',
+              zIndex: 9999,
+              top: 60,
+              backgroundColor: 'white',
+            },
+          ]}
+        >
           <TextInput
             style={styles.searchBar}
             value={searchQuery}
@@ -149,7 +160,7 @@ const styles = StyleSheet.create({
   titles: {
     fontSize: scale(12),
     marginBottom: scale(4),
-    marginTop: scale(20),
+    // marginTop: scale(20),
     color: StyleConfig.colors.greyLabel,
   },
   dropDownSelector: {
@@ -174,6 +185,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     marginTop: 10,
     borderRadius: 8,
+    elevation: 10,
   },
   userNameDropDown: {
     padding: 20,
