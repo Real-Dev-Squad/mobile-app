@@ -1,5 +1,7 @@
 import { Dimensions } from 'react-native';
 
+export const CELL_HEIGHT = 60;
+
 export const screenHeight = Dimensions.get('screen').height;
 export const screenWidth = Dimensions.get('screen').width;
 

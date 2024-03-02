@@ -10,6 +10,7 @@ import { formatDate } from '../../helpers/SiteUtils';
 import { unixToTimeStampYYMMDD } from '../AuthScreen/Util';
 import TimeZone from './TimeZone';
 import ProgressToZoom from './ProgressToZoom';
+import CalendarLayout from './CalendarLayout';
 
 export type UserInfoType = {
   created_at: number;
@@ -100,7 +101,7 @@ const CalendarInviteScreen = () => {
 
   // how do i clear selected user
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1, overflow: 'scroll' }}>
       <ProgressToZoom
         progressVal={progressVal}
         setProgressVal={setProgressVal}
@@ -113,7 +114,7 @@ const CalendarInviteScreen = () => {
       <TimeZone />
 
       <DisplayProfile setSelectedUsers={setUsers} selectedUsers={users} />
-
+      {/* 
       <Calendar
         userData={users}
         setUsers={setUsers}
@@ -123,8 +124,9 @@ const CalendarInviteScreen = () => {
         setSelectedDate={setSelectedDate}
         getMatchingTimeSlots={getMatchingTimeSlots}
         progressVal={progressVal}
-      />
-    </View>
+      /> */}
+      <CalendarLayout />
+    </ScrollView>
   );
 };
 
