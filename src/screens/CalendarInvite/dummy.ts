@@ -59,13 +59,13 @@ export const postEvent = async (eventData) => {
     });
 };
 
-// 
+//
 export const event = [
   {
     userId: ['kpBV5NrcHYb88xzgiC0u'], // participant
     eventType: 'public',
     eventName: 'test1 event',
-    eventScheduledBy: 'shreya',
+    eventScheduledBy: 'shreya', //userId
     // start time and end time without timezone
     startTime: 1708651681,
     endTime: 1708389172,
@@ -74,11 +74,46 @@ export const event = [
     userId: 'AaVNd2Jaz05bGvmW2ndz',
     eventType: 'public',
     eventName: 'test1 event',
-    eventScheduledBy: 'shreya',
+    eventScheduledBy: 'joy',
     startTime: 1708646281,
-    endTime: 1708389172,
+    endTime: 1708389172, //with timezone
   },
 ];
+     
+
+
+
+/*
+1. Sort events based on startTime
+2. Column
+  multiplier
+  Parent Container
+    a. First Column => Side Column : Time
+      Fixed height x multiplier, each time slot will also have a fix height x multiplier
+      Eg : 24Hr => 2400px x multiplier => 1hr slot : 100px x multiplier
+    b. Event Columns Container : All event will render inside this
+       Position : Relative
+    c. Slots
+        - Sorted
+        - Position : Absolute
+        - Top, height
+            Height : height of a minute x duration
+            Top : height of a minute x (startTime's HH:MM => minutes x multiplier => position)
+
+    d. Collapsing Events
+       - Sorted
+       while rendering nth slot
+        - (n+1)slot start time lies in between nth event's start & end time
+          - border bottom : red
+          - z-index : 9
+      while rendering n+1 slot
+      - (n+1)slot start time lies in between nth event's start & end time
+        - z-index : 99
+
+
+
+ */
+
 export const calendarData = [
   {
     kpBV5NrcHYb88xzgiC0u: {
