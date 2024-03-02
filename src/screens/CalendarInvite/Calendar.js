@@ -27,6 +27,7 @@ import { has } from 'lodash';
 import Profile from '../../components/Profile';
 import {
   Time_Slots,
+  calculateCurrentTimePosition,
   formatDate,
   formatTimeSlotDate,
   formatTimeSlotTime,
@@ -51,7 +52,6 @@ const Calendar = ({
   setSelectedDate,
   progressVal,
 }) => {
-  console.log('🚀 ~ progressVal inside calendar.js:', progressVal);
   // progressVal = progressVal - 5;
   const [showInviteForm, setShowInviteForm] = useState(false);
   const windowWidth = Dimensions.get('window').width;
@@ -97,13 +97,11 @@ const Calendar = ({
 
   const element = (data, index, j) => {
     const { picture, first_name, last_name, startTime, endTime } = data;
-    console.log('Start Time ENd tme', startTime, endTime);
     let timePairs = [];
 
     for (let i = 0; i < startTime.length; i++) {
       timePairs.push([startTime[i], endTime[i]]);
     }
-    console.log('🚀 ~ element ~ timePairs:', timePairs);
 
     const resultArray = timePairs.map((pair) => {
       const startHour = new Date(pair[0] * 1000).getHours();
@@ -113,7 +111,6 @@ const Calendar = ({
       const endMinutes = new Date(pair[1] * 1000).getMinutes();
       return [startHour, startMinutes, endHour, endMinutes];
     });
-    console.log('🚀 ~ resultArray ~ resultArray:', resultArray);
 
     const displayName = (picture, resultArray) => {
       const condition = [];
@@ -126,22 +123,39 @@ const Calendar = ({
         }
       }
       condition.sort();
-      const getHeight = (i) => {
+      const getHeight = (i, img) => {
+        console.log('resultArr', resultArray, i);
         let h =
           (resultArray[i][2] || 1) * 60 +
           resultArray[i][3] -
           (resultArray[i][0] * 60 + resultArray[i][1]);
+
+        if (img) {
+          return h;
+        }
         if (condition.length === 0 && j === resultArray[i][2]) {
           h =
             h -
             (resultArray[i][2] * 60 -
               (resultArray[i][0] * 60 + resultArray[i][1]));
         }
-
-        return (h * (12 * progressVal)) / 60;
+        if (condition.length === 0 && j === resultArray[i][0]) {
+          h =
+            resultArray[i][2] * 60 -
+            (resultArray[i][0] * 60 + resultArray[i][1]);
+        }
+        //[240,120],[240,0]
+        console.log('height of the eventssss', (h * (12 * progressVal)) / 60);
+        return (h * ((120 / 50) * progressVal)) / 60;
       };
 
       const getTopWidth = (i) => {
+        console.log(
+          'sadaaaaaaaaaaaaa',
+          condition.length,
+          condition.length === 0,
+          resultArray[i][0] !== resultArray[i][2] && resultArray[i][2] === j,
+        );
         return condition.length === 0 &&
           resultArray[i][0] !== resultArray[i][2] &&
           resultArray[i][2] === j
@@ -156,7 +170,6 @@ const Calendar = ({
             return (
               <TouchableOpacity
                 onPress={() => {
-                  console.log('FOCUS>>>>', item, i, j);
                   Alert.alert(
                     resultArray[i][0] +
                       ':' +
@@ -176,12 +189,12 @@ const Calendar = ({
                     top:
                       j !== resultArray[i][0]
                         ? 0
-                        : resultArray[i][1] * 0.2 * progressVal,
+                        : resultArray[i][1] * (120 / (50 * 60)) * progressVal,
                     borderWidth: 1,
                     borderTopWidth: getTopWidth(i),
-                    opacity: 0.5,
+                    // opacity: 0.5,
                     borderColor: randomCol,
-                    // backgroundColor: 'yellow',
+                    backgroundColor: 'transparent',
                     borderStyle:
                       condition.length > 0 &&
                       resultArray[i][2] === condition[0][2] &&
@@ -198,15 +211,18 @@ const Calendar = ({
                   },
                 ]}
               >
-                {j === resultArray[i][2] && (
+                {j === resultArray[i][0] && (
                   <Profile
                     selectedUser={{
                       picture: item,
                       first_name: first_name[i],
                       last_name: last_name[i],
                     }}
-                    profileHeight={30}
-                    profileWidth={30}
+                    // marginTop={2}
+                    // profileHeight={getHeight(i)}
+                    // mHeight={getHeight(i, true)}
+                    mHeight={getHeight(i, true)}
+                    // mWidth={30}
                   />
                 )}
               </TouchableOpacity>
@@ -331,7 +347,6 @@ const Calendar = ({
           // }}
           >
             {generateTableData().map((rowData, index) => {
-              console.log('logic:>>>', progressVal, (120 * progressVal) / 10);
               return (
                 <TableWrapper
                   key={index}
@@ -339,7 +354,7 @@ const Calendar = ({
                   style={[
                     styles.row,
                     {
-                      height: (120 * progressVal) / 10,
+                      height: (120 * progressVal) / 50,
                     },
                   ]}
                 >
@@ -377,6 +392,17 @@ const Calendar = ({
               );
             })}
           </Table>
+          {selectedDate === formatDate(new Date()) && (
+            <View
+              style={{
+                position: 'absolute',
+                top: calculateCurrentTimePosition(progressVal),
+                width: '100%',
+                height: 1,
+                backgroundColor: 'red',
+              }}
+            />
+          )}
         </ScrollView>
       </View>
       {showSelectedUsersDetails && (

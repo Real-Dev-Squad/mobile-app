@@ -14,6 +14,7 @@ import { durations, postEvent } from './dummy';
 import { AuthContext } from '../../context/AuthContext';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
+import { ScrollView } from 'react-native-gesture-handler';
 
 // assigned To : automatically will come selectedUsers on submit it should send userids of these peoiple
 
@@ -30,6 +31,16 @@ function changeDateFormat(dateStr) {
     dateComponents[1] + '/' + dateComponents[0] + '/' + dateComponents[2];
 
   return newDateStr;
+}
+
+function getDateObject(dateStr, time) {
+  var newDateStr = changeDateFormat(dateStr);
+  var newDate = new Date(newDateStr);
+  var [hours, minutes] = time.split(':');
+
+  newDate.setHours(Number(hours), Number(minutes));
+  console.log('newDate', newDate);
+  return newDate;
 }
 const InviteForm = ({
   userData,
@@ -120,59 +131,81 @@ const InviteForm = ({
         borderTopRightRadius: 20,
       }}
     >
-      <InputBox
-        title={eventTitle}
-        label={'Event Name'}
-        onChangeHandler={handleTitleChange}
-        error={''}
-        disabled={true}
-      />
-      {/** TODO: event description */}
-      <View style={styles.flexView}>
+      <Text
+        style={{
+          padding: 4,
+          color: 'black',
+          fontSize: 20,
+          fontWeight: 'bold',
+        }}
+      >
+        {`Selected Date: ${selectedDate}`}
+      </Text>
+      <ScrollView>
         <InputBox
-          title={selectedDate}
-          label={'Date'}
-          disabled={true}
-          onChangeHandler={() => {}}
+          title={eventTitle}
+          label={'Event Name'}
+          onChangeHandler={handleTitleChange}
           error={''}
+          disabled={true}
         />
-
-        <TouchableOpacity onPress={() => setShowClock((prev) => !prev)}>
-          <InputBox
-            title={selectedTime}
-            label={'Time'}
-            disabled={false}
+        {/** TODO: event description */}
+        <View style={styles.flexView}>
+          {/* <InputBox
+            title={selectedDate}
+            label={'Date'}
+            disabled={true}
             onChangeHandler={() => {}}
             error={''}
-          />
-        </TouchableOpacity>
+          /> */}
 
-        {showClock && (
-          <DatePicker
-            modal
-            mode="time"
-            open={showClock}
-            date={new Date(changeDateFormat(selectedDate))}
-            onConfirm={(time: any) => {
-              setShowClock(false);
-              // setDate(date);
-              // setSelectedDate(formatDate(date));
-              setSelectedTime(getColonTime(time));
-              handleEventSubmit(time);
-            }}
-            onCancel={() => {
-              setShowClock(false);
-            }}
-          />
-        )}
+          <TouchableOpacity onPress={() => setShowClock((prev) => !prev)}>
+            <InputBox
+              title={selectedTime}
+              label={'Time'}
+              disabled={false}
+              onChangeHandler={() => {}}
+              error={''}
+            />
+          </TouchableOpacity>
 
-        <Duration duration={duration} setDuration={setDuration} />
-      </View>
-      <Button_
-        title={'Submit'}
-        submitHandler={handleButtonHandler}
-        disabled={false}
-      />
+          {showClock && (
+            <DatePicker
+              modal
+              mode="time"
+              // is24Hour={true}
+              open={showClock}
+              date={getDateObject(selectedDate, selectedTime)}
+              onConfirm={(time: any) => {
+                // 01/03/24 02:00 2024-03-01T06:00:00.000Z 2024-03-01T05:00:00.000Z
+                console.log(
+                  '🚀 ~ time:',
+                  getDateObject(selectedDate, selectedTime),
+                  selectedDate,
+                  selectedTime,
+                  time,
+                  new Date(changeDateFormat(selectedDate)),
+                );
+                setShowClock(false);
+                // setDate(date);
+                // setSelectedDate(formatDate(date));
+                setSelectedTime(getColonTime(time));
+                handleEventSubmit(time);
+              }}
+              onCancel={() => {
+                setShowClock(false);
+              }}
+            />
+          )}
+
+          <Duration duration={duration} setDuration={setDuration} />
+        </View>
+        <Button_
+          title={'Submit'}
+          submitHandler={handleButtonHandler}
+          disabled={false}
+        />
+      </ScrollView>
     </View>
   );
 };

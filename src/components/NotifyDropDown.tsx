@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { SetStateAction, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import StyleConfig from '../utils/StyleConfig';
 import { scale } from '../utils/utils';
@@ -41,6 +41,7 @@ const NotifyDropDown = ({
     setSelectedUser(item);
     handleUserId(item);
     setIsDropDownSelected(false);
+    setSelectedUser('');
   };
   useEffect(() => {
     fetchData();
@@ -54,7 +55,12 @@ const NotifyDropDown = ({
   // TODO: refactor dropdown
   // TODO: show discord groups as well for group notification
   return (
-    <View style={{ marginHorizontal: 10, position: 'relative' }}>
+    <View
+      style={{
+        marginHorizontal: 10,
+        position: 'relative',
+      }}
+    >
       {error ? (
         <Text style={[styles.titles, { color: 'red' }]}>{error}</Text>
       ) : (

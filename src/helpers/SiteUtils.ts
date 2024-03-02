@@ -141,3 +141,12 @@ export const randomColor = () => {
   let newColor = Math.floor(Math.random() * 16777215).toString(16);
   return `#${newColor}`;
 };
+export const calculateCurrentTimePosition = (progressVal) => {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinutes = now.getMinutes();
+  const position = currentHour * 60 + currentMinutes; // Position in minutes
+
+  // Calculate the position based on your progressVal and other factors
+  return (position * (120 / 50) * progressVal) / 60;
+};

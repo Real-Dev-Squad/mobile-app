@@ -43,7 +43,6 @@ export const fetchEvents = async () => {
       // endTime: Number(event.data().endTime),
     });
   });
-  console.log('EVENT in dummy td', events);
   return events;
 };
 
@@ -59,9 +58,11 @@ export const postEvent = async (eventData) => {
       return Promise.reject();
     });
 };
+
+// 
 export const event = [
   {
-    userId: ['kpBV5NrcHYb88xzgiC0u'],
+    userId: ['kpBV5NrcHYb88xzgiC0u'], // participant
     eventType: 'public',
     eventName: 'test1 event',
     eventScheduledBy: 'shreya',

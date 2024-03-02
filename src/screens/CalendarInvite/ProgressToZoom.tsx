@@ -9,6 +9,8 @@ import React, { useEffect, useRef } from 'react';
 import Animated from 'react-native-reanimated';
 import { Circle, Svg } from 'react-native-svg';
 import Slider from '@react-native-community/slider';
+import { screenWidth } from '../../helpers/SiteUtils';
+import Images from '../../constants/images/Image';
 
 const ProgressToZoom = ({
   progressVal,
@@ -50,26 +52,7 @@ const ProgressToZoom = ({
     setProgressVal(newVal);
     console.log('successfully progress value increased ');
   };
-  const handleIncrement = () => {
-    const newValue = Math.min(progressVal + 10, 100);
-    setProgressVal(newValue);
-    updateProgressValue(newValue);
-  };
 
-  const handleDecrement = () => {
-    const newValue = Math.max(progressVal - 10, 0);
-    setProgressVal(newValue);
-    updateProgressValue(newValue);
-  };
-  const handleIconMove = (event, panResponderMove) => {
-    const gestureState = event.gestureState;
-
-    const newValue = Math.max(20, Math.min(progressVal + gestureState.dx, 100));
-    const roundedValue = Math.round(newValue / 10) * 10;
-    setProgressVal(roundedValue);
-    updateProgressValue(roundedValue);
-    progress.setValue(roundedValue);
-  };
   const handleValueChange = (value: number) => {
     const newVal = value + 10;
     setProgressVal((prev) => prev + 10);
@@ -78,51 +61,20 @@ const ProgressToZoom = ({
 
   return (
     <View style={styles.container}>
-      {/* <Animated.View
-        style={[
-          styles.bar,
-          {
-            width: progressVal ? progressVal + '%' : 20 + '%',
-            backgroundColor: 'blue',
-          },
-        ]}
-        {...panResponder.panHandlers}
-      >
-        <Svg
-          height="40"
-          width="40"
-          style={{ position: 'absolute', left: `${progressVal}%` }}
-          onTouchMove={(event) =>
-            handleIconMove(
-              event.nativeEvent,
-              panResponder.panHandlers.onPanResponderMove,
-            )
-          }
-        >
-          <Circle cx="20" cy="20" r="18" fill="green" />
-        </Svg>
-      </Animated.View> */}
       <Slider
         value={progressVal}
         onValueChange={handleValueChange}
         minimumValue={10}
         maximumValue={90}
         step={10}
+        style={{ width: screenWidth - 60 }}
+        minimumTrackTintColor="black"
+        maximumTrackTintColor="#777777"
+        thumbImage={Images.circle}
       />
-      <View style={styles.progressContainer}>
-        <Text style={styles.progressText}>
-          {progressVal ? Math.round(progressVal) : 20}%
-        </Text>
-      </View>
-      {/* <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleDecrement}>
-          <Text style={styles.buttonText}>-</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={handleIncrement}>
-          <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity>
-      </View> */}
+      <Text style={styles.progressText}>
+        {progressVal ? Math.round(progressVal) : 20}%
+      </Text>
     </View>
   );
 };
@@ -132,8 +84,11 @@ export default ProgressToZoom;
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    height: 80,
-    backgroundColor: '#eee',
+    height: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
     borderRadius: 10,
     margin: 10,
     // padding: 10,
@@ -152,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
+    // backgroundColor: 'orange',
   },
   buttonsContainer: {
     flexDirection: 'row',

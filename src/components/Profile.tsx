@@ -6,10 +6,16 @@ const Profile = ({
   selectedUser,
   profileHeight,
   profileWidth,
+  marginTop = 0,
+  mHeight,
+  mWidth,
 }: {
   selectedUser: UserInfoType;
   profileHeight?: number;
   profileWidth?: number;
+  marginTop?: number;
+  mHeight?: number;
+  mWidth?: number;
 
   // item: { first_name: string; last_name: string };
 }) => {
@@ -17,19 +23,34 @@ const Profile = ({
   return (
     <View style={styles.container}>
       {picture?.url ? (
-        <Image
-          source={{ uri: picture.url }}
-          style={[
-            styles.profileImage,
-            { height: profileHeight || 50, width: profileWidth || 50 },
-          ]}
-          accessibilityLabel="User Profile Image"
-        />
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: picture.url }}
+            style={[
+              styles.profileImage,
+              {
+                height: profileHeight || 50,
+                width: profileWidth || 50,
+                marginTop: marginTop,
+                maxHeight: mHeight,
+                maxWidth: mWidth,
+                position: 'absolute',
+                zIndex: 999,
+                // minHeight: 200,
+              },
+            ]}
+            accessibilityLabel="User Profile Image"
+          />
+        </View>
       ) : (
         <View
           style={[
             styles.defaultImageContainer,
-            { height: profileHeight || 50, width: profileWidth || 50 },
+            {
+              height: profileHeight || 50,
+              width: profileWidth || 50,
+              marginTop: marginTop,
+            },
           ]}
         >
           <Text style={styles.defaultImageText}>
@@ -45,11 +66,17 @@ const Profile = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    // marginLeft: -10,
-    // marginRight: 2,
+    // backgroundColor: 'red',
   },
   profileImage: {
     borderRadius: 25, // Use half of width/height for a circular shape
+  },
+  imageContainer: {
+    // backgroundColor: 'yellow',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
   },
   defaultImageContainer: {
     width: 50,

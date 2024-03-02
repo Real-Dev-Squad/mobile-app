@@ -31,5 +31,3 @@ const TimeZone = () => {
 };
 
 export default TimeZone;
-
-const styles = StyleSheet.create({});

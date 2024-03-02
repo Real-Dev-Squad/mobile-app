@@ -14,7 +14,6 @@ import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
 import { scale } from '../../utils/utils';
 import NotifyScreen from '../../screens/Notify/NotifyScreen';
 import CalendarInviteScreen from '../../screens/CalendarInvite/CalendarInviteScreen';
-import CalendarIcon from '../../../assets/svgs/calendar';
 
 const tab = createBottomTabNavigator();
 
@@ -24,7 +23,7 @@ const TabNavigation = () => {
   return (
     <NavigationContainer independent>
       <tab.Navigator
-        initialRouteName={Strings.Tab_Home}
+        initialRouteName={Strings.Tab_Calendar}
         screenOptions={() => ({
           headerShown: false,
           // tabBarStyle: TabViewStyle.tab_bar,
@@ -57,7 +56,8 @@ const TabNavigation = () => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
-                  source={focused ? Images.homeIcon : Images.homeIconUnF}
+                  source={Images.homeIcon}
+                  // source={focused ? Images.homeIcon : Images.homeIconUnF}
                 />
               );
             },
@@ -149,15 +149,12 @@ const TabNavigation = () => {
             },
             tabBarIcon: ({ focused }) => {
               return (
-                // <Image
-                //   style={TabViewStyle.tab_icon}
-                //   source={focused ? Images.profileIcon : Images.profileIconUnF}
-                // />
-                focused ? (
-                  <CalendarIcon width={30} height={30} />
-                ) : (
-                  <CalendarIcon width={30} height={30} focused />
-                )
+                <Image style={TabViewStyle.tab_icon} source={Images.calendar} />
+                // focused ? (
+                //   <CalendarIcon width={60} height={60} />
+                // ) : (
+                //   <CalendarIcon width={30} height={30} focused />
+                // )
               );
             },
           }}
@@ -185,7 +182,7 @@ const TabNavigation = () => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
-                  source={focused ? Images.profileIcon : Images.profileIconUnF}
+                  source={Images.profileIcon}
                 />
               );
             },
