@@ -1,20 +1,49 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
-import { screenHeight, screenWidth } from '../../helpers/SiteUtils';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import {
+  formatDate,
+  getSortedEvents,
+  screenHeight,
+  screenWidth,
+} from '../../helpers/SiteUtils';
 import LayoutHeader from '../../components/Calendar/LayoutHeader';
 import TimeSlotView from '../../components/Calendar/TimeSlotView';
 import { ScrollView } from 'react-native-gesture-handler';
-import ParticipantColView from '../../components/Calendar/ParticipantColView';
 
-const CalendarLayout = () => {
+const CalendarLayout = ({
+  progressVal,
+  usersWithTimeSlots,
+  selectedDate,
+  setSelectedDate,
+  getMatchingTimeSlots,
+  userData,
+}: // selectedUsers,
+{
+  progressVal: number;
+  usersWithTimeSlots: any;
+  selectedDate: String;
+  setSelectedDate: Dispatch<SetStateAction<string>>;
+  getMatchingTimeSlots: () => void;
+  userData: any;
+  // selectedUsers: [];
+}) => {
+  console.log('USERWITH TIME SLOTs', usersWithTimeSlots);
+  const MULTIPLIER = (120 * progressVal) / 50;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <LayoutHeader />
+      <LayoutHeader
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
       <View style={styles.timeSlotColView}>
-        <TimeSlotView />
-      </View>
-      <View style={styles.eventColView}>
-        <ParticipantColView />
+        <TimeSlotView
+          multiplier={MULTIPLIER}
+          data={usersWithTimeSlots}
+          selectedDate={selectedDate}
+          getMatchingTimeSlots={getMatchingTimeSlots}
+          userData={userData}
+        />
       </View>
     </ScrollView>
   );
@@ -35,6 +64,8 @@ const styles = StyleSheet.create({
     minHeight: screenHeight,
     flex: 1,
     backgroundColor: 'yellow',
+    display: 'flex',
+    flexDirection: 'column',
   },
   eventColView: {
     borderWidth: 2,

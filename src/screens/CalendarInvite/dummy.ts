@@ -13,7 +13,7 @@
 import firestore, { Filter } from '@react-native-firebase/firestore';
 import moment from 'moment';
 
-const usersCollection = firestore().collection('events');
+const eventsCollection = firestore().collection('events');
 
 export const durations = [15, 30, 45, 60];
 
@@ -30,7 +30,7 @@ const getUserTimezone = (utcTimestamp) => {
 };
 
 export const fetchEvents = async () => {
-  let eventSnapshot = await usersCollection.get();
+  let eventSnapshot = await eventsCollection.get();
 
   const events: any = [];
   eventSnapshot.forEach((event: any) => {
@@ -43,11 +43,12 @@ export const fetchEvents = async () => {
       // endTime: Number(event.data().endTime),
     });
   });
+  console.log('events', events);
   return events;
 };
 
 export const postEvent = async (eventData) => {
-  return usersCollection
+  return eventsCollection
     .add(eventData)
     .then((docRef) => {
       console.log('Data posted successfully with ID:', docRef.id);
@@ -79,9 +80,6 @@ export const event = [
     endTime: 1708389172, //with timezone
   },
 ];
-     
-
-
 
 /*
 1. Sort events based on startTime

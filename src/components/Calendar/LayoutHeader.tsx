@@ -1,13 +1,36 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { formatDate, formatTimeSlotDate } from '../../helpers/SiteUtils';
+import DatePicker from 'react-native-date-picker';
 
-const LayoutHeader = () => {
+const LayoutHeader = ({ selectedDate, setSelectedDate }) => {
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  const handleDatePicker = () => {
+    setIsDatePickerVisible((prev) => !prev);
+  };
+
   return (
-    <View style={styles.header}>
-      <TouchableOpacity onPress={() => {}}>
-        <Text>Date: {Date.now()}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={handleDatePicker} style={styles.header}>
+      <Text>Date: {formatDate(selectedDate)}</Text>
+      {isDatePickerVisible ? (
+        <DatePicker
+          modal
+          mode="date"
+          open={isDatePickerVisible}
+          date={currentDate}
+          onConfirm={(date_: Date) => {
+            setIsDatePickerVisible(false);
+            setCurrentDate(date_);
+            setSelectedDate(date_);
+          }}
+          onCancel={() => {
+            setIsDatePickerVisible(false);
+          }}
+        />
+      ) : null}
+    </TouchableOpacity>
   );
 };
 

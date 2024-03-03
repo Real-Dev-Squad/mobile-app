@@ -8,7 +8,6 @@ const Profile = ({
   profileWidth,
   marginTop = 0,
   mHeight,
-  mWidth,
 }: {
   selectedUser: UserInfoType;
   profileHeight?: number;
@@ -33,10 +32,6 @@ const Profile = ({
                 width: profileWidth || 50,
                 marginTop: marginTop,
                 maxHeight: mHeight,
-                maxWidth: mWidth,
-                position: 'absolute',
-                zIndex: 999,
-                // minHeight: 200,
               },
             ]}
             accessibilityLabel="User Profile Image"
@@ -50,6 +45,7 @@ const Profile = ({
               height: profileHeight || 50,
               width: profileWidth || 50,
               marginTop: marginTop,
+              maxHeight: mHeight,
             },
           ]}
         >

@@ -45,7 +45,7 @@ const NotifyDropDown = ({
   };
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   const fetchData = async () => {
     const allUser = await getAllUsers(loggedInUserData?.token);

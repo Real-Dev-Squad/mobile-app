@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-paper';
 import InputBox from '../../components/InputBox';
 import Button_ from '../../components/Button_';
 import {
+  formatDate,
   formatTimeSlotTime,
   getColonTime,
   screenHeight,
@@ -47,11 +48,9 @@ const InviteForm = ({
   selectedTime,
   selectedDate,
   handleEventSubmit,
-  users,
-  setIsDatePickerVisible,
   setSelectedTime,
   toggleForm,
-}) => {
+}: any) => {
   const [eventTitle, setEventTitle] = useState('');
 
   const [duration, setDuration] = useState(durations[0]);
@@ -72,7 +71,10 @@ const InviteForm = ({
     // dd/mm/yy
     // convert from dd/mm/yy to yy/mm/dd
     console.log('selectedDate', selectedDate); // 29/02/24
-    let convertFromDDMMYYTOYYMMDD = selectedDate.split('/').reverse().join('-');
+    let convertFromDDMMYYTOYYMMDD = formatDate(selectedDate)
+      .split('/')
+      .reverse()
+      .join('-');
 
     const formatDD = `20${convertFromDDMMYYTOYYMMDD}T${selectedTime}`; // 2024-02-29T10:00
 

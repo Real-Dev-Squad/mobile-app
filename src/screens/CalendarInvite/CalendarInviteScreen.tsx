@@ -6,7 +6,7 @@ import DisplayProfile from '../../components/DisplayProfile';
 import Calendar from './Calendar';
 import { event, fetchEvents } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
-import { formatDate } from '../../helpers/SiteUtils';
+import { formatDate, getSortedEvents } from '../../helpers/SiteUtils';
 import { unixToTimeStampYYMMDD } from '../AuthScreen/Util';
 import TimeZone from './TimeZone';
 import ProgressToZoom from './ProgressToZoom';
@@ -35,59 +35,50 @@ const CalendarInviteScreen = () => {
   const [progressVal, setProgressVal] = useState(20);
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
-  const [selectedDate, setSelectedDate] = useState(formatDate(new Date())); // dd/mm/yy
+  const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
 
   useEffect(() => {
-    getMatchingTimeSlots();
+    getData();
+    // fetchEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users, selectedDate]);
+  const getData = async () => {
+    console.log('111111111');
+    const data = await getMatchingTimeSlots();
+    console.log('🚀 ~ getData ~ data:', data);
+    const sortedEvents = getSortedEvents(data);
+    console.log('🚀 ~ getData ~ sortedEvents:', sortedEvents);
+    // filter by date
+    let today = new Date(selectedDate);
+    let tomorrow = new Date(selectedDate);
+    tomorrow.setDate(today.getDate() + 1);
+    let tomorrow_ = tomorrow.setUTCHours(0, 0, 0, 0);
+    let today_ = today.setUTCHours(0, 0, 0, 0);
 
+    // Get today's and tomorrow's timestamps in seconds
+    const todayTimestamp = Math.floor(today_ / 1000);
+    const tomorrowTimestamp = Math.floor(tomorrow_ / 1000);
+
+    console.log({ todayTimestamp, tomorrowTimestamp });
+
+    // Filter the sortedData based on today's timestamp and startTime
+    const filteredData = sortedEvents[0].filter(
+      (event) =>
+        event.startTime >= todayTimestamp &&
+        event.startTime < tomorrowTimestamp,
+    );
+    console.log('🚀 ~ filteredData ~ filteredData:', filteredData);
+    setUsersWithTimeSlots(filteredData);
+  };
   const getMatchingTimeSlots = async () => {
     const event_ = await fetchEvents();
+    console.log('🚀 ~ getMatchingTimeSlots ~ event_:', event_);
     const matchingTimeSlots = users.map((selectedItem) => {
-      const matchingCalendarItem = event_.filter((item) => {
-        // console.log(
-        //   'idhrrrrrr',
-        //   unixToTimeStampYYMMDD(item.startTime),
-        //   selectedDate,
-        //   item?.userId,
-        //   selectedItem.id,
-        // );
-        // console.log(
-        //   'selectedDateNE',
-        //   item,
-        //   selectedItem.id,
-        //   unixToTimeStampYYMMDD(item.startTime),
-        //   selectedDate,
-        // );
-        return (
-          (item?.userId).includes(selectedItem.id) &&
-          unixToTimeStampYYMMDD(item.startTime) === selectedDate
-        );
+      return event_.filter((item) => {
+        return (item?.userId).includes(selectedItem.id);
       });
-
-      // convert here without timezone
-      if (matchingCalendarItem) {
-        return {
-          matchingCalendarItem: matchingCalendarItem.map((ev) => ({
-            ...ev,
-            id: selectedItem.id,
-            first_name: selectedItem.first_name,
-            last_name: selectedItem.last_name,
-            picture: { url: selectedItem?.picture?.url },
-          })),
-        };
-      } else {
-        return null;
-      }
     });
-    let eventt: any[] = [];
-    matchingTimeSlots.forEach((item) => {
-      if (item?.matchingCalendarItem?.length > 0) {
-        eventt = [...eventt, ...item?.matchingCalendarItem];
-      }
-    });
-    setUsersWithTimeSlots(eventt);
+    return [...matchingTimeSlots];
   };
 
   const handleUserIdChange = (info: UserInfoType) => {
@@ -125,7 +116,16 @@ const CalendarInviteScreen = () => {
         getMatchingTimeSlots={getMatchingTimeSlots}
         progressVal={progressVal}
       /> */}
-      <CalendarLayout />
+      <CalendarLayout
+        // selectedUsers={users}
+
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        progressVal={progressVal}
+        usersWithTimeSlots={usersWithTimeSlots}
+        getMatchingTimeSlots={getMatchingTimeSlots}
+        userData={users}
+      />
     </ScrollView>
   );
 };
