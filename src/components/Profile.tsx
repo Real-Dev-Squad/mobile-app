@@ -29,14 +29,13 @@ const Profile = ({
             style={[
               styles.profileImage,
               {
-                height: profileHeight || 50,
-                width: profileWidth || 50,
+                height: profileHeight || 30,
+                width: profileWidth || 30,
                 marginTop: marginTop,
-                maxHeight: mHeight,
-                maxWidth: mWidth,
+                // maxHeight: Math.min(profileHeight, 30),
+                // maxWidth: mWidth,
                 position: 'absolute',
                 zIndex: 999,
-                // minHeight: 200,
               },
             ]}
             accessibilityLabel="User Profile Image"

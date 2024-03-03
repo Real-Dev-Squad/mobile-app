@@ -124,7 +124,6 @@ const Calendar = ({
       }
       condition.sort();
       const getHeight = (i, img) => {
-        console.log('resultArr', resultArray, i);
         let h =
           (resultArray[i][2] || 1) * 60 +
           resultArray[i][3] -
@@ -139,11 +138,11 @@ const Calendar = ({
             (resultArray[i][2] * 60 -
               (resultArray[i][0] * 60 + resultArray[i][1]));
         }
-        if (condition.length === 0 && j === resultArray[i][0]) {
-          h =
-            resultArray[i][2] * 60 -
-            (resultArray[i][0] * 60 + resultArray[i][1]);
-        }
+        // if (condition.length === 0 && j === resultArray[i][0]) {
+        //   h =
+        //     resultArray[i][2] * 60 -
+        //     (resultArray[i][0] * 60 + resultArray[i][1]);
+        // }
         //[240,120],[240,0]
         console.log('height of the eventssss', (h * (12 * progressVal)) / 60);
         return (h * ((120 / 50) * progressVal)) / 60;
@@ -166,7 +165,6 @@ const Calendar = ({
         <View>
           {picture.map((item, i) => {
             const randomCol = 'black';
-
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -218,11 +216,8 @@ const Calendar = ({
                       first_name: first_name[i],
                       last_name: last_name[i],
                     }}
-                    // marginTop={2}
-                    // profileHeight={getHeight(i)}
-                    // mHeight={getHeight(i, true)}
-                    mHeight={getHeight(i, true)}
-                    // mWidth={30}
+                    profileHeight={(getHeight(i, true) * 60) / 100}
+                    profileWidth={(getHeight(i, true) * 60) / 100}
                   />
                 )}
               </TouchableOpacity>
