@@ -81,7 +81,6 @@ const TodoComponent = () => {
             tasks
               ?.map((task) => {
                 const { title, assigned_by } = task?.attributes;
-                console.log(assigned_by);
                 return (
                   <Card
                     posStyle={

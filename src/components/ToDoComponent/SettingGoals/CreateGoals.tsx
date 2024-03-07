@@ -19,6 +19,7 @@ import dropUpImage from './../../../../assets/dropup.png';
 import dropDownImage from './../../../../assets/dropdown.png';
 import StyleConfig from '../../../utils/StyleConfig';
 import { scale } from '../../../utils/utils';
+import { useIsFocused } from '@react-navigation/native';
 
 const MainScreen = ({ navigation }) => {
   const [titleText, setTitleText] = useState('');
@@ -32,6 +33,7 @@ const MainScreen = ({ navigation }) => {
   const [titleError, setTitleError] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [date, setDate] = useState(new Date());
+  const isFocused = useIsFocused();
 
   const selectDropDown = () => {
     Keyboard.dismiss();
@@ -46,10 +48,13 @@ const MainScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fetchData();
-  });
-
+    if(isFocused){
+      fetchData()
+    }
+  },[isFocused]);
+  
   const fetchData = async () => {
+    console.log("calling api")
     const allUser = await getAllUsers(loggedInUserData?.token);
     setAllUsers(allUser);
     setIsLoading(false);
