@@ -52,6 +52,11 @@ const InviteForm = ({
   toggleForm,
 }: any) => {
   console.log('selectedDae', selectedDate);
+  const [isStartDatePickerVisible, setIsStartDatePickerVisible] =
+    useState(false);
+  const [startDate, setStartDate] = useState(selectedDate);
+  const [isEndDatePickerVisible, setIsEndDatePickerVisible] = useState(false);
+  const [endDate, setEndDate] = useState(selectedDate);
   const [eventTitle, setEventTitle] = useState('');
   const [showEndClock, setShowEndClock] = useState(false);
   const [endTime, setEndTime] = useState(
@@ -65,7 +70,6 @@ const InviteForm = ({
     `${new Date().getHours()}:${new Date().getMinutes() + 15}`,
   );
   const [startTime, setStartTime] = useState(getColonTime(selectedDate));
-  const [duration, setDuration] = useState(durations[0]);
   const { loggedInUserData } = useContext(AuthContext);
   const [showClock, setShowClock] = useState(false);
   const [error, setError] = useState('');
@@ -81,35 +85,36 @@ const InviteForm = ({
     const unixTimestamp = moment(dateTimeString).unix();
     return unixTimestamp;
   };
-
+  const formatToSend = (d, t) => {
+    let date_ = new Date(d).toLocaleDateString().split('/');
+    const formatDD = `20${date_[2]}-${date_[0]}-${date_[1]}T${t}`;
+    return formatDD;
+  };
   const handleSubmitTime = () => {
-    // dd/mm/yy
-    // convert from dd/mm/yy to yy/mm/dd
-    console.log('selectedDate>>>>>>', selectedDate, startTime, endTime); // 2024-03-09T01:19:00.000Z 20:07 23:45
-    // selectedDate = selectedDate.split('T')[0];
-    const date = new Date(selectedDate);
-    const formattedDate = date.toLocaleDateString().split('/');
-    // const formatD = formattedDate[1]
+    console.log('DATAAAA', eventTitle, startDate, endDate, startTime, endTime);
 
-    console.log('🚀 ~ handleSubmitTime ~ formattedDate:', formattedDate);
-    const formatDD = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${startTime}`; // 2024-02-29T10:00
-    let formattedEDate;
-    console.log('🚀 ~ handleSubmitTime ~ formatDD:', formatDD); //2024-03-09T20:07
-    // if (endTime < selectedTime) {
-    //   console.log('here inside if');
-    //   const formattedDate_ = new Date(eTime).toISOString().split('T')[0];
-    //   formattedEDate = `${formattedDate_}T${endTime}`;
-    // } else {
-    formattedEDate = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${endTime}`;
-    // }
-    console.log('🚀 ~ handleSubmitTime ~ formattedEDate:', formattedEDate); //2024-03-09T23:45
-    const formatStartDD = toUnix(formatDD);
-    console.log('🚀 ~ handleSubmitTime ~ formatStartDD:', formatStartDD); //1710032820
-
-    const formatEndDD = toUnix(formattedEDate); //1710045900
-    console.log('🚀 ~ handleSubmitTime ~ formatEndDD:', formatEndDD);
-
+    const formatStartDate = formatToSend(startDate, startTime);
+    const formatEndDate = formatToSend(endDate, endTime);
+    const formatStartDD = toUnix(formatStartDate);
+    const formatEndDD = toUnix(formatEndDate);
     return { formatStartDD, formatEndDD };
+
+    // const date = new Date(selectedDate);
+    // const formattedDate = date.toLocaleDateString().split('/');
+    // // const formatD = formattedDate[1]
+
+    // console.log('🚀 ~ handleSubmitTime ~ formattedDate:', formattedDate);
+    // const formatDD = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${startTime}`; // 2024-02-29T10:00
+    // let formattedEDate;
+    // console.log('🚀 ~ handleSubmitTime ~ formatDD:', formatDD); //2024-03-09T20:07
+    // // if (endTime < selectedTime) {
+    // //   console.log('here inside if');
+    // //   const formattedDate_ = new Date(eTime).toISOString().split('T')[0];
+    // //   formattedEDate = `${formattedDate_}T${endTime}`;
+    // // } else {
+    // formattedEDate = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${endTime}`;
+    // // }
+    // console.log('🚀 ~ handleSubmitTime ~ formattedEDate:', formattedEDate); //2024-03-09T23:45
   };
 
   const handleButtonHandler = () => {
@@ -208,8 +213,45 @@ const InviteForm = ({
         {error.length > 0 && (
           <Text style={{ color: 'red', paddingTop: 2 }}>{error}</Text>
         )}
-        <View style={styles.flexView}>
-          <TouchableOpacity onPress={() => setShowClock((prev) => !prev)}>
+        <View
+          style={[
+            styles.flexView,
+            { flexDirection: 'row', justifyContent: 'space-between' },
+          ]}
+        >
+          <TouchableOpacity
+            onPress={() => setIsStartDatePickerVisible((prev) => !prev)}
+            style={{ width: '40%' }}
+          >
+            <InputBox
+              title={formatDate(startDate)}
+              label={'Start Date'}
+              disabled={false}
+              onChangeHandler={() => {}}
+              error={''}
+            />
+          </TouchableOpacity>
+          {isStartDatePickerVisible ? (
+            <DatePicker
+              modal
+              mode="date"
+              open={isStartDatePickerVisible}
+              date={startDate}
+              onConfirm={(date_: Date) => {
+                console.log('🚀 ~ Start DAte date_:', date_);
+                setStartDate(date_);
+                // setCurrentEndDate(date_);
+                setIsStartDatePickerVisible(false);
+              }}
+              onCancel={() => {
+                setIsStartDatePickerVisible(false);
+              }}
+            />
+          ) : null}
+          <TouchableOpacity
+            style={{ width: '40%' }}
+            onPress={() => setShowClock((prev) => !prev)}
+          >
             <InputBox
               title={startTime}
               label={'Start Time'}
@@ -218,7 +260,9 @@ const InviteForm = ({
               error={''}
             />
           </TouchableOpacity>
+        </View>
 
+        <View style={styles.flexView}>
           {showClock && (
             <DatePicker
               modal
@@ -239,7 +283,29 @@ const InviteForm = ({
               maximumDate={setMaxTime()}
             />
           )}
-          <TouchableOpacity onPress={() => setShowEndClock((prev) => !prev)}>
+        </View>
+        <View
+          style={[
+            styles.flexView,
+            { flexDirection: 'row', justifyContent: 'space-between' },
+          ]}
+        >
+          <TouchableOpacity
+            style={{ width: '40%' }}
+            onPress={() => setIsEndDatePickerVisible((prev) => !prev)}
+          >
+            <InputBox
+              title={formatDate(endDate)}
+              label={'End Date'}
+              disabled={false}
+              onChangeHandler={() => {}}
+              error={''}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ width: '40%' }}
+            onPress={() => setShowEndClock((prev) => !prev)}
+          >
             <InputBox
               title={endTime}
               label={'End Time'}
@@ -248,28 +314,45 @@ const InviteForm = ({
               error={''}
             />
           </TouchableOpacity>
-          {showEndClock && (
+          {isEndDatePickerVisible ? (
             <DatePicker
               modal
-              mode="time"
-              open={showEndClock}
-              date={getDateObject(selectedDate, endTime)}
-              onConfirm={(time: any) => {
-                console.log('🚀 ~ time:', time);
-                setShowEndClock(false);
-                // const adjustedEndTime = adjustEndTime(time);
-                setEndTime(getColonTime(time));
-                handleEventSubmit(getColonTime(time));
+              mode="date"
+              open={isEndDatePickerVisible}
+              date={endDate}
+              onConfirm={(date_: Date) => {
+                console.log('🚀 ~ End DAte date_:', date_);
+                setEndDate(date_);
+                // setCurrentEndDate(date_);
+                setIsEndDatePickerVisible(false);
               }}
               onCancel={() => {
-                setShowEndClock(false);
+                setIsEndDatePickerVisible(false);
               }}
-              // minimumDate={new Date()} // Set to current date
-              maximumDate={getMaximumEndTime()} // Set to 23:45 of current date
             />
-          )}
-          {/* <Duration duration={duration} setDuration={setDuration} /> */}
+          ) : null}
         </View>
+
+        {showEndClock && (
+          <DatePicker
+            modal
+            mode="time"
+            open={showEndClock}
+            date={getDateObject(selectedDate, endTime)}
+            onConfirm={(time: any) => {
+              console.log('🚀 ~ time:', time);
+              setShowEndClock(false);
+              // const adjustedEndTime = adjustEndTime(time);
+              setEndTime(getColonTime(time));
+              handleEventSubmit(getColonTime(time));
+            }}
+            onCancel={() => {
+              setShowEndClock(false);
+            }}
+            // minimumDate={new Date()} // Set to current date
+            maximumDate={getMaximumEndTime()} // Set to 23:45 of current date
+          />
+        )}
         <Button_
           title={'Submit'}
           submitHandler={handleButtonHandler}

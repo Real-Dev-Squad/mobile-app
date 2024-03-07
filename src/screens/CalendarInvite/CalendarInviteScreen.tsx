@@ -47,7 +47,12 @@ const CalendarInviteScreen = () => {
 
   const [progressVal, setProgressVal] = useState(20);
   const [users, setUsers] = useState<UserInfoType[]>([]);
+  console.log('🚀 ~ CalendarInviteScreen ~ users:', users);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
+  console.log(
+    '🚀 ~ CalendarInviteScreen ~ usersWithTimeSlots:',
+    usersWithTimeSlots,
+  );
   const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
 
   useEffect(() => {
@@ -67,13 +72,10 @@ const CalendarInviteScreen = () => {
     };
 
     fetchData();
-    // fetchEvents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users, selectedDate, progressVal]);
 
   const getVal = async () => {
     const progressVal_ = await getProgressVal();
-    console.log('🚀 ~ getVal ~ progressVal_:', progressVal_);
     setProgressVal(progressVal_ || 20);
     return progressVal_;
   };
@@ -97,9 +99,9 @@ const CalendarInviteScreen = () => {
     // Filter the sortedData based on today's timestamp and startTime
     const filteredData = sortedEvents.filter((event: any) => {
       return (
-        event.startTime >= todayTimestamp && event.startTime < tomorrowTimestamp
-        //   ||
-        // (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
+        (event.startTime >= todayTimestamp &&
+          event.startTime < tomorrowTimestamp) ||
+        (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
       );
     });
     // end time check
@@ -111,9 +113,8 @@ const CalendarInviteScreen = () => {
           users_.push(user);
         }
       }
-      if (users_.length === 0) {
-        fData.push({ users_ });
-      } else {
+
+      if (users_.length > 0) {
         fData.push({ ...event, users_ });
       }
     }

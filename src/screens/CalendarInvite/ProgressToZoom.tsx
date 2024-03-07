@@ -29,6 +29,7 @@ const ProgressToZoom = ({
   };
 
   const handleValueChange = (value: number) => {
+    console.log('is it called ?????');
     const newVal = value + 10;
     if (newVal > 100) {
       Alert.alert('you can only set to 100 %');
@@ -42,7 +43,7 @@ const ProgressToZoom = ({
     <View style={styles.container}>
       <Slider
         value={progressVal}
-        onValueChange={handleValueChange}
+        onValueChange={(value) => handleValueChange(value)}
         minimumValue={10}
         maximumValue={90}
         step={10}

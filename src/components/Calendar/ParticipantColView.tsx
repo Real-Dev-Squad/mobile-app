@@ -21,25 +21,38 @@ const ParticipantColView = ({
   const [showSelectedUsersDetails, setShowSelectedUsersDetails] =
     useState(false);
 
-  console.log('🚀 ~ borderTopWidth:', event);
-  const { startTime, endTime, eventName, users_ } = event;
-  // const { picture, first_name, last_name } = users_;
-  const startDate = new Date(startTime * 1000); // Convert seconds to milliseconds
+  let { startTime, endTime, eventName, users_ } = event;
+  console.log({ startTime, endTime, event });
+  const minHourSelectedDate =
+    new Date(selectedDate).setHours(0, 0, 0, 0) / 1000;
+  console.log('🚀 ~ minHourSelectedDate:', minHourSelectedDate);
+  const maxHourSelectedDate =
+    new Date(selectedDate).setHours(23, 59, 59, 59) / 1000;
+  console.log('🚀 ~ maxHourSelectedDate:', maxHourSelectedDate);
+
+  const startDate = new Date(startTime * 1000);
   const endDate = new Date(endTime * 1000); // Convert seconds to milliseconds
 
   // Extract hours and minutes
-  const startHour = startDate.getHours();
-  const startMinute = startDate.getMinutes();
+  let startHour = startDate.getHours();
+  let startMinute = startDate.getMinutes();
 
-  const endHour = endDate.getHours();
-  const endMinute = endDate.getMinutes();
+  let endHour = endDate.getHours();
+  let endMinute = endDate.getMinutes();
+  console.log({ endTime, startTime, maxHourSelectedDate, minHourSelectedDate });
+  if (endTime && endTime > maxHourSelectedDate) {
+    endHour = 11;
+    endMinute = 59;
+  } else if (startTime && startTime < minHourSelectedDate) {
+    startHour = 0;
+    startMinute = 0;
+  }
+  console.log({ endHour, endMinute, startHour, startMinute });
   const getTopAndHeight = () => {
-    let a = getStartAndEndTime(selectedDate);
-    console.log('🚀 ~ getTopAndHeight ~ a:', a);
     const height = endHour * 60 + endMinute - (startHour * 60 + startMinute);
     const top = startHour * 60 + startMinute;
     return {
-      height: (height * multiplier) / 60,
+      height: Math.abs((height * multiplier) / 60),
       top: (top * multiplier) / 60,
     };
   };
@@ -72,7 +85,7 @@ const ParticipantColView = ({
           height: height || 0,
           top: top || 0,
           position: 'absolute',
-          borderWidth: top ? 1 : 0,
+          borderWidth: 1,
           width: 100,
           display: 'flex',
           alignItems: 'center',

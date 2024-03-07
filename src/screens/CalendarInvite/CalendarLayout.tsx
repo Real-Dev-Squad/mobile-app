@@ -26,7 +26,7 @@ const CalendarLayout = ({
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
-  console.log('🚀 ~ usersWithTimeSlots:', usersWithTimeSlots);
+  console.log('🚀 ~ progressVal:', progressVal);
   const MULTIPLIER = (120 * progressVal) / 50;
 
   return (
@@ -45,8 +45,12 @@ const CalendarLayout = ({
           userData={userData}
           showInviteForm={showInviteForm}
         />
+        {/* TODO: */}
         {formatDate(selectedDate) === formatDate(new Date()) && (
-          <CurrentTimeDenotingHorizontalLine />
+          <CurrentTimeDenotingHorizontalLine
+            progressVal={progressVal}
+            multiplier={MULTIPLIER}
+          />
         )}
       </View>
     </ScrollView>

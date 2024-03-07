@@ -24,13 +24,13 @@ const reference = firebase
 // console.log('🚀 ~ db:', db);
 // console.log('🚀 ~ reference:', reference);
 // // writing data to db
-firebase
-  .app()
-  .database()
-  .ref('progressVal')
-  .set({
-    progressVal: 20,
-  })
-  .then(() => console.log('Data set'));
+// firebase
+//   .app()
+//   .database()
+//   .ref('progressVal')
+//   .set({
+//     progressVal: 20,
+//   })
+//   .then(() => console.log('Data set'));
 
 AppRegistry.registerComponent(appName, () => App);
