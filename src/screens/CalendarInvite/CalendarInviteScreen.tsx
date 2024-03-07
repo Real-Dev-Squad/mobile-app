@@ -10,7 +10,19 @@ import ProgressToZoom from './ProgressToZoom';
 import CalendarLayout from './CalendarLayout';
 import FloatingButton_ from '../../components/Calendar/FloatingButton_';
 import Toast from 'react-native-toast-message';
+import { firebase } from '@react-native-firebase/database';
 
+export const getProgressVal = () => {
+  return firebase
+    .app()
+    .database()
+    .ref('progressVal')
+    .once('value')
+    .then((snapshot: any) => {
+      return snapshot.val().progressVal;
+    })
+    .catch((err) => console.log('Error b ho skti h', err));
+};
 export type UserInfoType = {
   created_at: number;
   discordId: string;
@@ -39,18 +51,24 @@ const CalendarInviteScreen = () => {
   const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
 
   useEffect(() => {
-    console.log('111111111>>>>>>>', users);
-    getData();
+    const fetchData = async () => {
+      await getData();
+      await getVal();
+    };
+
+    fetchData();
     // fetchEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users, selectedDate]);
-  // useEffect(() => {
-  //   console.log(222222222222, selectedDate);
-  //   // getData();
-  // }, [selectedDate]);
+
+  const getVal = async () => {
+    const progressVal_ = await getProgressVal();
+    console.log('🚀 ~ getVal ~ progressVal_:', progressVal_);
+    setProgressVal(progressVal_);
+    return progressVal_;
+  };
   const getData = async () => {
     const data = await getMatchingTimeSlots();
-    console.log('🚀 ~ getData ~ data:', data);
     const sortedEvents = data;
     // filter by date
     let today = new Date(selectedDate);
@@ -74,7 +92,6 @@ const CalendarInviteScreen = () => {
         // (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
       );
     });
-    console.log('🚀 ~ filteredData ~ filteredData:', filteredData);
     // end time check
     let fData = [];
     for (const event of filteredData) {
@@ -91,7 +108,6 @@ const CalendarInviteScreen = () => {
       }
     }
     const fSortedData = getSortedEvents(fData);
-    console.log('🚀 ~ getData ~ fSortedData:', fSortedData);
     if (users.length === 0) {
       setUsersWithTimeSlots([]);
       return;
@@ -100,11 +116,6 @@ const CalendarInviteScreen = () => {
   };
   const getMatchingTimeSlots = async () => {
     const event_ = await fetchEvents();
-    // const matchingTimeSlots = users.map((selectedItem) => {
-    //   return event_.filter((item) => {
-    //     return (item?.userId).includes(selectedItem.id);
-    //   });
-    // });
     return [...event_];
   };
 

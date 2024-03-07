@@ -1,4 +1,5 @@
 import {
+  Alert,
   PanResponder,
   StyleSheet,
   Text,
@@ -11,6 +12,9 @@ import { Circle, Svg } from 'react-native-svg';
 import Slider from '@react-native-community/slider';
 import { screenWidth } from '../../helpers/SiteUtils';
 import Images from '../../constants/images/Image';
+import { postToRDB } from './dummy';
+import { firebase } from '@react-native-firebase/database';
+import Button_ from '../../components/Button_';
 
 const ProgressToZoom = ({
   progressVal,
@@ -19,35 +23,6 @@ const ProgressToZoom = ({
   progressVal: any;
   setProgressVal: (num: number) => void;
 }) => {
-  const progress = useRef(new Animated.Value(0)).current;
-
-  const panResponder = useRef(
-    //TODO: on decreasing it sets value to 0
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: (event, gestureState) => {
-        const newValue = Math.max(
-          20,
-          Math.min(progressVal + gestureState.dx, 100),
-        );
-        const roundedValue = Math.round(newValue / 10) * 10;
-        setProgressVal(roundedValue);
-        updateProgressValue(roundedValue);
-        progress.setValue(roundedValue);
-      },
-    }),
-  ).current;
-
-  // useEffect(() => {
-  //   Animated.timing(progress, {
-  //     toValue: progressVal,
-  //     duration: 300,
-  //     useNativeDriver: false,
-  //   }).start();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [progress, progressVal]);
-
   const updateProgressValue = (newVal: any) => {
     setProgressVal(newVal);
     console.log('successfully progress value increased ');
@@ -55,8 +30,12 @@ const ProgressToZoom = ({
 
   const handleValueChange = (value: number) => {
     const newVal = value + 10;
-    setProgressVal((prev) => prev + 10);
-    updateProgressValue(newVal);
+    if (newVal > 100) {
+      Alert.alert('you can only set to 100 %');
+    } else {
+      postToRDB(newVal);
+      updateProgressValue(newVal);
+    }
   };
 
   return (
@@ -72,9 +51,7 @@ const ProgressToZoom = ({
         maximumTrackTintColor="#777777"
         thumbTintColor="black"
       />
-      <Text style={styles.progressText}>
-        {progressVal ? Math.round(progressVal) : 20}%
-      </Text>
+      <Text style={styles.progressText}>{progressVal ? progressVal : 20}%</Text>
     </View>
   );
 };

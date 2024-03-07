@@ -10,6 +10,7 @@
 //   startTime:
 //   endTime:
 // }
+import { firebase } from '@react-native-firebase/database';
 import firestore, { Filter } from '@react-native-firebase/firestore';
 import moment from 'moment';
 
@@ -167,3 +168,14 @@ export const postInvite = [
     },
   },
 ];
+
+export const postToRDB = (val: number) => {
+  firebase
+    .app()
+    .database()
+    .ref('progressVal')
+    .set({
+      progressVal: val,
+    })
+    .then(() => console.log('Data set>>>>>>>>>>>'));
+};
