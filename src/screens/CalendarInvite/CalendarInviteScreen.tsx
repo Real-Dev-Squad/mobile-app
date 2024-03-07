@@ -54,17 +54,27 @@ const CalendarInviteScreen = () => {
     const fetchData = async () => {
       await getData();
       await getVal();
+      const progressValRef = firebase.app().database().ref('progressVal');
+      progressValRef.on('value', (snapshot: any) => {
+        const newProgressVal = snapshot.val()?.progressVal || 20;
+        setProgressVal(newProgressVal);
+      });
+
+      return () => {
+        // Clean up the listener when the component unmounts
+        progressValRef.off('value');
+      };
     };
 
     fetchData();
     // fetchEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users, selectedDate]);
+  }, [users, selectedDate, progressVal]);
 
   const getVal = async () => {
     const progressVal_ = await getProgressVal();
     console.log('🚀 ~ getVal ~ progressVal_:', progressVal_);
-    setProgressVal(progressVal_);
+    setProgressVal(progressVal_ || 20);
     return progressVal_;
   };
   const getData = async () => {

@@ -10,9 +10,9 @@ const Index = () => {
     return <LoadingScreen />;
   }
 
-  if (!loggedInUserData) {
-    return <AuthScreen />;
-  }
+  // if (!loggedInUserData) {
+  //   return <AuthScreen />;
+  // }
 
   return <TabNavigation />;
 };
