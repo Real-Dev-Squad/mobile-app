@@ -11,6 +11,7 @@ const DisplayProfile = ({
   selectedUsers: UserInfoType[];
   setSelectedUsers: Dispatch<SetStateAction<UserInfoType[]>>;
 }) => {
+  console.log('🚀 ~ selectedUsers:', selectedUsers);
   const handleRemoveUser = (id: string) => {
     setSelectedUsers((prev: any) => prev.filter((item: any) => item.id !== id));
   };

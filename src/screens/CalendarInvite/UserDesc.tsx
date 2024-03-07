@@ -14,8 +14,7 @@ const formatTimeSlotTime = (timeSlotDate) => {
   const minutes = timeSlotDateObj.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
 };
-const UserDesc = ({ selectedSlots, setModalVisible }) => {
-  const { first_name, last_name, startTime, endTime } = selectedSlots;
+const UserDesc = ({ startTime, endTime, eventName, setModalVisible, user }) => {
   return (
     <View style={styles.modalContainer}>
       <ScrollView>
@@ -24,7 +23,10 @@ const UserDesc = ({ selectedSlots, setModalVisible }) => {
         </Text>
         <View>
           <Text style={{ color: 'black', marginTop: 20 }}>
-            {first_name} {last_name}
+            {user.first_name} {user.last_name}
+          </Text>
+          <Text style={{ color: 'black', marginTop: 30, fontWeight: 'bold' }}>
+            {eventName}
           </Text>
           <Text style={styles.time}>
             {`Start Time: ${formatTimeSlotTime(
@@ -32,12 +34,6 @@ const UserDesc = ({ selectedSlots, setModalVisible }) => {
             )}, End Time: ${formatTimeSlotTime(endTime)}`}
           </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => setModalVisible(false)}
-          style={styles.modalButton}
-        >
-          <Text style={styles.modalButtonText}>{'<-- Back'}</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -47,7 +43,7 @@ export default UserDesc;
 
 const styles = StyleSheet.create({
   modalContainer: {
-    // backgroundColor: 'red',
+    backgroundColor: 'white',
     // height: 400,
     padding: 20,
     borderRadius: 10,

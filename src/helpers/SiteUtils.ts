@@ -31,9 +31,9 @@ export const getColonTime = (date) => {
   const hours = new Date(date).getHours();
   const minutes = new Date(date).getMinutes();
   const newTime =
-    (hours < 10 ? '0' + hours : hours) +
+    (hours < 10 ? `0${hours}` : hours) +
     ':' +
-    (minutes < 10 ? '0' + minutes : minutes);
+    (minutes < 10 ? `0${minutes}` : minutes);
   return newTime;
 };
 export const transformedArrFunc = (matchingUsers: any) => {
@@ -140,4 +140,19 @@ export const getSortedEvents = (data: any) => {
   // const event_ = await fetchEvents();
   const sortedEvents = data?.sort((a, b) => a.startTime - b.startTime);
   return sortedEvents;
+};
+export const getStartAndEndTime = (date) => {
+  // Set start time to 00:00:00
+  const startTime = new Date(date);
+  startTime.setHours(0);
+  startTime.setMinutes(0);
+  startTime.setSeconds(0);
+
+  // Set end time to 23:59:59
+  const endTime = new Date(date);
+  endTime.setHours(23);
+  endTime.setMinutes(59);
+  endTime.setSeconds(59);
+
+  return { startTime, endTime };
 };

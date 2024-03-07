@@ -6,7 +6,7 @@ const Profile = ({
   selectedUser,
   profileHeight,
   profileWidth,
-  marginTop = 0,
+  marginTop,
   mHeight,
 }: {
   selectedUser: UserInfoType;
@@ -30,8 +30,8 @@ const Profile = ({
               {
                 height: profileHeight || 50,
                 width: profileWidth || 50,
-                marginTop: marginTop,
-                maxHeight: mHeight,
+                // marginTop: marginTop,
+                // maxHeight: mHeight,
               },
             ]}
             accessibilityLabel="User Profile Image"
@@ -44,7 +44,6 @@ const Profile = ({
             {
               height: profileHeight || 50,
               width: profileWidth || 50,
-              marginTop: marginTop,
               maxHeight: mHeight,
             },
           ]}
@@ -69,14 +68,14 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     // backgroundColor: 'yellow',
-    width: 50,
-    height: 50,
+    // width: 50,
+    // height: 50,
     borderRadius: 25,
     alignItems: 'center',
   },
   defaultImageContainer: {
-    width: 50,
-    height: 50,
+    // width: 50,
+    // height: 50,
     borderRadius: 25,
     backgroundColor: 'lightgray', // Add background color for a placeholder
     justifyContent: 'center',

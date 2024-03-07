@@ -70,7 +70,7 @@ const ProgressToZoom = ({
         style={{ width: screenWidth - 60 }}
         minimumTrackTintColor="black"
         maximumTrackTintColor="#777777"
-        thumbImage={Images.circle}
+        thumbTintColor="black"
       />
       <Text style={styles.progressText}>
         {progressVal ? Math.round(progressVal) : 20}%
@@ -129,14 +129,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     fontWeight: 'bold',
-  },
-  cursor: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: 'red',
-    position: 'absolute',
-    top: '50%',
-    marginLeft: -10,
   },
 });

@@ -1,14 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import {
-  formatDate,
-  getSortedEvents,
-  screenHeight,
-  screenWidth,
-} from '../../helpers/SiteUtils';
+import { StyleSheet, View } from 'react-native';
+import React, { Dispatch, SetStateAction } from 'react';
+import { formatDate, screenHeight, screenWidth } from '../../helpers/SiteUtils';
 import LayoutHeader from '../../components/Calendar/LayoutHeader';
 import TimeSlotView from '../../components/Calendar/TimeSlotView';
 import { ScrollView } from 'react-native-gesture-handler';
+import CurrentTimeDenotingHorizontalLine from '../../components/Calendar/CurrentTimeDenotingHorizontalLine';
 
 const CalendarLayout = ({
   progressVal,
@@ -17,17 +13,20 @@ const CalendarLayout = ({
   setSelectedDate,
   getMatchingTimeSlots,
   userData,
+  showInviteForm,
+  setShowInviteForm,
 }: // selectedUsers,
 {
   progressVal: number;
   usersWithTimeSlots: any;
-  selectedDate: String;
-  setSelectedDate: Dispatch<SetStateAction<string>>;
+  selectedDate: Date;
+  setSelectedDate: Dispatch<SetStateAction<Date>>;
   getMatchingTimeSlots: () => void;
   userData: any;
-  // selectedUsers: [];
+  showInviteForm: boolean;
+  setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
-  console.log('USERWITH TIME SLOTs', usersWithTimeSlots);
+  console.log('🚀 ~ usersWithTimeSlots:', usersWithTimeSlots);
   const MULTIPLIER = (120 * progressVal) / 50;
 
   return (
@@ -38,12 +37,17 @@ const CalendarLayout = ({
       />
       <View style={styles.timeSlotColView}>
         <TimeSlotView
+          setShowInviteForm={setShowInviteForm}
           multiplier={MULTIPLIER}
           data={usersWithTimeSlots}
           selectedDate={selectedDate}
           getMatchingTimeSlots={getMatchingTimeSlots}
           userData={userData}
+          showInviteForm={showInviteForm}
         />
+        {formatDate(selectedDate) === formatDate(new Date()) && (
+          <CurrentTimeDenotingHorizontalLine />
+        )}
       </View>
     </ScrollView>
   );
@@ -66,6 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'yellow',
     display: 'flex',
     flexDirection: 'column',
+    marginTop: 2,
   },
   eventColView: {
     borderWidth: 2,

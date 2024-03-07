@@ -13,7 +13,11 @@ const LayoutHeader = ({ selectedDate, setSelectedDate }) => {
 
   return (
     <TouchableOpacity onPress={handleDatePicker} style={styles.header}>
-      <Text>Date: {formatDate(selectedDate)}</Text>
+      <View style={{ elevation: 10 }}>
+        <Text style={styles.selectedDate}>
+          Date: {formatDate(selectedDate)}
+        </Text>
+      </View>
       {isDatePickerVisible ? (
         <DatePicker
           modal
@@ -38,9 +42,10 @@ export default LayoutHeader;
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'blue',
+    backgroundColor: '#3994f8',
     width: '100%',
     height: 40,
-    borderRadius: 2,
+    borderRadius: 4,
   },
+  selectedDate: { color: 'white', padding: 4 },
 });

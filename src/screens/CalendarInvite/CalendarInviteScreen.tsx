@@ -1,16 +1,15 @@
-import { Alert, View } from 'react-native';
+import { Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
-
 import NotifyDropDown from '../../components/NotifyDropDown';
 import DisplayProfile from '../../components/DisplayProfile';
-import Calendar from './Calendar';
-import { event, fetchEvents } from './dummy';
+import { fetchEvents } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
-import { formatDate, getSortedEvents } from '../../helpers/SiteUtils';
-import { unixToTimeStampYYMMDD } from '../AuthScreen/Util';
+import { getSortedEvents } from '../../helpers/SiteUtils';
 import TimeZone from './TimeZone';
 import ProgressToZoom from './ProgressToZoom';
 import CalendarLayout from './CalendarLayout';
+import FloatingButton_ from '../../components/Calendar/FloatingButton_';
+import Toast from 'react-native-toast-message';
 
 export type UserInfoType = {
   created_at: number;
@@ -32,22 +31,27 @@ export type UserInfoType = {
   username: string;
 };
 const CalendarInviteScreen = () => {
+  const [showInviteForm, setShowInviteForm] = useState(false);
+
   const [progressVal, setProgressVal] = useState(20);
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
 
   useEffect(() => {
+    console.log('111111111>>>>>>>', users);
     getData();
     // fetchEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users, selectedDate]);
+  // useEffect(() => {
+  //   console.log(222222222222, selectedDate);
+  //   // getData();
+  // }, [selectedDate]);
   const getData = async () => {
-    console.log('111111111');
     const data = await getMatchingTimeSlots();
     console.log('🚀 ~ getData ~ data:', data);
-    const sortedEvents = getSortedEvents(data);
-    console.log('🚀 ~ getData ~ sortedEvents:', sortedEvents);
+    const sortedEvents = data;
     // filter by date
     let today = new Date(selectedDate);
     let tomorrow = new Date(selectedDate);
@@ -57,28 +61,51 @@ const CalendarInviteScreen = () => {
 
     // Get today's and tomorrow's timestamps in seconds
     const todayTimestamp = Math.floor(today_ / 1000);
+
     const tomorrowTimestamp = Math.floor(tomorrow_ / 1000);
 
     console.log({ todayTimestamp, tomorrowTimestamp });
 
     // Filter the sortedData based on today's timestamp and startTime
-    const filteredData = sortedEvents[0].filter(
-      (event) =>
-        event.startTime >= todayTimestamp &&
-        event.startTime < tomorrowTimestamp,
-    );
+    const filteredData = sortedEvents.filter((event: any) => {
+      return (
+        event.startTime >= todayTimestamp && event.startTime < tomorrowTimestamp
+        //   ||
+        // (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
+      );
+    });
     console.log('🚀 ~ filteredData ~ filteredData:', filteredData);
-    setUsersWithTimeSlots(filteredData);
+    // end time check
+    let fData = [];
+    for (const event of filteredData) {
+      let users_ = [];
+      for (const user of users) {
+        if (event.userId.includes(user.id)) {
+          users_.push(user);
+        }
+      }
+      if (users_.length === 0) {
+        fData.push({ users_ });
+      } else {
+        fData.push({ ...event, users_ });
+      }
+    }
+    const fSortedData = getSortedEvents(fData);
+    console.log('🚀 ~ getData ~ fSortedData:', fSortedData);
+    if (users.length === 0) {
+      setUsersWithTimeSlots([]);
+      return;
+    }
+    setUsersWithTimeSlots(fSortedData);
   };
   const getMatchingTimeSlots = async () => {
     const event_ = await fetchEvents();
-    console.log('🚀 ~ getMatchingTimeSlots ~ event_:', event_);
-    const matchingTimeSlots = users.map((selectedItem) => {
-      return event_.filter((item) => {
-        return (item?.userId).includes(selectedItem.id);
-      });
-    });
-    return [...matchingTimeSlots];
+    // const matchingTimeSlots = users.map((selectedItem) => {
+    //   return event_.filter((item) => {
+    //     return (item?.userId).includes(selectedItem.id);
+    //   });
+    // });
+    return [...event_];
   };
 
   const handleUserIdChange = (info: UserInfoType) => {
@@ -89,23 +116,33 @@ const CalendarInviteScreen = () => {
       Alert.alert('user already exist');
     }
   };
-
-  // how do i clear selected user
+  const handleAddEvent = () => {
+    if (users.length === 0) {
+      Toast.show({
+        type: 'error',
+        text1: 'Please Select User to create event',
+        position: 'bottom',
+      });
+    } else {
+      setShowInviteForm((prev) => !prev);
+    }
+  };
   return (
-    <ScrollView style={{ flex: 1, overflow: 'scroll' }}>
-      <ProgressToZoom
-        progressVal={progressVal}
-        setProgressVal={setProgressVal}
-      />
-      <NotifyDropDown
-        title={'Select To invite'}
-        handleUserId={handleUserIdChange}
-        error={''}
-      />
-      <TimeZone />
-
-      <DisplayProfile setSelectedUsers={setUsers} selectedUsers={users} />
-      {/* 
+    <>
+      <FloatingButton_ handleButtonPress={handleAddEvent} />
+      <ScrollView style={{ flex: 1, overflow: 'scroll' }}>
+        <ProgressToZoom
+          progressVal={progressVal}
+          setProgressVal={setProgressVal}
+        />
+        <NotifyDropDown
+          title={'Select To invite'}
+          handleUserId={handleUserIdChange}
+          error={''}
+        />
+        <TimeZone />
+        <DisplayProfile setSelectedUsers={setUsers} selectedUsers={users} />
+        {/* 
       <Calendar
         userData={users}
         setUsers={setUsers}
@@ -116,17 +153,18 @@ const CalendarInviteScreen = () => {
         getMatchingTimeSlots={getMatchingTimeSlots}
         progressVal={progressVal}
       /> */}
-      <CalendarLayout
-        // selectedUsers={users}
-
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        progressVal={progressVal}
-        usersWithTimeSlots={usersWithTimeSlots}
-        getMatchingTimeSlots={getMatchingTimeSlots}
-        userData={users}
-      />
-    </ScrollView>
+        <CalendarLayout
+          setShowInviteForm={setShowInviteForm}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          progressVal={progressVal}
+          usersWithTimeSlots={usersWithTimeSlots}
+          getMatchingTimeSlots={getData}
+          userData={users}
+          showInviteForm={showInviteForm}
+        />
+      </ScrollView>
+    </>
   );
 };
 

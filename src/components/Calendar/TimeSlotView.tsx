@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { CELL_HEIGHT, Time_Slots } from '../../helpers/SiteUtils';
 import ParticipantColView from './ParticipantColView';
 import InviteForm from '../../screens/CalendarInvite/InviteForm';
@@ -12,40 +12,37 @@ const TimeSlotView = ({
   getMatchingTimeSlots,
   selectedDate,
   userData,
+  showInviteForm,
+  setShowInviteForm,
 }: {
   multiplier: number;
   data: any;
   getMatchingTimeSlots: () => void;
-  selectedDate: String;
+  selectedDate: Date;
   userData: any;
+  showInviteForm: boolean;
+  setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
+  console.log('🚀 ~ data:', data);
   // next start time and next endTime , slot start time
-  const [selectedTime, setSelectedTime] = useState(new Date().toISOString());
-  const [showInviteForm, setShowInviteForm] = useState(false);
-  const handleInviteForm = () => {
-    setShowInviteForm((prev) => !prev);
-  };
-  const toggleForm = () => {
-    setShowInviteForm((prev) => !prev);
-  };
-  const getOverlappingTop = (
-    currentStartTime,
-    currentEndTime,
-    prevStartTime,
-    prevEndTime,
-    nextStartTime,
-    nextEndTime,
+  const [selectedTime, setSelectedTime] = useState(
+    `${new Date().getHours()}:${new Date().getMinutes()}`,
+  );
+  const handleInviteForm = () => setShowInviteForm((prev) => !prev);
+
+  const toggleForm = () => setShowInviteForm((prev) => !prev);
+
+  const getBorderBottomColor = (
+    currentStartTime: number,
+    currentEndTime: number,
+    nextStartTime: number,
+    ...abc: any
   ) => {
-    if (currentStartTime >= prevStartTime && currentStartTime < prevEndTime) {
-      return 'above';
-    } else if (
-      nextStartTime >= currentStartTime &&
-      nextStartTime < currentEndTime
-    ) {
-      return 'below';
-    } else {
-      return 'none';
+    console.log('LOGS', abc);
+    if (currentStartTime < nextStartTime && nextStartTime < currentEndTime) {
+      return 'red';
     }
+    return null;
   };
   const handleNewDataSlot = (postInvite_) => {
     getMatchingTimeSlots();
@@ -85,16 +82,9 @@ const TimeSlotView = ({
     >
       <View style={styles.container}>
         {Time_Slots.map((ele, index) => (
-          <TouchableOpacity
-            onPress={() => {
-              // handleSubmitTime(ele);
-              setSelectedTime(ele);
-              setShowInviteForm((prev) => !prev);
-            }}
-            style={[styles.slot, { height: multiplier }]}
-          >
-            <Text>{ele}</Text>
-          </TouchableOpacity>
+          <View style={[styles.slot, { height: multiplier }]}>
+            <Text style={styles.slotText}>{ele}</Text>
+          </View>
         ))}
       </View>
       {showInviteForm && (
@@ -109,6 +99,7 @@ const TimeSlotView = ({
           style={profileScreenStyles.modal}
         >
           <InviteForm
+            setSelectedTime={setSelectedTime}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             handleEventSubmit={handleNewDataSlot}
@@ -130,16 +121,14 @@ const TimeSlotView = ({
           <ParticipantColView
             event={event}
             multiplier={multiplier}
-            borderTopWidth={() => {
-              getOverlappingTop(
-                event.startTime,
-                event.endTime,
-                data[index - 1] && data[index - 1]?.startTime,
-                data[index - 1] && data[index - 1]?.endTime,
-                data[index + 1] && data[index + 1]?.startTime,
-                data[index + 1] && data[index + 1]?.endTime,
-              );
-            }}
+            getBorderBottomColor={getBorderBottomColor(
+              event.startTime,
+              event.endTime,
+              data[index + 1] && data[index + 1]?.startTime,
+              data[index],
+              data[index + 1] && data[index + 1],
+            )}
+            selectedDate={selectedDate}
           />
         ))}
       </View>
@@ -151,7 +140,6 @@ export default TimeSlotView;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'red',
     width: 80,
     display: 'flex',
     flexDirection: 'column',
@@ -160,4 +148,5 @@ const styles = StyleSheet.create({
     height: CELL_HEIGHT,
     borderWidth: 1,
   },
+  slotText: { color: 'black', textAlign: 'center', padding: 4 },
 });
