@@ -46,6 +46,23 @@ const ParticipantColView = ({
 
   const { height, top } = getTopAndHeight();
   console.log('height and top', height, top);
+  const getProfileHeight = () => {
+    const maxProfileSize = 300; // Set your maximum height or width here
+
+    // Calculate the profileHeight and profileWidth based on the height variable
+    let calculatedHeight = (height * 20) / 100;
+    let calculatedWidth = (height * 20) / 100;
+
+    // Check if the calculated height exceeds the maximum, and if so, set it to the maximum
+    if (calculatedHeight > maxProfileSize) {
+      calculatedHeight = maxProfileSize;
+    }
+
+    // Check if the calculated width exceeds the maximum, and if so, set it to the maximum
+    if (calculatedWidth > maxProfileSize) {
+      calculatedWidth = maxProfileSize;
+    }
+  };
   return (
     <TouchableOpacity
       onPress={() => setShowSelectedUsersDetails((prev) => !prev)}
@@ -72,8 +89,8 @@ const ParticipantColView = ({
               first_name: user.first_name,
               last_name: user.last_name,
             }}
-            profileHeight={(height * 30) / 100}
-            profileWidth={(height * 30) / 100}
+            profileHeight={getProfileHeight()}
+            profileWidth={getProfileHeight()}
           />
           {showSelectedUsersDetails && (
             <Modal
