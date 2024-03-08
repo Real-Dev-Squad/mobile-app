@@ -39,6 +39,7 @@
     "react-native-app-auth": "^6.4.2",
     "react-native-arc-progress-bar": "^1.2.0",
     "react-native-asset": "^2.1.1",
+    "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-camera-kit": "^13.0.0",
     "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-collapsible": "^1.6.1",

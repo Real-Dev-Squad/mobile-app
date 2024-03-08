@@ -6823,6 +6823,11 @@ react-native-base64@0.0.2:
   resolved "https://registry.yarnpkg.com/react-native-base64/-/react-native-base64-0.0.2.tgz#c28463c2c6779ac3ec5fdd12979ebc8c5f9b410a"
   integrity sha512-Fu/J1a2y0X22EJDWqJR2oEa1fpP4gTFjYxk8ElJdt1Yak3HOXmFJ7EohLVHU2DaQkgmKfw8qb7u/48gpzveRbg==
 
+react-native-bouncy-checkbox@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-bouncy-checkbox/-/react-native-bouncy-checkbox-3.0.7.tgz#011aef92b4fbde2a1f223165626c56a9ffe637fb"
+  integrity sha512-776TgMGt9wTpOQA1TcvFjL5VUn6o945wFYf3Ztqva62/vT2o3JAezLiP7hYh2Svd+PewfWBYSPMs4jeaSoS8Sg==
+
 react-native-camera-kit@^13.0.0:
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/react-native-camera-kit/-/react-native-camera-kit-13.0.0.tgz#983d9146cdeb0ec0cb0c0a86b7fa5f7690df08f6"

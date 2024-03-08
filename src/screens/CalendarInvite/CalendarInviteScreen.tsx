@@ -1,4 +1,4 @@
-import { Alert } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import NotifyDropDown from '../../components/NotifyDropDown';
 import DisplayProfile from '../../components/DisplayProfile';
@@ -11,6 +11,7 @@ import CalendarLayout from './CalendarLayout';
 import FloatingButton_ from '../../components/Calendar/FloatingButton_';
 import Toast from 'react-native-toast-message';
 import { firebase } from '@react-native-firebase/database';
+import Checkbox from '../../components/Checkbox';
 
 export const getProgressVal = () => {
   return firebase
@@ -54,6 +55,7 @@ const CalendarInviteScreen = () => {
     usersWithTimeSlots,
   );
   const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
+  const [multiModeOn, setMultimodeOn] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,6 +84,7 @@ const CalendarInviteScreen = () => {
   const getData = async () => {
     const data = await getMatchingTimeSlots();
     const sortedEvents = data;
+    console.log('🚀 ~ getData ~ sortedEvents:', sortedEvents);
     // filter by date
     let today = new Date(selectedDate);
     let tomorrow = new Date(selectedDate);
@@ -104,6 +107,7 @@ const CalendarInviteScreen = () => {
         (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
       );
     });
+    console.log('🚀 ~ filteredData ~ filteredData:', filteredData);
     // end time check
     let fData = [];
     for (const event of filteredData) {
@@ -113,11 +117,16 @@ const CalendarInviteScreen = () => {
           users_.push(user);
         }
       }
+      console.log('🚀 ~ getData ~ users_:', users_);
 
       if (users_.length > 0) {
+        console.log('users there');
         fData.push({ ...event, users_ });
+      } else {
+        console.log('users not there');
       }
     }
+
     const fSortedData = getSortedEvents(fData);
     if (users.length === 0) {
       setUsersWithTimeSlots([]);
@@ -157,11 +166,19 @@ const CalendarInviteScreen = () => {
           progressVal={progressVal}
           setProgressVal={setProgressVal}
         />
-        <NotifyDropDown
-          title={'Select To invite'}
-          handleUserId={handleUserIdChange}
-          error={''}
-        />
+        <View style={styles.flexView}>
+          <View style={{ width: '60%' }}>
+            <NotifyDropDown
+              title={'Select To invite'}
+              handleUserId={handleUserIdChange}
+              error={''}
+              disabled={multiModeOn}
+            />
+          </View>
+
+          <Checkbox onHandleChange={() => setMultimodeOn((prev) => !prev)} />
+        </View>
+
         <TimeZone />
         <DisplayProfile setSelectedUsers={setUsers} selectedUsers={users} />
         {/* 
@@ -191,3 +208,11 @@ const CalendarInviteScreen = () => {
 };
 
 export default CalendarInviteScreen;
+
+const styles = StyleSheet.create({
+  flexView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});

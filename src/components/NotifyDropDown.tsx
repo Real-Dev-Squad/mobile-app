@@ -20,10 +20,12 @@ const NotifyDropDown = ({
   handleUserId,
   error,
   title = 'Notify To',
+  disabled, // multimode = true disabled true
 }: {
   handleUserId: (info: UserInfoType) => void;
   error: string;
   title: string;
+  disabled: boolean;
 }) => {
   const [isDropDownSelected, setIsDropDownSelected] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -68,8 +70,16 @@ const NotifyDropDown = ({
       )}
       <TouchableOpacity
         testID="dropdown"
-        style={[styles.dropDownSelector, styles.inputStyle]}
+        style={[
+          styles.dropDownSelector,
+          styles.inputStyle,
+          {
+            borderColor: disabled ? 'grey' : 'black',
+            borderWidth: disabled ? 1 : 1.5,
+          },
+        ]}
         onPress={selectDropDown}
+        disabled={disabled}
       >
         <Text
           style={{
@@ -174,6 +184,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderWidth: 2,
+    // borderColor: 'black',
   },
   dropDownIcon: {
     width: 20,
