@@ -3,7 +3,7 @@ import React from 'react';
 import { UserInfoType } from '../screens/CalendarInvite/CalendarInviteScreen';
 
 const Profile = ({
-  selectedUser,
+  selectedUser = {},
   profileHeight,
   profileWidth,
   marginTop,
@@ -26,7 +26,7 @@ const Profile = ({
   return (
     <View style={styles.container}>
       {picture?.url ? (
-        <View style={[styles.imageContainer]}>
+        <View style={styles.imageContainer}>
           <Image
             source={{ uri: picture.url }}
             style={[

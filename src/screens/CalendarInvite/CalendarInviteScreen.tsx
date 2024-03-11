@@ -113,10 +113,8 @@ const CalendarInviteScreen = () => {
     // }
   }, []);
 
-  const getLastUserPosition_ = () => {
-    console.log('liveUsers>>>>>', liveUsers);
-    let lastUser = liveUsers[liveUsers.length - 1];
-
+  const getLastUserPosition_ = (lastUser: { id: string }) => {
+    console.log('🚀 ~ CalendarInviteScreen ~ lastUser:', lastUser);
     getLastUserPosition(lastUser?.id)
       .then((val) => {
         console.log('getting position of a last user >>>', val);
@@ -139,6 +137,7 @@ const CalendarInviteScreen = () => {
         if (filteredLiveUsers?.length > 0) {
           // Set the filteredLiveUsers to liveUsers
           setLiveUsers(filteredLiveUsers);
+          return filteredLiveUsers;
         } else {
           console.log('No live users found');
           // Handle the case when no live users are found
@@ -150,7 +149,11 @@ const CalendarInviteScreen = () => {
           //   });
         }
       })
-      .then(() => multiModeOn && getLastUserPosition_())
+      .then(
+        (filteredLiveUsers: any) =>
+          multiModeOn &&
+          getLastUserPosition_(filteredLiveUsers[filteredLiveUsers.length - 1]),
+      )
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -263,7 +266,7 @@ const CalendarInviteScreen = () => {
     if (scrollViewRef.current) {
       scrollViewRef?.current.scrollTo({
         x: 0,
-        y: val.position,
+        y: val,
         animated: true,
       });
     }

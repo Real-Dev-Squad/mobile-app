@@ -48,7 +48,6 @@ const Form = () => {
         description,
         token,
       );
-      console.log('🚀 ~ handleSubmit ~ resNotify:', resNotify);
     } catch (error) {
       console.log(error);
     }

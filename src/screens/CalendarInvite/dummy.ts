@@ -188,14 +188,18 @@ export const postLiveUsers = (userId?: string) => {
     .once('value')
     .then((snapshot) => {
       const currentData = snapshot.val();
-      console.log('🚀 ~ .then ~ currentData:', currentData.userIds);
       let currentUsers: string[] = [];
 
       if (currentData && currentData.userIds) {
         currentUsers = currentData.userIds;
-        console.log('🚀 ~ .then ~ currentUsers+++++++++++:', currentUsers);
       }
 
+      if (!currentData || !currentData.userIds) {
+        return liveUsersRef.update({
+          // liveUserInfo: { [id]: position },
+          userIds: [userId],
+        });
+      }
       // Check if the userId already exists in the array
       if (userId && !currentUsers.includes(userId)) {
         // Add the new user ID to the array
@@ -332,6 +336,7 @@ export const getLastUserPosition = (id) => {
     .then((snapshot) => {
       const liveUserInfo = snapshot.val();
       const lastUserPosition = liveUserInfo[id];
+      console.log('🚀 ~ .then ~ lastUserPosition:', lastUserPosition);
 
       if (lastUserPosition) {
         // Found the user, return their details

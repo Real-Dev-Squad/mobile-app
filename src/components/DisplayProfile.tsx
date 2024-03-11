@@ -13,10 +13,10 @@ const DisplayProfile = ({
   setSelectedUsers: Dispatch<SetStateAction<UserInfoType[]>>;
   multiModeOn: boolean;
 }) => {
+  console.log('🚀 ~ selectedUsers:', selectedUsers);
   const handleRemoveUser = (id: string) => {
     setSelectedUsers((prev: any) => prev.filter((item: any) => item.id !== id));
   };
-  // console.log('selectedUSers>>>>', selectedUsers.reverse());
   return (
     <View style={styles.container}>
       <FlatList
@@ -35,7 +35,7 @@ const DisplayProfile = ({
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item?.id}
       />
     </View>
   );

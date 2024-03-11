@@ -24,7 +24,6 @@ const TimeSlotView = ({
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
-  console.log('🚀 ~ data:', data);
   // next start time and next endTime , slot start time
   const [selectedTime, setSelectedTime] = useState(
     `${new Date().getHours()}:${new Date().getMinutes()}`,
@@ -39,7 +38,6 @@ const TimeSlotView = ({
     nextStartTime: number,
     ...abc: any
   ) => {
-    console.log('LOGS', abc);
     if (currentStartTime < nextStartTime && nextStartTime < currentEndTime) {
       return 'red';
     }
@@ -60,10 +58,6 @@ const TimeSlotView = ({
     const selectedDateWithSelectedTime = `${
       selectedDate.toString().split('T')[0]
     }T${ele}`;
-    console.log(
-      '🚀 ~ handleSubmitTime ~ selectedDateWithSelectedTime:',
-      selectedDateWithSelectedTime,
-    );
     const durationMilliseconds = 30 * 60 * 1000;
 
     const endHourDate = new Date(selectedDate.getTime() + durationMilliseconds);
@@ -81,7 +75,7 @@ const TimeSlotView = ({
         flexDirection: 'row',
       }}
     >
-      <ScrollView onScroll={(e) => console.log('Event aaaega ', e)}>
+      <ScrollView>
         <View style={styles.container}>
           {Time_Slots.map((ele, index) => (
             <View style={[styles.slot, { height: multiplier }]}>

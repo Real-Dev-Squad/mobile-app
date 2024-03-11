@@ -7,7 +7,6 @@ export const screenHeight = Dimensions.get('screen').height;
 export const screenWidth = Dimensions.get('screen').width;
 
 export const formatDate = (date: any) => {
-  console.log('🚀 ~ formatDate ~ date:', date);
   if (!date) {
     return 'NA';
   }
@@ -121,7 +120,6 @@ export const randomColor = () => {
   return `#${newColor}`;
 };
 export const calculateCurrentTimePosition = (progressVal, multiplier) => {
-  console.log('🚀 ~ calculateCurrentTimePosition ~ multiplier:', multiplier);
   const now = new Date();
   const currentHour = now.getHours();
   const currentMinutes = now.getMinutes();
@@ -137,7 +135,6 @@ export const getEvents = async () => {
 };
 
 export const getSortedEvents = (data: any) => {
-  console.log('🚀 ~ getSortedEvents ~ data:', data);
   // const event_ = await fetchEvents();
   const sortedEvents = data?.sort((a, b) => a.startTime - b.startTime);
   return sortedEvents;

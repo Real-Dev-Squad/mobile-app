@@ -22,13 +22,10 @@ const ParticipantColView = ({
     useState(false);
 
   let { startTime, endTime, eventName, users_ } = event;
-  console.log({ startTime, endTime, event });
   const minHourSelectedDate =
     new Date(selectedDate).setHours(0, 0, 0, 0) / 1000;
-  console.log('🚀 ~ minHourSelectedDate:', minHourSelectedDate);
   const maxHourSelectedDate =
     new Date(selectedDate).setHours(23, 59, 59, 59) / 1000;
-  console.log('🚀 ~ maxHourSelectedDate:', maxHourSelectedDate);
 
   const startDate = new Date(startTime * 1000);
   const endDate = new Date(endTime * 1000); // Convert seconds to milliseconds
@@ -39,7 +36,6 @@ const ParticipantColView = ({
 
   let endHour = endDate.getHours();
   let endMinute = endDate.getMinutes();
-  console.log({ endTime, startTime, maxHourSelectedDate, minHourSelectedDate });
   if (endTime && endTime > maxHourSelectedDate) {
     endHour = 11;
     endMinute = 59;
@@ -47,7 +43,6 @@ const ParticipantColView = ({
     startHour = 0;
     startMinute = 0;
   }
-  console.log({ endHour, endMinute, startHour, startMinute });
   const getTopAndHeight = () => {
     const height = endHour * 60 + endMinute - (startHour * 60 + startMinute);
     const top = startHour * 60 + startMinute;
@@ -58,7 +53,6 @@ const ParticipantColView = ({
   };
 
   const { height, top } = getTopAndHeight();
-  console.log('height and top', height, top);
   const getProfileHeight = () => {
     const maxProfileSize = 300; // Set your maximum height or width here
 
