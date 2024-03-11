@@ -66,12 +66,9 @@ const CalendarInviteScreen = () => {
   const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
   const [multiModeOn, setMultimodeOn] = useState(false);
   const { loggedInUserData } = useContext(AuthContext);
-  const [allUsers, setAllUsers] = useState();
+  const [allUsers, setAllUsers] = useState([]);
   const isFocused = useIsFocused();
-  const [lastUserInfo, setLastUserInfo] = useState({
-    lastUser: '',
-    position: 0,
-  });
+  const [prevLiveUserId, setPrevLiveUserId] = useState({});
 
   const fetchData = async () => {
     const allUser = await getAllUsers(loggedInUserData?.token);
@@ -96,11 +93,9 @@ const CalendarInviteScreen = () => {
     let apiCallInterval: string | number | NodeJS.Timeout | undefined;
     if (isFocused) {
       apiCallInterval = setInterval(() => {
-        !multiModeOn
-          ? postLiveUsers(loggedInUserData?.id)
-          : removeOfflineUser(loggedInUserData?.id);
+        console.log('mounting...........');
+        postLiveUsers(loggedInUserData?.id);
         getLiveUsers_();
-        console.log('Mounting.................');
       }, 5000); // 5 minutes in milliseconds
     } else {
       removeOfflineUser(loggedInUserData?.id);
@@ -116,12 +111,13 @@ const CalendarInviteScreen = () => {
     // if (multiModeOn) {
     //   getLastUserPosition_();
     // }
-  }, [multiModeOn]);
+  }, []);
 
   const getLastUserPosition_ = () => {
-    // let lastUserId = liveUsers[liveUsers.length - 1];
-    // console.log('🚀 ~ CalendarInviteScreen ~ lastUserId:', lastUserId);
-    getLastUserPosition()
+    console.log('liveUsers>>>>>', liveUsers);
+    let lastUser = liveUsers[liveUsers.length - 1];
+
+    getLastUserPosition(lastUser?.id)
       .then((val) => {
         console.log('getting position of a last user >>>', val);
         return val;
@@ -136,10 +132,10 @@ const CalendarInviteScreen = () => {
         const newArray = [...userIds].filter((value) => value !== null);
         // Filter allUsers based on liveUsers IDs
         // loggedInUserData.id
-        const filteredLiveUsers = allUsers?.filter(
-          (user) =>
-            newArray.includes(user.id) && user.id !== loggedInUserData?.id,
+        const filteredLiveUsers = newArray.map((id) =>
+          allUsers.find((user) => user.id === id),
         );
+
         if (filteredLiveUsers?.length > 0) {
           // Set the filteredLiveUsers to liveUsers
           setLiveUsers(filteredLiveUsers);
@@ -264,7 +260,7 @@ const CalendarInviteScreen = () => {
 
   const scrollViewRef = useRef();
   const handleScrollToLastUserPosition = (val) => {
-    if (val?.userId !== loggedInUserData?.id && scrollViewRef.current) {
+    if (scrollViewRef.current) {
       scrollViewRef?.current.scrollTo({
         x: 0,
         y: val.position,
@@ -280,13 +276,13 @@ const CalendarInviteScreen = () => {
         contentInsetAdjustmentBehavior="automatic"
         scrollEventThrottle={50}
         onScroll={(event) => {
-          console.log('Live Users', liveUsers[liveUsers.length - 1]);
           // let lastUser = liveUsers[liveUsers.length];
-          !multiModeOn &&
-            postPositionWithId(
-              loggedInUserData?.id,
-              event.nativeEvent.contentOffset.y,
-            );
+
+          postPositionWithId(
+            prevLiveUserId,
+            loggedInUserData?.id,
+            event.nativeEvent.contentOffset.y,
+          );
           console.log('inside calendar invite screen>>>', {
             y: event.nativeEvent.contentOffset.y,
           });
