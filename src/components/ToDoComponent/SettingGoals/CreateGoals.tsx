@@ -19,7 +19,6 @@ import dropUpImage from './../../../../assets/dropup.png';
 import dropDownImage from './../../../../assets/dropdown.png';
 import StyleConfig from '../../../utils/StyleConfig';
 import { scale } from '../../../utils/utils';
-import { useIsFocused } from '@react-navigation/native';
 
 const MainScreen = ({ navigation }) => {
   const [titleText, setTitleText] = useState('');
@@ -33,32 +32,25 @@ const MainScreen = ({ navigation }) => {
   const [titleError, setTitleError] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [date, setDate] = useState(new Date());
-  const isFocused = useIsFocused();
 
   const selectDropDown = () => {
     Keyboard.dismiss();
     setIsDropDownSelected(!isDropDownSelected);
   };
 
-
-
   const handleDropDownPress = (item) => {
     setSelectedUser(item);
     setIsDropDownSelected(false);
   };
 
-  useEffect(() => {
-    if(isFocused){
-      fetchData()
-    }
-  },[isFocused]);
-  
-  const fetchData = async () => {
-    console.log("calling api")
-    const allUser = await getAllUsers(loggedInUserData?.token);
-    setAllUsers(allUser);
-    setIsLoading(false);
-  };
+  // const fetchData = useCallback(async () => {
+  //   console.log('calling api');
+  //   if (loggedInUserData?.token) {
+  //     const allUser = await getAllUsers(loggedInUserData.token);
+  //     setAllUsers(allUser);
+  //     setIsLoading(false);
+  //   }
+  // }, [loggedInUserData?.token]);
 
   const postNewGoal = async () => {
     setTitleError('');
@@ -100,6 +92,15 @@ const MainScreen = ({ navigation }) => {
       }
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log('calling api');
+      const allUser = await getAllUsers(loggedInUserData?.token);
+      setAllUsers(allUser);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [loggedInUserData?.token]);
 
   return (
     <View style={styles.container}>
