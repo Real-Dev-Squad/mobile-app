@@ -179,3 +179,190 @@ export const postToRDB = (val: number) => {
     })
     .then(() => console.log('Data set>>>>>>>>>>>'));
 };
+
+export const postLiveUsers = (userId: string) => {
+  console.log('🚀 ~ postLiveUsers ~ userId:', userId);
+  const liveUsersRef = firebase.app().database().ref('liveUsers');
+
+  liveUsersRef
+    .once('value')
+    .then((snapshot) => {
+      const currentData = snapshot.val();
+      let currentUsers: { [key: string]: string } = {};
+      if (!currentData || !currentData.userIds) {
+        currentUsers[userId] = userId;
+
+        return liveUsersRef.set({
+          userIds: currentUsers,
+        });
+      } else if (userId && !currentUsers[userId]) {
+        // Add the new user ID to the array
+        currentUsers[userId] = userId;
+
+        // Update the 'userIds' array in Firebase
+        return liveUsersRef.update({
+          userIds: { ...currentData.userIds, ...currentUsers },
+        });
+      } else {
+        console.log(
+          'User ID already exists in the array or userId is not provided.',
+        );
+        return Promise.resolve(); // Resolve the promise without updating if userId exists or not provided
+      }
+    })
+    .then(() => console.log('Data updated successfully.'))
+    .catch((error) => console.error('Error updating data:', error));
+};
+
+export const getLiveUsers = () => {
+  const liveUsersRef = firebase.app().database().ref('liveUsers');
+
+  return liveUsersRef
+    .once('value')
+    .then((snapshot) => {
+      const currentData = snapshot.val();
+      console.log('🚀 ~ .then ~ currentData:', currentData);
+
+      // If there are existing user IDs, return them
+      if (currentData && currentData.userIds) {
+        return currentData.userIds;
+      } else {
+        return []; // Return an empty array if no user IDs are found
+      }
+    })
+    .catch((error) => {
+      console.error('Error getting live users:', error);
+      throw error; // Propagate the error for further handling if needed
+    });
+};
+
+export const removeOfflineUser = async (userId?: string) => {
+  try {
+    const database = firebase.database();
+    const liveUsersRef = database.ref('liveUsers/userIds');
+
+    // Get the current user IDs object
+    const snapshot = await liveUsersRef.once('value');
+    const userIds = snapshot.val();
+
+    // Find the index of the user ID to remove dynamically
+    const userIndex = Object.keys(userIds).find(
+      (key) => userIds[key] === userId,
+    );
+
+    if (userIndex !== undefined) {
+      // Remove the user ID from the object
+      delete userIds[userIndex];
+
+      // Update the user IDs object in the database
+      await liveUsersRef.set(userIds);
+    }
+  } catch (error) {
+    console.error('Error removing user ID from liveUsers:', error);
+  }
+};
+
+export const postPositionWithId = (id, position) => {
+  console.log('🚀 ~ postPositionWithId ~ id:', id, position);
+
+  const liveUsersRef = firebase.app().database().ref('liveUsers');
+
+  // Check if the user with the given ID already exists
+  liveUsersRef
+    .child('liveUserInfo')
+    .once('value')
+    .then((snapshot) => {
+      const liveUserInfo = snapshot.val() || {};
+      console.log('🚀 ~ .then ~ liveUserInfo:', liveUserInfo);
+      const existingUserIndex = liveUserInfo.findIndex(
+        (user) => user.userId === id,
+      );
+
+      // if (existingUserIndex !== -1) {
+      //   // If the user exists, update the position
+      //   liveUserInfo[existingUserIndex].position = position;
+      // } else {
+      // If the user doesn't exist, add a new entry
+      liveUserInfo[id] = { userId: id, position: position };
+      //   // liveUserInfo.push({ userId: id, position: position });
+      // }
+
+      // Update the 'liveUserInfo' array within 'liveUsers' node
+      return liveUsersRef.child('liveUserInfo').set(liveUserInfo);
+    })
+    .then(() => {
+      // Successfully updated or added user position
+      console.log('Position updated successfully');
+    })
+    .catch((error) => {
+      console.error('Error updating position:', error);
+    });
+};
+
+export const getLastUserPosition = (id) => {
+  console.log('🚀 ~ getLastUserPosition ~ id:', id);
+  const liveUsersRef = firebase.app().database().ref('liveUsers');
+  // var userIdsRef = firebase.app().database().ref('liveUsers/userIds');
+  // userIdsRef
+  //   .once('value')
+  //   .then(function (snapshot) {
+  //     // The snapshot.val() contains the data from the "userIds" node
+  //     var userIdsData = snapshot.val();
+
+  //     // Extract values from the object
+  //     var valuesArray = Object.values(userIdsData);
+
+  //     // Get the last user position (assuming it represents the last user position)
+  //     var lastUserPosition_ = valuesArray[valuesArray.length - 1];
+
+  //     // Now you can work with the lastUserPosition
+  //     console.log('LAST USER POSITION', lastUserPosition_);
+  //     return lastUserPosition_;
+  //   })
+  //   .catch(function (error) {
+  //     console.error('Error fetching data:', error);
+  //   });
+  // getLastUserPosition().then(function (lastUserPosition) {
+  //   // Now you can work with the lastUserPosition
+  //   console.log('Last User Position:', lastUserPosition);
+  // });
+
+  return liveUsersRef
+    .child('liveUserInfo')
+    .once('value')
+    .then((snapshot) => {
+      const liveUserInfo = snapshot.val();
+
+      // [
+      //   { position: 0, userId: 'T7IL7MB8YriniTw4bt39' },
+      //   { position: 717.3333129882812, userId: 'YzEVZ50DHr37oL1mqqbO' },
+      //   { position: 193.4545440673828, userId: 'AAM0MZxZXEfWKmfdYOUp' },
+      // ];
+      const lastUser = liveUserInfo.filter((user) => user.userId === id);
+
+      console.log('🚀 ~ .then ~ lastUser:', lastUser);
+
+      if (lastUser) {
+        // Found the user, return their details
+        return lastUser;
+      } else {
+        // User not found
+        return null;
+      }
+    })
+    .then((lastUser) => {
+      if (lastUser) {
+        // Access the properties of lastUser
+        const { userId, position } = lastUser[0];
+        console.log('User and position:', userId, position);
+        return { userId, position };
+      } else {
+        console.log('User not found');
+        return null;
+      }
+    })
+    .catch((error) => {
+      console.error('Error getting last user position:', error);
+      throw error; // Propagate the error to the caller
+    });
+};

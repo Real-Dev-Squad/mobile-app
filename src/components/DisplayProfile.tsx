@@ -7,23 +7,31 @@ import Profile from './Profile';
 const DisplayProfile = ({
   selectedUsers,
   setSelectedUsers,
+  multiModeOn = false,
 }: {
   selectedUsers: UserInfoType[];
   setSelectedUsers: Dispatch<SetStateAction<UserInfoType[]>>;
+  multiModeOn: boolean;
 }) => {
-  console.log('🚀 ~ selectedUsers:', selectedUsers);
   const handleRemoveUser = (id: string) => {
     setSelectedUsers((prev: any) => prev.filter((item: any) => item.id !== id));
   };
+  // console.log('selectedUSers>>>>', selectedUsers.reverse());
   return (
     <View style={styles.container}>
       <FlatList
         data={selectedUsers}
         horizontal={true}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           return (
-            <TouchableOpacity onPress={() => handleRemoveUser(item.id)}>
-              <Profile selectedUser={item} />
+            <TouchableOpacity
+              onPress={() => !multiModeOn && handleRemoveUser(item.id)}
+            >
+              <Profile
+                selectedUser={item}
+                multimodeOn={multiModeOn}
+                index={index}
+              />
             </TouchableOpacity>
           );
         }}

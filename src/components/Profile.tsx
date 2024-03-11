@@ -8,6 +8,8 @@ const Profile = ({
   profileWidth,
   marginTop,
   mHeight,
+  multimodeOn = false,
+  index,
 }: {
   selectedUser: UserInfoType;
   profileHeight?: number;
@@ -15,6 +17,8 @@ const Profile = ({
   marginTop?: number;
   mHeight?: number;
   mWidth?: number;
+  multimodeOn: boolean;
+  index: number;
 
   // item: { first_name: string; last_name: string };
 }) => {
@@ -22,11 +26,15 @@ const Profile = ({
   return (
     <View style={styles.container}>
       {picture?.url ? (
-        <View style={styles.imageContainer}>
+        <View style={[styles.imageContainer]}>
           <Image
             source={{ uri: picture.url }}
             style={[
               styles.profileImage,
+              multimodeOn && index === 0
+                ? { borderWidth: 2, borderColor: 'green' }
+                : null,
+
               {
                 height: profileHeight || 50,
                 width: profileWidth || 50,
@@ -41,6 +49,9 @@ const Profile = ({
         <View
           style={[
             styles.defaultImageContainer,
+            multimodeOn && index === 0
+              ? { borderWidth: 2, borderColor: 'green' }
+              : null,
             {
               height: profileHeight || 50,
               width: profileWidth || 50,

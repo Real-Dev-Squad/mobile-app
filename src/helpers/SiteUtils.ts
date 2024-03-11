@@ -126,12 +126,6 @@ export const calculateCurrentTimePosition = (progressVal, multiplier) => {
   const currentHour = now.getHours();
   const currentMinutes = now.getMinutes();
   const position = currentHour * 60 + currentMinutes; // Position in minutes
-  console.log(
-    '🚀 ~ calculateCurrentTimePosition ~ position:',
-    currentHour,
-    currentMinutes,
-    position,
-  );
 
   // Calculate the position based on your progressVal and other factors
   return (position * multiplier) / 60;

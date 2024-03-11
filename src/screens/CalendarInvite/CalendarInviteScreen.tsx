@@ -1,8 +1,16 @@
-import { Alert, StyleSheet, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { Alert, AppState, StyleSheet, View } from 'react-native';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import NotifyDropDown from '../../components/NotifyDropDown';
 import DisplayProfile from '../../components/DisplayProfile';
-import { fetchEvents } from './dummy';
+import {
+  disconnectInactiveUsers,
+  fetchEvents,
+  getLastUserPosition,
+  getLiveUsers,
+  postLiveUsers,
+  postPositionWithId,
+  removeOfflineUser,
+} from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getSortedEvents } from '../../helpers/SiteUtils';
 import TimeZone from './TimeZone';
@@ -12,6 +20,9 @@ import FloatingButton_ from '../../components/Calendar/FloatingButton_';
 import Toast from 'react-native-toast-message';
 import { firebase } from '@react-native-firebase/database';
 import Checkbox from '../../components/Checkbox';
+import { AuthContext } from '../../context/AuthContext';
+import { getAllUsers } from '../AuthScreen/Util';
+import { useIsFocused } from '@react-navigation/native';
 
 export const getProgressVal = () => {
   return firebase
@@ -24,6 +35,7 @@ export const getProgressVal = () => {
     })
     .catch((err) => console.log('Error b ho skti h', err));
 };
+
 export type UserInfoType = {
   created_at: number;
   discordId: string;
@@ -43,19 +55,110 @@ export type UserInfoType = {
   updated_at: number;
   username: string;
 };
+
 const CalendarInviteScreen = () => {
   const [showInviteForm, setShowInviteForm] = useState(false);
 
   const [progressVal, setProgressVal] = useState(20);
   const [users, setUsers] = useState<UserInfoType[]>([]);
-  console.log('🚀 ~ CalendarInviteScreen ~ users:', users);
+  const [liveUsers, setLiveUsers] = useState<UserInfoType[]>([]);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
-  console.log(
-    '🚀 ~ CalendarInviteScreen ~ usersWithTimeSlots:',
-    usersWithTimeSlots,
-  );
   const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
   const [multiModeOn, setMultimodeOn] = useState(false);
+  const { loggedInUserData } = useContext(AuthContext);
+  const [allUsers, setAllUsers] = useState();
+  const isFocused = useIsFocused();
+  const [lastUserInfo, setLastUserInfo] = useState({
+    lastUser: '',
+    position: 0,
+  });
+
+  const fetchData = async () => {
+    const allUser = await getAllUsers(loggedInUserData?.token);
+    setAllUsers(allUser);
+  };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        console.log('active');
+      } else {
+        console.log('inactive');
+        removeOfflineUser(loggedInUserData?.id);
+      }
+    });
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+  // call post api call in every 5 min and check live users should go, and duplicacy should not be there
+  useEffect(() => {
+    let apiCallInterval: string | number | NodeJS.Timeout | undefined;
+    if (isFocused) {
+      apiCallInterval = setInterval(() => {
+        !multiModeOn
+          ? postLiveUsers(loggedInUserData?.id)
+          : removeOfflineUser(loggedInUserData?.id);
+        getLiveUsers_();
+        console.log('Mounting.................');
+      }, 5000); // 5 minutes in milliseconds
+    } else {
+      removeOfflineUser(loggedInUserData?.id);
+    }
+    return () => {
+      clearInterval(apiCallInterval);
+    };
+  }, [multiModeOn, isFocused]);
+
+  useEffect(() => {
+    fetchData();
+    getLiveUsers_();
+    // if (multiModeOn) {
+    //   getLastUserPosition_();
+    // }
+  }, [multiModeOn]);
+
+  const getLastUserPosition_ = () => {
+    // let lastUserId = liveUsers[liveUsers.length - 1];
+    // console.log('🚀 ~ CalendarInviteScreen ~ lastUserId:', lastUserId);
+    getLastUserPosition()
+      .then((val) => {
+        console.log('getting position of a last user >>>', val);
+        return val;
+      })
+      .then((val) => handleScrollToLastUserPosition(val));
+  };
+
+  const getLiveUsers_ = () => {
+    // TODO: it should not show my profile
+    getLiveUsers()
+      .then((userIds) => {
+        const newArray = [...userIds].filter((value) => value !== null);
+        // Filter allUsers based on liveUsers IDs
+        // loggedInUserData.id
+        const filteredLiveUsers = allUsers?.filter(
+          (user) =>
+            newArray.includes(user.id) && user.id !== loggedInUserData?.id,
+        );
+        if (filteredLiveUsers?.length > 0) {
+          // Set the filteredLiveUsers to liveUsers
+          setLiveUsers(filteredLiveUsers);
+        } else {
+          console.log('No live users found');
+          // Handle the case when no live users are found
+          // multiModeOn &&
+          //   Toast.show({
+          //     type: 'error',
+          //     text1: 'No live users found',
+          //     position: 'bottom',
+          //   });
+        }
+      })
+      .then(() => multiModeOn && getLastUserPosition_())
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -158,29 +261,69 @@ const CalendarInviteScreen = () => {
       setShowInviteForm((prev) => !prev);
     }
   };
+
+  const scrollViewRef = useRef();
+  const handleScrollToLastUserPosition = (val) => {
+    if (val?.userId !== loggedInUserData?.id && scrollViewRef.current) {
+      scrollViewRef?.current.scrollTo({
+        x: 0,
+        y: val.position,
+        animated: true,
+      });
+    }
+  };
+
   return (
     <>
       <FloatingButton_ handleButtonPress={handleAddEvent} />
-      <ScrollView style={{ flex: 1, overflow: 'scroll' }}>
-        <ProgressToZoom
-          progressVal={progressVal}
-          setProgressVal={setProgressVal}
-        />
-        <View style={styles.flexView}>
-          <View style={{ width: '60%' }}>
-            <NotifyDropDown
-              title={'Select To invite'}
-              handleUserId={handleUserIdChange}
-              error={''}
-              disabled={multiModeOn}
-            />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        scrollEventThrottle={50}
+        onScroll={(event) => {
+          console.log('Live Users', liveUsers[liveUsers.length - 1]);
+          // let lastUser = liveUsers[liveUsers.length];
+          !multiModeOn &&
+            postPositionWithId(
+              loggedInUserData?.id,
+              event.nativeEvent.contentOffset.y,
+            );
+          console.log('inside calendar invite screen>>>', {
+            y: event.nativeEvent.contentOffset.y,
+          });
+        }}
+        style={{ flex: 1, overflow: 'scroll' }}
+        stickyHeaderIndices={[0]}
+        ref={scrollViewRef}
+      >
+        <View
+          style={{ position: 'relative', top: 0, backgroundColor: 'white' }}
+        >
+          <ProgressToZoom
+            progressVal={progressVal}
+            setProgressVal={setProgressVal}
+          />
+          <View style={styles.flexView}>
+            <View style={{ width: '60%' }}>
+              <NotifyDropDown
+                title={'Select To invite'}
+                handleUserId={handleUserIdChange}
+                error={''}
+                disabled={multiModeOn}
+              />
+            </View>
+
+            <Checkbox onHandleChange={() => setMultimodeOn((prev) => !prev)} />
           </View>
 
-          <Checkbox onHandleChange={() => setMultimodeOn((prev) => !prev)} />
+          <TimeZone />
+          <DisplayProfile
+            setSelectedUsers={multiModeOn ? setLiveUsers : setUsers}
+            selectedUsers={multiModeOn ? [...liveUsers].reverse() : users}
+            multiModeOn={multiModeOn}
+            // lastUser={liveUsers[liveUsers.length - 1]}
+          />
         </View>
 
-        <TimeZone />
-        <DisplayProfile setSelectedUsers={setUsers} selectedUsers={users} />
         {/* 
       <Calendar
         userData={users}

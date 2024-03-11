@@ -14,6 +14,7 @@ import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
 import { scale } from '../../utils/utils';
 import NotifyScreen from '../../screens/Notify/NotifyScreen';
 import CalendarInviteScreen from '../../screens/CalendarInvite/CalendarInviteScreen';
+import testScreen from '../../screens/test/testScreen';
 
 const tab = createBottomTabNavigator();
 
@@ -184,6 +185,27 @@ const TabNavigation = () => {
                   style={TabViewStyle.tab_icon}
                   source={Images.profileIcon}
                 />
+              );
+            },
+          }}
+        />
+        <tab.Screen
+          name={'Test'}
+          component={testScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text
+                  style={{
+                    fontSize: Fonts.Tab_Text_Font,
+                    color: focused
+                      ? Colors.Tab_Active_Color
+                      : Colors.Tab_Inactive_Color,
+                  }}
+                >
+                  {'Test'}
+                </Text>
               );
             },
           }}

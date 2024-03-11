@@ -1,5 +1,11 @@
 import { StyleSheet, View } from 'react-native';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 import { formatDate, screenHeight, screenWidth } from '../../helpers/SiteUtils';
 import LayoutHeader from '../../components/Calendar/LayoutHeader';
 import TimeSlotView from '../../components/Calendar/TimeSlotView';
@@ -28,14 +34,57 @@ const CalendarLayout = ({
 }) => {
   console.log('🚀 ~ progressVal:', progressVal);
   const MULTIPLIER = (120 * progressVal) / 50;
+  const [scrollOffset, setScrollOffset] = useState(0);
+  const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
+  console.log('🚀 ~ contentSize:', contentSize);
+
+  const handleContentSizeChange = (contentWidth, contentHeight) => {
+    console.log('heryer is am');
+    setContentSize({ width: contentWidth, height: contentHeight });
+  };
+
+  const handleLayout = useCallback((event) => {
+    console.log('Layout event:', event.nativeEvent);
+    const { x, y, width, height } = event.nativeEvent.layout;
+    // setElementPosition({ x, y, width, height });
+  }, []); // Empty dependency array means the function will not be recreated on re-renders.
+  const ScrollViewRef = useRef();
+  // const handlePress = () => {
+  //   if (ScrollViewRef.current) {
+  //     ScrollViewRef?.current?.scrollTo({
+  //       x: 0,
+  //       y: 484,
+  //       animated: true,
+  //     });
+  //   }
+  // };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={styles.container}
+      // onContentSizeChange={handleContentSizeChange}
+      // scrollEventThrottle={50}
+      // onScroll={(event) => {
+      //   console.log('OBJECT SCROLL TO>>>', {
+      //     y: event.nativeEvent.contentOffset.y,
+      //   });
+      // }}
+      // ref={ScrollViewRef}
+    >
       <LayoutHeader
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
-      <View style={styles.timeSlotColView}>
+      <ScrollView
+        style={styles.timeSlotColView}
+        scrollEventThrottle={50}
+        onScroll={(event) => {
+          console.log('OBJECT SCROLL TO>>>', {
+            y: event.nativeEvent.contentOffset.y,
+          });
+        }}
+      >
         <TimeSlotView
           setShowInviteForm={setShowInviteForm}
           multiplier={MULTIPLIER}
@@ -45,14 +94,13 @@ const CalendarLayout = ({
           userData={userData}
           showInviteForm={showInviteForm}
         />
-        {/* TODO: */}
         {formatDate(selectedDate) === formatDate(new Date()) && (
           <CurrentTimeDenotingHorizontalLine
             progressVal={progressVal}
             multiplier={MULTIPLIER}
           />
         )}
-      </View>
+      </ScrollView>
     </ScrollView>
   );
 };
