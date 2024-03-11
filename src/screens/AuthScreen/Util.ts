@@ -66,6 +66,45 @@ export const fetchAllTasks = async (token: string): Promise<any> => {
     return null;
   }
 };
+
+export const postFcmToken = async (token: string, fcmToken: string) => {
+  try {
+    const data = { fcmToken: fcmToken };
+    const response = await axios.post(urls.POST_FCM_TOKEN, data, {
+      headers: {
+        cookie: `rds-session=${token}`,
+      },
+    });
+    console.log('🚀 ~ postFcmToken ~ response:', response);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const getNotifications = async (
+  id: string,
+  title: string,
+  description: string,
+  token: string,
+) => {
+  try {
+    const data = {
+      title: title,
+      body: description,
+      userId: id,
+    };
+    const response = await axios.post(urls.GET_NOTIFICATION, data, {
+      headers: {
+        cookie: `rds-session=${token}`,
+      },
+    });
+    //TO  check notification response
+    console.log('🚀 ~ response:', response.data);
+  } catch (error) {
+    console.log('🚀 ~ error:', error);
+  }
+};
 export const fetchActiveTasks = async (token: string): Promise<any> => {
   try {
     const response = await axios.get(urls.GET_ACTIVE_TASK, {
@@ -259,6 +298,28 @@ export const requestCameraPermission = async () => {
   } catch (err) {
     console.warn(err);
   }
+};
+export const unixToTimeStampYYMMDD = (_date) => {
+  if (!_date) {
+    return 'NA';
+  }
+  // Unix timestamp in seconds
+  const timestamp = _date;
+
+  // Create a new Date object using the timestamp
+  const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
+
+  // Get the components of the date
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+  const year = String(date.getFullYear()).slice(-2);
+
+  // Create a formatted date string
+  const formattedDate = `${day < 10 ? '0' : ''}${day}/${
+    month < 10 ? '0' : ''
+  }${month}/${year}`;
+
+  return formattedDate;
 };
 export const unixToTimeStamp = (_date) => {
   if (!_date) {

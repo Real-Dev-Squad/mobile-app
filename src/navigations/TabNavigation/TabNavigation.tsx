@@ -12,6 +12,9 @@ import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
 import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
 import { scale } from '../../utils/utils';
+import NotifyScreen from '../../screens/Notify/NotifyScreen';
+import CalendarInviteScreen from '../../screens/CalendarInvite/CalendarInviteScreen';
+import testScreen from '../../screens/test/testScreen';
 
 const tab = createBottomTabNavigator();
 
@@ -21,7 +24,7 @@ const TabNavigation = () => {
   return (
     <NavigationContainer independent>
       <tab.Navigator
-        initialRouteName={Strings.Tab_Home}
+        initialRouteName={Strings.Tab_Calendar}
         screenOptions={() => ({
           headerShown: false,
           // tabBarStyle: TabViewStyle.tab_bar,
@@ -54,7 +57,8 @@ const TabNavigation = () => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
-                  source={focused ? Images.homeIcon : Images.homeIconUnF}
+                  source={Images.homeIcon}
+                  // source={focused ? Images.homeIcon : Images.homeIconUnF}
                 />
               );
             },
@@ -93,7 +97,69 @@ const TabNavigation = () => {
             }}
           />
         )}
-
+        {/* TODO: Update icon */}
+        {!isProdEnvironment && (
+          <tab.Screen
+            name={Strings.Tab_Notify}
+            component={NotifyScreen}
+            options={{
+              headerShown: false,
+              tabBarLabel: ({ focused }) => {
+                return (
+                  <Text
+                    style={{
+                      fontSize: Fonts.Tab_Text_Font,
+                      color: focused
+                        ? Colors.Tab_Active_Color
+                        : Colors.Tab_Inactive_Color,
+                    }}
+                  >
+                    {Strings.Tab_Notify}
+                  </Text>
+                );
+              },
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Image
+                    style={TabViewStyle.tab_icon}
+                    source={focused ? Images.goalIcon : Images.goalIconUnF}
+                  />
+                );
+              },
+            }}
+          />
+        )}
+        <tab.Screen
+          name={Strings.Tab_Calendar}
+          component={CalendarInviteScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text
+                  style={{
+                    fontSize: Fonts.Tab_Text_Font,
+                    color: focused
+                      ? Colors.Tab_Active_Color
+                      : Colors.Tab_Inactive_Color,
+                  }}
+                >
+                  {Strings.Tab_Calendar}
+                </Text>
+              );
+            },
+            tabBarIcon: ({ focused }) => {
+              return (
+                <Image style={TabViewStyle.tab_icon} source={Images.calendar} />
+                // focused ? (
+                //   <CalendarIcon width={60} height={60} />
+                // ) : (
+                //   <CalendarIcon width={30} height={30} focused />
+                // )
+              );
+            },
+          }}
+        />
         <tab.Screen
           name={Strings.Tab_Profile}
           component={AllTaskScreenStack}
@@ -117,8 +183,29 @@ const TabNavigation = () => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
-                  source={focused ? Images.profileIcon : Images.profileIconUnF}
+                  source={Images.profileIcon}
                 />
+              );
+            },
+          }}
+        />
+        <tab.Screen
+          name={'Test'}
+          component={testScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => {
+              return (
+                <Text
+                  style={{
+                    fontSize: Fonts.Tab_Text_Font,
+                    color: focused
+                      ? Colors.Tab_Active_Color
+                      : Colors.Tab_Inactive_Color,
+                  }}
+                >
+                  {'Test'}
+                </Text>
               );
             },
           }}

@@ -6,6 +6,7 @@ import DisplayContribution from '../../../components/DisplayContribution';
 import Loader from '../../../components/Loader';
 import { fetchActiveTasks } from '../../AuthScreen/Util';
 
+const INCOMPLETE_STATUS = ['DONE', 'COMPLETED', 'VERIFIED'];
 const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTasks, setActiveTasks] = useState([]);
@@ -19,9 +20,9 @@ const ActiveScreen = () => {
         const token = loggedInUserData?.token;
 
         const tasksRes = await fetchActiveTasks(token);
-        const activeTaskRes = tasksRes.filter(
-          (item) => item.status !== 'COMPLETED',
-        );
+        const activeTaskRes = tasksRes.filter((item) => {
+          return !INCOMPLETE_STATUS.includes(item.status.toUpperCase());
+        });
         setActiveTasks(activeTaskRes);
         setLoading(false);
       })();

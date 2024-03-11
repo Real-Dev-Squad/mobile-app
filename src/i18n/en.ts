@@ -2,7 +2,9 @@ const Strings = {
   // TAB NAVIGATION
   Tab_Home: 'Home',
   Tab_Profile: 'Profile',
+  Tab_Calendar: 'Calendar',
   Tab_Goal: 'Goals',
+  Tab_Notify: 'Notify',
   // HOME SCREEN
   OOOStatus_Text: 'I am OOO',
   Active_Text: 'I am doing a task',
@@ -23,7 +25,9 @@ const Strings = {
   REAL_DEV_SQUAD: 'Real Dev Squad',
   ENTER_4_DIGIT_OTP: 'Enter 4 Digit Otp',
   SUBMIT: 'Submit',
-
+  // Notify Screen
+  TITLE: 'Enter an event title',
+  DESCRIPTION: 'Description of an event',
   // Launch Camera
   Permissin_Denied_Head: 'Permission Denied',
   Permission_Denied_Text: 'Camera Permission denied',
