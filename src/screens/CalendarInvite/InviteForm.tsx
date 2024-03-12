@@ -6,9 +6,11 @@ import Button_ from '../../components/Button_';
 import {
   formatDate,
   formatTimeSlotTime,
+  formatToSend,
   getColonTime,
   screenHeight,
   screenWidth,
+  toUnix,
 } from '../../helpers/SiteUtils';
 import Duration from './Duration';
 import { durations, postEvent } from './dummy';
@@ -80,16 +82,6 @@ const InviteForm = ({
     setEventTitle(text);
   };
 
-  const toUnix = (_date: any) => {
-    const dateTimeString = _date;
-    const unixTimestamp = moment(dateTimeString).unix();
-    return unixTimestamp;
-  };
-  const formatToSend = (d, t) => {
-    let date_ = new Date(d).toLocaleDateString().split('/');
-    const formatDD = `20${date_[2]}-${date_[0]}-${date_[1]}T${t}`;
-    return formatDD;
-  };
   const handleSubmitTime = () => {
     console.log('DATAAAA', eventTitle, startDate, endDate, startTime, endTime);
 

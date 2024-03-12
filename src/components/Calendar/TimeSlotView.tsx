@@ -75,60 +75,58 @@ const TimeSlotView = ({
         flexDirection: 'row',
       }}
     >
-      <ScrollView>
-        <View style={styles.container}>
-          {Time_Slots.map((ele, index) => (
-            <View style={[styles.slot, { height: multiplier }]}>
-              <Text style={styles.slotText}>{ele}</Text>
-            </View>
-          ))}
-        </View>
-        {showInviteForm && (
-          <Modal
-            transparent={true}
-            isVisible={showInviteForm}
-            onBackdropPress={handleInviteForm}
-            onBackButtonPress={handleInviteForm}
-            backdropOpacity={0.7}
-            animationIn="slideInUp"
-            animationOut="slideOutDown"
-            style={profileScreenStyles.modal}
-          >
-            <InviteForm
-              setSelectedTime={setSelectedTime}
-              selectedDate={selectedDate}
-              selectedTime={selectedTime}
-              handleEventSubmit={handleNewDataSlot}
-              userData={userData}
-              toggleForm={toggleForm}
-            />
-          </Modal>
-        )}
-
-        <View
-          style={{
-            width: '78%',
-            backgroundColor: 'white',
-            height: multiplier,
-            marginLeft: 2,
-          }}
+      <View style={styles.container}>
+        {Time_Slots.map((ele, index) => (
+          <View style={[styles.slot, { height: multiplier }]}>
+            <Text style={styles.slotText}>{ele}</Text>
+          </View>
+        ))}
+      </View>
+      {showInviteForm && (
+        <Modal
+          transparent={true}
+          isVisible={showInviteForm}
+          onBackdropPress={handleInviteForm}
+          onBackButtonPress={handleInviteForm}
+          backdropOpacity={0.7}
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          style={profileScreenStyles.modal}
         >
-          {data?.map((event: any, index: number) => (
-            <ParticipantColView
-              event={event}
-              multiplier={multiplier}
-              getBorderBottomColor={getBorderBottomColor(
-                event.startTime,
-                event.endTime,
-                data[index + 1] && data[index + 1]?.startTime,
-                data[index],
-                data[index + 1] && data[index + 1],
-              )}
-              selectedDate={selectedDate}
-            />
-          ))}
-        </View>
-      </ScrollView>
+          <InviteForm
+            setSelectedTime={setSelectedTime}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            handleEventSubmit={handleNewDataSlot}
+            userData={userData}
+            toggleForm={toggleForm}
+          />
+        </Modal>
+      )}
+
+      <View
+        style={{
+          width: '78%',
+          backgroundColor: 'white',
+          height: multiplier,
+          marginLeft: 2,
+        }}
+      >
+        {data?.map((event: any, index: number) => (
+          <ParticipantColView
+            event={event}
+            multiplier={multiplier}
+            getBorderBottomColor={getBorderBottomColor(
+              event.startTime,
+              event.endTime,
+              data[index + 1] && data[index + 1]?.startTime,
+              data[index],
+              data[index + 1] && data[index + 1],
+            )}
+            selectedDate={selectedDate}
+          />
+        ))}
+      </View>
     </View>
   );
 };

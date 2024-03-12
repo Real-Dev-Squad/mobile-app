@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import React, {
   Dispatch,
   SetStateAction,
@@ -11,6 +11,7 @@ import LayoutHeader from '../../components/Calendar/LayoutHeader';
 import TimeSlotView from '../../components/Calendar/TimeSlotView';
 import { ScrollView } from 'react-native-gesture-handler';
 import CurrentTimeDenotingHorizontalLine from '../../components/Calendar/CurrentTimeDenotingHorizontalLine';
+import Button_ from '../../components/Button_';
 
 const CalendarLayout = ({
   progressVal,
@@ -63,28 +64,34 @@ const CalendarLayout = ({
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.container}
-      // onContentSizeChange={handleContentSizeChange}
-      // scrollEventThrottle={50}
-      // onScroll={(event) => {
-      //   console.log('OBJECT SCROLL TO>>>', {
-      //     y: event.nativeEvent.contentOffset.y,
-      //   });
-      // }}
-      // ref={ScrollViewRef}
     >
-      <LayoutHeader
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-      />
-      <ScrollView
-        style={styles.timeSlotColView}
-        scrollEventThrottle={50}
-        onScroll={(event) => {
-          console.log('OBJECT SCROLL TO>>>', {
-            y: event.nativeEvent.contentOffset.y,
-          });
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          // alignItems: 'center',
         }}
       >
+        <Button
+          title="-"
+          onPress={() => {}}
+          disabled={false}
+          // style={{ marginBottom: 20 }}
+        />
+        <LayoutHeader
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+        <Button
+          title="+"
+          onPress={() => {}}
+          disabled={false}
+          // style={{ marginBottom: 20 }}
+        />
+      </View>
+
+      <ScrollView style={styles.timeSlotColView}>
         <TimeSlotView
           setShowInviteForm={setShowInviteForm}
           multiplier={MULTIPLIER}
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: screenHeight,
     flex: 1,
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
     display: 'flex',
     flexDirection: 'column',
     marginTop: 2,

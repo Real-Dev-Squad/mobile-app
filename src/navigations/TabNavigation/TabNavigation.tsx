@@ -30,7 +30,7 @@ const TabNavigation = () => {
           // tabBarStyle: TabViewStyle.tab_bar,
           tabBarStyle: {
             paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-            height: scale(55),
+            // height: scale(55),
           },
         })}
       >

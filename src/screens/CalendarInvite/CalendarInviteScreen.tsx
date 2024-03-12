@@ -12,7 +12,13 @@ import {
   removeOfflineUser,
 } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getSortedEvents } from '../../helpers/SiteUtils';
+import {
+  decimalToTime,
+  epocToDateTime,
+  getSortedEvents,
+  screenHeight,
+  transformTime_,
+} from '../../helpers/SiteUtils';
 import TimeZone from './TimeZone';
 import ProgressToZoom from './ProgressToZoom';
 import CalendarLayout from './CalendarLayout';
@@ -23,6 +29,7 @@ import Checkbox from '../../components/Checkbox';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllUsers } from '../AuthScreen/Util';
 import { useIsFocused } from '@react-navigation/native';
+import Button_ from '../../components/Button_';
 
 export const getProgressVal = () => {
   return firebase
@@ -118,9 +125,36 @@ const CalendarInviteScreen = () => {
     getLastUserPosition(lastUser?.id)
       .then((val) => {
         console.log('getting position of a last user >>>', val);
-        return val;
+        // convertEpochTime to normal date and time
+        const dStr = epocToDateTime(val);
+        console.log(
+          '🚀 ~ .then ~ dStr:|||||||||||||||||||||||||||||||||',
+          dStr,
+        ); //2024-03-12T22:01:00
+        const time = dStr.split('T')[1];
+        console.log('🚀 ~ .then ~ time:', time); //02:28:00
+        const [hr, min, sec] = time.split(':');
+        var totalMinutes = Number(hr) * 60 + Number(min); //28504681000
+        console.log('🚀 ~ .then ~ totalMinutes:', totalMinutes);
+
+        // console.log(
+        //   '🚀 ~ .then ~ time:|||||||||||||||||||||||||||||||||',
+        //   totalMinutes,
+        // );
+        let convertToOffsetVal = (totalMinutes / 60) * progressVal * 2.4 + 40;
+        console.log(
+          '🚀 ~ .then ~ convertToOffsetVal:"""""""""""""""""""""""||||||||||',
+          convertToOffsetVal,
+          progressVal,
+        );
+
+        // from time convert to scale
+        // if selectedDate then scroll to that
+        return convertToOffsetVal;
       })
-      .then((val) => handleScrollToLastUserPosition(val));
+      .then((convertToOffsetVal) =>
+        handleScrollToLastUserPosition(convertToOffsetVal),
+      );
   };
 
   const getLiveUsers_ = () => {
@@ -263,7 +297,7 @@ const CalendarInviteScreen = () => {
 
   const scrollViewRef = useRef();
   const handleScrollToLastUserPosition = (val) => {
-    if (scrollViewRef.current) {
+    if (multiModeOn && scrollViewRef.current) {
       scrollViewRef?.current.scrollTo({
         x: 0,
         y: val,
@@ -272,6 +306,25 @@ const CalendarInviteScreen = () => {
     }
   };
 
+  const calculateOffsetVal = (scrollOffsetVal: number) => {
+    if (scrollOffsetVal > 40) {
+      // *******************************
+
+      let totalVal = (scrollOffsetVal - 40) / ((120 * progressVal) / 50);
+      console.log('🚀 ~ calculateOffsetVal ~ totalHr:', totalVal); //2.025
+      console.log(
+        '.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+        selectedDate,
+        decimalToTime(totalVal),
+      );
+      let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
+      console.log(
+        '🚀 ~ calculateOffsetVal ~ transformTime:********************',
+        transformTime,
+      );
+      return transformTime;
+    }
+  };
   return (
     <>
       <FloatingButton_ handleButtonPress={handleAddEvent} />
@@ -279,15 +332,11 @@ const CalendarInviteScreen = () => {
         contentInsetAdjustmentBehavior="automatic"
         scrollEventThrottle={50}
         onScroll={(event) => {
-          // let lastUser = liveUsers[liveUsers.length];
-
-          postPositionWithId(
-            prevLiveUserId,
-            loggedInUserData?.id,
-            event.nativeEvent.contentOffset.y,
-          );
+          let timeStamp = calculateOffsetVal(event.nativeEvent.contentOffset.y);
+          postPositionWithId(loggedInUserData?.id, timeStamp, prevLiveUserId);
           console.log('inside calendar invite screen>>>', {
             y: event.nativeEvent.contentOffset.y,
+            screenHeight: screenHeight,
           });
         }}
         style={{ flex: 1, overflow: 'scroll' }}
@@ -310,11 +359,25 @@ const CalendarInviteScreen = () => {
                 disabled={multiModeOn}
               />
             </View>
-
-            <Checkbox onHandleChange={() => setMultimodeOn((prev) => !prev)} />
+            <View style={{ marginTop: 20, padding: 10 }}>
+              <Checkbox
+                onHandleChange={() => setMultimodeOn((prev) => !prev)}
+              />
+            </View>
           </View>
-
           <TimeZone />
+
+          {/* <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              backgroundColor: 'yellow',
+            }}
+          >
+            <Button_ title="-" submitHandler={() => {}} disabled={false} />
+            <Button_ title="+" submitHandler={() => {}} disabled={false} />
+          </View> */}
           <DisplayProfile
             setSelectedUsers={multiModeOn ? setLiveUsers : setUsers}
             selectedUsers={multiModeOn ? [...liveUsers].reverse() : users}

@@ -268,9 +268,9 @@ export const removeOfflineUser = async (userId?: string) => {
 };
 
 export const postPositionWithId = (
-  prevLiveUserId: {},
   id: string,
   position: number,
+  prevLiveUserId: {},
 ) => {
   console.log('🚀 ~ postPositionWithId ~ id:', id, position);
   const liveUsersRef = firebase.app().database().ref('liveUsers');
@@ -328,7 +328,6 @@ export const postPositionWithId = (
 };
 
 export const getLastUserPosition = (id) => {
-  console.log('🚀 ~ getLastUserPosition ~ id:', id);
   const liveUsersRef = firebase.app().database().ref('liveUsers');
   return liveUsersRef
     .child('liveUserInfo')
@@ -336,8 +335,6 @@ export const getLastUserPosition = (id) => {
     .then((snapshot) => {
       const liveUserInfo = snapshot.val();
       const lastUserPosition = liveUserInfo[id];
-      console.log('🚀 ~ .then ~ lastUserPosition:', lastUserPosition);
-
       if (lastUserPosition) {
         // Found the user, return their details
         return lastUserPosition;
