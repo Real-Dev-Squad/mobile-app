@@ -190,17 +190,13 @@ export const decimalToTime = (decimalValue) => {
 };
 export const formatToSend = (d, t) => {
   let date_ = new Date(d).toLocaleDateString().split('/');
-  console.log('🚀 ~ formatToSend ~ date_:', date_);
   const newHr = t.hours < 10 ? `0${t.hours}` : t.hours;
   const newMin = t.minutes < 10 ? `0${t.minutes}` : t.minutes;
   const formatDD = `20${date_[2]}-${date_[0]}-${date_[1]}T${newHr}:${newMin}`;
-  console.log('🚀 ~ formatToSend ~ formatDD:', formatDD); //2024-03-12T2982616:06
-
   return formatDD;
 };
 
 export const transformTime_ = (selectedD, time) => {
-  console.log('🚀 ~ time:', time);
   let newDateString = formatToSend(selectedD, time);
 
   return toUnix(newDateString);
@@ -227,6 +223,5 @@ export const epocToDateTime = (timestamp: number) => {
     minutes < 10 ? '0' + minutes : minutes
   }:${seconds < 10 ? '0' + seconds : seconds}`;
 
-  console.log('FFFFFFFFFFFFF||||||||||||||', formattedDateTime);
   return formattedDateTime;
 };

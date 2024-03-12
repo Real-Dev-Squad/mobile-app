@@ -33,32 +33,17 @@ const CalendarLayout = ({
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
-  console.log('🚀 ~ progressVal:', progressVal);
   const MULTIPLIER = (120 * progressVal) / 50;
-  const [scrollOffset, setScrollOffset] = useState(0);
   const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
-  console.log('🚀 ~ contentSize:', contentSize);
 
   const handleContentSizeChange = (contentWidth, contentHeight) => {
-    console.log('heryer is am');
     setContentSize({ width: contentWidth, height: contentHeight });
   };
 
   const handleLayout = useCallback((event) => {
-    console.log('Layout event:', event.nativeEvent);
     const { x, y, width, height } = event.nativeEvent.layout;
-    // setElementPosition({ x, y, width, height });
-  }, []); // Empty dependency array means the function will not be recreated on re-renders.
+  }, []);
   const ScrollViewRef = useRef();
-  // const handlePress = () => {
-  //   if (ScrollViewRef.current) {
-  //     ScrollViewRef?.current?.scrollTo({
-  //       x: 0,
-  //       y: 484,
-  //       animated: true,
-  //     });
-  //   }
-  // };
 
   return (
     <ScrollView

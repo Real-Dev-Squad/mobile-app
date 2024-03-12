@@ -44,7 +44,6 @@ export const fetchEvents = async () => {
       // endTime: Number(event.data().endTime),
     });
   });
-  console.log('events', events);
   return events;
 };
 

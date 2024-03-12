@@ -42,7 +42,6 @@ function changeDateFormat(dateStr) {
 function getDateObject(dateStr, time) {
   var [hours, minutes] = time.split(':');
   dateStr.setHours(Number(hours), Number(minutes));
-  console.log('newDate', dateStr);
   return dateStr;
 }
 const InviteForm = ({
@@ -53,7 +52,6 @@ const InviteForm = ({
   setSelectedTime,
   toggleForm,
 }: any) => {
-  console.log('selectedDae', selectedDate);
   const [isStartDatePickerVisible, setIsStartDatePickerVisible] =
     useState(false);
   const [startDate, setStartDate] = useState(selectedDate);
@@ -83,30 +81,11 @@ const InviteForm = ({
   };
 
   const handleSubmitTime = () => {
-    console.log('DATAAAA', eventTitle, startDate, endDate, startTime, endTime);
-
     const formatStartDate = formatToSend(startDate, startTime);
     const formatEndDate = formatToSend(endDate, endTime);
     const formatStartDD = toUnix(formatStartDate);
     const formatEndDD = toUnix(formatEndDate);
     return { formatStartDD, formatEndDD };
-
-    // const date = new Date(selectedDate);
-    // const formattedDate = date.toLocaleDateString().split('/');
-    // // const formatD = formattedDate[1]
-
-    // console.log('🚀 ~ handleSubmitTime ~ formattedDate:', formattedDate);
-    // const formatDD = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${startTime}`; // 2024-02-29T10:00
-    // let formattedEDate;
-    // console.log('🚀 ~ handleSubmitTime ~ formatDD:', formatDD); //2024-03-09T20:07
-    // // if (endTime < selectedTime) {
-    // //   console.log('here inside if');
-    // //   const formattedDate_ = new Date(eTime).toISOString().split('T')[0];
-    // //   formattedEDate = `${formattedDate_}T${endTime}`;
-    // // } else {
-    // formattedEDate = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${endTime}`;
-    // // }
-    // console.log('🚀 ~ handleSubmitTime ~ formattedEDate:', formattedEDate); //2024-03-09T23:45
   };
 
   const handleButtonHandler = () => {
@@ -124,7 +103,6 @@ const InviteForm = ({
         startTime: Number(startUT),
         endTime: Number(endUT),
       };
-      console.log('🚀 ~ handleButtonHandler ~ data:', data);
       postEvent(data)
         .then(() => {
           handleEventSubmit(data);

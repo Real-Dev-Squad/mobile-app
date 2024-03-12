@@ -3,8 +3,6 @@ import React from 'react';
 import { Time_Slots } from '../../helpers/SiteUtils';
 
 const CalendarTable = ({ users }) => {
-  // console.log('🚀 ~ CalendarTable ~ data:', data);
-  console.log('🚀 ~ CalendarTable ~ data:', Time_Slots);
   const transformData = () => {
     const arr = [];
     const sortedArr = users.sort((a, b) => a.startTime - b.startTime);

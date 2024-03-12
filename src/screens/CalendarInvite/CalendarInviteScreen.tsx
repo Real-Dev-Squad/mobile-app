@@ -88,9 +88,7 @@ const CalendarInviteScreen = () => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
         getLiveUsers_();
-        console.log('active');
       } else {
-        console.log('inactive');
         removeOfflineUser(loggedInUserData?.id);
         removePositionWithId(loggedInUserData?.id);
       }
@@ -104,7 +102,6 @@ const CalendarInviteScreen = () => {
     let apiCallInterval: string | number | NodeJS.Timeout | undefined;
     if (isFocused) {
       apiCallInterval = setInterval(() => {
-        console.log('mounting...........');
         postLiveUsers(loggedInUserData?.id);
         getLiveUsers_();
       }, 5000); // 5 minutes in milliseconds
@@ -126,37 +123,15 @@ const CalendarInviteScreen = () => {
   }, []);
 
   const getLastUserPosition_ = (lastUser: { id: string }) => {
-    console.log('🚀 ~ CalendarInviteScreen ~ lastUser:', lastUser);
     getLastUserPosition(lastUser?.id)
       .then((val) => {
-        console.log('getting position of a last user >>>', val);
         // convertEpochTime to normal date and time
         const dStr = epocToDateTime(val);
-        console.log(
-          '🚀 ~ .then ~ dStr:|||||||||||||||||||||||||||||||||',
-          dStr,
-        ); //2024-03-12T22:01:00
         const date = dStr.split('T')[0];
-        console.log('🚀 ~ .then ~ date:', date);
         const time = dStr.split('T')[1];
-        console.log('🚀 ~ .then ~ time:', time); //02:28:00
         const [hr, min, sec] = time.split(':');
         var totalMinutes = Number(hr) * 60 + Number(min); //28504681000
-        console.log('🚀 ~ .then ~ totalMinutes:', totalMinutes);
-
-        // console.log(
-        //   '🚀 ~ .then ~ time:|||||||||||||||||||||||||||||||||',
-        //   totalMinutes,
-        // );
         let convertToOffsetVal = (totalMinutes / 60) * progressVal * 2.4 + 40;
-        console.log(
-          '🚀 ~ .then ~ convertToOffsetVal:"""""""""""""""""""""""||||||||||',
-          convertToOffsetVal,
-          progressVal,
-        );
-
-        // from time convert to scale
-        // if selectedDate then scroll to that
         return { convertToOffsetVal, date };
       })
       .then(({ convertToOffsetVal, date }) =>
@@ -169,8 +144,6 @@ const CalendarInviteScreen = () => {
     getLiveUsers()
       .then((userIds) => {
         const newArray = [...userIds].filter((value) => value !== null);
-        // Filter allUsers based on liveUsers IDs
-        // loggedInUserData.id
         const filteredLiveUsers = newArray.map((id) =>
           allUsers.find((user) => user.id === id),
         );
@@ -231,7 +204,6 @@ const CalendarInviteScreen = () => {
   const getData = async () => {
     const data = await getMatchingTimeSlots();
     const sortedEvents = data;
-    console.log('🚀 ~ getData ~ sortedEvents:', sortedEvents);
     // filter by date
     let today = new Date(selectedDate);
     let tomorrow = new Date(selectedDate);
@@ -243,9 +215,6 @@ const CalendarInviteScreen = () => {
     const todayTimestamp = Math.floor(today_ / 1000);
 
     const tomorrowTimestamp = Math.floor(tomorrow_ / 1000);
-
-    console.log({ todayTimestamp, tomorrowTimestamp });
-
     // Filter the sortedData based on today's timestamp and startTime
     const filteredData = sortedEvents.filter((event: any) => {
       return (
@@ -254,7 +223,6 @@ const CalendarInviteScreen = () => {
         (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
       );
     });
-    console.log('🚀 ~ filteredData ~ filteredData:', filteredData);
     // end time check
     let fData = [];
     for (const event of filteredData) {
@@ -264,10 +232,7 @@ const CalendarInviteScreen = () => {
           users_.push(user);
         }
       }
-      console.log('🚀 ~ getData ~ users_:', users_);
-
       if (users_.length > 0) {
-        console.log('users there');
         fData.push({ ...event, users_ });
       } else {
         console.log('users not there');
@@ -323,17 +288,7 @@ const CalendarInviteScreen = () => {
       // *******************************
 
       let totalVal = (scrollOffsetVal - 40) / ((120 * progressVal) / 50);
-      console.log('🚀 ~ calculateOffsetVal ~ totalHr:', totalVal); //2.025
-      console.log(
-        '.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
-        selectedDate,
-        decimalToTime(totalVal),
-      );
       let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
-      console.log(
-        '🚀 ~ calculateOffsetVal ~ transformTime:********************',
-        transformTime,
-      );
       return transformTime;
     }
   };
@@ -346,10 +301,6 @@ const CalendarInviteScreen = () => {
         onScroll={(event) => {
           let timeStamp = calculateOffsetVal(event.nativeEvent.contentOffset.y);
           postPositionWithId(loggedInUserData?.id, timeStamp, prevLiveUserId);
-          console.log('inside calendar invite screen>>>', {
-            y: event.nativeEvent.contentOffset.y,
-            screenHeight: screenHeight,
-          });
         }}
         style={{ flex: 1, overflow: 'scroll' }}
         stickyHeaderIndices={[0]}
@@ -378,18 +329,6 @@ const CalendarInviteScreen = () => {
             </View>
           </View>
           <TimeZone />
-
-          {/* <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              backgroundColor: 'yellow',
-            }}
-          >
-            <Button_ title="-" submitHandler={() => {}} disabled={false} />
-            <Button_ title="+" submitHandler={() => {}} disabled={false} />
-          </View> */}
           <DisplayProfile
             setSelectedUsers={multiModeOn ? setLiveUsers : setUsers}
             selectedUsers={multiModeOn ? [...liveUsers].reverse() : users}
