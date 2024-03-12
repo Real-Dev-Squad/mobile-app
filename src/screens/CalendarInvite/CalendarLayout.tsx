@@ -71,13 +71,18 @@ const CalendarLayout = ({
           flexDirection: 'row',
           justifyContent: 'space-around',
           // alignItems: 'center',
+          width: '100%',
         }}
       >
         <Button
           title="-"
-          onPress={() => {}}
+          onPress={() => {
+            const date = new Date(selectedDate);
+            date.setDate(date.getDate() - 1);
+            setSelectedDate(date);
+          }}
           disabled={false}
-          // style={{ marginBottom: 20 }}
+          style={{ height: 20, width: 20 }}
         />
         <LayoutHeader
           selectedDate={selectedDate}
@@ -85,7 +90,11 @@ const CalendarLayout = ({
         />
         <Button
           title="+"
-          onPress={() => {}}
+          onPress={() => {
+            const date = new Date(selectedDate);
+            date.setDate(date.getDate() + 1);
+            setSelectedDate(date);
+          }}
           disabled={false}
           // style={{ marginBottom: 20 }}
         />

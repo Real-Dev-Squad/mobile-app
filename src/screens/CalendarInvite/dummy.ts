@@ -250,14 +250,14 @@ export const removeOfflineUser = async (userId?: string) => {
     const snapshot = await liveUsersRef.once('value');
     const userIds = snapshot.val();
 
-    // Find the index of the user ID to remove dynamically
-    const userIndex = Object.keys(userIds).find(
-      (key) => userIds[key] === userId,
-    );
-
-    if (userIndex !== undefined) {
+    // // Find the index of the user ID to remove dynamically
+    // const userIndex = Object.keys(userIds).find(
+    //   (key) => userIds[key] === userId,
+    // );
+    let index = userIds.indexOf(userId);
+    if (index !== -1) {
       // Remove the user ID from the object
-      delete userIds[userIndex];
+      userIds.splice(index, 1);
 
       // Update the user IDs object in the database
       await liveUsersRef.set(userIds);
@@ -266,44 +266,51 @@ export const removeOfflineUser = async (userId?: string) => {
     console.error('Error removing user ID from liveUsers:', error);
   }
 };
+export const removePositionWithId = async (userId?: string) => {
+  try {
+    const database = firebase.database();
+    const liveUsersRef = database.ref('liveUsers/liveUserInfo');
 
+    // Get the current user IDs object
+    const snapshot = await liveUsersRef.once('value');
+    const userInfo = snapshot.val();
+    console.log('🚀 ~ removePositionWithId ~ userInfo:>>>>>>>>>>>>>', userInfo);
+    if (userId && userId in userInfo) {
+      console.log('trueeee');
+      delete userInfo[userId];
+    }
+    await liveUsersRef.set(userInfo);
+
+    // Find the index of the user ID to remove dynamically
+  } catch (error) {
+    console.error('Error removing user ID from liveUsers:', error);
+  }
+};
 export const postPositionWithId = (
   id: string,
   position: number,
   prevLiveUserId: {},
 ) => {
-  console.log('🚀 ~ postPositionWithId ~ id:', id, position);
   const liveUsersRef = firebase.app().database().ref('liveUsers');
-  // const activeUserRef = firebase.app().database().ref('liveUsers/liveUserInfo');
-  console.log('🚀 ~ postPositionWithId ~ liveUsersRef:', liveUsersRef);
-
   liveUsersRef
     .once('value')
     .then((snapshot) => {
       const currentData = snapshot.val();
-      console.log('🚀 ~ .then ~ currentData:', currentData);
-      // const currentPositionData: { [key: string]: number } = {
-      //   [id]: position,
-      // };
-
       if (!currentData || !currentData.liveUserInfo) {
-        console.log(11111111111111111);
         return liveUsersRef.set({
           liveUserInfo: { [id]: position },
           userIds: { ...prevLiveUserId },
         });
-      }
-      // if (existingUserIndex !== -1) {
-      //   // If the user exists, update the position
-      //   liveUserInfo[existingUserIndex].position = position;
-      // } else {
-      // If the user doesn't exist, add a new entry
-      else if (id) {
+      } else if (id) {
         let liveUserInfo =
           currentData && currentData.liveUserInfo
             ? { ...currentData.liveUserInfo }
-            : {};
-        liveUserInfo[id] = position;
+            : {}; // Initialize as an empty object if not present
+        if (id in currentData.liveUserInfo) {
+          liveUserInfo[id] = position;
+        } else {
+          liveUserInfo[id] = -1;
+        }
 
         return liveUsersRef.update({
           liveUserInfo: liveUserInfo,
@@ -312,11 +319,6 @@ export const postPositionWithId = (
         console.log('user id not exist');
         return Promise.resolve(); // Resolve the promise without updating if userId exists or not provided
       }
-      //   // liveUserInfo.push({ userId: id, position: position });
-      // }
-
-      // Update the 'liveUserInfo' array within 'liveUsers' node
-      // return liveUsersRef.child('liveUserInfo').set(liveUserInfo);
     })
     .then(() => {
       // Successfully updated or added user position

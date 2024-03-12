@@ -10,11 +10,13 @@ import {
   postLiveUsers,
   postPositionWithId,
   removeOfflineUser,
+  removePositionWithId,
 } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
   decimalToTime,
   epocToDateTime,
+  formatDate,
   getSortedEvents,
   screenHeight,
   transformTime_,
@@ -85,10 +87,12 @@ const CalendarInviteScreen = () => {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
+        getLiveUsers_();
         console.log('active');
       } else {
         console.log('inactive');
         removeOfflineUser(loggedInUserData?.id);
+        removePositionWithId(loggedInUserData?.id);
       }
     });
     return () => {
@@ -106,6 +110,7 @@ const CalendarInviteScreen = () => {
       }, 5000); // 5 minutes in milliseconds
     } else {
       removeOfflineUser(loggedInUserData?.id);
+      removePositionWithId(loggedInUserData?.id);
     }
     return () => {
       clearInterval(apiCallInterval);
@@ -131,6 +136,8 @@ const CalendarInviteScreen = () => {
           '🚀 ~ .then ~ dStr:|||||||||||||||||||||||||||||||||',
           dStr,
         ); //2024-03-12T22:01:00
+        const date = dStr.split('T')[0];
+        console.log('🚀 ~ .then ~ date:', date);
         const time = dStr.split('T')[1];
         console.log('🚀 ~ .then ~ time:', time); //02:28:00
         const [hr, min, sec] = time.split(':');
@@ -150,10 +157,10 @@ const CalendarInviteScreen = () => {
 
         // from time convert to scale
         // if selectedDate then scroll to that
-        return convertToOffsetVal;
+        return { convertToOffsetVal, date };
       })
-      .then((convertToOffsetVal) =>
-        handleScrollToLastUserPosition(convertToOffsetVal),
+      .then(({ convertToOffsetVal, date }) =>
+        handleScrollToLastUserPosition(convertToOffsetVal, date),
       );
   };
 
@@ -183,11 +190,13 @@ const CalendarInviteScreen = () => {
           //   });
         }
       })
+
       .then(
         (filteredLiveUsers: any) =>
           multiModeOn &&
           getLastUserPosition_(filteredLiveUsers[filteredLiveUsers.length - 1]),
       )
+
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -197,6 +206,7 @@ const CalendarInviteScreen = () => {
     const fetchData = async () => {
       await getData();
       await getVal();
+      await getLiveUsers_();
       const progressValRef = firebase.app().database().ref('progressVal');
       progressValRef.on('value', (snapshot: any) => {
         const newProgressVal = snapshot.val()?.progressVal || 20;
@@ -214,6 +224,7 @@ const CalendarInviteScreen = () => {
 
   const getVal = async () => {
     const progressVal_ = await getProgressVal();
+
     setProgressVal(progressVal_ || 20);
     return progressVal_;
   };
@@ -296,8 +307,9 @@ const CalendarInviteScreen = () => {
   };
 
   const scrollViewRef = useRef();
-  const handleScrollToLastUserPosition = (val) => {
+  const handleScrollToLastUserPosition = (val, date) => {
     if (multiModeOn && scrollViewRef.current) {
+      setSelectedDate(formatDate(date));
       scrollViewRef?.current.scrollTo({
         x: 0,
         y: val,

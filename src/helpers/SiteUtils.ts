@@ -215,7 +215,7 @@ export const epocToDateTime = (timestamp: number) => {
   // Get the various components of the date and time
   var year = date.getFullYear();
   var month = date.getMonth() + 1; // Note: Months are zero-based
-  var day = date.getDate();
+  var day = date.getDate() + 1;
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var seconds = date.getSeconds();
