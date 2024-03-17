@@ -6,29 +6,25 @@ const Profile = ({
   selectedUser = {},
   profileHeight,
   profileWidth,
-  marginTop,
   mHeight,
   multimodeOn = false,
   index,
 }: {
-  selectedUser: UserInfoType;
+  selectedUser: UserInfoType | {};
   profileHeight?: number;
   profileWidth?: number;
-  marginTop?: number;
   mHeight?: number;
   mWidth?: number;
   multimodeOn: boolean;
-  index: number;
-
   // item: { first_name: string; last_name: string };
 }) => {
-  const { picture, first_name, last_name } = selectedUser;
+  console.log('🚀 ~ selectedUser:>>>>>>>>>>>', selectedUser);
   return (
     <View style={styles.container}>
-      {picture?.url ? (
+      {selectedUser?.picture?.url ? (
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: picture.url }}
+            source={{ uri: selectedUser?.picture?.url }}
             style={[
               styles.profileImage,
               multimodeOn && index === 0
@@ -40,6 +36,7 @@ const Profile = ({
                 width: profileWidth || 50,
                 // marginTop: marginTop,
                 // maxHeight: mHeight,
+                backgroundColor: 'yellow',
               },
             ]}
             accessibilityLabel="User Profile Image"
@@ -60,8 +57,8 @@ const Profile = ({
           ]}
         >
           <Text style={styles.defaultImageText}>
-            {first_name?.charAt(0)}
-            {last_name?.charAt(0)}
+            {selectedUser?.first_name?.charAt(0)}
+            {selectedUser?.last_name?.charAt(0)}
           </Text>
         </View>
       )}

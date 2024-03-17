@@ -82,7 +82,9 @@ const InviteForm = ({
 
   const handleSubmitTime = () => {
     const formatStartDate = formatToSend(startDate, startTime);
+    console.log('🚀 ~ handleSubmitTime ~ formatStartDate:', formatStartDate);
     const formatEndDate = formatToSend(endDate, endTime);
+    console.log('🚀 ~ handleSubmitTime ~ formatEndDate:', formatEndDate);
     const formatStartDD = toUnix(formatStartDate);
     const formatEndDD = toUnix(formatEndDate);
     return { formatStartDD, formatEndDD };
@@ -94,6 +96,10 @@ const InviteForm = ({
     } else {
       setError('');
       const { formatStartDD: startUT, formatEndDD: endUT } = handleSubmitTime();
+      console.log(
+        '🚀 ~ handleButtonHandler ~ handleSubmitTime():',
+        handleSubmitTime(),
+      );
       const userIds = userData.map((item) => item.id);
       const data = {
         userId: userIds,
@@ -103,6 +109,7 @@ const InviteForm = ({
         startTime: Number(startUT),
         endTime: Number(endUT),
       };
+      console.log('🚀 ~ handleButtonHandler ~ data:', data);
       postEvent(data)
         .then(() => {
           handleEventSubmit(data);

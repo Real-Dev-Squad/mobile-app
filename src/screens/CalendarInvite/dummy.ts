@@ -51,11 +51,9 @@ export const postEvent = async (eventData) => {
   return eventsCollection
     .add(eventData)
     .then((docRef) => {
-      console.log('Data posted successfully with ID:', docRef.id);
       return Promise.resolve();
     })
     .catch((error) => {
-      console.error('Error posting data:', error);
       return Promise.reject();
     });
 };
@@ -176,13 +174,11 @@ export const postToRDB = (val: number) => {
     .set({
       progressVal: val,
     })
-    .then(() => console.log('Data set>>>>>>>>>>>'));
+    .then(() => console.log('UPDATED PROGRESS VALUE IS SAVED IN DATABASE'));
 };
 
-export const postLiveUsers = (userId?: string) => {
-  console.log('🚀 ~ postLiveUsers ~ userId:', userId);
+export const postLiveUsers = (userId: string) => {
   const liveUsersRef = firebase.app().database().ref('liveUsers');
-
   liveUsersRef
     .once('value')
     .then((snapshot) => {
@@ -203,41 +199,27 @@ export const postLiveUsers = (userId?: string) => {
       if (userId && !currentUsers.includes(userId)) {
         // Add the new user ID to the array
         currentUsers.push(userId);
-        console.log('🚀 ~ .then ~ currentUsers>>>>>>>>>>>>>:', currentUsers);
 
         // Update the 'userIds' array in Firebase
         return liveUsersRef.update({
           userIds: currentUsers,
         });
       } else {
-        console.log('User ID already exists in the array.');
         return Promise.resolve(); // Resolve the promise without updating if userId exists
       }
     })
-    .then(() => console.log('Data set>>>>>>>>>>>'))
+    .then(() => console.log('LIVE USER POSTING DONE'))
     .catch((error) => console.error('Error updating data:', error));
 };
 
-export const getLiveUsers = () => {
-  const liveUsersRef = firebase.app().database().ref('liveUsers');
-
-  return liveUsersRef
-    .once('value')
-    .then((snapshot) => {
-      const currentData = snapshot.val();
-      console.log('🚀 ~ .then ~ currentData:', currentData);
-
-      // If there are existing user IDs, return them
-      if (currentData && currentData.userIds) {
-        return currentData.userIds;
-      } else {
-        return []; // Return an empty array if no user IDs are found
-      }
-    })
-    .catch((error) => {
-      console.error('Error getting live users:', error);
-      throw error; // Propagate the error for further handling if needed
-    });
+export const getLiveUsers = (liveUsers: { userIds: string }) => {
+  const currentData = liveUsers;
+  // If there are existing user IDs, return them
+  if (currentData && currentData) {
+    return currentData;
+  } else {
+    return []; // Return an empty array if no user IDs are found
+  }
 };
 
 export const removeOfflineUser = async (userId?: string) => {
@@ -248,11 +230,6 @@ export const removeOfflineUser = async (userId?: string) => {
     // Get the current user IDs object
     const snapshot = await liveUsersRef.once('value');
     const userIds = snapshot.val();
-
-    // // Find the index of the user ID to remove dynamically
-    // const userIndex = Object.keys(userIds).find(
-    //   (key) => userIds[key] === userId,
-    // );
     let index = userIds.indexOf(userId);
     if (index !== -1) {
       // Remove the user ID from the object
@@ -273,9 +250,7 @@ export const removePositionWithId = async (userId?: string) => {
     // Get the current user IDs object
     const snapshot = await liveUsersRef.once('value');
     const userInfo = snapshot.val();
-    console.log('🚀 ~ removePositionWithId ~ userInfo:>>>>>>>>>>>>>', userInfo);
     if (userId && userId in userInfo) {
-      console.log('trueeee');
       delete userInfo[userId];
     }
     await liveUsersRef.set(userInfo);
@@ -289,26 +264,38 @@ export const postPositionWithId = (
   id: string,
   position: number,
   prevLiveUserId: {},
+  selectedDate,
 ) => {
   const liveUsersRef = firebase.app().database().ref('liveUsers');
   liveUsersRef
     .once('value')
     .then((snapshot) => {
       const currentData = snapshot.val();
+      const timestamp = Date.now();
+      const minHourSelectedDate =
+        new Date(selectedDate).setHours(0, 0, 0, 0) / 1000;
       if (!currentData || !currentData.liveUserInfo) {
         return liveUsersRef.set({
-          liveUserInfo: { [id]: position },
+          liveUserInfo: {
+            [id]: { position, timestamp },
+          },
           userIds: { ...prevLiveUserId },
         });
-      } else if (id) {
-        let liveUserInfo =
-          currentData && currentData.liveUserInfo
-            ? { ...currentData.liveUserInfo }
-            : {}; // Initialize as an empty object if not present
+      } else if (currentData.liveUserInfo) {
+        //TODO:
+        let liveUserInfo = currentData &&
+          currentData.liveUserInfo && { ...currentData.liveUserInfo };
         if (id in currentData.liveUserInfo) {
-          liveUserInfo[id] = position;
+          liveUserInfo[id] = {
+            position: position,
+            timestamp: timestamp,
+          };
+          // liveUserInfo[timestamp] = timestamp;
         } else {
-          liveUserInfo[id] = -1;
+          liveUserInfo[id] = {
+            position: minHourSelectedDate,
+            timestamp: timestamp,
+          };
         }
 
         return liveUsersRef.update({
@@ -328,24 +315,134 @@ export const postPositionWithId = (
     });
 };
 
-export const getLastUserPosition = (id) => {
+//  LiveInfo(useEffect)  ====> return newDAta.liveUserInfo => calcul => return {id:position:timeStamp}
+
+// liveStamp
+// userIds
+
+export const getLiveUserInfoInRealtime = (
+  setProof,
+  setLiveIds,
+  setLatestTimeStamp,
+  selectedDate,
+) => {
+  const liveUsersRef = firebase.app().database().ref('liveUsers');
+  let newData;
+  liveUsersRef.on('value', (snapshot) => {
+    newData = snapshot.val();
+    console.log(
+      '------------------------------REALTIME DATA INCOMING------------------------',
+    );
+    console.log('THIS IS NEW DATA ', newData);
+    console.log(
+      '------------------------------REALTIME DATA ENDS------------------------',
+    );
+    let liveInfo = getLastUserPosition(newData.liveUserInfo, selectedDate);
+    setProof(liveInfo);
+    let userIds = getLiveUsers(newData.userIds);
+    setLiveIds([...userIds]);
+    setLatestTimeStamp(newData.liveUserTimestamp);
+  });
+};
+
+export const getLastUserPosition = (liveUserInfo: any, selectedDate) => {
+  // TODO: update the name to lastActiveUserPosition
+  let max = -1;
+  // const minHourSelectedDate =
+  // new Date(selectedDate).setHours(0, 0, 0, 0) / 1000;
+  let res = { id: '', position: 0, timestamp: 0 };
+  for (const item in liveUserInfo) {
+    let temp = liveUserInfo[item].timestamp;
+    if (temp > max) {
+      max = temp;
+      res['id'] = item;
+      res['position'] = liveUserInfo[item].position;
+      res['timestamp'] = liveUserInfo[item].timestamp;
+    }
+  }
+  // bt39 --> scroll value
+  // lastUser
+  // userId , postion, timeStamp
+  // lastUser -> details + position
+  return res;
+};
+
+export const getTimeStampFromId = (id) => {
   const liveUsersRef = firebase.app().database().ref('liveUsers');
   return liveUsersRef
     .child('liveUserInfo')
     .once('value')
     .then((snapshot) => {
       const liveUserInfo = snapshot.val();
-      const lastUserPosition = liveUserInfo[id];
-      if (lastUserPosition) {
-        // Found the user, return their details
-        return lastUserPosition;
+      let temp;
+      for (const item in liveUserInfo) {
+        if (item === id) {
+          temp = liveUserInfo[id].timestamp;
+        }
+      }
+      return temp;
+    });
+};
+
+export const postIdsWithTimeStamp = (userId: string, prevLiveUserId: []) => {
+  const liveUsersRef = firebase.app().database().ref('liveUsers');
+
+  liveUsersRef
+    .once('value')
+    .then((snapshot) => {
+      const currentData = snapshot.val();
+      const timestamp = Date.now();
+      if (!currentData || !currentData.liveUserTimestamp) {
+        return liveUsersRef.set({
+          liveUserTimestamp: {
+            [userId]: { timestamp },
+          },
+          userIds: { ...prevLiveUserId },
+          ...currentData,
+        });
+      } else if (currentData.liveUserTimestamp) {
+        let liveUserTimestamp = currentData &&
+          currentData.liveUserTimestamp && { ...currentData.liveUserTimestamp };
+        // Initialize as an empty object if not present
+        if (userId in currentData.liveUserTimestamp) {
+          liveUserTimestamp[userId] = {
+            timestamp: timestamp,
+          };
+        } else {
+          liveUserTimestamp[userId] = {
+            timestamp: timestamp,
+          };
+        }
+
+        return liveUsersRef.update({
+          liveUserTimestamp: liveUserTimestamp,
+        });
       } else {
-        // User not found
-        return null;
+        console.log('user id not exist');
+        return Promise.resolve(); // Resolve the promise without updating if userId exists or not provided
       }
     })
+    .then(() => {
+      // Successfully updated or added user position
+      console.log('TimeStamp updated successfully');
+    })
     .catch((error) => {
-      console.error('Error getting last user position:', error);
-      throw error; // Propagate the error to the caller
+      console.error('Error updating Timestamp:', error);
     });
+};
+
+export const getLastLoggedInTime = (
+  id: string,
+  liveUserTimestamp: { id: string },
+) => {
+  console.log('🚀 ~ .then ~ liveUserTimestamp:', liveUserTimestamp);
+  let temp;
+  for (const item in liveUserTimestamp) {
+    if (item === id) {
+      temp = liveUserTimestamp[id].timestamp;
+    }
+  }
+  console.log('🚀 ~ .then ~ temp:', temp);
+
+  return temp;
 };

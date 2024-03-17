@@ -46,62 +46,27 @@ const CalendarLayout = ({
   const ScrollViewRef = useRef();
 
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={styles.container}
-    >
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          // alignItems: 'center',
-          width: '100%',
-        }}
-      >
-        <Button
-          title="-"
-          onPress={() => {
-            const date = new Date(selectedDate);
-            date.setDate(date.getDate() - 1);
-            setSelectedDate(date);
-          }}
-          disabled={false}
-          style={{ height: 20, width: 20 }}
-        />
-        <LayoutHeader
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
-        <Button
-          title="+"
-          onPress={() => {
-            const date = new Date(selectedDate);
-            date.setDate(date.getDate() + 1);
-            setSelectedDate(date);
-          }}
-          disabled={false}
-          // style={{ marginBottom: 20 }}
-        />
-      </View>
-
-      <ScrollView style={styles.timeSlotColView}>
-        <TimeSlotView
-          setShowInviteForm={setShowInviteForm}
+    // <ScrollView
+    //   contentInsetAdjustmentBehavior="automatic"
+    //   contentContainerStyle={styles.container}
+    // >
+    <ScrollView style={styles.timeSlotColView}>
+      <TimeSlotView
+        setShowInviteForm={setShowInviteForm}
+        multiplier={MULTIPLIER}
+        data={usersWithTimeSlots}
+        selectedDate={selectedDate}
+        getMatchingTimeSlots={getMatchingTimeSlots}
+        userData={userData}
+        showInviteForm={showInviteForm}
+      />
+      {formatDate(selectedDate) === formatDate(new Date()) && (
+        <CurrentTimeDenotingHorizontalLine
+          progressVal={progressVal}
           multiplier={MULTIPLIER}
-          data={usersWithTimeSlots}
-          selectedDate={selectedDate}
-          getMatchingTimeSlots={getMatchingTimeSlots}
-          userData={userData}
-          showInviteForm={showInviteForm}
         />
-        {formatDate(selectedDate) === formatDate(new Date()) && (
-          <CurrentTimeDenotingHorizontalLine
-            progressVal={progressVal}
-            multiplier={MULTIPLIER}
-          />
-        )}
-      </ScrollView>
+      )}
+      {/* </ScrollView> */}
     </ScrollView>
   );
 };
@@ -116,7 +81,7 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   timeSlotColView: {
-    borderWidth: 2,
+    // borderWidth: 2,
     width: '100%',
     minHeight: screenHeight,
     flex: 1,

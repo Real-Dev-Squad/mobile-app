@@ -24,10 +24,11 @@ const TimeSlotView = ({
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
-  // next start time and next endTime , slot start time
+  console.log('🚀 ~ data:>>>>>>>>>', data);
   const [selectedTime, setSelectedTime] = useState(
     `${new Date().getHours()}:${new Date().getMinutes()}`,
   );
+  console.log('selected time >>>>>>>>>>', selectedTime);
   const handleInviteForm = () => setShowInviteForm((prev) => !prev);
 
   const toggleForm = () => setShowInviteForm((prev) => !prev);
@@ -43,37 +44,18 @@ const TimeSlotView = ({
     }
     return null;
   };
-  const handleNewDataSlot = (postInvite_) => {
-    getMatchingTimeSlots();
-    //here
-    // setNewDataSlot(updatedCalendarData);
-    // setTimeout(() => {
-    //   setRefreshKey(Math.random());
-    // }, 300);
-  };
-  const handleSubmitTime = (ele) => {
-    //  mm/dd/yy
-    // convert from dd/mm/yy to yy/mm/dd
-    // 2024-03-03T14:31:22.871Z
-    const selectedDateWithSelectedTime = `${
-      selectedDate.toString().split('T')[0]
-    }T${ele}`;
-    const durationMilliseconds = 30 * 60 * 1000;
+  // const handleNewDataSlot = () => {};
 
-    const endHourDate = new Date(selectedDate.getTime() + durationMilliseconds);
-
-    //TODO: logic for the last hour
-    // const formatStartDD = toUnix(selectedDateWithSelectedTime);
-    // const formatEndDD = toUnix(endHourDate);
-    // return { formatStartDD, formatEndDD };
-  };
   return (
-    <View
-      style={{
-        backgroundColor: 'white',
-        display: 'flex',
-        flexDirection: 'row',
-      }}
+    <ScrollView
+      // style={{
+      //   backgroundColor: 'white',
+      //   display: 'flex',
+      //   flexDirection: 'row',
+      //   flex: 1,
+      // }}
+      style={{ flex: 1, overflow: 'scroll' }}
+      stickyHeaderIndices={[0]}
     >
       <View style={styles.container}>
         {Time_Slots.map((ele, index) => (
@@ -82,6 +64,7 @@ const TimeSlotView = ({
           </View>
         ))}
       </View>
+
       {showInviteForm && (
         <Modal
           transparent={true}
@@ -97,23 +80,16 @@ const TimeSlotView = ({
             setSelectedTime={setSelectedTime}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
-            handleEventSubmit={handleNewDataSlot}
+            handleEventSubmit={getMatchingTimeSlots}
             userData={userData}
             toggleForm={toggleForm}
           />
         </Modal>
       )}
-
-      <View
-        style={{
-          width: '78%',
-          backgroundColor: 'white',
-          height: multiplier,
-          marginLeft: 2,
-        }}
-      >
+      <View style={{ width: '78%' }}>
         {data?.map((event: any, index: number) => (
           <ParticipantColView
+            key={index}
             event={event}
             multiplier={multiplier}
             getBorderBottomColor={getBorderBottomColor(
@@ -127,7 +103,7 @@ const TimeSlotView = ({
           />
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

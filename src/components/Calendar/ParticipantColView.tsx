@@ -5,7 +5,11 @@ import Modal from 'react-native-modal';
 
 import UserDesc from '../../screens/CalendarInvite/UserDesc';
 import { profileScreenStyles } from '../../screens/ProfileScreen/styles';
-import { getStartAndEndTime } from '../../helpers/SiteUtils';
+import {
+  CELL_HEIGHT,
+  getStartAndEndTime,
+  screenHeight,
+} from '../../helpers/SiteUtils';
 
 const ParticipantColView = ({
   event,
@@ -18,6 +22,7 @@ const ParticipantColView = ({
   getBorderBottomColor: string;
   selectedDate: Date;
 }) => {
+  console.log('🚀 ~ event:>>>>>EVENT>>>>>>', event);
   const [showSelectedUsersDetails, setShowSelectedUsersDetails] =
     useState(false);
 
@@ -69,6 +74,7 @@ const ParticipantColView = ({
     if (calculatedWidth > maxProfileSize) {
       calculatedWidth = maxProfileSize;
     }
+    console.log({ calculatedHeight, calculatedWidth });
   };
   return (
     <TouchableOpacity
@@ -95,34 +101,11 @@ const ParticipantColView = ({
               picture: user.picture,
               first_name: user.first_name,
               last_name: user.last_name,
+              id: user.id,
             }}
-            profileHeight={getProfileHeight()}
-            profileWidth={getProfileHeight()}
+            profileHeight={200 || getProfileHeight()}
+            profileWidth={200 || getProfileHeight()}
           />
-          {showSelectedUsersDetails && (
-            <Modal
-              // transparent={true}
-              isVisible={showSelectedUsersDetails}
-              onBackdropPress={() =>
-                setShowSelectedUsersDetails((prev) => !prev)
-              }
-              onBackButtonPress={() =>
-                setShowSelectedUsersDetails((prev) => !prev)
-              }
-              backdropOpacity={0.7}
-              animationIn="slideInUp"
-              animationOut="slideOutDown"
-              style={profileScreenStyles.modal}
-            >
-              <UserDesc
-                startTime={startTime}
-                endTime={endTime}
-                eventName={eventName}
-                user={user}
-                setModalVisible={setShowSelectedUsersDetails}
-              />
-            </Modal>
-          )}
         </>
       ))}
     </TouchableOpacity>
@@ -133,10 +116,10 @@ export default ParticipantColView;
 
 const styles = StyleSheet.create({
   container: {
-    // height: screenHeight,
+    height: screenHeight,
   },
   event: {
-    // height: CELL_HEIGHT,
+    height: CELL_HEIGHT,
     borderWidth: 1,
   },
 });

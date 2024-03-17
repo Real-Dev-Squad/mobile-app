@@ -44,7 +44,8 @@ export default LayoutHeader;
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#3994f8',
-    width: '60%',
+    flex: 1,
+    // width: '80%',
     height: 40,
     borderRadius: 4,
     alignItems: 'center',

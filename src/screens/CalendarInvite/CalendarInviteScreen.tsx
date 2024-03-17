@@ -1,12 +1,29 @@
-import { Alert, AppState, StyleSheet, View } from 'react-native';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import {
+  Alert,
+  AppState,
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import NotifyDropDown from '../../components/NotifyDropDown';
 import DisplayProfile from '../../components/DisplayProfile';
 import {
   disconnectInactiveUsers,
   fetchEvents,
+  getLastLoggedInTime,
   getLastUserPosition,
+  getLiveUserInfoInRealtime,
   getLiveUsers,
+  postIdsWithTimeStamp,
   postLiveUsers,
   postPositionWithId,
   removeOfflineUser,
@@ -30,8 +47,10 @@ import { firebase } from '@react-native-firebase/database';
 import Checkbox from '../../components/Checkbox';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllUsers } from '../AuthScreen/Util';
-import { useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import Button_ from '../../components/Button_';
+import LayoutHeader from '../../components/Calendar/LayoutHeader';
+import { compact, remove } from 'lodash';
 
 export const getProgressVal = () => {
   return firebase
@@ -64,115 +83,185 @@ export type UserInfoType = {
   updated_at: number;
   username: string;
 };
+const tempData = {
+  company: 'Temporary company',
+  created_at: 1710420200205,
+  designation: 'Faltu ka kaam',
+  discordId: '728932416059867216',
+  discordJoinedAt: '2022-01-02T08:17:42.704000+00:00',
+  first_name: 'temp',
+  github_created_at: 1581850563000,
+  github_display_name: 'Temporary',
+  github_id: 'shreya-mishra',
+  github_user_id: '61110378',
+  id: 'H5PtL5x0q38MoOWTN92w',
+  incompleteUserDetails: false,
+  instagram_id: 'shreya1mishra_',
+  last_name: 'User',
+  linkedin_id: 'shreyamishra04',
+  picture: {
+    publicId: 'profile/T7IL7MB8YriniTw4bt39/kecskmedeh7ktl2mnd6c',
+    url: '',
+  },
+  profileStatus: 'BLOCKED',
+  profileURL: 'https://shreya-profile-service.onrender.com',
+  roles: {
+    archived: false,
+    in_discord: true,
+    member: true,
+  },
+  status: 'active',
+  twitter_id: 'shreya1mishra',
+  updated_at: 1710420200105,
+  username: 'shreya',
+  website: 'https://shreya-portfolio.vercel.app/',
+  yoe: 2,
+};
 
 const CalendarInviteScreen = () => {
   const [showInviteForm, setShowInviteForm] = useState(false);
-
   const [progressVal, setProgressVal] = useState(20);
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [liveUsers, setLiveUsers] = useState<UserInfoType[]>([]);
+  const [liveIds, setLiveIds] = useState([]);
   const [usersWithTimeSlots, setUsersWithTimeSlots] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date()); // dd/mm/yy
   const [multiModeOn, setMultimodeOn] = useState(false);
   const { loggedInUserData } = useContext(AuthContext);
-  const [allUsers, setAllUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState<UserInfoType>([]);
   const isFocused = useIsFocused();
+  const [isAutoScroll, setIsAutoScroll] = useState(false);
   const [prevLiveUserId, setPrevLiveUserId] = useState({});
+  const [lastActiveUser, setLastActiveUser] = useState();
+  const [proof, setProof] = useState([]);
+  const [displayTime, setDisplayTime] = useState();
+  const [scrollTime, setScrollTime] = useState(0);
+  const [latestTimeStamp, setLatestTimeStamp] = useState();
+  console.log('🚀 ~ CalendarInviteScreen ~ latestTimeStamp:', latestTimeStamp);
+  const [autoScrollVal, setAutoScrollVal] = useState();
+
+  const minHourSelectedDate =
+    new Date(selectedDate).setHours(0, 0, 0, 0) / 1000;
+  // TODO: (move to useEffect later , check date change)
+  const liveUsersRef = firebase.app().database().ref('liveUsers');
+
+  useEffect(() => {
+    fetchData();
+    getLiveUserInfoInRealtime(
+      setProof,
+      setLiveIds,
+      setLatestTimeStamp,
+      selectedDate,
+    );
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getLastUserPosition_();
+      postLiveUsers(loggedInUserData?.id);
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>MOUNTING');
+      return () => {
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>UNMOUNTING');
+        removeOfflineUser(loggedInUserData?.id);
+      };
+    }, []),
+  );
+  useEffect(() => {
+    getLastUserPosition_();
+    getLiveUsers_();
+    return () => {
+      // removeOfflineUser(loggedInUserData?.id);
+      // liveUsersRef.off('value');
+    };
+  }, [isFocused, proof, liveIds, latestTimeStamp]);
 
   const fetchData = async () => {
     const allUser = await getAllUsers(loggedInUserData?.token);
-    setAllUsers(allUser);
+    setAllUsers([tempData, ...allUser]);
   };
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
         getLiveUsers_();
+        // getLastLoggedInTime_(loggedInUserData?.id);
+        getLastUserPosition_();
       } else {
         removeOfflineUser(loggedInUserData?.id);
-        removePositionWithId(loggedInUserData?.id);
+        // liveUsersRef.off('value');
       }
     });
     return () => {
       subscription.remove();
     };
   }, []);
-  // call post api call in every 5 min and check live users should go, and duplicacy should not be there
+
   useEffect(() => {
     let apiCallInterval: string | number | NodeJS.Timeout | undefined;
     if (isFocused) {
+      // TODO: get focused when you are on screen not after scroll
       apiCallInterval = setInterval(() => {
+        // getLiveUsers_();
+        // getLastUserPosition_();
         postLiveUsers(loggedInUserData?.id);
-        getLiveUsers_();
-      }, 5000); // 5 minutes in milliseconds
+        postIdsWithTimeStamp(loggedInUserData?.id, prevLiveUserId);
+      }, 10000); // 5 minutes in milliseconds
     } else {
       removeOfflineUser(loggedInUserData?.id);
-      removePositionWithId(loggedInUserData?.id);
     }
     return () => {
       clearInterval(apiCallInterval);
     };
   }, [multiModeOn, isFocused]);
 
-  useEffect(() => {
-    fetchData();
-    getLiveUsers_();
-    // if (multiModeOn) {
-    //   getLastUserPosition_();
-    // }
-  }, []);
+  const getLastUserPosition_ = () => {
+    console.log('PROOOOOOOOOOOOOOOOOOOOOOOFFFFFFFFFFFFFFFFFFF', proof);
+    const lastUser_ = allUsers.filter(
+      (user: UserInfoType) => proof.id === user.id,
+    );
+    console.log('🚀 ~ CalendarInviteScreen ~ lastUser_:', lastUser_);
+    setLastActiveUser(lastUser_[0]);
+    let newVal = proof?.position;
 
-  const getLastUserPosition_ = (lastUser: { id: string }) => {
-    getLastUserPosition(lastUser?.id)
-      .then((val) => {
-        // convertEpochTime to normal date and time
-        const dStr = epocToDateTime(val);
-        const date = dStr.split('T')[0];
-        const time = dStr.split('T')[1];
-        const [hr, min, sec] = time.split(':');
-        var totalMinutes = Number(hr) * 60 + Number(min); //28504681000
-        let convertToOffsetVal = (totalMinutes / 60) * progressVal * 2.4 + 40;
-        return { convertToOffsetVal, date };
-      })
-      .then(({ convertToOffsetVal, date }) =>
-        handleScrollToLastUserPosition(convertToOffsetVal, date),
-      );
+    if (proof === null || proof === undefined) {
+      newVal = minHourSelectedDate;
+    }
+    const dStr = epocToDateTime(newVal, false, false);
+    const date = dStr.split('T')[0];
+    console.log('🚀 ~ .then ~ date:', date);
+    const time = dStr.split('T')[1];
+    const [hr, min, sec] = time.split(':');
+    //TODO:
+    let dTime = `${hr}:${min}`;
+    console.log('🚀 ~ .then ~ dTime:', dTime);
+    var totalMinutes = Number(hr) * 60 + Number(min); //28504681000
+    let convertToOffsetVal = (totalMinutes / 60) * progressVal * 2.4;
+    console.log(
+      '🚀 ~ CalendarInviteScreen ~ convertToOffsetVal:',
+      convertToOffsetVal,
+    );
+    setAutoScrollVal(convertToOffsetVal);
+    handleScrollToLastUserPosition(convertToOffsetVal, date);
   };
 
   const getLiveUsers_ = () => {
-    // TODO: it should not show my profile
-    getLiveUsers()
-      .then((userIds) => {
-        const newArray = [...userIds].filter((value) => value !== null);
-        const filteredLiveUsers = newArray.map((id) =>
-          allUsers.find((user) => user.id === id),
-        );
-
-        if (filteredLiveUsers?.length > 0) {
-          // Set the filteredLiveUsers to liveUsers
-          setLiveUsers(filteredLiveUsers);
-          return filteredLiveUsers;
-        } else {
-          console.log('No live users found');
-          // Handle the case when no live users are found
-          // multiModeOn &&
-          //   Toast.show({
-          //     type: 'error',
-          //     text1: 'No live users found',
-          //     position: 'bottom',
-          //   });
-        }
-      })
-
-      .then(
-        (filteredLiveUsers: any) =>
-          multiModeOn &&
-          getLastUserPosition_(filteredLiveUsers[filteredLiveUsers.length - 1]),
-      )
-
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    console.log('livIDSSSSSSSS>>>', liveIds);
+    const newArray: Array<UserInfoType> = liveIds.filter(
+      (value) => value !== null,
+    );
+    const filteredLiveUsers = newArray
+      .map((id) => allUsers.find((user: any) => user.id === id))
+      .filter((item) => item !== undefined) as unknown as Array<UserInfoType>;
+    console.log(
+      '🚀 ~ CalendarInviteScreen ~ filteredLiveUsers:',
+      filteredLiveUsers,
+    );
+    if (filteredLiveUsers?.length > 0) {
+      setLiveUsers(filteredLiveUsers);
+      return filteredLiveUsers;
+    } else {
+      console.log('No live users found');
+    }
   };
 
   useEffect(() => {
@@ -185,7 +274,6 @@ const CalendarInviteScreen = () => {
         const newProgressVal = snapshot.val()?.progressVal || 20;
         setProgressVal(newProgressVal);
       });
-
       return () => {
         // Clean up the listener when the component unmounts
         progressValRef.off('value');
@@ -223,6 +311,7 @@ const CalendarInviteScreen = () => {
         (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
       );
     });
+    console.log('🚀 ~ filteredData ~ filteredData:', filteredData);
     // end time check
     let fData = [];
     for (const event of filteredData) {
@@ -240,6 +329,7 @@ const CalendarInviteScreen = () => {
     }
 
     const fSortedData = getSortedEvents(fData);
+    console.log('🚀 ~ getData ~ fSortedData:', fSortedData);
     if (users.length === 0) {
       setUsersWithTimeSlots([]);
       return;
@@ -248,6 +338,7 @@ const CalendarInviteScreen = () => {
   };
   const getMatchingTimeSlots = async () => {
     const event_ = await fetchEvents();
+    console.log('🚀 ~ getMatchingTimeSlots ~ event_:', event_);
     return [...event_];
   };
 
@@ -260,6 +351,8 @@ const CalendarInviteScreen = () => {
     }
   };
   const handleAddEvent = () => {
+    // postLiveUsers('AAM0MZxZXEfWKmfdYOUp');
+    // return;
     if (users.length === 0) {
       Toast.show({
         type: 'error',
@@ -273,24 +366,34 @@ const CalendarInviteScreen = () => {
 
   const scrollViewRef = useRef();
   const handleScrollToLastUserPosition = (val, date) => {
+    // autoscroll / user scroll
+    // call ->
+
     if (multiModeOn && scrollViewRef.current) {
-      setSelectedDate(formatDate(date));
+      setIsAutoScroll(true);
+      // setSelectedDate(formatDate(date));
+      let totalVal = val / ((120 * progressVal) / 50);
+      let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
+      console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
+      let sTime = epocToDateTime(transformTime).split('T')[1];
+      console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
+      setScrollTime(sTime);
       scrollViewRef?.current.scrollTo({
         x: 0,
         y: val,
         animated: true,
       });
+      setTimeout(() => setIsAutoScroll(false), 1000);
     }
   };
-
   const calculateOffsetVal = (scrollOffsetVal: number) => {
-    if (scrollOffsetVal > 40) {
-      // *******************************
-
-      let totalVal = (scrollOffsetVal - 40) / ((120 * progressVal) / 50);
-      let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
-      return transformTime;
-    }
+    let totalVal = scrollOffsetVal / ((120 * progressVal) / 50);
+    let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
+    console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
+    let sTime = epocToDateTime(transformTime).split('T')[1];
+    console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
+    setScrollTime(sTime);
+    return transformTime;
   };
   return (
     <>
@@ -298,56 +401,158 @@ const CalendarInviteScreen = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         scrollEventThrottle={50}
-        onScroll={(event) => {
-          let timeStamp = calculateOffsetVal(event.nativeEvent.contentOffset.y);
-          postPositionWithId(loggedInUserData?.id, timeStamp, prevLiveUserId);
+        onScrollEndDrag={(event) => {
+          if (!isAutoScroll) {
+            let timeStamp = calculateOffsetVal(
+              event.nativeEvent.contentOffset.y,
+            );
+            console.log('-----SCROLL TIMESTAMP VALUE------', timeStamp);
+            console.log('-------ONSCROLL CONDITION--------', {
+              timeStamp,
+              autoScrollVal,
+              stringiFiedTimestamp: timeStamp.toString(),
+            });
+            timeStamp &&
+              autoScrollVal !== timeStamp &&
+              timeStamp.toString() !== 'NaN' &&
+              postPositionWithId(
+                loggedInUserData?.id,
+                timeStamp,
+                prevLiveUserId,
+                selectedDate,
+              );
+          } else {
+            console.log('--------AUTO-SCROLL-DETECTED-------');
+          }
         }}
         style={{ flex: 1, overflow: 'scroll' }}
         stickyHeaderIndices={[0]}
         ref={scrollViewRef}
       >
-        <View
-          style={{ position: 'relative', top: 0, backgroundColor: 'white' }}
-        >
-          <ProgressToZoom
-            progressVal={progressVal}
-            setProgressVal={setProgressVal}
-          />
-          <View style={styles.flexView}>
-            <View style={{ width: '60%' }}>
-              <NotifyDropDown
-                title={'Select To invite'}
-                handleUserId={handleUserIdChange}
-                error={''}
-                disabled={multiModeOn}
-              />
+        <View style={{ backgroundColor: 'white' }}>
+          <View
+            style={{ position: 'relative', top: 0, backgroundColor: 'white' }}
+          >
+            <ProgressToZoom
+              progressVal={progressVal}
+              setProgressVal={setProgressVal}
+            />
+            <View style={styles.flexView}>
+              <View style={{ width: '60%', zIndex: 999 }}>
+                <NotifyDropDown
+                  title={'Select To invite'}
+                  handleUserId={handleUserIdChange}
+                  error={''}
+                  disabled={multiModeOn}
+                />
+              </View>
+              <View style={{ marginTop: 20, padding: 10 }}>
+                <Checkbox
+                  onHandleChange={() => setMultimodeOn((prev) => !prev)}
+                />
+              </View>
             </View>
-            <View style={{ marginTop: 20, padding: 10 }}>
-              <Checkbox
-                onHandleChange={() => setMultimodeOn((prev) => !prev)}
-              />
-            </View>
+            <TimeZone />
+            {/* // TODO: to show last active user green */}
+            <DisplayProfile
+              setSelectedUsers={multiModeOn ? setLiveUsers : setUsers}
+              selectedUsers={
+                multiModeOn
+                  ? [
+                      lastActiveUser,
+                      ...liveUsers.filter(
+                        (user) => user.id !== lastActiveUser?.id,
+                      ),
+                    ]
+                  : users
+              }
+              multiModeOn={multiModeOn}
+              latestTimeStamp={latestTimeStamp}
+            />
           </View>
-          <TimeZone />
-          <DisplayProfile
-            setSelectedUsers={multiModeOn ? setLiveUsers : setUsers}
-            selectedUsers={multiModeOn ? [...liveUsers].reverse() : users}
-            multiModeOn={multiModeOn}
-            // lastUser={liveUsers[liveUsers.length - 1]}
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-around',
+              zIndex: -1,
+              backgroundColor: 'white',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                height: 40,
+                width: 50,
+                // borderWidth: 2,
+                backgroundColor: '#3994f8',
+                padding: 4,
+                marginHorizontal: 4,
+              }}
+              onPress={() => {
+                const date = new Date(selectedDate);
+                date.setDate(date.getDate() - 1);
+                setSelectedDate(date);
+              }}
+            >
+              <Text
+                style={{ textAlign: 'center', color: 'white', marginTop: 4 }}
+              >
+                -
+              </Text>
+            </TouchableOpacity>
+            <View style={{ flex: 2, flexDirection: 'row' }}>
+              <LayoutHeader
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+            </View>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                height: 40,
+                width: 50,
+                // borderWidth: 2,
+                padding: 4,
+                backgroundColor: '#3994f8',
+                marginHorizontal: 4,
+              }}
+              onPress={() => {
+                const date = new Date(selectedDate);
+                date.setDate(date.getDate() + 1);
+                setSelectedDate(date);
+              }}
+            >
+              <Text
+                style={{ textAlign: 'center', color: 'white', marginTop: 4 }}
+              >
+                +
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{ borderWidth: 1, color: 'black', marginTop: 2, zIndex: -1 }}
           />
+          {/* TODO: fix hardcoded style */}
+          <View
+            style={{
+              position: 'absolute',
+              top:
+                users.length > 0 || (liveUsers.length > 0 && multiModeOn)
+                  ? 256
+                  : 206,
+              right: 0,
+              borderWidth: 1,
+              backgroundColor: 'black',
+            }}
+          >
+            <Text style={{ color: 'white' }}>
+              {scrollTime ? scrollTime : displayTime}
+            </Text>
+          </View>
         </View>
 
-        {/* 
-      <Calendar
-        userData={users}
-        setUsers={setUsers}
-        users={usersWithTimeSlots}
-        setNewDataSlot={setUsersWithTimeSlots}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        getMatchingTimeSlots={getMatchingTimeSlots}
-        progressVal={progressVal}
-      /> */}
         <CalendarLayout
           setShowInviteForm={setShowInviteForm}
           selectedDate={selectedDate}
