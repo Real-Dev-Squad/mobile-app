@@ -11,6 +11,7 @@ const Strings = {
   ActiveBtn_Text: 'change status to Active',
   OOOBtn1_Text: 'Mark Yourself as OOO',
   OOOBtn2_Text: 'Mark Yourself as Active again',
+  Tab_Calendar: 'Calendar',
 
   // Profile Screen
   Greet_User: 'Hello User',

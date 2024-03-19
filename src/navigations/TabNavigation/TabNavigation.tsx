@@ -12,6 +12,7 @@ import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
 import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
 import { scale } from '../../utils/utils';
+import CalendarInviteScreen from '../../screens/Calendar/CalendarInviteScreen';
 
 const tab = createBottomTabNavigator();
 
@@ -21,7 +22,7 @@ const TabNavigation = () => {
   return (
     <NavigationContainer independent>
       <tab.Navigator
-        initialRouteName={Strings.Tab_Home}
+        initialRouteName={Strings.Tab_Calendar}
         screenOptions={() => ({
           headerShown: false,
           // tabBarStyle: TabViewStyle.tab_bar,
@@ -60,6 +61,42 @@ const TabNavigation = () => {
             },
           }}
         />
+        {!isProdEnvironment && (
+          <tab.Screen
+            name={Strings.Tab_Calendar}
+            component={CalendarInviteScreen}
+            options={{
+              headerShown: false,
+              tabBarLabel: ({ focused }) => {
+                return (
+                  <Text
+                    style={{
+                      fontSize: Fonts.Tab_Text_Font,
+                      color: focused
+                        ? Colors.Tab_Active_Color
+                        : Colors.Tab_Inactive_Color,
+                    }}
+                  >
+                    {Strings.Tab_Calendar}
+                  </Text>
+                );
+              },
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Image
+                    style={TabViewStyle.tab_icon}
+                    source={Images.calendar}
+                  />
+                  // focused ? (
+                  //   <CalendarIcon width={60} height={60} />
+                  // ) : (
+                  //   <CalendarIcon width={30} height={30} focused />
+                  // )
+                );
+              },
+            }}
+          />
+        )}
 
         {!isProdEnvironment && (
           <tab.Screen
