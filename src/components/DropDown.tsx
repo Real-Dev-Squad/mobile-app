@@ -47,6 +47,7 @@ const DropDown = ({
   };
   useEffect(() => {
     fetchData();
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   const fetchData = async () => {
