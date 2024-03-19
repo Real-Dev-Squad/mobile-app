@@ -11,6 +11,7 @@ const CalendarInviteScreen = () => {
 
   useEffect(() => {
     loggedInUserData && fetchUsers(loggedInUserData?.token, setUsers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUserIdChange = (info: UserInfoType) => {
