@@ -1,5 +1,6 @@
 import { Dimensions } from 'react-native';
 import { format, fromUnixTime, getTime, parse } from 'date-fns';
+import moment from 'moment';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;

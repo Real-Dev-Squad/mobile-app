@@ -37,3 +37,10 @@ export type PictureType = {
   publicId: string;
   url: string;
 };
+export interface InputBoxProps {
+  label: string;
+  title: string;
+  onChangeHandler: (text: string) => void;
+  error: string;
+  disabled: boolean;
+}

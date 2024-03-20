@@ -28,7 +28,7 @@
     "axios": "^0.26.0",
     "date-fns": "^3.6.0",
     "eslint-plugin-prettier": "^4.1.0",
-    "moment": "^2.29.4",
+    "moment": "^2.30.1",
     "react": "17.0.2",
     "react-native": "0.67.2",
     "react-native-app-auth": "^6.4.2",

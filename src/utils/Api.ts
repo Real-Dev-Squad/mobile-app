@@ -8,3 +8,15 @@ export const fetchUsers = async (
   const allUser = await getAllUsers(token);
   setUsers(allUser);
 };
+
+export const postEvent = async (eventData) => {
+  console.log('🚀 ~ postEvent ~ eventData:', eventData);
+  // return eventsCollection
+  //   .add(eventData)
+  //   .then((docRef) => {
+  //     return Promise.resolve();
+  //   })
+  //   .catch((error) => {
+  //     return Promise.reject();
+  //   });
+};
