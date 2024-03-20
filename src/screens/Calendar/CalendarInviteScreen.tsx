@@ -8,14 +8,13 @@ import TimeZone from '../../components/CalendarSpecificComp/TimeZone';
 import DisplayProfile from '../../components/CalendarSpecificComp/DisplayProfile';
 import {
   decimalToTime,
-  timestampToFormatTime,
   transformTime_,
   windowHeight,
 } from '../../helpers/CalendarInviteHelpers';
 import LayoutHeader from '../../components/CalendarSpecificComp/TableHeader';
-import CalendarLayout from '../../components/CalendarSpecificComp/CalendarLayout';
 import FloatingButton_ from '../../components/FloatingButton_';
 import Toast from 'react-native-toast-message';
+import CalendarLayout from '../../components/CalendarSpecificComp/CalendarLayout';
 
 const CalendarInviteScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
@@ -32,7 +31,9 @@ const CalendarInviteScreen = () => {
   }, []);
 
   const handleUserIdChange = (info: UserInfoType) => {
-    const userExists = users.some((user: UserInfoType) => user.id === info.id);
+    const userExists = selectedUser.some(
+      (user: UserInfoType) => user.id === info.id,
+    );
     if (!userExists) {
       setSelectedUser((prevUsers: UserInfoType[]) => [...prevUsers, info]);
     } else {
@@ -78,6 +79,7 @@ const CalendarInviteScreen = () => {
     console.log('🚀 ~ onScrollHandler ~ timeStamp:', timeStamp);
     // return calculateOffsetVal(timeStamp);
   };
+
   return (
     <>
       <FloatingButton_ handleButtonPress={handleAddEvent} />
@@ -131,7 +133,7 @@ const CalendarInviteScreen = () => {
           progressVal={20}
           // usersWithTimeSlots={usersWithTimeSlots}
           // getMatchingTimeSlots={getData}
-          userData={users}
+          selectedUserData={selectedUser}
         />
       </ScrollView>
     </>

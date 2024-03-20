@@ -21,7 +21,7 @@ function getDateObject(dateStr, time) {
   return dateStr;
 }
 const InviteForm = ({
-  userData,
+  selectedUserData,
   selectedDate,
   handleEventSubmit,
   setSelectedTime,
@@ -68,7 +68,7 @@ const InviteForm = ({
     } else {
       setError('');
       const { formatStartDD: startUT, formatEndDD: endUT } = handleSubmitTime();
-      const userIds = userData.map((item) => item.id);
+      const userIds = selectedUserData.map((item) => item.id);
       const data = {
         userId: userIds,
         eventType: 'public',

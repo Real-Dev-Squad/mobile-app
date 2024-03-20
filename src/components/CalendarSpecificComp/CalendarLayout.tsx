@@ -10,14 +10,14 @@ const CalendarLayout = ({
   // getMatchingTimeSlots,
   showInviteForm,
   setShowInviteForm,
-  userData,
+  selectedUserData,
 }: {
   progressVal: number;
   usersWithTimeSlots: any;
   selectedDate: string;
   setSelectedDate: Dispatch<SetStateAction<Date>>;
   getMatchingTimeSlots: () => void;
-  userData: any;
+  selectedUserData: any;
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -31,7 +31,7 @@ const CalendarLayout = ({
         // data={usersWithTimeSlots}
         selectedDate={selectedDate}
         // getMatchingTimeSlots={getMatchingTimeSlots}
-        userData={userData}
+        selectedUserData={selectedUserData}
         showInviteForm={showInviteForm}
       />
       {/* {formatDate(selectedDate) === formatDate(new Date()) && (

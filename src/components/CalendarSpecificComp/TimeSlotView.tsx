@@ -7,20 +7,20 @@ import Modal from 'react-native-modal';
 import InviteForm from './InviteForm';
 
 const TimeSlotView = ({
-  userData,
+  selectedUserData,
   multiplier,
   showInviteForm,
   setShowInviteForm,
   selectedDate,
 }: // getMatchingTimeSlots,
 // selectedDate,
-// userData,
+// selectedUserData,
 {
   multiplier: number;
   data: any;
   getMatchingTimeSlots: () => void;
   selectedDate: string;
-  userData: any;
+  selectedUserData: any;
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -64,7 +64,7 @@ const TimeSlotView = ({
             setSelectedTime={setSelectedTime}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
-            userData={userData}
+            selectedUserData={selectedUserData}
             // handleEventSubmit={getMatchingTimeSlots}
             // toggleForm={toggleForm}
           />
