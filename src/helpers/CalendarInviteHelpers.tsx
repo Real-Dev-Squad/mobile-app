@@ -77,3 +77,18 @@ export const decimalToTime = (decimalValue: number) => {
     seconds: seconds,
   };
 };
+
+export const getColonTime = (date) => {
+  const hours = new Date(date).getHours();
+  const minutes = new Date(date).getMinutes();
+  const newTime =
+    (hours < 10 ? `0${hours}` : hours) +
+    ':' +
+    (minutes < 10 ? `0${minutes}` : minutes);
+  return newTime;
+};
+export const toUnix = (_date: any) => {
+  const dateTimeString = _date;
+  const unixTimestamp = moment(dateTimeString).unix();
+  return unixTimestamp;
+};
