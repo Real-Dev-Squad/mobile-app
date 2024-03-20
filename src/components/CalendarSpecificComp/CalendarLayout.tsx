@@ -8,10 +8,10 @@ const CalendarLayout = ({
   // usersWithTimeSlots,
   selectedDate,
   // getMatchingTimeSlots,
+  showInviteForm,
+  setShowInviteForm,
   userData,
-}: // showInviteForm,
-// setShowInviteForm,
-{
+}: {
   progressVal: number;
   usersWithTimeSlots: any;
   selectedDate: string;
@@ -26,13 +26,13 @@ const CalendarLayout = ({
   return (
     <ScrollView style={styles.timeSlotColView}>
       <TimeSlotView
-        // setShowInviteForm={setShowInviteForm}
+        setShowInviteForm={setShowInviteForm}
         multiplier={MULTIPLIER}
         // data={usersWithTimeSlots}
         selectedDate={selectedDate}
         // getMatchingTimeSlots={getMatchingTimeSlots}
         userData={userData}
-        // showInviteForm={showInviteForm}
+        showInviteForm={showInviteForm}
       />
       {/* {formatDate(selectedDate) === formatDate(new Date()) && (
         <CurrentTimeDenotingHorizontalLine
