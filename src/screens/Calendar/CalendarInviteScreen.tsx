@@ -1,4 +1,4 @@
-import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { fetchUsers } from '../../utils/Api';
@@ -8,12 +8,13 @@ import TimeZone from '../../components/CalendarSpecificComp/TimeZone';
 import DisplayProfile from '../../components/CalendarSpecificComp/DisplayProfile';
 import { windowHeight } from '../../helpers/CalendarInviteHelpers';
 import LayoutHeader from '../../components/CalendarSpecificComp/TableHeader';
+import CalendarLayout from '../../components/CalendarSpecificComp/CalendarLayout';
 
 const CalendarInviteScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [selectedUser, setSelectedUser] = useState<UserInfoType[]>([]);
-  const [selectedDate, setSelectedDate] = useState<number>(Date.now());
+  const [selectedDate, setSelectedDate] = useState(Date.now());
 
   useEffect(() => {
     loggedInUserData && fetchUsers(loggedInUserData?.token, setUsers);
@@ -63,16 +64,22 @@ const CalendarInviteScreen = () => {
               setSelectedDate={setSelectedDate}
             />
           </View>
-          <View
-            style={{
-              borderWidth: 1,
-              backgroundColor: 'black',
-              marginTop: 2,
-              zIndex: -1,
-            }}
-          />
+          <View style={styles.border} />
+
+          <View style={styles.displayTime}>
+            <Text style={styles.textColor}>{'04:20:00'}</Text>
+          </View>
         </View>
-        <View style={{ height: '100%' }} />
+
+        <CalendarLayout
+          // setShowInviteForm={setShowInviteForm}
+          selectedDate={selectedDate}
+          progressVal={20}
+          // usersWithTimeSlots={usersWithTimeSlots}
+          // getMatchingTimeSlots={getData}
+          userData={users}
+          // showInviteForm={showInviteForm}
+        />
       </ScrollView>
     </>
   );
@@ -101,4 +108,13 @@ const styles = StyleSheet.create({
     zIndex: -1,
     backgroundColor: 'white',
   },
+  displayTime: {
+    position: 'absolute',
+    top: 150,
+    right: 0,
+    borderWidth: 1,
+    backgroundColor: 'black',
+  },
+  border: { borderWidth: 1, color: 'black', marginTop: 2, zIndex: -1 },
+  textColor: { color: 'white' },
 });
