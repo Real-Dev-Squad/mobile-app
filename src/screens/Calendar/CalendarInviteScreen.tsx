@@ -7,11 +7,13 @@ import DropDown from '../../components/DropDown';
 import TimeZone from '../../components/CalendarSpecificComp/TimeZone';
 import DisplayProfile from '../../components/CalendarSpecificComp/DisplayProfile';
 import { windowHeight } from '../../helpers/CalendarInviteHelpers';
+import LayoutHeader from '../../components/CalendarSpecificComp/TableHeader';
 
 const CalendarInviteScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
   const [users, setUsers] = useState<UserInfoType[]>([]);
   const [selectedUser, setSelectedUser] = useState<UserInfoType[]>([]);
+  const [selectedDate, setSelectedDate] = useState<number>(Date.now());
 
   useEffect(() => {
     loggedInUserData && fetchUsers(loggedInUserData?.token, setUsers);
@@ -54,6 +56,21 @@ const CalendarInviteScreen = () => {
             selectedUsers={selectedUser}
             multiModeOn={false}
           />
+
+          <View style={styles.tableHeader}>
+            <LayoutHeader
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
+          </View>
+          <View
+            style={{
+              borderWidth: 1,
+              backgroundColor: 'black',
+              marginTop: 2,
+              zIndex: -1,
+            }}
+          />
         </View>
         <View style={{ height: '100%' }} />
       </ScrollView>
@@ -76,4 +93,12 @@ const styles = StyleSheet.create({
   },
   dropdown: { width: '70%' },
   topHeader: { position: 'relative', top: 0, backgroundColor: 'white' },
+  tableHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+    zIndex: -1,
+    backgroundColor: 'white',
+  },
 });
