@@ -5,12 +5,12 @@ import { CELL_HEIGHT } from '../../helpers/CalendarInviteHelpers';
 
 const TimeSlotView = ({
   multiplier,
+  showInviteForm,
+  setShowInviteForm,
 }: // data,
 // getMatchingTimeSlots,
 // selectedDate,
 // userData,
-// showInviteForm,
-// setShowInviteForm,
 {
   multiplier: number;
   data: any;
@@ -23,7 +23,7 @@ const TimeSlotView = ({
   // const [selectedTime, setSelectedTime] = useState(
   //   `${new Date().getHours()}:${new Date().getMinutes()}`,
   // );
-  // const handleInviteForm = () => setShowInviteForm((prev) => !prev);
+  const handleInviteForm = () => setShowInviteForm((prev) => !prev);
 
   // const getBorderBottomColor = (
   //   currentStartTime: number,
