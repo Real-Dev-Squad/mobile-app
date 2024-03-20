@@ -23,7 +23,7 @@ const CalendarInviteScreen = () => {
     }
   };
   return (
-    <View style={styles.flexView}>
+    <View style={styles.flexView} testID="calendar">
       <View style={styles.dropdown}>
         <DropDown
           title={'Select To invite'}
