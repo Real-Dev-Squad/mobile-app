@@ -27,7 +27,7 @@ const CalendarInviteScreen = () => {
     }
   };
   return (
-    <>
+    <View testID="calendar">
       {/* Floating button */}
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
@@ -57,7 +57,7 @@ const CalendarInviteScreen = () => {
         </View>
         <View style={{ height: '100%' }} />
       </ScrollView>
-    </>
+    </View>
   );
 };
 

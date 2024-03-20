@@ -17,7 +17,9 @@ import CalendarInviteScreen from '../../screens/Calendar/CalendarInviteScreen';
 const tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  const { isProdEnvironment } = useSelector(
+    (store: { localFeatureFlag: any }) => store.localFeatureFlag,
+  );
 
   return (
     <NavigationContainer independent>
@@ -61,7 +63,7 @@ const TabNavigation = () => {
             },
           }}
         />
-        {!isProdEnvironment && (
+        {isProdEnvironment && (
           <tab.Screen
             name={Strings.Tab_Calendar}
             component={CalendarInviteScreen}
@@ -81,7 +83,7 @@ const TabNavigation = () => {
                   </Text>
                 );
               },
-              tabBarIcon: ({ focused }) => {
+              tabBarIcon: () => {
                 return (
                   <Image
                     style={TabViewStyle.tab_icon}
