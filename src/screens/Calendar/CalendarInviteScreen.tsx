@@ -3,7 +3,7 @@ import React from 'react';
 
 const CalendarInviteScreen = () => {
   return (
-    <View>
+    <View testID="calendar">
       <Text>CalendarInviteScreen</Text>
     </View>
   );
