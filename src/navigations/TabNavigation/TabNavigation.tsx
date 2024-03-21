@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { Image, Text, Platform } from 'react-native';
 import Colors from '../../constants/colors/Colors';
 import Fonts from '../../constants/fonts/TabFont';
 import Images from '../../constants/images/Image';
@@ -12,6 +12,8 @@ import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
 import ProfileScreen2 from '../../screens/ProfileScreen/ProfileScreen2';
 import NotifyScreen from '../../screens/NotifyScreen/NotifyScreen';
+import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
+import { scale } from '../../utils/utils';
 
 const tab = createBottomTabNavigator();
 
@@ -24,7 +26,11 @@ const TabNavigation = () => {
         initialRouteName={Strings.Tab_Home}
         screenOptions={() => ({
           headerShown: false,
-          tabBarStyle: TabViewStyle.tab_bar,
+          // tabBarStyle: TabViewStyle.tab_bar,
+          tabBarStyle: {
+            paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+            height: scale(55),
+          },
         })}
       >
         <tab.Screen
@@ -122,7 +128,7 @@ const TabNavigation = () => {
 
         <tab.Screen
           name={Strings.Tab_Profile}
-          component={ProfileScreen2}
+          component={AllTaskScreenStack}
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => {

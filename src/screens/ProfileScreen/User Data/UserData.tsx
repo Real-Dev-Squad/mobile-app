@@ -3,49 +3,53 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   Linking,
   TouchableOpacity,
 } from 'react-native';
+import GithubSvg from '../../../../assets/svgs/github_logo';
+import LinkedInSvg from '../../../../assets/svgs/linkedIn';
+import TwitterSvg from '../../../../assets/svgs/twitter';
 
 const UserData = ({ userData }) => {
+  const {
+    twitter_id,
+    linkedin_id,
+    github_id,
+    designation,
+    company,
+    name,
+    username,
+  } = userData;
   return (
     <View>
-      <Text style={styles.Name}>{userData.name}</Text>
-      <Text style={styles.userName}>{'@' + userData.username}</Text>
-      <Text style={styles.designation}> {userData.designation}</Text>
-      <Text style={styles.company}> {userData.company}</Text>
-      <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
-        <>
+      <Text style={styles.Name}>{name}</Text>
+      {github_id && <Text style={styles.userName}>{'@' + username}</Text>}
+      {designation && <Text style={styles.designation}> {designation}</Text>}
+      {company && <Text style={styles.company}> {company}</Text>}
+      <View style={styles.contactView}>
+        {twitter_id && (
           <TouchableOpacity
-            onPress={() => Linking.openURL(userData.twitter_id)}
+            onPress={() => Linking.openURL(`https://twitter.com/${twitter_id}`)}
           >
-            <Image
-              style={{ height: 30, width: 30, margin: 5 }}
-              source={require('../../../../assets/twitter_logo.png')}
-            />
+            <TwitterSvg height={30} width={30} />
           </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => Linking.openURL(userData.linkedin_id)}
-          >
-            <Image
-              style={{ height: 30, width: 30, margin: 5 }}
-              source={require('../../../../assets/linkedIn_logo.png')}
-            />
-          </TouchableOpacity>
-
+        )}
+        {linkedin_id && (
           <TouchableOpacity
             onPress={() =>
-              Linking.openURL(`https://github.com/${userData.github_id}`)
+              Linking.openURL(`https://www.linkedin.com/in/${linkedin_id}`)
             }
           >
-            <Image
-              style={{ height: 30, width: 30, margin: 5 }}
-              source={require('../../../../assets/githublogo.png')}
-            />
+            <LinkedInSvg height={30} width={30} />
           </TouchableOpacity>
-        </>
+        )}
+        {github_id && (
+          <TouchableOpacity
+            onPress={() => Linking.openURL(`https://github.com/${github_id}`)}
+          >
+            <GithubSvg height={28} width={28} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -56,6 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+    textAlign: 'center',
   },
   userName: {
     fontSize: 13,
@@ -72,6 +77,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'grey',
     textAlign: 'center',
+  },
+  contactView: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: 20,
   },
 });
 

@@ -21,7 +21,7 @@ export const AuthViewStyle = StyleSheet.create({
   },
 
   btnContainer: {
-    justifyContent: 'center',
+    // justifyContent: 'space-evenly',
     alignItems: 'center',
     flex: 0.4,
     marginTop: 80,
@@ -37,6 +37,8 @@ export const AuthViewStyle = StyleSheet.create({
     minWidth: 200,
     width: '55%',
     justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
   },
 
   logo: {
@@ -46,12 +48,14 @@ export const AuthViewStyle = StyleSheet.create({
   githubLogo: {
     flex: 0.2,
     justifyContent: 'center',
-    paddingStart: 8,
+    padding: 8,
   },
   signInTxtView: {
-    flex: 0.7,
+    flex: 0.9,
     justifyContent: 'center',
-    paddingRight: 5,
+    // paddingRight: 8,
+    alignSelf: 'center',
+    // paddingLeft: 2,
   },
   welcomeMsg: {
     fontSize: 35,

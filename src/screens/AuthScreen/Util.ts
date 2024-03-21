@@ -2,6 +2,8 @@ import axios from 'axios';
 import { urls } from '../../constants/appConstant/url';
 import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
+import moment from 'moment';
+import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
 export const getUserData = async (token: string) => {
   try {
@@ -40,11 +42,35 @@ export const fetchContribution = async (userName: string): Promise<any> => {
   }
 };
 
-export const fetchActiveTasks = async (userName: string): Promise<any> => {
+// export const fetchActiveContributions = async (id: string): Promise<any> => {
+//   try {
+//     const response = await axios.get(urls.GET_ACTIVE_TASK, {
+//       headers: {
+//         cookie: '',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     return null;
+//   }
+// };
+export const fetchAllTasks = async (token: string): Promise<any> => {
   try {
-    const response = await axios.get(urls.GET_ACTIVE_TASKS + userName, {
+    const response = await axios.get(urls.GET_ALL_TASK, {
       headers: {
-        Cookie: '',
+        cookie: `rds-session=${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+export const fetchActiveTasks = async (token: string): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GET_ACTIVE_TASK, {
+      headers: {
+        cookie: `rds-session=${token}`,
       },
     });
     return response.data;
@@ -80,6 +106,59 @@ export const updateMarkYourSelfAs_ = async (markStatus: string) => {
   return res.data.status;
 };
 
+export const goalsAuth = async (token: string): Promise<any> => {
+  try {
+    const response = await axios.get(urls.GOALS_AUTH, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // Use Authorization instead of Cookie
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+export const PostGoal = async (
+  title: string,
+  description: string,
+  created_by: string,
+  assigned_to: string,
+  ends_on: string,
+  assigned_by: string,
+) => {
+  try {
+    const apiUrl = GoalsApi.POST_TODO_S;
+    const goalData = {
+      data: {
+        type: 'Goal',
+        attributes: {
+          title: title,
+          description: description,
+          created_by: created_by,
+          assigned_to: assigned_to,
+          ends_on: ends_on,
+          assigned_by: assigned_by,
+        },
+      },
+    };
+
+    const response = await axios.post(apiUrl, goalData, {
+      headers: {
+        'Content-Type': 'application/vnd.api+json',
+        //  Authorization: `Bearer ${token}`, // Use Authorization instead of Cookie
+      },
+    });
+
+    // Handle the response
+    console.log('POST API response:', response.data);
+    return response.data;
+  } catch (error) {
+    // Handle errors
+    console.error('Error in POST API:', error.message);
+  }
+};
+
 export const getUsersStatus = async (token) => {
   try {
     const res = await axios.get(HomeApi.GET_USER_STATUS, {
@@ -89,7 +168,7 @@ export const getUsersStatus = async (token) => {
       },
     });
     if (res.data.data.currentStatus) {
-      return res.data.data.currentStatus.state;
+      return res?.data?.data?.currentStatus?.state;
     } else {
       return 'Something went wrong';
     }
@@ -108,13 +187,10 @@ export const getAllUsers = async (token) => {
     });
     if (res?.data?.users) {
       return res?.data?.users;
-    } 
-    else {
+    } else {
       return 'Something went wrong';
     }
-  }
-  
-  catch (err) {
+  } catch (err) {
     return 'Something went wrong';
   }
 };
@@ -184,7 +260,28 @@ export const requestCameraPermission = async () => {
     console.warn(err);
   }
 };
+export const unixToTimeStamp = (_date) => {
+  if (!_date) {
+    return 'NA';
+  }
+  // Unix timestamp in seconds
+  const timestamp = _date;
 
+  // Create a new Date object using the timestamp
+  const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
+
+  // Get the components of the date
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+  const year = date.getFullYear();
+
+  // Create a formatted date string
+  const formattedDate = `${day < 10 ? '0' : ''}${day}-${
+    month < 10 ? '0' : ''
+  }${month}-${year}`;
+
+  return formattedDate;
+};
 export const formatTimeToUnix = (date) => {
   const newDate = new Date(date);
 
@@ -254,4 +351,94 @@ export const calculateISODateFormat = (isoDateString) => {
 
 export const parseISODate = (isoDateString) => {
   return new Date(isoDateString);
+};
+
+export const formatTimeAgo = (timestamp) => {
+  const currentDate = moment();
+  const endDate = moment.unix(timestamp);
+  return endDate.from(currentDate);
+};
+
+export const fetchTaskDetails = async (
+  taskId: String,
+  token: string,
+): Promise<any> => {
+  console.log(
+    'token and taskid',
+    urls.GET_ALL_TASK + taskId + '/details',
+    taskId,
+  );
+  try {
+    const response = await axios.get(urls.GET_ALL_TASK + taskId + '/details', {
+      headers: {
+        'Content-type': 'application/json',
+        cookie: `rds-session=${token}`,
+      },
+    });
+    console.log(response.status);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+export const fetchTaskProgressDetails = async (
+  token: string,
+  taskId: string,
+): Promise<any> => {
+  console.log('URL>>>', urls.GET_TASK_PROGRESS_DETAIL + taskId);
+  try {
+    const response = await axios.get(urls.GET_TASK_PROGRESS_DETAIL + taskId, {
+      headers: {
+        'Content-type': 'application/json',
+        cookie: `rds-session=${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.log('Error:', response.data);
+      return response.data;
+    } else {
+      console.log('res>>', response.status);
+      return response?.data;
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      // Handle 404 response here if needed
+      // For example, you can return a specific error object or a default value
+      return error.response.data;
+    } else {
+      console.log('Other Error:', error);
+      // Handle other errors here
+      return null;
+    }
+  }
+};
+
+export const overallTaskProgress = async (
+  token: string,
+  percentCompleted: number,
+  taskId: string,
+) => {
+  const options = {
+    headers: {
+      'Content-type': 'application/json',
+      cookie: `rds-session=${token}`,
+    },
+  };
+  const body = { percentCompleted: percentCompleted };
+  try {
+    const res = await axios.patch(
+      `${urls.GET_ACTIVE_TASK}/${taskId}?userStatusFlag=true`,
+      body,
+      options,
+    );
+    if (res.status === 200) {
+      console.log('Task updated successfully!', res.data);
+      return res.data;
+    } else {
+      throw new Error(`API Error: ${res.status} - ${res.statusText}`);
+    }
+  } catch (err) {
+    console.error('API error:', err);
+  }
 };
