@@ -82,6 +82,8 @@ const CalendarInviteScreen = () => {
     <>
       <FloatingButton_ handleButtonPress={handleAddEvent} />
 
+    <View testID="calendar">
+      {/* Floating button */}
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         scrollEventThrottle={50}
@@ -134,7 +136,7 @@ const CalendarInviteScreen = () => {
           userData={users}
         />
       </ScrollView>
-    </>
+    </View>
   );
 };
 
