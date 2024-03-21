@@ -1,7 +1,12 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import React, { Dispatch, SetStateAction } from 'react';
 import TimeSlotView from './TimeSlotView';
-import { windowHeight, windowWidth } from '../../helpers/CalendarInviteHelpers';
+import {
+  formatDate,
+  windowHeight,
+  windowWidth,
+} from '../../helpers/CalendarInviteHelpers';
+import CurrentTimeDenotingHorizontalLine from './CurrentTimeDenotingHorizontalLine';
 
 const CalendarLayout = ({
   progressVal,
@@ -34,12 +39,9 @@ const CalendarLayout = ({
         selectedUserData={selectedUserData}
         showInviteForm={showInviteForm}
       />
-      {/* {formatDate(selectedDate) === formatDate(new Date()) && (
-        <CurrentTimeDenotingHorizontalLine
-          progressVal={progressVal}
-          multiplier={MULTIPLIER}
-        />
-      )} */}
+      {formatDate(selectedDate) === formatDate(new Date()) && (
+        <CurrentTimeDenotingHorizontalLine multiplier={MULTIPLIER} />
+      )}
     </ScrollView>
   );
 };

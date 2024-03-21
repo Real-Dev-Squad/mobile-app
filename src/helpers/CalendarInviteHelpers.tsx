@@ -104,3 +104,13 @@ export const getSortedEvents = (data: any) => {
   const sortedEvents = data?.sort((a, b) => a.startTime - b.startTime);
   return sortedEvents;
 };
+
+export const calculateCurrentTimePosition = (multiplier: number) => {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinutes = now.getMinutes();
+  const position = currentHour * 60 + currentMinutes; // Position in minutes
+
+  // Calculate the position based on your progressVal and other factors
+  return (position * multiplier) / 60;
+};
