@@ -1,4 +1,5 @@
 import { UserInfoType } from '../context/type';
+import { eventsCollection } from '../helpers/CalendarInviteHelpers';
 import { getAllUsers } from '../screens/AuthScreen/Util';
 
 export const fetchUsers = async (
@@ -11,12 +12,12 @@ export const fetchUsers = async (
 
 export const postEvent = async (eventData) => {
   console.log('🚀 ~ postEvent ~ eventData:', eventData);
-  // return eventsCollection
-  //   .add(eventData)
-  //   .then((docRef) => {
-  //     return Promise.resolve();
-  //   })
-  //   .catch((error) => {
-  //     return Promise.reject();
-  //   });
+  return eventsCollection
+    .add(eventData)
+    .then(() => {
+      return Promise.resolve();
+    })
+    .catch(() => {
+      return Promise.reject();
+    });
 };

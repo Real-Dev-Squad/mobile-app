@@ -1,6 +1,9 @@
 import { Dimensions } from 'react-native';
 import { format, fromUnixTime, getTime, parse } from 'date-fns';
 import moment from 'moment';
+import firestore from '@react-native-firebase/firestore';
+
+export const eventsCollection = firestore().collection('events');
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
