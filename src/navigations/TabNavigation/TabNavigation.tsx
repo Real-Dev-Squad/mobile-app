@@ -189,7 +189,7 @@ const TabNavigation = () => {
             },
           }}
         />
-        <tab.Screen
+        {/* <tab.Screen
           name={'Test'}
           component={testScreen}
           options={{
@@ -209,7 +209,7 @@ const TabNavigation = () => {
               );
             },
           }}
-        />
+        /> */}
       </tab.Navigator>
     </NavigationContainer>
   );
