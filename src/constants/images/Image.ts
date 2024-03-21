@@ -7,7 +7,7 @@ const Images = {
   goalIconUnF: require('../../../assets/goalIcon.png'),
   profileIconUnF: require('../../../assets/profile-g.png'),
   emptyTaskScreen: require('../../../assets/task-empty.png'),
-  circle: require('../../../assets/circle.png'),
+  // circle: require('../../../assets/circle.png'),
   calendar: require('../../../assets/calendar.png'),
   dropup: require('../../../assets/dropup.png'),
   dropdown: require('../../../assets/dropdown.png'),

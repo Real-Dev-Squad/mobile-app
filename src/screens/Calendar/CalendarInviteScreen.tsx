@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   displayTime: {
     position: 'absolute',
-    top: 150,
+    top: 202, //TODO: calculate via header ht
     right: 0,
     borderWidth: 1,
     backgroundColor: 'black',

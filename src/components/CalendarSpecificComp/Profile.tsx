@@ -10,7 +10,7 @@ const Profile = ({
   multimodeOn = false,
   index,
 }: {
-  selectedUser: UserInfoType;
+  selectedUser: any;
   profileHeight?: number;
   profileWidth?: number;
   marginTop?: number;

@@ -5,7 +5,7 @@ import { windowHeight, windowWidth } from '../../helpers/CalendarInviteHelpers';
 
 const CalendarLayout = ({
   progressVal,
-  // usersWithTimeSlots,
+  usersWithTimeSlots,
   selectedDate,
   getMatchingTimeSlots,
   showInviteForm,
@@ -28,7 +28,7 @@ const CalendarLayout = ({
       <TimeSlotView
         setShowInviteForm={setShowInviteForm}
         multiplier={MULTIPLIER}
-        // data={usersWithTimeSlots}
+        data={usersWithTimeSlots}
         selectedDate={selectedDate}
         getMatchingTimeSlots={getMatchingTimeSlots}
         selectedUserData={selectedUserData}
