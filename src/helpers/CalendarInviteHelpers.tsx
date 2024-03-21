@@ -98,3 +98,9 @@ export const timestampToUnix = (timestamp: number) => {
   const formattedTime = format(date, 'HH:mm:ss');
   return formattedTime;
 };
+
+export const getSortedEvents = (data: any) => {
+  // const event_ = await fetchEvents();
+  const sortedEvents = data?.sort((a, b) => a.startTime - b.startTime);
+  return sortedEvents;
+};

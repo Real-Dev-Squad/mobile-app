@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { fetchUsers } from '../../utils/Api';
+import { fetchEvents, fetchUsers } from '../../utils/Api';
 import { UserInfoType } from '../../context/type';
 import DropDown from '../../components/DropDown';
 import TimeZone from '../../components/CalendarSpecificComp/TimeZone';
 import DisplayProfile from '../../components/CalendarSpecificComp/DisplayProfile';
 import {
   decimalToTime,
+  getSortedEvents,
   minHourSelectedDate,
   timestampToUnix,
   transformTime_,
@@ -35,6 +36,7 @@ const CalendarInviteScreen = () => {
   let smallestTs = minHourSelectedDate(selectedDate);
   const [scrollTime, setScrollTime] = useState(timestampToUnix(smallestTs));
   const scrollViewRef = useRef();
+  const [eventsInSlot, setEventsInSlot] = useState([]);
 
   useEffect(() => {
     loggedInUserData && fetchUsers(loggedInUserData?.token, setUsers);
@@ -64,7 +66,55 @@ const CalendarInviteScreen = () => {
     }
   };
 
-  const getData = () => {};
+  const getData = async () => {
+    const data = await getMatchingTimeSlots();
+    const sortedEvents = data;
+    // filter by date
+    let today = new Date(selectedDate);
+    let tomorrow = new Date(selectedDate);
+    tomorrow.setDate(today.getDate() + 1);
+    let tomorrow_ = tomorrow.setUTCHours(0, 0, 0, 0);
+    let today_ = today.setUTCHours(0, 0, 0, 0);
+
+    // Get today's and tomorrow's timestamps in seconds
+    const todayTimestamp = Math.floor(today_ / 1000);
+
+    const tomorrowTimestamp = Math.floor(tomorrow_ / 1000);
+    // Filter the sortedData based on today's timestamp and startTime
+    const filteredData = sortedEvents.filter((event: any) => {
+      return (
+        (event.startTime >= todayTimestamp &&
+          event.startTime < tomorrowTimestamp) ||
+        (event.endTime >= todayTimestamp && event.endTime < tomorrowTimestamp)
+      );
+    });
+    // end time check
+    let fData = [];
+    for (const event of filteredData) {
+      let users_ = [];
+      for (const user of users) {
+        if (event.userId.includes(user.id)) {
+          users_.push(user);
+        }
+      }
+      if (users_.length > 0) {
+        fData.push({ ...event, users_ });
+      } else {
+        console.log('users not there');
+      }
+    }
+
+    const fSortedData = getSortedEvents(fData);
+    if (users.length === 0) {
+      setEventsInSlot([]);
+      return;
+    }
+    setEventsInSlot(fSortedData);
+  };
+  const getMatchingTimeSlots = async () => {
+    const event_ = await fetchEvents();
+    return [...event_];
+  };
   const calculateOffsetVal = (scrollOffsetVal: number) => {
     // TODO:update 20 from progress val
     if (scrollOffsetVal === 0) {
@@ -137,7 +187,7 @@ const CalendarInviteScreen = () => {
           showInviteForm={flag}
           selectedDate={selectedDate}
           progressVal={20}
-          // usersWithTimeSlots={usersWithTimeSlots}
+          usersWithTimeSlots={eventsInSlot}
           getMatchingTimeSlots={getData}
           selectedUserData={selectedUser}
         />

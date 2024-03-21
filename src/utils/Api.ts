@@ -21,3 +21,17 @@ export const postEvent = async (eventData: EventDataType) => {
       return Promise.reject();
     });
 };
+
+export const fetchEvents = async () => {
+  let eventSnapshot = await eventsCollection.get();
+
+  const events: EventDataType[] = [];
+
+  eventSnapshot.forEach((event: any) => {
+    events.push({
+      id: event.id,
+      ...event.data(),
+    });
+  });
+  return events;
+};
