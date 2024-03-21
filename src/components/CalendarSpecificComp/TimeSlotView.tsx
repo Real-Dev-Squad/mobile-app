@@ -1,14 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Time_Slots } from '../../constants/TimeSlotsData';
 import { CELL_HEIGHT } from '../../helpers/CalendarInviteHelpers';
+import { profileScreenStyles } from '../../screens/ProfileScreen/styles';
+import Modal from 'react-native-modal';
+import InviteForm from './InviteForm';
 
 const TimeSlotView = ({
+  userData,
   multiplier,
   showInviteForm,
   setShowInviteForm,
-}: // data,
-// getMatchingTimeSlots,
+  selectedDate,
+}: // getMatchingTimeSlots,
 // selectedDate,
 // userData,
 {
@@ -20,9 +24,9 @@ const TimeSlotView = ({
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
-  // const [selectedTime, setSelectedTime] = useState(
-  //   `${new Date().getHours()}:${new Date().getMinutes()}`,
-  // );
+  const [selectedTime, setSelectedTime] = useState(
+    `${new Date().getHours()}:${new Date().getMinutes()}`,
+  );
   const handleInviteForm = () => setShowInviteForm((prev) => !prev);
 
   // const getBorderBottomColor = (
@@ -45,6 +49,27 @@ const TimeSlotView = ({
           </View>
         ))}
       </View>
+      {showInviteForm && (
+        <Modal
+          transparent={true}
+          isVisible={showInviteForm}
+          onBackdropPress={handleInviteForm}
+          onBackButtonPress={handleInviteForm}
+          backdropOpacity={0.7}
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          style={profileScreenStyles.modal}
+        >
+          <InviteForm
+            setSelectedTime={setSelectedTime}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            userData={userData}
+            // handleEventSubmit={getMatchingTimeSlots}
+            // toggleForm={toggleForm}
+          />
+        </Modal>
+      )}
     </>
   );
 };
