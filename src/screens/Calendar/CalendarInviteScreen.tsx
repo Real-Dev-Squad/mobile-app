@@ -1,4 +1,12 @@
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Alert,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { fetchUsers } from '../../utils/Api';
@@ -8,6 +16,8 @@ import TimeZone from '../../components/CalendarSpecificComp/TimeZone';
 import DisplayProfile from '../../components/CalendarSpecificComp/DisplayProfile';
 import {
   decimalToTime,
+  minHourSelectedDate,
+  timestampToUnix,
   transformTime_,
   windowHeight,
 } from '../../helpers/CalendarInviteHelpers';
@@ -22,7 +32,8 @@ const CalendarInviteScreen = () => {
   const [selectedUser, setSelectedUser] = useState<UserInfoType[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [flag, setFlag] = useState(false);
-  const [scrollTime, setScrollTime] = useState('00:00:00');
+  let smallestTs = minHourSelectedDate(selectedDate);
+  const [scrollTime, setScrollTime] = useState(timestampToUnix(smallestTs));
   const scrollViewRef = useRef();
 
   useEffect(() => {
@@ -42,9 +53,7 @@ const CalendarInviteScreen = () => {
   };
 
   const handleAddEvent = () => {
-    // postLiveUsers('AAM0MZxZXEfWKmfdYOUp');
-    // return;
-    if (users.length === 0) {
+    if (selectedUser.length === 0) {
       Toast.show({
         type: 'error',
         text1: 'Please Select User to create event',
@@ -55,29 +64,26 @@ const CalendarInviteScreen = () => {
     }
   };
 
+  const getData = () => {};
   const calculateOffsetVal = (scrollOffsetVal: number) => {
     // TODO:update 20 from progress val
-    let totalVal;
-    if (scrollOffsetVal > 0) {
+    if (scrollOffsetVal === 0) {
+      let newS = timestampToUnix(smallestTs);
+      setScrollTime(newS);
+    } else {
+      let totalVal;
       totalVal = scrollOffsetVal / ((120 * 20) / 50);
-    }
 
-    console.log('🚀 ~ calculateOffsetVal ~ totalVal:', totalVal);
-    let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
-    console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
-    // let sTime = timestampToFormatTime(transformTime);
-    // console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
-    setScrollTime(transformTime);
-    // return transformTime;
+      let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
+      let sTime = timestampToUnix(transformTime);
+      setScrollTime(sTime);
+
+      return transformTime;
+    }
   };
-  const onScrollHandler = (event: any) => {
-    console.log(
-      '🚀 ~ onScrollHandler ~ event:',
-      event.nativeEvent.contentOffset.y,
-    );
-    let timeStamp = calculateOffsetVal(event.nativeEvent.contentOffset.y);
-    console.log('🚀 ~ onScrollHandler ~ timeStamp:', timeStamp);
-    // return calculateOffsetVal(timeStamp);
+  const onScrollHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    let scrollVal = calculateOffsetVal(event.nativeEvent.contentOffset.y);
+    return calculateOffsetVal(scrollVal);
   };
 
   return (
@@ -132,7 +138,7 @@ const CalendarInviteScreen = () => {
           selectedDate={selectedDate}
           progressVal={20}
           // usersWithTimeSlots={usersWithTimeSlots}
-          // getMatchingTimeSlots={getData}
+          getMatchingTimeSlots={getData}
           selectedUserData={selectedUser}
         />
       </ScrollView>

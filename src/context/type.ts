@@ -44,3 +44,12 @@ export interface InputBoxProps {
   error: string;
   disabled: boolean;
 }
+
+export interface EventDataType {
+  endTime: number;
+  eventName: string;
+  eventScheduledBy: string;
+  eventType: string;
+  startTime: number;
+  userId: string[];
+}

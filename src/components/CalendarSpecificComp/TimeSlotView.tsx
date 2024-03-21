@@ -12,8 +12,8 @@ const TimeSlotView = ({
   showInviteForm,
   setShowInviteForm,
   selectedDate,
-}: // getMatchingTimeSlots,
-// selectedDate,
+  getMatchingTimeSlots,
+}: // selectedDate,
 // selectedUserData,
 {
   multiplier: number;
@@ -65,8 +65,8 @@ const TimeSlotView = ({
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             selectedUserData={selectedUserData}
-            // handleEventSubmit={getMatchingTimeSlots}
-            // toggleForm={toggleForm}
+            handleEventSubmit={getMatchingTimeSlots}
+            toggleForm={handleInviteForm}
           />
         </Modal>
       )}

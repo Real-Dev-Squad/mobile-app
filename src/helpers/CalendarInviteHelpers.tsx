@@ -8,7 +8,7 @@ export const eventsCollection = firestore().collection('events');
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 export const CELL_HEIGHT = 60;
-export const todaysDate = format(new Date(), 'dd-MM-yyyy');
+// export const todaysDate = format(new Date(), 'dd-MM-yyyy');
 // export const formatDate = (date: string) =>
 //   format(new Date(date), 'dd-MM-yyyy');
 
@@ -33,16 +33,9 @@ export const transformTime_ = (
   let newDateString = formatToSend(selectedD, time);
 
   console.log('🚀 ~ newDateString:', { newDateString, selectedD, time });
-  //2024-03-20T35643836:15:00
-
   const dateTime = parse(newDateString, "yyyy-MM-dd'T'HH:mm:ss", new Date());
-  let t = format(dateTime, "yyyy-MM-dd'T'HH:mm:ss");
-  return t.split('T')[1];
   const unixTimestamp = Math.floor(getTime(dateTime) / 1000);
-  console.log('>>>>>>>>>>>>>>> check here whats wrong', {
-    dateTime,
-    unixTimestamp,
-  });
+  console.log('🚀 ~ unixTimestamp:', unixTimestamp);
 
   return unixTimestamp;
 };
@@ -95,4 +88,13 @@ export const toUnix = (_date: any) => {
   const dateTimeString = _date;
   const unixTimestamp = moment(dateTimeString).unix();
   return unixTimestamp;
+};
+
+export const minHourSelectedDate = (d) => {
+  return new Date(d).setHours(0, 0, 0, 0) / 1000;
+};
+export const timestampToUnix = (timestamp: number) => {
+  const date = fromUnixTime(timestamp);
+  const formattedTime = format(date, 'HH:mm:ss');
+  return formattedTime;
 };

@@ -7,7 +7,7 @@ const CalendarLayout = ({
   progressVal,
   // usersWithTimeSlots,
   selectedDate,
-  // getMatchingTimeSlots,
+  getMatchingTimeSlots,
   showInviteForm,
   setShowInviteForm,
   selectedUserData,
@@ -30,7 +30,7 @@ const CalendarLayout = ({
         multiplier={MULTIPLIER}
         // data={usersWithTimeSlots}
         selectedDate={selectedDate}
-        // getMatchingTimeSlots={getMatchingTimeSlots}
+        getMatchingTimeSlots={getMatchingTimeSlots}
         selectedUserData={selectedUserData}
         showInviteForm={showInviteForm}
       />
