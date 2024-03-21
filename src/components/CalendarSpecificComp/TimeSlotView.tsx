@@ -43,7 +43,7 @@ const TimeSlotView = ({
 
   return (
     <View style={styles.timeSlotContainer}>
-      <View style={[styles.container, { borderWidth: 2, borderColor: 'red' }]}>
+      <View style={styles.container}>
         {Time_Slots.map((ele: string, index: number) => (
           <View key={index} style={[styles.slot, { height: multiplier }]}>
             <Text style={styles.slotText}>{ele}</Text>
