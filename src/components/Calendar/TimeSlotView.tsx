@@ -58,7 +58,7 @@ const TimeSlotView = ({
         width: screenWidth,
       }}
     >
-      <View style={[styles.container, { borderWidth: 2, borderColor: 'red' }]}>
+      <View style={styles.container}>
         {Time_Slots.map((ele, index) => (
           <View style={[styles.slot, { height: multiplier }]}>
             <Text style={styles.slotText}>{ele}</Text>
