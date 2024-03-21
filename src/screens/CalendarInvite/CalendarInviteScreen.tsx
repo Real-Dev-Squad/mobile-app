@@ -401,6 +401,7 @@ const CalendarInviteScreen = () => {
     let sTime = abc(transformTime);
     // let sTime = epocToDateTime(transformTime).split('T')[1];
     setScrollTime(sTime);
+    setDisplayTime(sTime);
 
     return transformTime;
   };
@@ -557,7 +558,7 @@ const CalendarInviteScreen = () => {
             }}
           >
             <Text style={{ color: 'white' }}>
-              {scrollTime ? scrollTime : displayTime}
+              {scrollTime && multiModeOn ? scrollTime : displayTime}
             </Text>
           </View>
         </View>
