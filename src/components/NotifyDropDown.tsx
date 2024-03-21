@@ -124,7 +124,7 @@ const NotifyDropDown = ({
           ) : (
             <FlatList
               nestedScrollEnabled
-              data={allUsers.filter(
+              data={allUsers?.filter(
                 (item) =>
                   item.first_name
                     .toLowerCase()

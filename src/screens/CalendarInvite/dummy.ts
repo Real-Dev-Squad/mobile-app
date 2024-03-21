@@ -34,6 +34,7 @@ export const fetchEvents = async () => {
   let eventSnapshot = await eventsCollection.get();
 
   const events: any = [];
+
   eventSnapshot.forEach((event: any) => {
     events.push({
       id: event.id,
@@ -44,10 +45,14 @@ export const fetchEvents = async () => {
       // endTime: Number(event.data().endTime),
     });
   });
+  console.log('🚀 ~ fetchEvents ~ events:', events);
   return events;
 };
 
 export const postEvent = async (eventData) => {
+  // {"endTime": 1710986760, "eventName": "Test event", "eventScheduledBy": "T7IL7MB8YriniTw4bt39", "eventType": "public", "id": "jbIbyaJMrqog56Slk30m", "startTime": 1710986340, "userId": ["YzEVZ50DHr37oL1mqqbO"], "users_": [{"company": "Yudek", "company_name": "Yudek", "created_at": 1709928398392, "designation": "SDE", "discordId": "688997548614090752", "discordJoinedAt": "2020-03-16T06:31:35.804000+00:00", "first_name": "Prakash", "github_created_at": 1513007526000, "github_display_name": "Prakash Choudhary", "github_id": "prakashchoudhary07", "github_user_id": "34452139", "id": "YzEVZ50DHr37oL1mqqbO", "incompleteUserDetails": false, "instagram_id": "", "isMember": true, "last_name": "Choudhary", "linkedin_id": "prakashchoudhary07", "picture": [Object], "profileStatus": "BLOCKED", "profileURL": "https://profile-service-rds-prakash.herokuapp.com/", "roles": [Object], "status": "active", "twitter_id": "pc2097", "updated_at": 1709928398392, "username": "Prakash", "website": "", "yoe": 2}]}
+
+  console.log('🚀 ~ postEvent ~ eventData:!!!!!!!!!!!!!!!!!!', eventData);
   return eventsCollection
     .add(eventData)
     .then((docRef) => {

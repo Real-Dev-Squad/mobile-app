@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { CELL_HEIGHT, Time_Slots } from '../../helpers/SiteUtils';
+import { CELL_HEIGHT, Time_Slots, screenWidth } from '../../helpers/SiteUtils';
 import ParticipantColView from './ParticipantColView';
 import InviteForm from '../../screens/CalendarInvite/InviteForm';
 import { profileScreenStyles } from '../../screens/ProfileScreen/styles';
@@ -47,17 +47,18 @@ const TimeSlotView = ({
   // const handleNewDataSlot = () => {};
 
   return (
-    <ScrollView
-      // style={{
-      //   backgroundColor: 'white',
-      //   display: 'flex',
-      //   flexDirection: 'row',
-      //   flex: 1,
-      // }}
-      style={{ flex: 1, overflow: 'scroll' }}
-      stickyHeaderIndices={[0]}
+    <View
+      style={{
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'row',
+        flex: 1,
+        baorderWidth: 2,
+        borderColor: 'yellow',
+        width: screenWidth,
+      }}
     >
-      <View style={styles.container}>
+      <View style={[styles.container, { borderWidth: 2, borderColor: 'red' }]}>
         {Time_Slots.map((ele, index) => (
           <View style={[styles.slot, { height: multiplier }]}>
             <Text style={styles.slotText}>{ele}</Text>
@@ -86,7 +87,7 @@ const TimeSlotView = ({
           />
         </Modal>
       )}
-      <View style={{ width: '78%' }}>
+      <View style={{ width: '20%' }}>
         {data?.map((event: any, index: number) => (
           <ParticipantColView
             key={index}
@@ -103,7 +104,7 @@ const TimeSlotView = ({
           />
         ))}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -111,7 +112,7 @@ export default TimeSlotView;
 
 const styles = StyleSheet.create({
   container: {
-    width: 80,
+    width: '20%',
     display: 'flex',
     flexDirection: 'column',
   },

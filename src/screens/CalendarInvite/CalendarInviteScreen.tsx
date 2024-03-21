@@ -31,6 +31,7 @@ import {
 } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
+  abc,
   decimalToTime,
   epocToDateTime,
   formatDate,
@@ -51,7 +52,7 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import Button_ from '../../components/Button_';
 import LayoutHeader from '../../components/Calendar/LayoutHeader';
 import { compact, remove } from 'lodash';
-
+import { fromUnixTime, format } from 'date-fns';
 export const getProgressVal = () => {
   return firebase
     .app()
@@ -226,6 +227,12 @@ const CalendarInviteScreen = () => {
     if (proof === null || proof === undefined) {
       newVal = minHourSelectedDate;
     }
+    if (typeof newVal === 'number') {
+      let sTime = abc(newVal);
+      console.log('🚀 ~ CalendarInviteScreen ~ sTime:', sTime);
+
+      setScrollTime(sTime);
+    }
     const dStr = epocToDateTime(newVal, false, false);
     const date = dStr.split('T')[0];
     console.log('🚀 ~ .then ~ date:', date);
@@ -291,6 +298,7 @@ const CalendarInviteScreen = () => {
   };
   const getData = async () => {
     const data = await getMatchingTimeSlots();
+    console.log('🚀 ~ getData ~ data:', data);
     const sortedEvents = data;
     // filter by date
     let today = new Date(selectedDate);
@@ -375,9 +383,9 @@ const CalendarInviteScreen = () => {
       let totalVal = val / ((120 * progressVal) / 50);
       let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
       console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
-      let sTime = epocToDateTime(transformTime).split('T')[1];
-      console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
-      setScrollTime(sTime);
+      // let sTime = epocToDateTime(transformTime).split('T')[1];
+      // console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
+      // setScrollTime(sTime);
       scrollViewRef?.current.scrollTo({
         x: 0,
         y: val,
@@ -390,9 +398,10 @@ const CalendarInviteScreen = () => {
     let totalVal = scrollOffsetVal / ((120 * progressVal) / 50);
     let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
     console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
-    let sTime = epocToDateTime(transformTime).split('T')[1];
-    console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
+    let sTime = abc(transformTime);
+    // let sTime = epocToDateTime(transformTime).split('T')[1];
     setScrollTime(sTime);
+
     return transformTime;
   };
   return (

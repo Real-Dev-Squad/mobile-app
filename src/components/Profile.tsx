@@ -34,8 +34,6 @@ const Profile = ({
               {
                 height: profileHeight || 50,
                 width: profileWidth || 50,
-                // marginTop: marginTop,
-                // maxHeight: mHeight,
                 backgroundColor: 'yellow',
               },
             ]}

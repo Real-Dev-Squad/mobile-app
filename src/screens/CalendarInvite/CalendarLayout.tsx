@@ -46,27 +46,27 @@ const CalendarLayout = ({
   const ScrollViewRef = useRef();
 
   return (
-    // <ScrollView
-    //   contentInsetAdjustmentBehavior="automatic"
-    //   contentContainerStyle={styles.container}
-    // >
-    <ScrollView style={styles.timeSlotColView}>
-      <TimeSlotView
-        setShowInviteForm={setShowInviteForm}
-        multiplier={MULTIPLIER}
-        data={usersWithTimeSlots}
-        selectedDate={selectedDate}
-        getMatchingTimeSlots={getMatchingTimeSlots}
-        userData={userData}
-        showInviteForm={showInviteForm}
-      />
-      {formatDate(selectedDate) === formatDate(new Date()) && (
-        <CurrentTimeDenotingHorizontalLine
-          progressVal={progressVal}
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={styles.container}
+    >
+      <ScrollView style={styles.timeSlotColView}>
+        <TimeSlotView
+          setShowInviteForm={setShowInviteForm}
           multiplier={MULTIPLIER}
+          data={usersWithTimeSlots}
+          selectedDate={selectedDate}
+          getMatchingTimeSlots={getMatchingTimeSlots}
+          userData={userData}
+          showInviteForm={showInviteForm}
         />
-      )}
-      {/* </ScrollView> */}
+        {formatDate(selectedDate) === formatDate(new Date()) && (
+          <CurrentTimeDenotingHorizontalLine
+            progressVal={progressVal}
+            multiplier={MULTIPLIER}
+          />
+        )}
+      </ScrollView>
     </ScrollView>
   );
 };
@@ -76,6 +76,7 @@ export default CalendarLayout;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: 'red',
     width: screenWidth,
     alignItems: 'center',
     padding: 2,

@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     // borderColor: 'grey',
   },
   createButtonStyle: {
-    // padding: scale(14),
-    // marginTop: scale(25),
+    padding: scale(14),
+    marginTop: scale(25),
     borderRadius: 10,
     backgroundColor: '#2827CC',
   },

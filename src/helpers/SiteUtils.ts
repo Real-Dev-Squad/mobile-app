@@ -1,6 +1,7 @@
 import { Dimensions } from 'react-native';
 import { fetchEvents } from '../screens/CalendarInvite/dummy';
 import moment from 'moment';
+import { format, fromUnixTime, getTime, parse } from 'date-fns';
 
 export const CELL_HEIGHT = 60;
 
@@ -193,7 +194,7 @@ export const formatToSend = (d, t) => {
   let date_ = new Date(d).toLocaleDateString().split('/');
   const newHr = t.hours < 10 ? `0${t.hours}` : t.hours;
   const newMin = t.minutes < 10 ? `0${t.minutes}` : t.minutes;
-  const newT = typeof t === 'object' ? `${newHr}:${newMin}` : t;
+  const newT = typeof t === 'object' ? `${newHr}:${newMin}:00` : t;
   const formatDD = `20${date_[2]}-${date_[0]}-${date_[1]}T${newT}`;
   console.log('🚀 ~ formatToSend ~ newT:', newT);
   return formatDD;
@@ -201,8 +202,11 @@ export const formatToSend = (d, t) => {
 
 export const transformTime_ = (selectedD, time) => {
   let newDateString = formatToSend(selectedD, time);
+  const dateTime = parse(newDateString, "yyyy-MM-dd'T'HH:mm:ss", new Date());
+  const unixTimestamp = Math.floor(getTime(dateTime) / 1000);
+  console.log('🚀 ~ unixTimestamp:', unixTimestamp);
 
-  return toUnix(newDateString);
+  return unixTimestamp;
 };
 
 export const epocToDateTime = (
@@ -240,4 +244,12 @@ export const epocToDateTime = (
   console.log('🚀 ~ epocToDateTime ~ formattedDateTime:', formattedDateTime);
 
   return formattedDateTime;
+};
+
+export const abc = (timestamp) => {
+  console.log('🚀 ~ abc ~ timestamp:', timestamp);
+  const date = fromUnixTime(timestamp);
+  const formattedTime = format(date, 'HH:mm:ss');
+  console.log('🚀 ~ abc ~ formattedTime:', formattedTime);
+  return formattedTime;
 };
