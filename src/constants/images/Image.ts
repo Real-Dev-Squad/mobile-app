@@ -7,7 +7,8 @@ const Images = {
   goalIconUnF: require('../../../assets/goalIcon.png'),
   profileIconUnF: require('../../../assets/profile-g.png'),
   emptyTaskScreen: require('../../../assets/task-empty.png'),
-
+  circle: require('../../../assets/circle.png'),
+  calendar: require('../../../assets/calendar_.png'),
   //GoalScreen Icons
   arrowIcon: require('../../../assets/arrow.png'),
   doneIcon: require('../../../assets/done.png'),
@@ -31,6 +32,10 @@ const Images = {
 
   //LOGO
   rdsLogo: require('../../../assets/rdsLogo.png'),
+
+  // dropIcon
+  dropup: require('../../../assets/dropup.png'),
+  dropdown: require('../../../assets/dropdown.png'),
 
   //Default Image Url
   DEFAULT_IMAGE:

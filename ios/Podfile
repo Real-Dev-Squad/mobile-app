@@ -12,6 +12,8 @@ target 'RDSApp' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-add-calendar-event', :path => '../node_modules/react-native-add-calendar-event'
+
   target 'RDSAppTests' do
     inherit! :complete
     # Pods for testing

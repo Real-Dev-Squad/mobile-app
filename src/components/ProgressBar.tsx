@@ -19,9 +19,9 @@ function ProgressBar({
   endsOn,
 }: {
   percCompleted: number;
-  taskId: string;
-  startedOn: string;
-  endsOn: string;
+  taskId?: string;
+  startedOn?: string;
+  endsOn?: string;
 }) {
   const [progressValue, setProgressValue] = useState(0);
   const progress = useRef(new Animated.Value(0)).current;
