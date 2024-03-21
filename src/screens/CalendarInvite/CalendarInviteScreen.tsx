@@ -51,8 +51,9 @@ import { getAllUsers } from '../AuthScreen/Util';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import Button_ from '../../components/Button_';
 import LayoutHeader from '../../components/Calendar/LayoutHeader';
-import { compact, remove } from 'lodash';
+import { find, compact, remove } from 'lodash';
 import { fromUnixTime, format } from 'date-fns';
+
 export const getProgressVal = () => {
   return firebase
     .app()
@@ -465,11 +466,14 @@ const CalendarInviteScreen = () => {
             <TimeZone />
             {/* // TODO: to show last active user green */}
             <DisplayProfile
+              key={liveUsers.length}
               setSelectedUsers={multiModeOn ? setLiveUsers : setUsers}
               selectedUsers={
                 multiModeOn
                   ? [
-                      lastActiveUser,
+                      find(liveUsers, (user) => user.id === lastActiveUser?.id)
+                        ? lastActiveUser
+                        : null,
                       ...liveUsers.filter(
                         (user) => user.id !== lastActiveUser?.id,
                       ),
@@ -548,10 +552,7 @@ const CalendarInviteScreen = () => {
           <View
             style={{
               position: 'absolute',
-              top:
-                users.length > 0 || (liveUsers.length > 0 && multiModeOn)
-                  ? 256
-                  : 206,
+              top: '100%',
               right: 0,
               borderWidth: 1,
               backgroundColor: 'black',

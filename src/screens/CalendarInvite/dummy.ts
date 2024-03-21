@@ -335,13 +335,6 @@ export const getLiveUserInfoInRealtime = (
   let newData;
   liveUsersRef.on('value', (snapshot) => {
     newData = snapshot.val();
-    console.log(
-      '------------------------------REALTIME DATA INCOMING------------------------',
-    );
-    console.log('THIS IS NEW DATA ', newData);
-    console.log(
-      '------------------------------REALTIME DATA ENDS------------------------',
-    );
     let liveInfo = getLastUserPosition(newData.liveUserInfo, selectedDate);
     setProof(liveInfo);
     let userIds = getLiveUsers(newData.userIds);

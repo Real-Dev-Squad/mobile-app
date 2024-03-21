@@ -9,6 +9,7 @@ import {
 } from '../screens/CalendarInvite/dummy';
 import Toast from 'react-native-toast-message';
 import { epocToDateTime } from '../helpers/SiteUtils';
+import { compact } from 'lodash';
 
 const DisplayProfile = ({
   selectedUsers,
@@ -46,7 +47,7 @@ const DisplayProfile = ({
   return (
     <View style={styles.container}>
       <FlatList
-        data={selectedUsers}
+        data={compact(selectedUsers)}
         horizontal={true}
         renderItem={({ item, index }) => {
           return (

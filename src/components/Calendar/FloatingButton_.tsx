@@ -18,7 +18,7 @@ export default FloatingButton_;
 const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
-    top: screenHeight - 180,
+    top: '90%',
     right: 20,
     width: 50,
     height: 50,
