@@ -114,3 +114,5 @@ If the above commands fail, try building the Android app from Android Studio and
 - 4 to remaing : ATM work
 
 Calendar 
+
+V2 APK : https://drive.google.com/file/d/1unqgPxzKUX2eTDn4yGZpaGsdrDZmvemp/view?usp=sharing
