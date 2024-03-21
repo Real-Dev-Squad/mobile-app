@@ -83,7 +83,7 @@ const CalendarInviteScreen = () => {
   };
   const onScrollHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     let scrollVal = calculateOffsetVal(event.nativeEvent.contentOffset.y);
-    return calculateOffsetVal(scrollVal);
+    // return calculateOffsetVal(scrollVal);
   };
 
   return (
