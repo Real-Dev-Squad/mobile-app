@@ -18,7 +18,7 @@ const Profile = ({
   multimodeOn: boolean;
   // item: { first_name: string; last_name: string };
 }) => {
-  console.log('🚀 ~ selectedUser:>>>>>>>>>>>', index);
+  console.log('🚀 ~ selectedUser:>>>>>>>>>>>', selectedUser);
   return (
     <View style={styles.container}>
       {selectedUser?.picture?.url ? (

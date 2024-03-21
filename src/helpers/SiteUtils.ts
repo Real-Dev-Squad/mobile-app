@@ -1,7 +1,6 @@
 import { Dimensions } from 'react-native';
 import { fetchEvents } from '../screens/CalendarInvite/dummy';
 import moment from 'moment';
-import { format, fromUnixTime, getTime, parse } from 'date-fns';
 
 export const CELL_HEIGHT = 60;
 
@@ -171,8 +170,6 @@ export const getStartAndEndTime = (date) => {
 };
 
 export const decimalToTime = (decimalValue) => {
-  // let decimalValue = Number(time.toFixed(2));
-  console.log('🚀 ~ decimalToTime ~ decimalValue:', decimalValue);
   // Extract hours
   var hours = Math.floor(decimalValue);
 
@@ -184,11 +181,7 @@ export const decimalToTime = (decimalValue) => {
 
   // Calculate remaining seconds
   var seconds = Math.round((remainingMinutes - minutes) * 60);
-  console.log({
-    hours: hours,
-    minutes: minutes,
-    seconds: seconds,
-  });
+
   return {
     hours: hours,
     minutes: minutes,
@@ -197,14 +190,10 @@ export const decimalToTime = (decimalValue) => {
 };
 export const formatToSend = (d, t) => {
   console.log('🚀 ~ formatToSend ~ d:', { d, t });
-  // {"d": 2024-03-18T16:43:18.627Z, "t": {"hours": 16, "minutes": 30, "seconds": 60}}
-
-  let date_ = new Date(d).toLocaleDateString().split('/'); //["03", "18", "24"]
-
-  console.log('🚀 ~ formatToSend ~ date_:', date_);
+  let date_ = new Date(d).toLocaleDateString().split('/');
   const newHr = t.hours < 10 ? `0${t.hours}` : t.hours;
   const newMin = t.minutes < 10 ? `0${t.minutes}` : t.minutes;
-  const newT = typeof t === 'object' ? `${newHr}:${newMin}:00` : t;
+  const newT = typeof t === 'object' ? `${newHr}:${newMin}` : t;
   const formatDD = `20${date_[2]}-${date_[0]}-${date_[1]}T${newT}`;
   console.log('🚀 ~ formatToSend ~ newT:', newT);
   return formatDD;
@@ -213,15 +202,7 @@ export const formatToSend = (d, t) => {
 export const transformTime_ = (selectedD, time) => {
   let newDateString = formatToSend(selectedD, time);
 
-  console.log('🚀 ~ newDateString:', newDateString);
-  const dateTime = parse(newDateString, "yyyy-MM-dd'T'HH:mm:ss", new Date());
-  console.log('🚀 ~ dateTime:', dateTime);
-
-  // Get the Unix timestamp (in seconds) from the Date object
-  const unixTimestamp = Math.floor(getTime(dateTime) / 1000);
-  console.log('🚀 ~ unixTimestamp:', unixTimestamp);
-
-  return unixTimestamp;
+  return toUnix(newDateString);
 };
 
 export const epocToDateTime = (
@@ -231,12 +212,10 @@ export const epocToDateTime = (
 ) => {
   // Convert to milliseconds
   //1705381980,
-
   var milliseconds = inms ? timestamp : timestamp * 1000;
 
   // Create a new Date object
   var date = new Date(milliseconds);
-  console.log('🚀 ~ date:', date);
 
   // Get the various components of the date and time
   var year = date.getFullYear();
@@ -246,11 +225,7 @@ export const epocToDateTime = (
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var seconds = date.getSeconds();
-  console.log('INDHR DEKHO KYA H DATE JO LABEL ME SET KRA RE', {
-    hours,
-    minutes,
-    seconds,
-  }); // 2:1:0
+
   // if (month === 0) {
   //   year--; // Adjust year
   //   month = 12; // Set month to December
@@ -265,12 +240,4 @@ export const epocToDateTime = (
   console.log('🚀 ~ epocToDateTime ~ formattedDateTime:', formattedDateTime);
 
   return formattedDateTime;
-};
-
-export const abc = (timestamp) => {
-  console.log('🚀 ~ abc ~ timestamp:', timestamp);
-  const date = fromUnixTime(timestamp);
-  const formattedTime = format(date, 'HH:mm:ss');
-  console.log('🚀 ~ abc ~ formattedTime:', formattedTime);
-  return formattedTime;
 };

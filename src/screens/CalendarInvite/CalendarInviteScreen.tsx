@@ -31,7 +31,6 @@ import {
 } from './dummy';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
-  abc,
   decimalToTime,
   epocToDateTime,
   formatDate,
@@ -51,7 +50,7 @@ import { getAllUsers } from '../AuthScreen/Util';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import Button_ from '../../components/Button_';
 import LayoutHeader from '../../components/Calendar/LayoutHeader';
-import { fromUnixTime, format } from 'date-fns';
+import { compact, remove } from 'lodash';
 
 export const getProgressVal = () => {
   return firebase
@@ -223,18 +222,10 @@ const CalendarInviteScreen = () => {
     console.log('🚀 ~ CalendarInviteScreen ~ lastUser_:', lastUser_);
     setLastActiveUser(lastUser_[0]);
     let newVal = proof?.position;
-    console.log('🚀 ~ CalendarInviteScreen ~ newVal:', newVal);
 
     if (proof === null || proof === undefined) {
       newVal = minHourSelectedDate;
     }
-    if (typeof newVal === 'number') {
-      let sTime = abc(newVal);
-      console.log('🚀 ~ CalendarInviteScreen ~ sTime:', sTime);
-
-      setScrollTime(sTime);
-    }
-
     const dStr = epocToDateTime(newVal, false, false);
     const date = dStr.split('T')[0];
     console.log('🚀 ~ .then ~ date:', date);
@@ -248,7 +239,7 @@ const CalendarInviteScreen = () => {
     console.log(
       '🚀 ~ CalendarInviteScreen ~ convertToOffsetVal:',
       convertToOffsetVal,
-    ); // 128
+    );
     setAutoScrollVal(convertToOffsetVal);
     handleScrollToLastUserPosition(convertToOffsetVal, date);
   };
@@ -374,7 +365,6 @@ const CalendarInviteScreen = () => {
   };
 
   const scrollViewRef = useRef();
-
   const handleScrollToLastUserPosition = (val, date) => {
     // autoscroll / user scroll
     // call ->
@@ -382,18 +372,12 @@ const CalendarInviteScreen = () => {
     if (multiModeOn && scrollViewRef.current) {
       setIsAutoScroll(true);
       // setSelectedDate(formatDate(date));
-      console.log('value where it scrolled :', val);
       let totalVal = val / ((120 * progressVal) / 50);
       let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
       console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
-      // let sTime = abc(transformTime);
-      // console.log(
-      //   '🚀 ~ calculateOffsetVal ~ sTime:',
-      //   abc(transformTime),
-      //   sTime,
-      // );
-      // setScrollTime(sTime);
-
+      let sTime = epocToDateTime(transformTime).split('T')[1];
+      console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
+      setScrollTime(sTime);
       scrollViewRef?.current.scrollTo({
         x: 0,
         y: val,
@@ -402,20 +386,12 @@ const CalendarInviteScreen = () => {
       setTimeout(() => setIsAutoScroll(false), 1000);
     }
   };
-
   const calculateOffsetVal = (scrollOffsetVal: number) => {
     let totalVal = scrollOffsetVal / ((120 * progressVal) / 50);
     let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
-    console.log('🚀 ~ calculateOffsetVal ~ scrollOffsetVal:', {
-      scrollOffsetVal,
-      selectedDate,
-      totalVal,
-    });
-    // console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
-
-    // let sTime = epocToDateTime(transformTime).split('T')[1];
-    let sTime = abc(transformTime);
-    console.log('🚀 ~ calculateOffsetVal ~ sTime:', abc(transformTime), sTime);
+    console.log('🚀 ~ calculateOffsetVal ~ transformTime:', transformTime);
+    let sTime = epocToDateTime(transformTime).split('T')[1];
+    console.log('🚀 ~ calculateOffsetVal ~ sTime:', sTime);
     setScrollTime(sTime);
     return transformTime;
   };
@@ -479,12 +455,19 @@ const CalendarInviteScreen = () => {
             <TimeZone />
             {/* // TODO: to show last active user green */}
             <DisplayProfile
-              key={lastActiveUser?.id}
               setSelectedUsers={multiModeOn ? setLiveUsers : setUsers}
-              selectedUsers={multiModeOn ? [...liveUsers] : users}
+              selectedUsers={
+                multiModeOn
+                  ? [
+                      lastActiveUser,
+                      ...liveUsers.filter(
+                        (user) => user.id !== lastActiveUser?.id,
+                      ),
+                    ]
+                  : users
+              }
               multiModeOn={multiModeOn}
               latestTimeStamp={latestTimeStamp}
-              lastActiveUser={lastActiveUser}
             />
           </View>
           <View
