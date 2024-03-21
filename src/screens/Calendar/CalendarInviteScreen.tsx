@@ -26,6 +26,7 @@ import LayoutHeader from '../../components/CalendarSpecificComp/TableHeader';
 import FloatingButton_ from '../../components/FloatingButton_';
 import Toast from 'react-native-toast-message';
 import CalendarLayout from '../../components/CalendarSpecificComp/CalendarLayout';
+import ProgressToZoom from '../../components/CalendarSpecificComp/ProgressToZoom';
 
 const CalendarInviteScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
@@ -150,6 +151,7 @@ const CalendarInviteScreen = () => {
       >
         <View style={styles.topHeader}>
           {/* zoom-scale */}
+          <ProgressToZoom />
           <View style={styles.flexView}>
             <View style={styles.dropdown}>
               <DropDown
