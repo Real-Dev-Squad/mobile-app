@@ -4,9 +4,9 @@ import CalendarInviteScreen from '../../src/screens/Calendar/CalendarInviteScree
 
 // Mock the AuthContext and fetchUsers function
 jest.mock('../../src/context/AuthContext', () => ({
-  AuthContext: {
-    Consumer: ({ children }) =>
-      children({ loggedInUserData: { token: 'mockToken' } }),
+  __esModule: true,
+  default: {
+    loggedInUserData: { token: 'mockToken' },
   },
 }));
 jest.mock('../../src/utils/Api', () => ({

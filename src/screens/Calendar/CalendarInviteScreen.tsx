@@ -26,6 +26,7 @@ const CalendarInviteScreen = () => {
     <View style={styles.flexView} testID="calendar">
       <View style={styles.dropdown}>
         <DropDown
+          testID="dropdown"
           title={'Select To invite'}
           handleUserId={handleUserIdChange}
           error={''}

@@ -3,7 +3,6 @@ import { render } from '@testing-library/react-native';
 import { Provider } from 'react-redux'; // Import Provider from react-redux
 import { store } from '../App';
 import TabNavigation from '../src/navigations/TabNavigation/TabNavigation';
-import Strings from '../src/i18n/en';
 
 describe('TabNavigation', () => {
   it('renders all tabs correctly', () => {
