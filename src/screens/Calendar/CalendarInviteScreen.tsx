@@ -176,7 +176,7 @@ const CalendarInviteScreen = () => {
           <DisplayProfile
             setSelectedUsers={setSelectedUser}
             selectedUsers={selectedUser}
-            multiModeOn={false}
+            multiModeOn={flag}
           />
 
           <View style={styles.tableHeader}>
