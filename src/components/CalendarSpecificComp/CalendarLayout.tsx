@@ -7,9 +7,9 @@ import {
   windowWidth,
 } from '../../helpers/CalendarInviteHelpers';
 import CurrentTimeDenotingHorizontalLine from './CurrentTimeDenotingHorizontalLine';
+import { useProgressVal } from '../../hooks/useProgressVal';
 
 const CalendarLayout = ({
-  progressVal,
   usersWithTimeSlots,
   selectedDate,
   getMatchingTimeSlots,
@@ -17,7 +17,6 @@ const CalendarLayout = ({
   setShowInviteForm,
   selectedUserData,
 }: {
-  progressVal: number;
   usersWithTimeSlots: any;
   selectedDate: string;
   setSelectedDate: Dispatch<SetStateAction<Date>>;
@@ -26,6 +25,8 @@ const CalendarLayout = ({
   showInviteForm: boolean;
   setShowInviteForm: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { progressVal } = useProgressVal();
+
   const MULTIPLIER = (120 * progressVal) / 50;
 
   return (

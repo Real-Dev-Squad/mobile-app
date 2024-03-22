@@ -27,6 +27,7 @@ import FloatingButton_ from '../../components/FloatingButton_';
 import Toast from 'react-native-toast-message';
 import CalendarLayout from '../../components/CalendarSpecificComp/CalendarLayout';
 import ProgressToZoom from '../../components/CalendarSpecificComp/ProgressToZoom';
+import { useProgressVal } from '../../hooks/useProgressVal';
 
 const CalendarInviteScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
@@ -38,6 +39,7 @@ const CalendarInviteScreen = () => {
   const [scrollTime, setScrollTime] = useState(timestampToUnix(smallestTs));
   const scrollViewRef = useRef();
   const [eventsInSlot, setEventsInSlot] = useState([]);
+  const { progressVal } = useProgressVal();
 
   useEffect(() => {
     loggedInUserData && fetchUsers(loggedInUserData?.token, setUsers);
@@ -117,13 +119,12 @@ const CalendarInviteScreen = () => {
     return [...event_];
   };
   const calculateOffsetVal = (scrollOffsetVal: number) => {
-    // TODO:update 20 from progress val
     if (scrollOffsetVal === 0) {
       let newS = timestampToUnix(smallestTs);
       setScrollTime(newS);
     } else {
       let totalVal;
-      totalVal = scrollOffsetVal / ((120 * 20) / 50);
+      totalVal = scrollOffsetVal / ((120 * progressVal) / 50);
 
       let transformTime = transformTime_(selectedDate, decimalToTime(totalVal));
       let sTime = timestampToUnix(transformTime);
@@ -188,7 +189,6 @@ const CalendarInviteScreen = () => {
           setShowInviteForm={setFlag}
           showInviteForm={flag}
           selectedDate={selectedDate}
-          progressVal={20}
           usersWithTimeSlots={eventsInSlot}
           getMatchingTimeSlots={getData}
           selectedUserData={selectedUser}
