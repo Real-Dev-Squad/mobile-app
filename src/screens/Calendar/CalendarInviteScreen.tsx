@@ -41,6 +41,7 @@ const CalendarInviteScreen = () => {
   const scrollViewRef = useRef();
   const [eventsInSlot, setEventsInSlot] = useState([]);
   const { progressVal } = useProgressVal();
+  const [multimode, setMultimode] = useState(false);
 
   useEffect(() => {
     loggedInUserData && fetchUsers(loggedInUserData?.token, setUsers);
@@ -138,8 +139,9 @@ const CalendarInviteScreen = () => {
     let scrollVal = calculateOffsetVal(event.nativeEvent.contentOffset.y);
     // return calculateOffsetVal(scrollVal);
   };
+
   const onToggleFlag = () => {
-    setFlag((prev) => !prev);
+    setMultimode((prev: boolean) => !prev);
   };
 
   return (
@@ -163,7 +165,7 @@ const CalendarInviteScreen = () => {
                 title={'Select To invite'}
                 handleUserId={handleUserIdChange}
                 error={''}
-                disabled={false}
+                disabled={multimode}
               />
             </View>
             {/* checkbox */}
