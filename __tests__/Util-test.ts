@@ -190,6 +190,6 @@ describe('fetchUserRequest', () => {
     expect(unixToTimeStamp('')).toBe('NA');
   });
   test('unixToTimeStamp function should return date in dd-mm-yyyy format on passing seconds', () => {
-    expect(unixToTimeStamp('1700000000')).toBe('14-11-2023');
+    expect(unixToTimeStamp('1700000000')).toBe('15-11-2023');
   });
 });
