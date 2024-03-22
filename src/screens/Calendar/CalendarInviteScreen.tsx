@@ -28,6 +28,7 @@ import Toast from 'react-native-toast-message';
 import CalendarLayout from '../../components/CalendarSpecificComp/CalendarLayout';
 import ProgressToZoom from '../../components/CalendarSpecificComp/ProgressToZoom';
 import { useProgressVal } from '../../hooks/useProgressVal';
+import Checkbox from '../../components/CalendarSpecificComp/Checkbox';
 
 const CalendarInviteScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
@@ -137,6 +138,9 @@ const CalendarInviteScreen = () => {
     let scrollVal = calculateOffsetVal(event.nativeEvent.contentOffset.y);
     // return calculateOffsetVal(scrollVal);
   };
+  const onToggleFlag = () => {
+    setFlag((prev) => !prev);
+  };
 
   return (
     <>
@@ -163,6 +167,9 @@ const CalendarInviteScreen = () => {
               />
             </View>
             {/* checkbox */}
+            <View style={{ marginTop: 20, padding: 10 }}>
+              <Checkbox onHandleChange={onToggleFlag} />
+            </View>
           </View>
 
           <TimeZone />
@@ -211,7 +218,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  dropdown: { width: '70%' },
+  dropdown: { width: '65%' },
   topHeader: { position: 'relative', top: 0, backgroundColor: 'white' },
   tableHeader: {
     display: 'flex',
