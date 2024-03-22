@@ -114,3 +114,40 @@ export const calculateCurrentTimePosition = (multiplier: number) => {
   // Calculate the position based on your progressVal and other factors
   return (position * multiplier) / 60;
 };
+
+export const epocToDateTime = (
+  timestamp: number,
+  inms = false,
+  dateFromzero = true,
+) => {
+  // Convert to milliseconds
+  //1705381980,
+  var milliseconds = inms ? timestamp : timestamp * 1000;
+
+  // Create a new Date object
+  var date = new Date(milliseconds);
+
+  // Get the various components of the date and time
+  var year = date.getFullYear();
+  var month = dateFromzero ? date.getMonth() + 1 : date.getMonth(); // Note: Months are zero-based
+  console.log('🚀 ~ month:', month);
+  var day = dateFromzero ? date.getDate() + 1 : date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+
+  // if (month === 0) {
+  //   year--; // Adjust year
+  //   month = 12; // Set month to December
+  // }
+
+  // Format the date and time
+  var formattedDateTime = `${year}-${month < 10 ? '0' + month : month}-${
+    day < 10 ? '0' + day : day
+  }T${hours < 10 ? '0' + hours : hours}:${
+    minutes < 10 ? '0' + minutes : minutes
+  }:${seconds < 10 ? '0' + seconds : seconds}`;
+  console.log('🚀 ~ epocToDateTime ~ formattedDateTime:', formattedDateTime);
+
+  return formattedDateTime;
+};

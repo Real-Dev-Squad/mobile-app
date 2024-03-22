@@ -1,5 +1,6 @@
 import {
   Alert,
+  AppState,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
@@ -7,15 +8,29 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { fetchEvents, fetchUsers } from '../../utils/Api';
+import {
+  fetchEvents,
+  fetchUsers,
+  getLiveUserInfoInRealtime,
+  postIdsWithTimeStamp,
+  postLiveUsers,
+  removeOfflineUser,
+} from '../../utils/Api';
 import { UserInfoType } from '../../context/type';
 import DropDown from '../../components/DropDown';
 import TimeZone from '../../components/CalendarSpecificComp/TimeZone';
 import DisplayProfile from '../../components/CalendarSpecificComp/DisplayProfile';
 import {
   decimalToTime,
+  epocToDateTime,
   getSortedEvents,
   minHourSelectedDate,
   timestampToUnix,
@@ -29,6 +44,8 @@ import CalendarLayout from '../../components/CalendarSpecificComp/CalendarLayout
 import ProgressToZoom from '../../components/CalendarSpecificComp/ProgressToZoom';
 import { useProgressVal } from '../../hooks/useProgressVal';
 import Checkbox from '../../components/CalendarSpecificComp/Checkbox';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { find, compact } from 'lodash';
 
 const CalendarInviteScreen = () => {
   const { loggedInUserData } = useContext(AuthContext);
@@ -42,6 +59,43 @@ const CalendarInviteScreen = () => {
   const [eventsInSlot, setEventsInSlot] = useState([]);
   const { progressVal } = useProgressVal();
   const [multimode, setMultimode] = useState(false);
+  const [lastScrolledId, setLastScrolledId] = useState();
+  const [liveIds, setLiveIds] = useState([]);
+  const [latestTimeStamp, setLatestTimeStamp] = useState();
+  const isFocused = useIsFocused();
+  const [autoScrollVal, setAutoScrollVal] = useState();
+  const [lastActiveUser, setLastActiveUser] = useState();
+  const [liveUsers, setLiveUsers] = useState([]);
+
+  useEffect(() => {
+    fetchUsers(loggedInUserData?.id, setUsers);
+    getLiveUserInfoInRealtime(
+      setLastScrolledId,
+      setLiveIds,
+      setLatestTimeStamp,
+      selectedDate,
+    );
+  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getLastUserPosition_();
+      postLiveUsers(loggedInUserData?.id);
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>MOUNTING');
+      return () => {
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>UNMOUNTING');
+        removeOfflineUser(loggedInUserData?.id);
+      };
+    }, []),
+  );
+
+  useEffect(() => {
+    getLastUserPosition_();
+    getLiveUsers_();
+    return () => {
+      // removeOfflineUser(loggedInUserData?.id);
+      // liveUsersRef.off('value');
+    };
+  }, [isFocused, lastScrolledId, liveIds, latestTimeStamp]);
 
   useEffect(() => {
     loggedInUserData && fetchUsers(loggedInUserData?.token, setUsers);
@@ -59,6 +113,93 @@ const CalendarInviteScreen = () => {
     }
   };
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        getLiveUsers_();
+        // getLastLoggedInTime_(loggedInUserData?.id);
+        getLastUserPosition_();
+      } else {
+        removeOfflineUser(loggedInUserData?.id);
+        // liveUsersRef.off('value');
+      }
+    });
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+  const getLastUserPosition_ = () => {
+    console.log('PROOOOOOOOOOOOOOOOOOOOOOOFFFFFFFFFFFFFFFFFFF', lastScrolledId);
+    const lastUser_ = users.filter(
+      (user: UserInfoType) => lastScrolledId.id === user.id,
+    );
+    console.log('🚀 ~ CalendarInviteScreen ~ lastUser_:', lastUser_);
+    setLastActiveUser(lastUser_[0]);
+    let newVal = lastScrolledId?.position;
+
+    if (lastScrolledId === null || lastScrolledId === undefined) {
+      newVal = minHourSelectedDate;
+    }
+    if (typeof newVal === 'number') {
+      let sTime = timestampToUnix(newVal);
+      console.log('🚀 ~ CalendarInviteScreen ~ sTime:', sTime);
+
+      setScrollTime(sTime);
+    }
+    const dStr = epocToDateTime(newVal, false, false);
+    const date = dStr.split('T')[0];
+    console.log('🚀 ~ .then ~ date:', date);
+    const time = dStr.split('T')[1];
+    const [hr, min, sec] = time.split(':');
+    //TODO:
+    let dTime = `${hr}:${min}`;
+    console.log('🚀 ~ .then ~ dTime:', dTime);
+    var totalMinutes = Number(hr) * 60 + Number(min); //28504681000
+    let convertToOffsetVal = (totalMinutes / 60) * progressVal * 2.4;
+    console.log(
+      '🚀 ~ CalendarInviteScreen ~ convertToOffsetVal:',
+      convertToOffsetVal,
+    );
+    setAutoScrollVal(convertToOffsetVal);
+    // handleScrollToLastUserPosition(convertToOffsetVal, date);
+  };
+
+  const getLiveUsers_ = () => {
+    console.log('livIDSSSSSSSS>>>', liveIds, users);
+    const newArray: Array<UserInfoType> = liveIds.filter(
+      (value) => value !== null,
+    );
+    const filteredLiveUsers = newArray
+      .map((id) => users?.find((user: any) => user.id === id))
+      .filter((item) => item !== undefined) as unknown as Array<UserInfoType>;
+    console.log(
+      '🚀 ~ CalendarInviteScreen ~ filteredLiveUsers:',
+      filteredLiveUsers,
+    );
+    if (filteredLiveUsers?.length > 0) {
+      setLiveUsers(filteredLiveUsers);
+      return filteredLiveUsers;
+    } else {
+      console.log('No live users found');
+    }
+  };
+  useEffect(() => {
+    let apiCallInterval: string | number | NodeJS.Timeout | undefined;
+    if (isFocused) {
+      // TODO: get focused when you are on screen not after scroll
+      apiCallInterval = setInterval(() => {
+        // getLiveUsers_();
+        // getLastUserPosition_();
+        postLiveUsers(loggedInUserData?.id);
+        postIdsWithTimeStamp(loggedInUserData?.id);
+      }, 10000); // 5 minutes in milliseconds
+    } else {
+      removeOfflineUser(loggedInUserData?.id);
+    }
+    return () => {
+      clearInterval(apiCallInterval);
+    };
+  }, [multimode, isFocused]);
   const handleAddEvent = () => {
     if (selectedUser.length === 0) {
       Toast.show({
@@ -176,9 +317,21 @@ const CalendarInviteScreen = () => {
 
           <TimeZone />
           <DisplayProfile
-            setSelectedUsers={setSelectedUser}
-            selectedUsers={selectedUser}
-            multiModeOn={flag}
+            key={liveUsers.length}
+            setSelectedUsers={multimode ? setLiveUsers : setSelectedUser}
+            selectedUsers={
+              multimode
+                ? [
+                    find(liveUsers, (user) => user.id === lastActiveUser?.id)
+                      ? lastActiveUser
+                      : null,
+                    ...liveUsers.filter(
+                      (user) => user.id !== lastActiveUser?.id,
+                    ),
+                  ]
+                : compact(selectedUser)
+            }
+            multiModeOn={multimode}
           />
 
           <View style={styles.tableHeader}>

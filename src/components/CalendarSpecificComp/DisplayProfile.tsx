@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { UserInfoType } from '../../context/type';
 import Profile from './Profile';
+import { compact } from 'lodash';
 
 const DisplayProfile = ({
   selectedUsers,
@@ -19,7 +20,7 @@ const DisplayProfile = ({
   return (
     <View style={styles.container}>
       <FlatList
-        data={selectedUsers}
+        data={compact(selectedUsers)}
         horizontal={true}
         renderItem={({ item, index }) => {
           return (
@@ -34,7 +35,7 @@ const DisplayProfile = ({
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.id}
+        // keyExtractor={(item) => item.id}
       />
     </View>
   );
