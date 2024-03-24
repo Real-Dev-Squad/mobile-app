@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { formatDate, formatTimeSlotDate } from '../../helpers/SiteUtils';
 import DatePicker from 'react-native-date-picker';
+import { scale } from '../../utils/utils';
 
 const LayoutHeader = ({ selectedDate, setSelectedDate }) => {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
@@ -43,9 +44,13 @@ export default LayoutHeader;
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#3994f8',
-    width: '100%',
+    flex: 1,
+    // width: '80%',
     height: 40,
     borderRadius: 4,
+    alignItems: 'center',
+    // padding: scale(14),
+    // marginTop: scale(25),
   },
   selectedDate: { color: 'white', padding: 4 },
 });

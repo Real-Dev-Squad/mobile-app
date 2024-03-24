@@ -61,6 +61,7 @@ const NotifyDropDown = ({
       style={{
         marginHorizontal: 10,
         position: 'relative',
+        zIndex: 1,
       }}
     >
       {error ? (
@@ -104,7 +105,7 @@ const NotifyDropDown = ({
             styles.dropDownArea,
             {
               position: 'absolute',
-              zIndex: 9999,
+              // zIndex: 9999,
               top: 60,
               backgroundColor: 'white',
             },
@@ -123,7 +124,7 @@ const NotifyDropDown = ({
           ) : (
             <FlatList
               nestedScrollEnabled
-              data={allUsers.filter(
+              data={allUsers?.filter(
                 (item) =>
                   item.first_name
                     .toLowerCase()

@@ -6,14 +6,20 @@ const Button_ = ({
   title,
   submitHandler,
   disabled,
+  style = {},
 }: {
   title: string;
   submitHandler: () => void;
   disabled: boolean;
+  style: {};
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.createButtonStyle, disabled && styles.disabledButtonStyle]}
+      style={[
+        styles.createButtonStyle,
+        disabled && styles.disabledButtonStyle,
+        { ...style },
+      ]}
       onPress={!disabled ? submitHandler : undefined}
       disabled={disabled} // Add disabled prop for TouchableOpacity
     >

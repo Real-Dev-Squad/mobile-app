@@ -6,9 +6,11 @@ import Button_ from '../../components/Button_';
 import {
   formatDate,
   formatTimeSlotTime,
+  formatToSend,
   getColonTime,
   screenHeight,
   screenWidth,
+  toUnix,
 } from '../../helpers/SiteUtils';
 import Duration from './Duration';
 import { durations, postEvent } from './dummy';
@@ -40,7 +42,6 @@ function changeDateFormat(dateStr) {
 function getDateObject(dateStr, time) {
   var [hours, minutes] = time.split(':');
   dateStr.setHours(Number(hours), Number(minutes));
-  console.log('newDate', dateStr);
   return dateStr;
 }
 const InviteForm = ({
@@ -51,7 +52,6 @@ const InviteForm = ({
   setSelectedTime,
   toggleForm,
 }: any) => {
-  console.log('selectedDae', selectedDate);
   const [isStartDatePickerVisible, setIsStartDatePickerVisible] =
     useState(false);
   const [startDate, setStartDate] = useState(selectedDate);
@@ -80,41 +80,14 @@ const InviteForm = ({
     setEventTitle(text);
   };
 
-  const toUnix = (_date: any) => {
-    const dateTimeString = _date;
-    const unixTimestamp = moment(dateTimeString).unix();
-    return unixTimestamp;
-  };
-  const formatToSend = (d, t) => {
-    let date_ = new Date(d).toLocaleDateString().split('/');
-    const formatDD = `20${date_[2]}-${date_[0]}-${date_[1]}T${t}`;
-    return formatDD;
-  };
   const handleSubmitTime = () => {
-    console.log('DATAAAA', eventTitle, startDate, endDate, startTime, endTime);
-
     const formatStartDate = formatToSend(startDate, startTime);
+    console.log('🚀 ~ handleSubmitTime ~ formatStartDate:', formatStartDate);
     const formatEndDate = formatToSend(endDate, endTime);
+    console.log('🚀 ~ handleSubmitTime ~ formatEndDate:', formatEndDate);
     const formatStartDD = toUnix(formatStartDate);
     const formatEndDD = toUnix(formatEndDate);
     return { formatStartDD, formatEndDD };
-
-    // const date = new Date(selectedDate);
-    // const formattedDate = date.toLocaleDateString().split('/');
-    // // const formatD = formattedDate[1]
-
-    // console.log('🚀 ~ handleSubmitTime ~ formattedDate:', formattedDate);
-    // const formatDD = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${startTime}`; // 2024-02-29T10:00
-    // let formattedEDate;
-    // console.log('🚀 ~ handleSubmitTime ~ formatDD:', formatDD); //2024-03-09T20:07
-    // // if (endTime < selectedTime) {
-    // //   console.log('here inside if');
-    // //   const formattedDate_ = new Date(eTime).toISOString().split('T')[0];
-    // //   formattedEDate = `${formattedDate_}T${endTime}`;
-    // // } else {
-    // formattedEDate = `20${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}T${endTime}`;
-    // // }
-    // console.log('🚀 ~ handleSubmitTime ~ formattedEDate:', formattedEDate); //2024-03-09T23:45
   };
 
   const handleButtonHandler = () => {
@@ -123,9 +96,13 @@ const InviteForm = ({
     } else {
       setError('');
       const { formatStartDD: startUT, formatEndDD: endUT } = handleSubmitTime();
+      console.log(
+        '🚀 ~ handleButtonHandler ~ handleSubmitTime():',
+        handleSubmitTime(),
+      );
       const userIds = userData.map((item) => item.id);
       const data = {
-        userId: userIds,
+        userId: userIds.length > 0 ? userIds : [loggedInUserData?.id],
         eventType: 'public',
         eventName: eventTitle,
         eventScheduledBy: loggedInUserData?.id,

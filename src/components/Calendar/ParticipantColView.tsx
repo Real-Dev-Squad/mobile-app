@@ -5,7 +5,11 @@ import Modal from 'react-native-modal';
 
 import UserDesc from '../../screens/CalendarInvite/UserDesc';
 import { profileScreenStyles } from '../../screens/ProfileScreen/styles';
-import { getStartAndEndTime } from '../../helpers/SiteUtils';
+import {
+  CELL_HEIGHT,
+  getStartAndEndTime,
+  screenHeight,
+} from '../../helpers/SiteUtils';
 
 const ParticipantColView = ({
   event,
@@ -18,17 +22,16 @@ const ParticipantColView = ({
   getBorderBottomColor: string;
   selectedDate: Date;
 }) => {
+  console.log('🚀 ~ event:>>>>>EVENT>>>>>>', event);
+  // {"endTime": 1711004760, "eventName": "new event1", "eventScheduledBy": "T7IL7MB8YriniTw4bt39", "eventType": "public", "id": "pkySsTV4u0LmooguziDd", "startTime": 1711000860, "userId": ["0WLgXCnIWA2RuoJ1JZCn"], "users_": [{"created_at": 1710955352447, "first_name": "Siddhant", "github_created_at": 1641429822000, "github_display_name": "Siddhant Kumar Keshri", "github_id": "quantavoid11", "github_user_id": "97203165", "id": "0WLgXCnIWA2RuoJ1JZCn", "incompleteUserDetails": false, "last_name": "Keshri", "roles": [Object], "updated_at": 1710955374364, "username": "Quantavoid"}]}
   const [showSelectedUsersDetails, setShowSelectedUsersDetails] =
     useState(false);
 
   let { startTime, endTime, eventName, users_ } = event;
-  console.log({ startTime, endTime, event });
   const minHourSelectedDate =
     new Date(selectedDate).setHours(0, 0, 0, 0) / 1000;
-  console.log('🚀 ~ minHourSelectedDate:', minHourSelectedDate);
   const maxHourSelectedDate =
     new Date(selectedDate).setHours(23, 59, 59, 59) / 1000;
-  console.log('🚀 ~ maxHourSelectedDate:', maxHourSelectedDate);
 
   const startDate = new Date(startTime * 1000);
   const endDate = new Date(endTime * 1000); // Convert seconds to milliseconds
@@ -39,7 +42,6 @@ const ParticipantColView = ({
 
   let endHour = endDate.getHours();
   let endMinute = endDate.getMinutes();
-  console.log({ endTime, startTime, maxHourSelectedDate, minHourSelectedDate });
   if (endTime && endTime > maxHourSelectedDate) {
     endHour = 11;
     endMinute = 59;
@@ -47,7 +49,6 @@ const ParticipantColView = ({
     startHour = 0;
     startMinute = 0;
   }
-  console.log({ endHour, endMinute, startHour, startMinute });
   const getTopAndHeight = () => {
     const height = endHour * 60 + endMinute - (startHour * 60 + startMinute);
     const top = startHour * 60 + startMinute;
@@ -58,7 +59,6 @@ const ParticipantColView = ({
   };
 
   const { height, top } = getTopAndHeight();
-  console.log('height and top', height, top);
   const getProfileHeight = () => {
     const maxProfileSize = 300; // Set your maximum height or width here
 
@@ -75,14 +75,18 @@ const ParticipantColView = ({
     if (calculatedWidth > maxProfileSize) {
       calculatedWidth = maxProfileSize;
     }
+    console.log({ calculatedHeight, calculatedWidth });
+  };
+  const toggleDesc = () => {
+    setShowSelectedUsersDetails((prev) => !prev);
   };
   return (
     <TouchableOpacity
-      onPress={() => setShowSelectedUsersDetails((prev) => !prev)}
+      onPress={toggleDesc}
       style={[
         styles.event,
         {
-          height: height || 0,
+          height: height | 0,
           top: top || 0,
           position: 'absolute',
           borderWidth: 1,
@@ -101,20 +105,17 @@ const ParticipantColView = ({
               picture: user.picture,
               first_name: user.first_name,
               last_name: user.last_name,
+              id: user.id,
             }}
             profileHeight={getProfileHeight()}
             profileWidth={getProfileHeight()}
           />
           {showSelectedUsersDetails && (
             <Modal
-              // transparent={true}
+              transparent={true}
               isVisible={showSelectedUsersDetails}
-              onBackdropPress={() =>
-                setShowSelectedUsersDetails((prev) => !prev)
-              }
-              onBackButtonPress={() =>
-                setShowSelectedUsersDetails((prev) => !prev)
-              }
+              onBackdropPress={toggleDesc}
+              onBackButtonPress={toggleDesc}
               backdropOpacity={0.7}
               animationIn="slideInUp"
               animationOut="slideOutDown"
@@ -124,8 +125,8 @@ const ParticipantColView = ({
                 startTime={startTime}
                 endTime={endTime}
                 eventName={eventName}
+                setModalVisible={showSelectedUsersDetails}
                 user={user}
-                setModalVisible={setShowSelectedUsersDetails}
               />
             </Modal>
           )}
@@ -139,10 +140,10 @@ export default ParticipantColView;
 
 const styles = StyleSheet.create({
   container: {
-    // height: screenHeight,
+    height: screenHeight,
   },
   event: {
-    // height: CELL_HEIGHT,
+    height: CELL_HEIGHT,
     borderWidth: 1,
   },
 });

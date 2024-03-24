@@ -30,7 +30,7 @@ const TabNavigation = () => {
           // tabBarStyle: TabViewStyle.tab_bar,
           tabBarStyle: {
             paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-            height: scale(55),
+            // height: scale(55),
           },
         })}
       >
@@ -189,7 +189,7 @@ const TabNavigation = () => {
             },
           }}
         />
-        <tab.Screen
+        {/* <tab.Screen
           name={'Test'}
           component={testScreen}
           options={{
@@ -209,7 +209,7 @@ const TabNavigation = () => {
               );
             },
           }}
-        />
+        /> */}
       </tab.Navigator>
     </NavigationContainer>
   );
