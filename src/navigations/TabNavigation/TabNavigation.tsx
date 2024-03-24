@@ -16,6 +16,22 @@ import CalendarInviteScreen from '../../screens/Calendar/CalendarInviteScreen';
 
 const tab = createBottomTabNavigator();
 
+const renderLabel = ({ focused }) => {
+  return (
+    <Text
+      style={{
+        fontSize: Fonts.Tab_Text_Font,
+        color: focused ? Colors.Tab_Active_Color : Colors.Tab_Inactive_Color,
+      }}
+    >
+      {Strings.Tab_Calendar}
+    </Text>
+  );
+};
+
+const renderImage = () => {
+  return <Image style={TabViewStyle.tab_icon} source={Images.calendar} />;
+};
 const TabNavigation = () => {
   const { isProdEnvironment } = useSelector(
     (store: { localFeatureFlag: any }) => store.localFeatureFlag,
@@ -63,42 +79,16 @@ const TabNavigation = () => {
             },
           }}
         />
-        {isProdEnvironment && (
-          <tab.Screen
-            name={Strings.Tab_Calendar}
-            component={CalendarInviteScreen}
-            options={{
-              headerShown: false,
-              tabBarLabel: ({ focused }) => {
-                return (
-                  <Text
-                    style={{
-                      fontSize: Fonts.Tab_Text_Font,
-                      color: focused
-                        ? Colors.Tab_Active_Color
-                        : Colors.Tab_Inactive_Color,
-                    }}
-                  >
-                    {Strings.Tab_Calendar}
-                  </Text>
-                );
-              },
-              tabBarIcon: () => {
-                return (
-                  <Image
-                    style={TabViewStyle.tab_icon}
-                    source={Images.calendar}
-                  />
-                  // focused ? (
-                  //   <CalendarIcon width={60} height={60} />
-                  // ) : (
-                  //   <CalendarIcon width={30} height={30} focused />
-                  // )
-                );
-              },
-            }}
-          />
-        )}
+
+        <tab.Screen
+          name={Strings.Tab_Calendar}
+          component={CalendarInviteScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => renderLabel({ focused }),
+            tabBarIcon: () => renderImage(),
+          }}
+        />
 
         {!isProdEnvironment && (
           <tab.Screen
