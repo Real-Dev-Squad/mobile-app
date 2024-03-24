@@ -362,15 +362,15 @@ const CalendarInviteScreen = () => {
   const handleAddEvent = () => {
     // postLiveUsers('AAM0MZxZXEfWKmfdYOUp');
     // return;
-    if (users.length === 0) {
-      Toast.show({
-        type: 'error',
-        text1: 'Please Select User to create event',
-        position: 'bottom',
-      });
-    } else {
-      setShowInviteForm((prev) => !prev);
-    }
+    // if (users.length === 0) {
+    //   Toast.show({
+    //     type: 'error',
+    //     text1: 'Please Select User to create event',
+    //     position: 'bottom',
+    //   });
+    // } else {
+    setShowInviteForm((prev) => !prev);
+    // }
   };
 
   const scrollViewRef = useRef();

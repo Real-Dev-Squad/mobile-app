@@ -102,7 +102,7 @@ const InviteForm = ({
       );
       const userIds = userData.map((item) => item.id);
       const data = {
-        userId: userIds,
+        userId: userIds.length > 0 ? userIds : [loggedInUserData?.id],
         eventType: 'public',
         eventName: eventTitle,
         eventScheduledBy: loggedInUserData?.id,
