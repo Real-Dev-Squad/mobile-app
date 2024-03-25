@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
+import { render } from '@testing-library/react-native';
 import { store } from '../App';
 import TabNavigation from '../src/navigations/TabNavigation/TabNavigation';
 
