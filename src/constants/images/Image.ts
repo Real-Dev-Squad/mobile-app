@@ -7,6 +7,7 @@ const Images = {
   goalIconUnF: require('../../../assets/goalIcon.png'),
   profileIconUnF: require('../../../assets/profile-g.png'),
   emptyTaskScreen: require('../../../assets/task-empty.png'),
+  calendar: require('../../../assets/calendar.png'),
 
   //GoalScreen Icons
   arrowIcon: require('../../../assets/arrow.png'),
