@@ -38,22 +38,19 @@ const MainScreen = ({ navigation }) => {
     setIsDropDownSelected(!isDropDownSelected);
   };
 
-
-
   const handleDropDownPress = (item) => {
     setSelectedUser(item);
     setIsDropDownSelected(false);
   };
 
-  useEffect(() => {
-    fetchData();
-  });
-
-  const fetchData = async () => {
-    const allUser = await getAllUsers(loggedInUserData?.token);
-    setAllUsers(allUser);
-    setIsLoading(false);
-  };
+  // const fetchData = useCallback(async () => {
+  //   console.log('calling api');
+  //   if (loggedInUserData?.token) {
+  //     const allUser = await getAllUsers(loggedInUserData.token);
+  //     setAllUsers(allUser);
+  //     setIsLoading(false);
+  //   }
+  // }, [loggedInUserData?.token]);
 
   const postNewGoal = async () => {
     setTitleError('');
@@ -95,6 +92,15 @@ const MainScreen = ({ navigation }) => {
       }
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log('calling api');
+      const allUser = await getAllUsers(loggedInUserData?.token);
+      setAllUsers(allUser);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [loggedInUserData?.token]);
 
   return (
     <View style={styles.container}>
