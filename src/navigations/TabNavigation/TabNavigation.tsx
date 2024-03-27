@@ -16,21 +16,25 @@ import CalendarInviteScreen from '../../screens/Calendar/CalendarInviteScreen';
 
 const tab = createBottomTabNavigator();
 
-const renderLabel = ({ focused }) => {
-  return (
-    <Text
-      style={{
-        fontSize: Fonts.Tab_Text_Font,
-        color: focused ? Colors.Tab_Active_Color : Colors.Tab_Inactive_Color,
-      }}
-    >
-      {Strings.Tab_Calendar}
-    </Text>
-  );
-};
+const renderLabel = ({
+  focused,
+  tabName,
+}: {
+  focused?: boolean;
+  tabName: string;
+}) => (
+  <Text
+    style={{
+      fontSize: Fonts.Tab_Text_Font,
+      color: focused ? Colors.Tab_Active_Color : Colors.Tab_Inactive_Color,
+    }}
+  >
+    {tabName}
+  </Text>
+);
 
-const renderImage = () => {
-  return <Image style={TabViewStyle.tab_icon} source={Images.calendar} />;
+const renderIcon = ({ tabIcon }: { tabIcon: any }) => {
+  return <Image style={TabViewStyle.tab_icon} source={tabIcon} />;
 };
 const TabNavigation = () => {
   const { isProdEnvironment } = useSelector(
@@ -43,7 +47,6 @@ const TabNavigation = () => {
         initialRouteName={Strings.Tab_Calendar}
         screenOptions={() => ({
           headerShown: false,
-          // tabBarStyle: TabViewStyle.tab_bar,
           tabBarStyle: {
             paddingVertical: Platform.OS === 'ios' ? 20 : 0,
             height: scale(55),
@@ -55,28 +58,12 @@ const TabNavigation = () => {
           component={HomeScreenV2}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text
-                  style={{
-                    fontSize: Fonts.Tab_Text_Font,
-                    color: focused
-                      ? Colors.Tab_Active_Color
-                      : Colors.Tab_Inactive_Color,
-                  }}
-                >
-                  {Strings.Tab_Home}
-                </Text>
-              );
-            },
-            tabBarIcon: ({ focused }) => {
-              return (
-                <Image
-                  style={TabViewStyle.tab_icon}
-                  source={focused ? Images.homeIcon : Images.homeIconUnF}
-                />
-              );
-            },
+            tabBarLabel: ({ focused }) =>
+              renderLabel({ focused, tabName: Strings.Tab_Home }),
+            tabBarIcon: ({ focused }) =>
+              renderIcon({
+                tabIcon: focused ? Images.homeIcon : Images.homeIconUnF,
+              }),
           }}
         />
 
@@ -85,8 +72,9 @@ const TabNavigation = () => {
           component={CalendarInviteScreen}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused }) => renderLabel({ focused }),
-            tabBarIcon: () => renderImage(),
+            tabBarLabel: ({ focused }) =>
+              renderLabel({ focused, tabName: Strings.Tab_Calendar }),
+            tabBarIcon: () => renderIcon({ tabIcon: Images.calendar }),
           }}
         />
 
@@ -97,28 +85,13 @@ const TabNavigation = () => {
             options={{
               headerShown: false,
 
-              tabBarLabel: ({ focused }) => {
-                return (
-                  <Text
-                    style={{
-                      fontSize: Fonts.Tab_Text_Font,
-                      color: focused
-                        ? Colors.Tab_Active_Color
-                        : Colors.Tab_Inactive_Color,
-                    }}
-                  >
-                    {Strings.Tab_Goal}
-                  </Text>
-                );
-              },
-              tabBarIcon: ({ focused }) => {
-                return (
-                  <Image
-                    style={TabViewStyle.tab_icon}
-                    source={focused ? Images.goalIcon : Images.goalIconUnF}
-                  />
-                );
-              },
+              tabBarLabel: ({ focused }) =>
+                renderLabel({ focused, tabName: Strings.Tab_Goal }),
+
+              tabBarIcon: ({ focused }) =>
+                renderIcon({
+                  tabIcon: focused ? Images.goalIcon : Images.goalIconUnF,
+                }),
             }}
           />
         )}
@@ -128,28 +101,13 @@ const TabNavigation = () => {
           component={AllTaskScreenStack}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text
-                  style={{
-                    fontSize: Fonts.Tab_Text_Font,
-                    color: focused
-                      ? Colors.Tab_Active_Color
-                      : Colors.Tab_Inactive_Color,
-                  }}
-                >
-                  {Strings.Tab_Profile}
-                </Text>
-              );
-            },
-            tabBarIcon: ({ focused }) => {
-              return (
-                <Image
-                  style={TabViewStyle.tab_icon}
-                  source={focused ? Images.profileIcon : Images.profileIconUnF}
-                />
-              );
-            },
+            tabBarLabel: ({ focused }) =>
+              renderLabel({ focused, tabName: Strings.Tab_Profile }),
+
+            tabBarIcon: ({ focused }) =>
+              renderIcon({
+                tabIcon: focused ? Images.profileIcon : Images.profileIconUnF,
+              }),
           }}
         />
       </tab.Navigator>

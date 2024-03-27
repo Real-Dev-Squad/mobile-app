@@ -22,7 +22,7 @@ describe('TabNavigation', () => {
         <TabNavigation />
       </Provider>,
     );
-    const calendar = getByTestId('calendar');
+    const calendar = getByTestId('Tab_Calendar');
 
     expect(calendar).toBeTruthy();
   });
