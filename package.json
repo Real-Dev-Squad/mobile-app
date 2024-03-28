@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.16",
+    "@react-native-community/netinfo": "^11.3.1",
     "@react-native-community/slider": "^4.4.3",
     "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-navigation/bottom-tabs": "^6.0.9",
@@ -49,6 +50,7 @@
     "react-native-keychain": "^8.1.2",
     "react-native-local-resource": "^0.1.6",
     "react-native-modal": "^13.0.1",
+    "react-native-offline": "^6.0.2",
     "react-native-pager-view": "^6.2.1",
     "react-native-paper": "^5.11.2",
     "react-native-progress": "^5.0.1",
