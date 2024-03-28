@@ -10,7 +10,6 @@ import { TabViewStyle } from './style';
 import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
 import { useSelector } from 'react-redux';
-import ProfileScreen2 from '../../screens/ProfileScreen/ProfileScreen2';
 import NotifyScreen from '../../screens/NotifyScreen/NotifyScreen';
 import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
 import { scale } from '../../utils/utils';
