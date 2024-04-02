@@ -5,17 +5,20 @@ import TabNavigation from './navigations/TabNavigation/TabNavigation';
 import AuthScreen from './screens/AuthScreen/AuthScreen';
 import ConnectionScreen from './screens/ConnectionScreen/ConnectionScreen';
 import NetInfo from '@react-native-community/netinfo';
+import { useSelector } from 'react-redux';
+
 
 const Index = () => {
   const { isLoading, loggedInUserData } = useContext(AuthContext);
   const [isConnected, setIsConnected] = useState(false);
+    const { isProdEnvironment } = useSelector(
+      (store) => store.localFeatureFlag,
+    );
 
   const retryConnection = async () => {
     try {
       const state = await NetInfo.fetch();
-
       setIsConnected(state.isConnected);
-      console.log(state.isConnected);
     } catch (error) {
       setIsConnected(false);
     }
@@ -34,7 +37,7 @@ const Index = () => {
     return <LoadingScreen />;
   }
 
-  if (!isConnected) {
+  if (!isConnected && !isProdEnvironment) {
     return <ConnectionScreen retryConnect={retryConnection} />;
   }
 

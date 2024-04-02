@@ -1,3 +1,3 @@
 export const strings = {
-  OFFLINE_TEXT: "Oops! Seems line you're offline",
+  OFFLINE_TEXT: "Oops! Seems like you're offline",
 };
