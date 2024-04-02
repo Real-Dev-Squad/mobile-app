@@ -35,6 +35,9 @@ const Images = {
   //Default Image Url
   DEFAULT_IMAGE:
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+
+  //LOGO
+  noInternet: require('./../../../assets/no-internet.png'),
 };
 
 export default Images;

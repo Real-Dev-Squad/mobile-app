@@ -2,8 +2,10 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { scale } from '../../utils/utils';
 import StyleConfig from '../../utils/StyleConfig';
-import { strings } from '../../constants/strings/strings';
-import { images } from '../../constants/assets/images';
+import Images from '../../constants/images/Image';
+import Strings from '../../i18n/en';
+Images
+
 
 type RetryFunction = () => void;
 
@@ -16,8 +18,8 @@ const ConnectionScreen: React.FC<ConnectionScreenProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Image source={images.NO_INTERNET} style={styles.offlineImage} />
-      <Text style={styles.noInternetText}>{strings.OFFLINE_TEXT}</Text>
+      <Image source={Images.noInternet} style={styles.offlineImage} />
+      <Text style={styles.noInternetText}>{Strings.OFFLINE_TEXT}</Text>
       <TouchableOpacity onPress={retryConnect} style={styles.retryButton}>
         <Text style={styles.retry}>Retry</Text>
       </TouchableOpacity>
