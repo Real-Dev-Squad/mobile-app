@@ -1,4 +1,4 @@
-const primary_color = '#0A0A0A';
+const primary_color = '#1D1283';
 const floating_color = '#656F85';
 const placeholderView_color = '#1F2B42';
 const placeholderText_color = '#B1B1B1';

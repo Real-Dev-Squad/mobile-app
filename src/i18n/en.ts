@@ -43,6 +43,7 @@ const Strings = {
 
   UPDATE_STATUS_TO_OOO: 'Update your Status',
   CANCEL_OOO: 'Cancel OOO',
+  OFFLINE_TEXT: "Oops! Seems like you're offline",
 };
 
 export default Strings;
