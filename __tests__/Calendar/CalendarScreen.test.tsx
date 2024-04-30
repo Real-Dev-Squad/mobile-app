@@ -2,7 +2,6 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import CalendarInviteScreen from '../../src/screens/Calendar/CalendarInviteScreen';
 
-// Mock the AuthContext and fetchUsers function
 jest.mock('../../src/context/AuthContext', () => ({
   __esModule: true,
   default: {
@@ -15,7 +14,6 @@ jest.mock('../../src/utils/Api', () => ({
 
 describe.only('CalendarInviteScreen', () => {
   beforeEach(() => {
-    // Reset the mock implementation before each test
     jest.clearAllMocks();
   });
   it('renders without crashing', () => {
@@ -35,6 +33,4 @@ describe.only('CalendarInviteScreen', () => {
     const dropdown = getByTestId('dropdown');
     fireEvent.changeText(dropdown, 'New User');
   });
-
-  it('displays "user already exists" alert when handleUserIdChange is called with an existing user', () => {});
 });
