@@ -21,11 +21,10 @@ describe('DropDown Component', () => {
     );
     const dropdownSelector = getByTestId('dropdown');
     expect(dropdownSelector).toBeTruthy();
-    expect(dropdownSelector.props.accessibilityState.disabled).toBe(false); // Check the disabled prop value directly
+    expect(dropdownSelector.props.accessibilityState.disabled).toBe(false);
     expect(dropdownSelector).toHaveTextContent('Select User');
   });
 
-  // Dropdown Toggle Test
   it('toggles dropdown visibility', async () => {
     const { getByTestId, queryByTestId } = render(
       <DropDown handleUserId={() => {}} error="" disabled={false} />,
@@ -48,23 +47,20 @@ describe('DropDown Component', () => {
     );
     const dropdownSelector = getByTestId('dropdown');
     fireEvent.press(dropdownSelector);
-    const userItem = getByText('John Doe'); // Assuming John Doe exists in the mock data
+    const userItem = getByText('John Doe');
     fireEvent.press(userItem);
     await waitFor(() => {
-      expect(
-        handleUserIdMock,
-      ).toHaveBeenCalledWith(/* pass expected user info */);
+      expect(handleUserIdMock).toHaveBeenCalledWith();
     });
   });
 
   it.skip('displays user data correctly', async () => {
-    // Mock data containing user info
     const mockAllUsers = [
       {
         id: 1,
         first_name: 'John',
         last_name: 'Doe',
-      } /* add more users if needed */,
+      },
     ];
     jest.mock('../screens/AuthScreen/Util', () => ({
       getAllUsers: jest.fn().mockResolvedValue(mockAllUsers),
