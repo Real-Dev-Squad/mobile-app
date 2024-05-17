@@ -15,6 +15,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
+  console.log("test")
 
   const changeStatus = (status: string) => {
     setLoader(true);
