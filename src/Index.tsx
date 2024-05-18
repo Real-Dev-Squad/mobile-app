@@ -7,13 +7,10 @@ import ConnectionScreen from './screens/ConnectionScreen/ConnectionScreen';
 import NetInfo from '@react-native-community/netinfo';
 import { useSelector } from 'react-redux';
 
-
 const Index = () => {
   const { isLoading, loggedInUserData } = useContext(AuthContext);
   const [isConnected, setIsConnected] = useState(false);
-    const { isProdEnvironment } = useSelector(
-      (store) => store.localFeatureFlag,
-    );
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
   const retryConnection = async () => {
     try {

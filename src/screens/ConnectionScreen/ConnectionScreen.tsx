@@ -4,9 +4,6 @@ import { scale } from '../../utils/utils';
 import StyleConfig from '../../utils/StyleConfig';
 import Images from '../../constants/images/Image';
 import Strings from '../../i18n/en';
-Images
-
-
 type RetryFunction = () => void;
 
 interface ConnectionScreenProps {
