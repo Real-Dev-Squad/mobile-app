@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest --runInBand --detectOpenHandles --forceExit",
-    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint **/*.ts",
     "format-check": "prettier --check ./src",
     "format-fix": "prettier --write ./src",
     "precommit-check": "yarn run format-fix && yarn run lint",
