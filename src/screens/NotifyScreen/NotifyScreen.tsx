@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import NotifyButton from '../../components/Notify/NotifyButton';
 import Colors from '../../constants/colors/Colors';
@@ -12,8 +12,8 @@ const NotifyScreen = () => {
       <NotifyButton
         onPress={onNotifyHandler}
         title={'Notify'}
-        buttonStyle={{backgroundColor: Colors.Primary_Color}}
-        textStyle={{color: 'white'}}
+        buttonStyle={{ backgroundColor: Colors.Primary_Color }}
+        textStyle={{ color: 'white' }}
       />
     </View>
   );

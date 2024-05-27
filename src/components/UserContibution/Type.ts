@@ -17,4 +17,4 @@ export type displayContributionType = {
   updatedAt: number;
 };
 export type taskType = displayContributionType[];
-export type completionAwardType = {dinero: number; neelam: number};
+export type completionAwardType = { dinero: number; neelam: number };

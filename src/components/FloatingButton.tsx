@@ -1,5 +1,5 @@
-import {FloatingAction} from 'react-native-floating-action';
-import {View, StyleSheet} from 'react-native';
+import { FloatingAction } from 'react-native-floating-action';
+import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import FloatingActions from './FloatingActions';
 

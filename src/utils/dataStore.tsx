@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 export const storeData = async (name: string, value: string) => {
   try {
@@ -13,10 +13,10 @@ export const storeData = async (name: string, value: string) => {
 export const getData = async (item: string) => {
   console.log('getData', item);
   return AsyncStorage.getItem(item)
-    .then(res => {
+    .then((res) => {
       return res ? JSON.parse(res) : '';
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 export enum StorageKey {

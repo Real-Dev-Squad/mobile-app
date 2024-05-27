@@ -1,7 +1,7 @@
-import {Text, View, TouchableOpacity} from 'react-native';
-import React, {useCallback, useContext, useState} from 'react';
-import {profileScreenStyles} from '../styles';
-import {ScrollView} from 'react-native-gesture-handler';
+import { Text, View, TouchableOpacity } from 'react-native';
+import React, { useCallback, useContext, useState } from 'react';
+import { profileScreenStyles } from '../styles';
+import { ScrollView } from 'react-native-gesture-handler';
 import {
   calculateISODateFormat,
   fetchTaskDetails,
@@ -15,10 +15,10 @@ import {
 } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 
-import {AuthContext} from '../../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 import GithubLink from '../../../components/GithubLink';
 import PushUpModalContent from '../../../components/PushUpModalContent';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProgressBar from '../../../components/ProgressBar';
 import BackSvg from '../../../../assets/svgs/back';
 import Skelton from '../../../components/Skelton';
@@ -26,15 +26,15 @@ import Skelton from '../../../components/Skelton';
 const TaskDetailScreen = () => {
   const route = useRoute();
 
-  const {taskId, isActive} = route.params;
+  const { taskId, isActive } = route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [progress, setProgress] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const {isProdEnvironment} = useSelector(store => store.localFeatureFlag);
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
-  const toggleModal = item => {
+  const toggleModal = (item) => {
     console.log(item);
-    setIsModalVisible(prev => !prev);
+    setIsModalVisible((prev) => !prev);
 
     setProgress(item);
   };
@@ -44,7 +44,7 @@ const TaskDetailScreen = () => {
 
   const [allTaskProgressDetail, setAllTaskProgressDetailData] = useState();
 
-  const {loggedInUserData} = useContext(AuthContext);
+  const { loggedInUserData } = useContext(AuthContext);
 
   useFocusEffect(
     useCallback(() => {
@@ -149,7 +149,8 @@ const TaskDetailScreen = () => {
                     style={[
                       profileScreenStyles.progressListLeftPadding,
                       profileScreenStyles.progressStyle,
-                    ]}>
+                    ]}
+                  >
                     {`\u25A1 ${calculateISODateFormat(item?.date)}`}
                   </Text>
                 </TouchableOpacity>
@@ -201,7 +202,8 @@ const TaskDetailScreen = () => {
                     taskId: taskId,
                   });
                 }}
-                style={profileScreenStyles.updateButtonContainer}>
+                style={profileScreenStyles.updateButtonContainer}
+              >
                 <Text style={profileScreenStyles.updatebutton}>
                   Update Progress
                 </Text>
@@ -216,7 +218,8 @@ const TaskDetailScreen = () => {
               backdropOpacity={0.7}
               animationIn="slideInUp"
               animationOut="slideOutDown"
-              style={profileScreenStyles.modal}>
+              style={profileScreenStyles.modal}
+            >
               <PushUpModalContent task={progress} />
             </Modal>
           )}

@@ -1,5 +1,12 @@
-import {View, Text, TextInput, Picker, Button, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Picker,
+  Button,
+  StyleSheet,
+} from 'react-native';
+import React, { useState } from 'react';
 
 const NotifyForm = () => {
   const [title, setTitle] = useState('');
@@ -8,7 +15,7 @@ const NotifyForm = () => {
 
   const handleButtonPress = () => {
     // Handle the button press and perform necessary actions (e.g., send notification)
-    console.log('Notification sent:', {title, description, notifyTo});
+    console.log('Notification sent:', { title, description, notifyTo });
   };
   return (
     <View style={styles.container}>
@@ -16,7 +23,7 @@ const NotifyForm = () => {
       <TextInput
         style={styles.input}
         value={title}
-        onChangeText={text => setTitle(text)}
+        onChangeText={(text) => setTitle(text)}
         placeholder="Enter title"
       />
 
@@ -24,7 +31,7 @@ const NotifyForm = () => {
       <TextInput
         style={styles.input}
         value={description}
-        onChangeText={text => setDescription(text)}
+        onChangeText={(text) => setDescription(text)}
         placeholder="Enter description"
         multiline
       />
@@ -33,7 +40,8 @@ const NotifyForm = () => {
       <Picker
         style={styles.input}
         selectedValue={notifyTo}
-        onValueChange={itemValue => setNotifyTo(itemValue)}>
+        onValueChange={(itemValue) => setNotifyTo(itemValue)}
+      >
         <Picker.Item label="User 1" value="user1" />
         <Picker.Item label="User 2" value="user2" />
         {/* Add more items as needed */}

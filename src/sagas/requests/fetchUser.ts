@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {urls} from '../../constants/appConstant/url';
-import {User} from '../../context/type';
+import { urls } from '../../constants/appConstant/url';
+import { User } from '../../context/type';
 
 export const fetchUserData = async (userId: string): Promise<User | null> => {
   try {

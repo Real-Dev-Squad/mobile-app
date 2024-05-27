@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {SelectCountry} from 'react-native-element-dropdown';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { SelectCountry } from 'react-native-element-dropdown';
 import Searchbar from './SearchBar';
 import Radio from './RadioGroup';
 
@@ -17,7 +17,7 @@ const local_data = [
 
 export interface Props {}
 
-const SelectCountryScreen: React.FC<Props> = _props => {
+const SelectCountryScreen: React.FC<Props> = (_props) => {
   const [duration, setDuration] = useState<string>('1');
 
   return (
@@ -33,7 +33,7 @@ const SelectCountryScreen: React.FC<Props> = _props => {
         labelField="lable"
         placeholder="Select Duration"
         testID="roadmapType"
-        onChange={e => {
+        onChange={(e) => {
           setDuration(e.value);
         }}
       />

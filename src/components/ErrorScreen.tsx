@@ -1,7 +1,7 @@
 import React from 'react';
-import {Modal, StyleSheet, View, Text} from 'react-native';
+import { Modal, StyleSheet, View, Text } from 'react-native';
 
-const ErrorScreen = ({error}: string) => {
+const ErrorScreen = ({ error }: string) => {
   return (
     <Modal transparent={true}>
       <View style={styles.container}>

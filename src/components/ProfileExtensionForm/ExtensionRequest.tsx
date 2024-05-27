@@ -6,15 +6,15 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import Images from '../../constants/images/Image';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {TextInput} from 'react-native-gesture-handler';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { TextInput } from 'react-native-gesture-handler';
 import {
   submitExtension,
   getDateAndTimeFromUnix,
 } from '../../screens/AuthScreen/Util';
-import {AuthContext} from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import DeadLineDatePicker from '../OOO/OOOFormDatePicker';
 
 export default function ExtensionRequest() {
@@ -23,9 +23,9 @@ export default function ExtensionRequest() {
   const [reason, setReason] = useState('');
   const [title, setTitle] = useState('');
   const [newEndsOn, setNewEndsOn] = useState(null);
-  const {loggedInUserData} = useContext(AuthContext);
+  const { loggedInUserData } = useContext(AuthContext);
   const route = useRoute();
-  const {endsOn} = route.params;
+  const { endsOn } = route.params;
   const [toDate, setToDate] = useState(new Date());
 
   const handleFormSubmit = async () => {
@@ -59,7 +59,7 @@ export default function ExtensionRequest() {
         <Text style={styles.paragraph}>Reason :</Text>
         <TextInput
           value={reason}
-          onChangeText={text => setReason(text)}
+          onChangeText={(text) => setReason(text)}
           style={styles.input}
           placeholder="Enter reason"
         />
@@ -67,20 +67,20 @@ export default function ExtensionRequest() {
         <Text style={styles.paragraph}>Title :</Text>
         <TextInput
           value={title}
-          onChangeText={text => setTitle(text)}
+          onChangeText={(text) => setTitle(text)}
           style={styles.input}
           placeholder="Enter Title"
         />
 
         <Text style={styles.paragraph}>New Ends On :</Text>
-        <Text style={{color: 'black'}}>
+        <Text style={{ color: 'black' }}>
           OldsEndsOn : {getDateAndTimeFromUnix(endsOn)}`
         </Text>
 
         <DeadLineDatePicker
           title={`New date: ${toDate.toLocaleString('en-US')}`}
           value={newEndsOn}
-          onDateChange={date => {
+          onDateChange={(date) => {
             setNewEndsOn(date);
             setToDate(date);
           }}
@@ -89,7 +89,7 @@ export default function ExtensionRequest() {
 
       <View style={styles.buttoncontainer}>
         <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
-          <Text style={{color: 'Whight'}}>Create Extension</Text>
+          <Text style={{ color: 'Whight' }}>Create Extension</Text>
         </TouchableOpacity>
       </View>
     </View>

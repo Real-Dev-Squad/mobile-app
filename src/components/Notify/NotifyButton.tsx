@@ -1,8 +1,13 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {NotifyType} from './NotifyType';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { NotifyType } from './NotifyType';
 
-const NotifyButton = ({onPress, title, buttonStyle, textStyle}: NotifyType) => {
+const NotifyButton = ({
+  onPress,
+  title,
+  buttonStyle,
+  textStyle,
+}: NotifyType) => {
   return (
     <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
       <Text style={[styles.text, textStyle]}>{title}</Text>

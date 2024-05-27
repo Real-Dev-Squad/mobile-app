@@ -1,4 +1,4 @@
-import {View, StyleSheet, TextInput} from 'react-native';
+import { View, StyleSheet, TextInput } from 'react-native';
 import React from 'react';
 
 type SearchBarProps = {
@@ -27,7 +27,7 @@ const SearchBar = ({
     console.log('1', text);
 
     const updatedData = text
-      ? membersData?.filter(member => {
+      ? membersData?.filter((member) => {
           const {
             github_display_name,
             first_name,

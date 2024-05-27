@@ -14,7 +14,7 @@ const uploadImage = (
       maxHeight: 400,
       mediaType: 'photo',
     },
-    res => {
+    (res) => {
       setResponse(res);
     },
   );

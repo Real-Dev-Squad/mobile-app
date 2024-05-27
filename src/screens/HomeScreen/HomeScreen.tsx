@@ -1,20 +1,20 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
-import {AuthContext} from '../../context/AuthContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { AuthContext } from '../../context/AuthContext';
 import withHeader from '../../helpers/withHeader';
-import {storeData} from '../../utils/dataStore';
+import { storeData } from '../../utils/dataStore';
 import Strings from '../../i18n/en';
-import {updateStatus} from '../AuthScreen/Util';
-import {HomeViewStyle} from './styles';
+import { updateStatus } from '../AuthScreen/Util';
+import { HomeViewStyle } from './styles';
 import Toast from 'react-native-toast-message';
-import {useDispatch} from 'react-redux';
-import {getUser} from '../../actions';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../actions';
 
 const HomeScreen = () => {
   const [loader, setLoader] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const {loggedInUserData, setLoggedInUserData} = useContext(AuthContext);
+  const { loggedInUserData, setLoggedInUserData } = useContext(AuthContext);
 
   const changeStatus = (status: string) => {
     setLoader(true);
@@ -33,7 +33,7 @@ const HomeScreen = () => {
             }),
           );
         })
-        .catch(err => {
+        .catch((err) => {
           Toast.show({
             type: 'error',
             text1: 'Error',
@@ -69,7 +69,8 @@ const HomeScreen = () => {
         ) : (
           <>
             <TouchableOpacity
-              onPress={() => changeStatus(Strings.OUT_OF_OFFICE)}>
+              onPress={() => changeStatus(Strings.OUT_OF_OFFICE)}
+            >
               <Text style={HomeViewStyle.oooBtn}>{Strings.OOOBtn1_Text}</Text>
             </TouchableOpacity>
           </>

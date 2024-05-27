@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import {Card, Title, Paragraph, Button} from 'react-native-paper';
+import { Card, Title, Paragraph, Button } from 'react-native-paper';
 import Slider from '@react-native-community/slider';
 
 function ProgressModal() {
@@ -12,13 +12,13 @@ function ProgressModal() {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-  const handleSliderChange = value => {
+  const handleSliderChange = (value) => {
     const roundedValue = Math.round(value / 10) * 10;
     setProgress(roundedValue);
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity onPress={toggleModal}>
         <CircularProgress
           value={progress}
@@ -55,7 +55,7 @@ function ProgressModal() {
             <Card.Content>
               <Paragraph>Slide to update progress:</Paragraph>
               <Slider
-                style={{width: '80%', alignSelf: 'center'}}
+                style={{ width: '80%', alignSelf: 'center' }}
                 value={progress}
                 onValueChange={handleSliderChange}
                 minimumValue={0}

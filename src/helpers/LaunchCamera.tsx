@@ -1,5 +1,5 @@
-import {PermissionsAndroid, Platform} from 'react-native';
-import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
+import { PermissionsAndroid, Platform } from 'react-native';
+import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import Strings from '../i18n/en';
 

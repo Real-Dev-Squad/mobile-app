@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {urls} from '../../constants/appConstant/url';
-import {HomeApi} from '../../constants/apiConstant/HomeApi';
-import {PermissionsAndroid} from 'react-native';
+import { urls } from '../../constants/appConstant/url';
+import { HomeApi } from '../../constants/apiConstant/HomeApi';
+import { PermissionsAndroid } from 'react-native';
 import moment from 'moment';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
@@ -82,7 +82,7 @@ export const fetchActiveTasks = async (token: string): Promise<any> => {
 export const updateStatus = async (status: string) => {
   const res = await axios.patch(
     urls.GET_USERS_DATA,
-    {status},
+    { status },
     {
       headers: {
         cookie: '',
@@ -95,7 +95,7 @@ export const updateStatus = async (status: string) => {
 export const updateMarkYourSelfAs_ = async (markStatus: string) => {
   const res = await axios.patch(
     urls.GET_USERS_DATA,
-    {status: markStatus},
+    { status: markStatus },
     {
       headers: {
         cookie: '',
@@ -159,7 +159,7 @@ export const PostGoal = async (
   }
 };
 
-export const getUsersStatus = async token => {
+export const getUsersStatus = async (token) => {
   try {
     const res = await axios.get(HomeApi.GET_USER_STATUS, {
       headers: {
@@ -177,7 +177,7 @@ export const getUsersStatus = async token => {
   }
 };
 
-export const getAllUsers = async token => {
+export const getAllUsers = async (token) => {
   try {
     const res = await axios.get(HomeApi.GET_ALL_USERS, {
       headers: {
@@ -214,14 +214,14 @@ export const submitOOOForm = async (data, token) => {
   }
 };
 
-export const cancelOoo = async token => {
+export const cancelOoo = async (token) => {
   const options = {
     headers: {
       'Content-type': 'application/json',
       cookie: `rds-session=${token}`,
     },
   };
-  const body = {cancelOoo: true};
+  const body = { cancelOoo: true };
   try {
     const res = await axios.patch(HomeApi.UPDATE_STATUS, body, options);
     if (res.status === 200) {
@@ -260,7 +260,7 @@ export const requestCameraPermission = async () => {
     console.warn(err);
   }
 };
-export const unixToTimeStamp = _date => {
+export const unixToTimeStamp = (_date) => {
   if (!_date) {
     return 'NA';
   }
@@ -282,7 +282,7 @@ export const unixToTimeStamp = _date => {
 
   return formattedDate;
 };
-export const formatTimeToUnix = date => {
+export const formatTimeToUnix = (date) => {
   const newDate = new Date(date);
 
   // Convert the date to Unix Epoch timestamp in seconds
@@ -290,7 +290,7 @@ export const formatTimeToUnix = date => {
   return unixTimestampInSeconds;
 };
 
-export const convertTimestampToReadableDate = timestamp => {
+export const convertTimestampToReadableDate = (timestamp) => {
   return new Date(timestamp * 1000);
 };
 
@@ -321,9 +321,9 @@ export const calculateTimeDifference = (startDate, endDate) => {
   }
 };
 
-export const calculateISODateFormat = isoDateString => {
+export const calculateISODateFormat = (isoDateString) => {
   const date = new Date(isoDateString);
-  const formatDate = d => {
+  const formatDate = (d) => {
     const months = [
       'January',
       'February',
@@ -349,11 +349,11 @@ export const calculateISODateFormat = isoDateString => {
   return formattedDate;
 };
 
-export const parseISODate = isoDateString => {
+export const parseISODate = (isoDateString) => {
   return new Date(isoDateString);
 };
 
-export const formatTimeAgo = timestamp => {
+export const formatTimeAgo = (timestamp) => {
   const currentDate = moment();
   const endDate = moment.unix(timestamp);
   return endDate.from(currentDate);
@@ -425,7 +425,7 @@ export const overallTaskProgress = async (
       cookie: `rds-session=${token}`,
     },
   };
-  const body = {percentCompleted: percentCompleted};
+  const body = { percentCompleted: percentCompleted };
   try {
     const res = await axios.patch(
       `${urls.GET_ACTIVE_TASK}/${taskId}?userStatusFlag=true`,

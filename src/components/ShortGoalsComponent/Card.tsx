@@ -1,10 +1,10 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import Images from '../../constants/images/Image';
-import {CardStyles} from './Styles/CardStyles';
+import { CardStyles } from './Styles/CardStyles';
 import Strings from '../../i18n/en';
 
-const Card = ({item}: any) => {
+const Card = ({ item }: any) => {
   return (
     <View style={CardStyles.card}>
       <View>
@@ -25,11 +25,13 @@ const Card = ({item}: any) => {
       <View style={[CardStyles.flex, CardStyles.container]}>
         <View style={CardStyles.flex}>
           <Image source={Images.commentIcon} style={CardStyles.commentIcon} />
-          <Text style={{color: 'blue'}}>{item.messageCount}</Text>
+          <Text style={{ color: 'blue' }}>{item.messageCount}</Text>
         </View>
-        <Text style={{color: 'red'}}>Due in {item.dueDate} days</Text>
+        <Text style={{ color: 'red' }}>Due in {item.dueDate} days</Text>
         <TouchableOpacity style={[CardStyles.doneBtn, CardStyles.flex]}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Mark as done</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+            Mark as done
+          </Text>
           <Image source={Images.doneIcon} style={CardStyles.doneIcon} />
         </TouchableOpacity>
       </View>

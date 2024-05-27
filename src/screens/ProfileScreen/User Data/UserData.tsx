@@ -1,10 +1,16 @@
 import React from 'react';
-import {StyleSheet, View, Text, Linking, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import GithubSvg from '../../../../assets/svgs/github_logo';
 import LinkedInSvg from '../../../../assets/svgs/linkedIn';
 import TwitterSvg from '../../../../assets/svgs/twitter';
 
-const UserData = ({userData}) => {
+const UserData = ({ userData }) => {
   const {
     twitter_id,
     linkedin_id,
@@ -23,9 +29,8 @@ const UserData = ({userData}) => {
       <View style={styles.contactView}>
         {twitter_id && (
           <TouchableOpacity
-            onPress={() =>
-              Linking.openURL(`https://twitter.com/${twitter_id}`)
-            }>
+            onPress={() => Linking.openURL(`https://twitter.com/${twitter_id}`)}
+          >
             <TwitterSvg height={30} width={30} />
           </TouchableOpacity>
         )}
@@ -33,13 +38,15 @@ const UserData = ({userData}) => {
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(`https://www.linkedin.com/in/${linkedin_id}`)
-            }>
+            }
+          >
             <LinkedInSvg height={30} width={30} />
           </TouchableOpacity>
         )}
         {github_id && (
           <TouchableOpacity
-            onPress={() => Linking.openURL(`https://github.com/${github_id}`)}>
+            onPress={() => Linking.openURL(`https://github.com/${github_id}`)}
+          >
             <GithubSvg height={28} width={28} />
           </TouchableOpacity>
         )}

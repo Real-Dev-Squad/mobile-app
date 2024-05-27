@@ -1,5 +1,5 @@
-import React, {ReactElement} from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
+import React, { ReactElement } from 'react';
+import { View, Image, TouchableOpacity } from 'react-native';
 import Avatar from './Avatar';
 
 const AvatarWithBadge = ({
@@ -14,12 +14,12 @@ const AvatarWithBadge = ({
 }) => {
   const ICON_SIZE = size / 2.5;
   return (
-    <View key={uri} style={{alignItems: 'center', position: 'relative'}}>
+    <View key={uri} style={{ alignItems: 'center', position: 'relative' }}>
       <Image
         resizeMode="cover"
         resizeMethod="scale"
-        style={{width: size, height: size, borderRadius: size}}
-        source={{uri: uri}}
+        style={{ width: size, height: size, borderRadius: size }}
+        source={{ uri: uri }}
       />
       <TouchableOpacity
         onPress={onPress}
@@ -28,7 +28,8 @@ const AvatarWithBadge = ({
           position: 'absolute',
           top: ICON_SIZE * 1.5,
           left: ICON_SIZE * 1.5,
-        }}>
+        }}
+      >
         <Avatar uri={'https://picsum.photos/id/237/200/300'} size={ICON_SIZE} />
       </TouchableOpacity>
     </View>

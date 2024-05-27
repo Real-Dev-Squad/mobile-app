@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from 'react';
-import {Animated, Easing, Text, View} from 'react-native';
-import {ProgressBarStyles} from './ProgressBarStyle';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Easing, Text, View } from 'react-native';
+import { ProgressBarStyles } from './ProgressBarStyle';
 
 export type ProgressBarProps = {
   progress: number;

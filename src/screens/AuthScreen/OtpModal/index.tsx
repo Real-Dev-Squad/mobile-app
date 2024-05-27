@@ -1,8 +1,15 @@
-import React, {useRef, useState} from 'react';
-import {Modal, Text, TextInput, Pressable, View, Keyboard} from 'react-native';
-import {OtpBox} from './components';
+import React, { useRef, useState } from 'react';
+import {
+  Modal,
+  Text,
+  TextInput,
+  Pressable,
+  View,
+  Keyboard,
+} from 'react-native';
+import { OtpBox } from './components';
 import OtpModalStyle from './styles';
-import {isValidTextInput} from '../Util';
+import { isValidTextInput } from '../Util';
 import Strings from '../../../i18n/en';
 
 type OtpModalProps = {
@@ -44,17 +51,20 @@ export function OtpModal({
       testID={testId}
       visible={visible}
       animationType="slide"
-      onRequestClose={onRequestClose}>
+      onRequestClose={onRequestClose}
+    >
       <Pressable
         style={[OtpModalStyle.container, OtpModalStyle.backdrop]}
-        onPress={onRequestClose}>
+        onPress={onRequestClose}
+      >
         <View style={OtpModalStyle.centeredWrapper}>
           <Text style={OtpModalStyle.title}>{title}</Text>
           <View style={OtpModalStyle.relativeWrapper}>
             <Pressable
               style={OtpModalStyle.otpBoxesWrapper}
-              onPress={onTextInput}>
-              {Array.from({length: maxLength}, (_, index) => (
+              onPress={onTextInput}
+            >
+              {Array.from({ length: maxLength }, (_, index) => (
                 <OtpBox
                   index={index}
                   code={code}
@@ -71,7 +81,7 @@ export function OtpModal({
                 style={OtpModalStyle.textInput}
                 value={code}
                 ref={textInputRef}
-                onChangeText={newCode =>
+                onChangeText={(newCode) =>
                   isValidTextInput(newCode) && setCode(newCode)
                 }
                 onBlur={ontextInputBlur}
@@ -84,7 +94,8 @@ export function OtpModal({
               OtpModalStyle.submitButton,
               isOtpReady ? OtpModalStyle.submitButtonActive : {},
             ]}
-            testID="submitOtpModal">
+            testID="submitOtpModal"
+          >
             <Text style={OtpModalStyle.submitText}>{Strings.SUBMIT}</Text>
           </Pressable>
         </View>

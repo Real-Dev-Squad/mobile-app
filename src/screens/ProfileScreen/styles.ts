@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const profileScreenStyles = StyleSheet.create({
   progressStyle: {
@@ -63,7 +63,7 @@ export const profileScreenStyles = StyleSheet.create({
     position: 'absolute',
     bottom: 16, // Adjust the value based on your preference
     left: '20%', // Center the button horizontally
-    transform: [{translateX: -50}], // Center the button horizontally
+    transform: [{ translateX: -50 }], // Center the button horizontally
     width: '80%', // Adjust the width based on your preference
     zIndex: 2, // Ensure the button is above other elements
   },

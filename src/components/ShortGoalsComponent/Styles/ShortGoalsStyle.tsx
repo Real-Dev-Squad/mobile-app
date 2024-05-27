@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const ShortGoalsStyle = StyleSheet.create({
   container: {
@@ -19,7 +19,7 @@ export const ShortGoalsStyle = StyleSheet.create({
     resizeMode: 'cover',
     width: 30,
     height: 30,
-    transform: [{rotate: '90deg'}],
+    transform: [{ rotate: '90deg' }],
   },
   arrowIcon: {
     resizeMode: 'cover',

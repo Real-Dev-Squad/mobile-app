@@ -37,14 +37,15 @@ const ButtonWidget = ({
   return (
     <Pressable style={icon ? styles.iconStyle : btnStyle} onPress={onPress}>
       {icon ? (
-        <Image style={{height: 50, width: 50}} source={icon} />
+        <Image style={{ height: 50, width: 50 }} source={icon} />
       ) : (
         <Text
           style={{
             color: textColor ? textColor : 'black',
             textAlign: 'center',
             fontSize: fontSize ? fontSize : 14,
-          }}>
+          }}
+        >
           {title}
         </Text>
       )}

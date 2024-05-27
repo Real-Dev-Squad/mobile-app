@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 const data = [
-  {label: ' Available', value: '1'},
-  {label: 'Assigned', value: '2'},
-  {label: 'In Progress', value: '3'},
-  {label: 'Block', value: '4'},
-  {label: 'Smock testimng', value: '5'},
-  {label: 'compleated', value: '6'},
-  {label: 'Needs Review', value: '7'},
-  {label: 'In review', value: '8'},
+  { label: ' Available', value: '1' },
+  { label: 'Assigned', value: '2' },
+  { label: 'In Progress', value: '3' },
+  { label: 'Block', value: '4' },
+  { label: 'Smock testimng', value: '5' },
+  { label: 'compleated', value: '6' },
+  { label: 'Needs Review', value: '7' },
+  { label: 'In review', value: '8' },
 ];
 
 const DropdownComponent = () => {
@@ -28,7 +28,7 @@ const DropdownComponent = () => {
       valueField="value"
       placeholder="Select item"
       value={value}
-      onChange={item => {
+      onChange={(item) => {
         setValue(item.value);
       }}
     />

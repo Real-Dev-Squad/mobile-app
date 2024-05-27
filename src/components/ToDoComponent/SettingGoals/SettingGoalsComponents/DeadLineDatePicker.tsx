@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import {scale} from '../../../../utils/utils';
+import { scale } from '../../../../utils/utils';
 import StyleConfig from '../../../../utils/StyleConfig';
 
-const DeadLineDatePicker = ({date, setDate}) => {
+const DeadLineDatePicker = ({ date, setDate }) => {
   const [open, setOpen] = useState(false);
 
-  const isToday = someDate => {
+  const isToday = (someDate) => {
     const today = new Date();
     return (
       someDate.getDate() === today.getDate() &&
@@ -20,7 +20,8 @@ const DeadLineDatePicker = ({date, setDate}) => {
     <ScrollView>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={() => setOpen(true)}>
+        onPress={() => setOpen(true)}
+      >
         <Text style={styles.buttonTextStyle}>
           {isToday(date) ? 'Pick date' : date.toDateString()}
         </Text>
@@ -30,7 +31,7 @@ const DeadLineDatePicker = ({date, setDate}) => {
         mode="date"
         open={open}
         date={date}
-        onConfirm={selectedDate => {
+        onConfirm={(selectedDate) => {
           setOpen(false);
           setDate(selectedDate);
         }}

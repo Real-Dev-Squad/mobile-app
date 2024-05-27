@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import 'react-native-gesture-handler';
 import {
   Text,
@@ -13,14 +13,14 @@ import {
   ScrollView,
 } from 'react-native';
 import DeadLineDatePicker from './SettingGoalsComponents/DeadLineDatePicker';
-import {AuthContext} from '../../../context/AuthContext';
-import {PostGoal, getAllUsers} from '../../../screens/AuthScreen/Util';
+import { AuthContext } from '../../../context/AuthContext';
+import { PostGoal, getAllUsers } from '../../../screens/AuthScreen/Util';
 import dropUpImage from './../../../../assets/dropup.png';
 import dropDownImage from './../../../../assets/dropdown.png';
 import StyleConfig from '../../../utils/StyleConfig';
-import {scale} from '../../../utils/utils';
+import { scale } from '../../../utils/utils';
 
-const MainScreen = ({navigation}) => {
+const MainScreen = ({ navigation }) => {
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   const [isDropDownSelected, setIsDropDownSelected] = useState(false);
@@ -28,7 +28,7 @@ const MainScreen = ({navigation}) => {
   const [allUsers, setAllUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const {loggedInUserData} = useContext(AuthContext);
+  const { loggedInUserData } = useContext(AuthContext);
   const [titleError, setTitleError] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [date, setDate] = useState(new Date());
@@ -38,7 +38,7 @@ const MainScreen = ({navigation}) => {
     setIsDropDownSelected(!isDropDownSelected);
   };
 
-  const handleDropDownPress = item => {
+  const handleDropDownPress = (item) => {
     setSelectedUser(item);
     setIsDropDownSelected(false);
   };
@@ -83,11 +83,11 @@ const MainScreen = ({navigation}) => {
         Alert.alert(
           'Success',
           `Task has been created and assigned to ${selectedUser?.first_name}`,
-          [{text: 'OK', onPress: () => navigation.navigate('GoalsScreen')}],
+          [{ text: 'OK', onPress: () => navigation.navigate('GoalsScreen') }],
         );
       } else {
         Alert.alert('Success', 'Task has been created successfully', [
-          {text: 'OK', onPress: () => navigation.navigate('GoalsScreen')},
+          { text: 'OK', onPress: () => navigation.navigate('GoalsScreen') },
         ]);
       }
     }
@@ -107,14 +107,15 @@ const MainScreen = ({navigation}) => {
       <ScrollView
         nestedScrollEnabled
         showsVerticalScrollIndicator={false}
-        style={styles.formContainer}>
+        style={styles.formContainer}
+      >
         <Text style={styles.formHeading}>Create New Goal</Text>
         <Text style={styles.titles}>Title</Text>
         <TextInput
           style={styles.inputStyle}
           maxLength={50}
           value={titleText}
-          onChangeText={text => {
+          onChangeText={(text) => {
             setTitleText(text);
             setTitleError(''); // Clear error message on change
           }}
@@ -127,7 +128,7 @@ const MainScreen = ({navigation}) => {
         <TextInput
           style={styles.inputStyle}
           value={descriptionText}
-          onChangeText={text => {
+          onChangeText={(text) => {
             setDescriptionText(text);
             setDescriptionError(''); // Clear error message on change
           }}
@@ -143,14 +144,16 @@ const MainScreen = ({navigation}) => {
           <TouchableOpacity
             testID="dropdown"
             style={[styles.dropDownSelector, styles.inputStyle]}
-            onPress={selectDropDown}>
+            onPress={selectDropDown}
+          >
             <Text
               style={{
                 color:
                   selectedUser === ''
                     ? StyleConfig.colors.placeholderText
                     : StyleConfig.colors.darkGrey,
-              }}>
+              }}
+            >
               {selectedUser === '' ? 'Select User' : selectedUser?.first_name}
             </Text>
             {!isDropDownSelected ? (
@@ -164,7 +167,7 @@ const MainScreen = ({navigation}) => {
               <TextInput
                 style={styles.searchBar}
                 value={searchQuery}
-                onChangeText={text => setSearchQuery(text)}
+                onChangeText={(text) => setSearchQuery(text)}
                 maxLength={200}
                 placeholder="Search User"
                 placeholderTextColor={StyleConfig.colors.placeholderText}
@@ -175,7 +178,7 @@ const MainScreen = ({navigation}) => {
                 <FlatList
                   nestedScrollEnabled
                   data={allUsers.filter(
-                    item =>
+                    (item) =>
                       item.first_name
                         .toLowerCase()
                         .includes(searchQuery.toLowerCase()) ||
@@ -186,15 +189,16 @@ const MainScreen = ({navigation}) => {
                         .toLowerCase()
                         .includes(searchQuery.toLowerCase()),
                   )}
-                  renderItem={({item, index}) => {
+                  renderItem={({ item, index }) => {
                     return (
                       <TouchableOpacity
                         key={index}
                         onPress={() => handleDropDownPress(item)}
-                        style={styles.userDetails}>
+                        style={styles.userDetails}
+                      >
                         {item.picture && item.picture.url ? (
                           <Image
-                            source={{uri: item.picture.url}}
+                            source={{ uri: item.picture.url }}
                             style={styles.userImageDropDown}
                           />
                         ) : (
@@ -221,7 +225,8 @@ const MainScreen = ({navigation}) => {
         <TouchableOpacity
           testID="createButton"
           style={styles.createButtonStyle}
-          onPress={postNewGoal}>
+          onPress={postNewGoal}
+        >
           <Text style={styles.createButtonText}>Create Goal</Text>
         </TouchableOpacity>
       </ScrollView>

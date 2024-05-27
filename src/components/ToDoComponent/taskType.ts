@@ -1,5 +1,5 @@
 type task = {
-  attributes: {title: string; assigned_by: string};
+  attributes: { title: string; assigned_by: string };
   id: number;
   task: string;
   isread: boolean;

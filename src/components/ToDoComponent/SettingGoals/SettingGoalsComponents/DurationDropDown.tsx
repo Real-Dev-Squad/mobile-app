@@ -6,12 +6,12 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const timeperiod = [
-  {names: 'Short term'},
-  {names: 'Mid term'},
-  {names: 'Long term'},
+  { names: 'Short term' },
+  { names: 'Mid term' },
+  { names: 'Long term' },
 ];
 
 const windowWidth = Dimensions.get('window').width;
@@ -28,7 +28,8 @@ const DurationDropDown = () => {
         style={styles.DropDownButton}
         onPress={() => {
           setClicked(!clicked);
-        }}>
+        }}
+      >
         <Text style={styles.TimePeriod}>
           {selectedTimePeriod === '' ? 'Select duration' : selectedTimePeriod}
         </Text>
@@ -43,14 +44,15 @@ const DurationDropDown = () => {
           <FlatList
             style={styles.DropDownMenu}
             data={data}
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               return (
                 <TouchableOpacity
                   style={styles.DropDownElement}
                   onPress={() => {
                     setSelectedTimePeriod(item.names);
                     setClicked(!clicked);
-                  }}>
+                  }}
+                >
                   <Text style={styles.DropDownList}>{item.names}</Text>
                 </TouchableOpacity>
               );

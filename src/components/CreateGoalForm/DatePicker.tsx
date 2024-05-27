@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 const DatePickerComponent = () => {

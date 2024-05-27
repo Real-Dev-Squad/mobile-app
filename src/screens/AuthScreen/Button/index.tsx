@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Image} from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import ButtonStyle from './styles';
 
 type AuthScreenButtonProps = {
@@ -8,13 +8,17 @@ type AuthScreenButtonProps = {
   onPress?: () => void;
 };
 
-export function AuthScreenButton({text, uri, onPress}: AuthScreenButtonProps) {
+export function AuthScreenButton({
+  text,
+  uri,
+  onPress,
+}: AuthScreenButtonProps) {
   return (
     <View style={ButtonStyle.btnContainer}>
       <TouchableOpacity onPress={onPress} style={ButtonStyle.btnView}>
         {uri && (
           <View style={ButtonStyle.btnIcon}>
-            <Image source={{uri}} />
+            <Image source={{ uri }} />
           </View>
         )}
         <View style={ButtonStyle.signInTxtView}>

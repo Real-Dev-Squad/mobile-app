@@ -1,5 +1,5 @@
-import {View} from 'react-native';
-import React, {useState} from 'react';
+import { View } from 'react-native';
+import React, { useState } from 'react';
 import Data from './Data';
 import GoalScreenHeader from '../GoalScreenHeader';
 import GoalCard from '../GoalCard';
@@ -16,7 +16,7 @@ const LongGoalsComponent = () => {
 
       {show ? (
         <View testID="flatlist">
-          {Data.map(item => {
+          {Data.map((item) => {
             return (
               <GoalCard
                 key={item.id}

@@ -1,8 +1,8 @@
-import {Linking, Text, TouchableOpacity} from 'react-native';
+import { Linking, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
-import {profileScreenStyles} from '../screens/ProfileScreen/styles';
+import { profileScreenStyles } from '../screens/ProfileScreen/styles';
 
-const GithubLink = ({issueUrl}: {issueUrl: string}) => {
+const GithubLink = ({ issueUrl }: { issueUrl: string }) => {
   if (!issueUrl) {
     return <Text>NA</Text>;
   }

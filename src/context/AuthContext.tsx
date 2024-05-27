@@ -1,6 +1,6 @@
-import React, {FC, useEffect, useState} from 'react';
-import {getData} from '../utils/dataStore';
-import {loggedInUserType} from './type';
+import React, { FC, useEffect, useState } from 'react';
+import { getData } from '../utils/dataStore';
+import { loggedInUserType } from './type';
 
 type authContextProviderType = {
   loggedInUserData: loggedInUserType | null;
@@ -23,16 +23,16 @@ type authProviderProps = {
   children: JSX.Element;
 };
 
-export const AuthProvider: FC<authProviderProps> = ({children}) => {
+export const AuthProvider: FC<authProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loggedInUserData, setLoggedInUserData] =
     useState<loggedInUserType | null>(null);
   const [goalsData, setGoalsData] = useState<loggedInUserType | null>(null);
   useEffect(() => {
-    getData('userData').then(res => {
+    getData('userData').then((res) => {
       setLoggedInUserData(res);
     });
-    getData('userGoalsData').then(res => {
+    getData('userGoalsData').then((res) => {
       setGoalsData(res);
     });
   }, []);
@@ -42,7 +42,7 @@ export const AuthProvider: FC<authProviderProps> = ({children}) => {
     loggedInUserData,
     goalsData,
     setIsLoading: () => {
-      setIsLoading(prevIsLoading => !prevIsLoading);
+      setIsLoading((prevIsLoading) => !prevIsLoading);
     },
     setLoggedInUserData: (userData: loggedInUserType | null) => {
       setLoggedInUserData(userData);

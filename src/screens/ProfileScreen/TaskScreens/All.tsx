@@ -1,14 +1,14 @@
-import React, {useCallback, useContext, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
-import {AuthContext} from '../../../context/AuthContext';
+import React, { useCallback, useContext, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { AuthContext } from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
-import {fetchAllTasks} from '../../AuthScreen/Util';
+import { fetchAllTasks } from '../../AuthScreen/Util';
 import Loader from '../../../components/Loader';
 
 const All = () => {
   const [allTask, setAllTask] = useState([]);
-  const {loggedInUserData} = useContext(AuthContext);
+  const { loggedInUserData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   // const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
@@ -23,7 +23,7 @@ const All = () => {
         const allTasks = await fetchAllTasks(token);
         const idToMatch = loggedInUserData?.id;
         const myActiveTask = allTasks.tasks.filter(
-          task => task.assigneeId === idToMatch,
+          (task) => task.assigneeId === idToMatch,
         );
         setAllTask(myActiveTask);
         setLoading(false);

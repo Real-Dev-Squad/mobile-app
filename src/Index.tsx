@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {AuthContext} from './context/AuthContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from './context/AuthContext';
 import LoadingScreen from './components/LoadingScreen';
 import TabNavigation from './navigations/TabNavigation/TabNavigation';
 import AuthScreen from './screens/AuthScreen/AuthScreen';
 import ConnectionScreen from './screens/ConnectionScreen/ConnectionScreen';
 import NetInfo from '@react-native-community/netinfo';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Index = () => {
-  const {isLoading, loggedInUserData} = useContext(AuthContext);
+  const { isLoading, loggedInUserData } = useContext(AuthContext);
   const [isConnected, setIsConnected] = useState(false);
-  const {isProdEnvironment} = useSelector(store => store.localFeatureFlag);
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
 
   const retryConnection = async () => {
     try {
@@ -22,7 +22,7 @@ const Index = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
       setIsConnected(state.isConnected);
     });
     return () => {

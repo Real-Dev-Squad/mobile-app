@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
 type DatePickerProps = {
@@ -10,14 +10,15 @@ type DatePickerProps = {
 
 const DeadLineDatePicker = (props: DatePickerProps) => {
   const [open, setOpen] = useState(false);
-  const {onDateChange, selectedDate, title} = props;
+  const { onDateChange, selectedDate, title } = props;
   return (
     <ScrollView>
       <TouchableOpacity
         style={styles.buttonStyle}
         onPress={() => {
           setOpen(true);
-        }}>
+        }}
+      >
         <Text style={styles.buttonTextStyle}>{title}</Text>
       </TouchableOpacity>
       <DatePicker
@@ -25,7 +26,7 @@ const DeadLineDatePicker = (props: DatePickerProps) => {
         mode="date"
         open={open}
         date={selectedDate || new Date()}
-        onConfirm={date => {
+        onConfirm={(date) => {
           setOpen(false);
           console.log('date', date);
           onDateChange(date);

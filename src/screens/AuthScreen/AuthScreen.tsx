@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import {
   Text,
@@ -13,18 +13,18 @@ import {
   Platform,
 } from 'react-native';
 import Strings from '../../i18n/en';
-import {AuthViewStyle} from './styles';
-import {Toast} from 'react-native-toast-message/lib/src/Toast';
-import {AuthContext} from '../../context/AuthContext';
-import {getUserData, goalsAuth, requestCameraPermission} from './Util';
-import {storeData} from '../../utils/dataStore';
+import { AuthViewStyle } from './styles';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { AuthContext } from '../../context/AuthContext';
+import { getUserData, goalsAuth, requestCameraPermission } from './Util';
+import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
 // import { AuthApisStaging } from '../../constants/apiConstant/AuthApi';
-import {CameraScreen} from 'react-native-camera-kit';
+import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 // import Github from '../../constants/images/Image';
 import Images from '../../constants/images/Image';
 import GithubSvg from '../../../assets/svgs/github_logo.js';
@@ -32,8 +32,8 @@ import WebSvg from '../../../assets/svgs/web';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
-  const {isProdEnvironment} = useSelector(store => store.localFeatureFlag);
-  const {setLoggedInUserData, setGoalsData} = useContext(AuthContext);
+  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  const { setLoggedInUserData, setGoalsData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [scannedUserId, setScannedUserID] = useState('');
@@ -47,7 +47,7 @@ const AuthScreen = () => {
 
   function buildUrl(url, params) {
     const queryString = Object.keys(params)
-      .map(key => `${key}=${params[key]}`)
+      .map((key) => `${key}=${params[key]}`)
       .join('&');
 
     return `${url}?${queryString}`;
@@ -59,7 +59,7 @@ const AuthScreen = () => {
     Platform.OS !== 'android' || requestCameraPermission();
 
     Linking.getInitialURL();
-    const handleDeepLink = async event => {
+    const handleDeepLink = async (event) => {
       const token = event.url.split('token=')[1];
       token && updateUserData(token); // store token in redux
     };
@@ -71,20 +71,20 @@ const AuthScreen = () => {
   }, []);
 
   const activateCamera = async () => {
-    setCameraActive(prev => !prev);
+    setCameraActive((prev) => !prev);
     try {
       await requestCameraPermission();
       // Set cameraActive state to true
 
       const backAction = () => {
-        setCameraActive(prev => !prev);
+        setCameraActive((prev) => !prev);
         Alert.alert('Hold on!', 'Are you sure you want to go back?', [
           {
             text: 'Cancel',
             onPress: () => null,
             style: 'cancel',
           },
-          {text: 'YES', onPress: () => BackHandler.exitApp()},
+          { text: 'YES', onPress: () => BackHandler.exitApp() },
         ]);
         return true;
       };
@@ -98,7 +98,7 @@ const AuthScreen = () => {
     }
   };
 
-  const handleQRCodeScanned = ({nativeEvent}: any) => {
+  const handleQRCodeScanned = ({ nativeEvent }: any) => {
     console.log(nativeEvent);
     setScannedUserID(nativeEvent.codeStringValue);
     setToolTip(true);
@@ -257,7 +257,8 @@ const AuthScreen = () => {
 
         <TouchableOpacity
           style={AuthViewStyle.btnView}
-          onPress={activateCamera}>
+          onPress={activateCamera}
+        >
           <WebSvg
             height={40}
             width={40}
@@ -267,7 +268,7 @@ const AuthScreen = () => {
             }}
           />
 
-          <View style={[AuthViewStyle.signInTxtView, {marginRight: 26}]}>
+          <View style={[AuthViewStyle.signInTxtView, { marginRight: 26 }]}>
             <Text style={AuthViewStyle.signInText}>
               {Strings.SIGN_IN_WITH_WEB}
             </Text>
@@ -311,7 +312,8 @@ const AuthScreen = () => {
               </Text>
             }
             placement="top"
-            onClose={() => setToolTip(false)}>
+            onClose={() => setToolTip(false)}
+          >
             <TouchableOpacity onPress={handleToolTip}>
               <Text style={styles.toolButton}>What To Do ? </Text>
             </TouchableOpacity>
