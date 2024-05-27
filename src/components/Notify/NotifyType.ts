@@ -7,4 +7,4 @@ export type NotifyType = {
 type buttonStyleType = {
   backgroundColor: string;
 };
-type textStyleType = { color: string };
+type textStyleType = {color: string};

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 const ProgressDetailScreen = () => {
   // TODO: progress detail api call
@@ -50,7 +50,7 @@ const ProgressDetailScreen = () => {
       <TextInput
         style={styles.taskUpdateInput}
         multiline={true}
-        onChangeText={(newText) => {
+        onChangeText={newText => {
           setTaskCompleted(newText.trim());
           isVisible();
         }}
@@ -63,7 +63,7 @@ const ProgressDetailScreen = () => {
       <TextInput
         style={styles.taskUpdateInput}
         multiline={true}
-        onChangeText={(newText) => {
+        onChangeText={newText => {
           setTaskPlanned(newText.trim());
           isVisible();
         }}
@@ -76,7 +76,7 @@ const ProgressDetailScreen = () => {
       <TextInput
         style={styles.taskUpdateInput}
         multiline={true}
-        onChangeText={(newText) => {
+        onChangeText={newText => {
           setTaskBlockers(newText.trim());
           isVisible();
         }}
@@ -86,8 +86,7 @@ const ProgressDetailScreen = () => {
       <TouchableOpacity
         style={styles.submitProgressContainer}
         // disabled={shouldDisable}
-        onPress={submitProgress}
-      >
+        onPress={submitProgress}>
         <Text style={styles.updatebutton}>Submit</Text>
       </TouchableOpacity>
     </ScrollView>

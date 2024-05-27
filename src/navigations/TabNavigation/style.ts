@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const TabViewStyle = StyleSheet.create({
   tab_bar: {

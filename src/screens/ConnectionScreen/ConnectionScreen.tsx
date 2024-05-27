@@ -1,6 +1,6 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
-import { scale } from '../../utils/utils';
+import {scale} from '../../utils/utils';
 import StyleConfig from '../../utils/StyleConfig';
 import Images from '../../constants/images/Image';
 import Strings from '../../i18n/en';
@@ -10,9 +10,7 @@ interface ConnectionScreenProps {
   retryConnect: RetryFunction;
 }
 
-const ConnectionScreen: React.FC<ConnectionScreenProps> = ({
-  retryConnect,
-}) => {
+const ConnectionScreen: React.FC<ConnectionScreenProps> = ({retryConnect}) => {
   return (
     <View style={styles.container}>
       <Image source={Images.noInternet} style={styles.offlineImage} />

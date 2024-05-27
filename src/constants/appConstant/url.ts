@@ -1,5 +1,5 @@
-import { githubConfig } from '../../../config/config';
-import { PROD_BASE_URL } from '../apiConstant/BaseUrl';
+import {githubConfig} from '../../../config/config';
+import {PROD_BASE_URL} from '../apiConstant/BaseUrl';
 
 export const urls = {
   GITHUB_AUTH: `https://github.com/login/oauth/authorize?client_id=${githubConfig.clientId}`,

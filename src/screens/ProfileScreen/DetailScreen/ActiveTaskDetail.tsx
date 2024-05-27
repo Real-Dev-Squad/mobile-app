@@ -1,24 +1,24 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import ProgressModal from '../../../components/Modal/ProgressModal';
 // import { getDateAndTimeFromUnix } from '../../AuthScreen/Util';
 
 const ActiveTaskDetail = () => {
   const route = useRoute();
-  const { task } = route.params;
+  const {task} = route.params;
   const navigation = useNavigation();
 
   console.log(task, 'percentCompleted');
 
-  const formatStatusText = (status) => {
+  const formatStatusText = status => {
     // Split the status string by underscore
     const words = status.split('_');
 
     // Capitalize the first letter of each word
     const formattedText = words.map(
-      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+      word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
     );
 
     // Join the words with a space
@@ -51,16 +51,14 @@ const ActiveTaskDetail = () => {
           onPress={() =>
             // navigation.navigate('ExtensionRequest', { endsOn: task.endsOn })
             console.log('here')
-          }
-        >
+          }>
           <Text style={styles.buttonTextStyle}>Create Extension</Text>
         </TouchableOpacity>
         <View style={styles.buttoncontainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={{ color: 'white' }}>Go Back</Text>
+            onPress={() => navigation.goBack()}>
+            <Text style={{color: 'white'}}>Go Back</Text>
           </TouchableOpacity>
         </View>
       </View>

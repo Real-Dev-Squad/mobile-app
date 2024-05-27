@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import Strings from '../../i18n/en';
 import ProgressBar from '../ProgressBar';
-import { GoalCardStyles } from './GoalCardStyle';
+import {GoalCardStyles} from './GoalCardStyle';
 
 export type GoalCardProps = {
   title: String;

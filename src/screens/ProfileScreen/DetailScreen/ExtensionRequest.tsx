@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { TextInput } from 'react-native-gesture-handler';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {TextInput} from 'react-native-gesture-handler';
 // import axios from 'axios';
 
 export default function ExtensionRequest() {
@@ -26,8 +26,8 @@ export default function ExtensionRequest() {
         body: newEndsOn,
       }),
     })
-      .then((response) => response.json())
-      .then((responseData) => {
+      .then(response => response.json())
+      .then(responseData => {
         console.log(JSON.stringify(responseData));
         console.log(JSON.stringify(responseData), 'PostApiCAlled');
       })
@@ -41,7 +41,7 @@ export default function ExtensionRequest() {
         <Text style={styles.paragraph}>Reason :</Text>
         <TextInput
           value={reason}
-          onChangeText={(text) => setReason(text)}
+          onChangeText={text => setReason(text)}
           style={styles.input}
           placeholder="Enter reason"
         />
@@ -49,7 +49,7 @@ export default function ExtensionRequest() {
         <Text style={styles.paragraph}>Title :</Text>
         <TextInput
           value={title}
-          onChangeText={(text) => setTitle(text)}
+          onChangeText={text => setTitle(text)}
           style={styles.input}
           placeholder="Enter reason"
         />
@@ -57,7 +57,7 @@ export default function ExtensionRequest() {
         <Text style={styles.paragraph}>Old Ends On :</Text>
         <TextInput
           value={oldEndsOn}
-          onChangeText={(text) => setOldEndsOn(text)}
+          onChangeText={text => setOldEndsOn(text)}
           style={styles.input}
           placeholder="Old Ends On"
         />
@@ -65,7 +65,7 @@ export default function ExtensionRequest() {
         <Text style={styles.paragraph}>New Ends On :</Text>
         <TextInput
           value={newEndsOn}
-          onChangeText={(text) => setNewEndsOn(text)}
+          onChangeText={text => setNewEndsOn(text)}
           style={styles.input}
           placeholder="New Date"
         />
@@ -74,16 +74,15 @@ export default function ExtensionRequest() {
       <View style={styles.buttoncontainer}>
         <TouchableOpacity style={styles.button} onPress={postApi}>
           {/* onPress={saveData} */}
-          <Text style={{ color: 'white' }}>Create Extension</Text>
+          <Text style={{color: 'white'}}>Create Extension</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.buttoncontainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={{ color: 'white' }}>Go Back</Text>
+          onPress={() => navigation.goBack()}>
+          <Text style={{color: 'white'}}>Go Back</Text>
         </TouchableOpacity>
       </View>
     </View>

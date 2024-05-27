@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import {View, Text} from 'react-native';
 import * as Progress from 'react-native-progress';
 
 const CustomProgressBar = ({
@@ -13,7 +13,7 @@ const CustomProgressBar = ({
 }) => {
   return (
     <View>
-      <Text style={{ color: 'black', margin: 10 }}>{text}</Text>
+      <Text style={{color: 'black', margin: 10}}>{text}</Text>
       <Progress.Bar
         progress={progress}
         color={color}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import {
   SafeAreaView,
@@ -27,7 +27,7 @@ const SearchBar = () => {
   //     });
   // }, []);
 
-  const searchFilterFunction = (text) => {
+  const searchFilterFunction = text => {
     // Check if searched text is not blank
     if (text) {
       // Inserted text is not blank
@@ -50,7 +50,7 @@ const SearchBar = () => {
     }
   };
 
-  const ItemView = ({ item }) => {
+  const ItemView = ({item}) => {
     return (
       <Text style={styles.itemStyle} onPress={() => getItem(item)}>
         {item.id}
@@ -72,16 +72,16 @@ const SearchBar = () => {
     );
   };
 
-  const getItem = (item) => {
+  const getItem = item => {
     alert('Id : ' + item.id + ' Title : ' + item.title);
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
         <TextInput
           style={styles.textInputStyle}
-          onChangeText={(text) => searchFilterFunction(text)}
+          onChangeText={text => searchFilterFunction(text)}
           value={search}
           underlineColorAndroid="transparent"
           placeholder="Search Here"

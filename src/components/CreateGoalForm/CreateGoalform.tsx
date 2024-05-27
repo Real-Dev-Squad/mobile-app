@@ -6,7 +6,7 @@ import {
   Switch,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Deadline from './DatePicker';
 import Dropdown from './Dropdown';
 
@@ -14,7 +14,7 @@ export default function CreateGoalform() {
   const [title, onChangeTitle] = useState('');
   const [description, onChangeDescription] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -54,7 +54,7 @@ export default function CreateGoalform() {
           <View style={styles.toggle}>
             <Text style={styles.togglechild}>Public 🌐</Text>
             <Switch
-              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              trackColor={{false: '#767577', true: '#81b0ff'}}
               thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
@@ -66,7 +66,7 @@ export default function CreateGoalform() {
 
         <View style={styles.buttoncontainer}>
           <TouchableOpacity style={styles.button}>
-            <Text style={{ color: 'white' }}>Create</Text>
+            <Text style={{color: 'white'}}>Create</Text>
           </TouchableOpacity>
         </View>
       </View>

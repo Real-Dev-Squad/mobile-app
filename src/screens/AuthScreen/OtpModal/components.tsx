@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import {View, Text} from 'react-native';
 import OtpModalStyle from './styles';
 
 type OtpBoxProps = {
@@ -9,12 +9,7 @@ type OtpBoxProps = {
   textInputFocus: boolean;
 };
 
-export function OtpBox({
-  index,
-  code,
-  maxLength,
-  textInputFocus,
-}: OtpBoxProps) {
+export function OtpBox({index, code, maxLength, textInputFocus}: OtpBoxProps) {
   const isCurrentValue = index === code.length;
   const isLastValue = index === maxLength - 1;
   const isCodeComplete = code.length === maxLength;
@@ -25,8 +20,7 @@ export function OtpBox({
         OtpModalStyle.otpBox,
         textInputFocus && isValueFocused ? OtpModalStyle.otpBoxFocused : {},
       ]}
-      key={index}
-    >
+      key={index}>
       <Text style={OtpModalStyle.otp}>{code[index] ? code[index] : ''}</Text>
     </View>
   );

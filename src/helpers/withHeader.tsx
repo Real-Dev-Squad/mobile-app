@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, {ReactElement} from 'react';
 import Header from '../components/Header';
 
 const withHeader = (Component: () => ReactElement) => {

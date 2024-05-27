@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import React from 'react';
-import { OOOFormType } from './OOOFormType';
+import {OOOFormType} from './OOOFormType';
 import DatePicker from './OOOFormDatePicker';
 
 const OOOForm = ({
@@ -47,17 +47,17 @@ const OOOForm = ({
   };
   return (
     <View>
-      <Pressable onPress={(prev) => setIsFormVisible(!prev)}>
+      <Pressable onPress={prev => setIsFormVisible(!prev)}>
         <Image style={styles.close} source={Images.closeIcon} />
       </Pressable>
       <DatePicker
         title={`From date: ${fromDate.toLocaleDateString('en-US')}`}
-        onDateChange={(date) => setFromDate(date)}
+        onDateChange={date => setFromDate(date)}
         selectedDate={fromDate}
       />
       <DatePicker
         title={`To date: ${toDate.toLocaleDateString('en-US')}`}
-        onDateChange={(date) => setToDate(date)}
+        onDateChange={date => setToDate(date)}
         selectedDate={toDate}
       />
       <TextInput
@@ -73,8 +73,7 @@ const OOOForm = ({
           isFormValid() && handleFormSubmit();
         }}
         style={styles.SubmitButtonContainer}
-        disabled={isLoading}
-      >
+        disabled={isLoading}>
         <Text style={styles.SubmitButtonText}>Submit</Text>
       </TouchableOpacity>
     </View>

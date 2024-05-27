@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import {TouchableOpacity} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 const EllipseComponent = ({
   handleLogout,
@@ -11,7 +11,7 @@ const EllipseComponent = ({
   handleDropDown: () => void;
 }) => {
   const dispatch = useDispatch();
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  const {isProdEnvironment} = useSelector(store => store.localFeatureFlag);
   return (
     <View style={styles.dropdownContainer}>
       <TouchableOpacity onPress={handleLogout}>
@@ -20,12 +20,11 @@ const EllipseComponent = ({
       <TouchableOpacity
         onPress={() => {
           isProdEnvironment
-            ? dispatch({ type: 'DEV' })
-            : dispatch({ type: 'PROD' });
+            ? dispatch({type: 'DEV'})
+            : dispatch({type: 'PROD'});
           handleDropDown();
-        }}
-      >
-        <Text style={[styles.dropdownOption, { color: 'black' }]}>
+        }}>
+        <Text style={[styles.dropdownOption, {color: 'black'}]}>
           {!isProdEnvironment ? 'Prod mode' : 'Dev mode'}
         </Text>
       </TouchableOpacity>
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
     fontWeight: 'bold',
-    transform: [{ rotate: '90deg' }],
+    transform: [{rotate: '90deg'}],
     padding: 8,
   },
   dropdownContainer: {

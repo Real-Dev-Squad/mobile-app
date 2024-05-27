@@ -1,24 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useCallback, useContext, useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Linking,
-  ScrollView,
-} from 'react-native';
-import { profileScreenStyles } from '../styles';
+import React, {useCallback, useContext, useState} from 'react';
+import {View, Text, TouchableOpacity, Linking, ScrollView} from 'react-native';
+import {profileScreenStyles} from '../styles';
 import {
   calculateTimeDifference,
   convertTimestampToReadableDate,
   fetchContribution,
 } from '../../AuthScreen/Util';
-import { useFocusEffect } from '@react-navigation/native';
-import { AuthContext } from '../../../context/AuthContext';
+import {useFocusEffect} from '@react-navigation/native';
+import {AuthContext} from '../../../context/AuthContext';
 
 const Note = () => {
   const [userContributionData, setUserContributionData] = useState([]);
-  const { loggedInUserData } = useContext(AuthContext);
+  const {loggedInUserData} = useContext(AuthContext);
 
   useFocusEffect(
     useCallback(() => {
@@ -32,7 +26,7 @@ const Note = () => {
   );
 
   return (
-    <ScrollView style={{ padding: 10, elevation: 10 }}>
+    <ScrollView style={{padding: 10, elevation: 10}}>
       {userContributionData ? (
         <View style={profileScreenStyles.container}>
           {userContributionData.map((item, index) => (
@@ -43,11 +37,8 @@ const Note = () => {
                   item.task.featureUrl
                     ? () => Linking.openURL(item.task.featureUrl)
                     : null
-                }
-              >
-                <Text
-                  style={{ color: 'blue', fontSize: 18, fontWeight: 'bold' }}
-                >
+                }>
+                <Text style={{color: 'blue', fontSize: 18, fontWeight: 'bold'}}>
                   {item.task.title}
                 </Text>
                 <>
@@ -60,12 +51,11 @@ const Note = () => {
                         paddingBottom: 10,
                         color: 'grey',
                         fontSize: 15,
-                      }}
-                    >
+                      }}>
                       {item.task.purpose}
                     </Text>
                   ) : (
-                    <View style={{ padding: 10 }} />
+                    <View style={{padding: 10}} />
                   )}
                 </>
                 <Text
@@ -75,10 +65,9 @@ const Note = () => {
                     paddingLeft: 15,
                     paddingRight: 15,
                     paddingBottom: 10,
-                  }}
-                >
+                  }}>
                   Estimated completion:{''}
-                  <Text style={{ fontWeight: 'bold' }}>
+                  <Text style={{fontWeight: 'bold'}}>
                     {calculateTimeDifference(
                       convertTimestampToReadableDate(item.task.startedOn),
                       convertTimestampToReadableDate(item.task.endsOn),
@@ -92,8 +81,7 @@ const Note = () => {
                         color: 'grey',
                         fontSize: 13,
                         textAlign: 'center',
-                      }}
-                    >
+                      }}>
                       Checkout this feature in action
                     </Text>
                   ) : null}
@@ -107,9 +95,8 @@ const Note = () => {
           style={{
             justifyContent: 'flex-start',
             alignItems: 'center',
-          }}
-        >
-          <Text style={{ fontSize: 13, color: 'black' }}>
+          }}>
+          <Text style={{fontSize: 13, color: 'black'}}>
             No noteworthy task yet!
           </Text>
         </View>

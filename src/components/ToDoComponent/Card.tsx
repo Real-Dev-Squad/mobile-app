@@ -1,5 +1,5 @@
-import { Image, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import React, { useState, useEffect, memo } from 'react';
+import {Image, Text, View, TouchableOpacity, Dimensions} from 'react-native';
+import React, {useState, useEffect, memo} from 'react';
 import Animated, {
   Easing,
   interpolate,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-gesture-handler';
 import Images from '../../constants/images/Image';
 import Toast from 'react-native-toast-message';
-import { CardStyles } from './Styles/CardStyles';
+import {CardStyles} from './Styles/CardStyles';
 
 type items = {
   id: number;
@@ -50,7 +50,7 @@ const Card = ({
     timerRef = setTimeout(() => deleteCardFunction(), 4000);
   };
 
-  const { width: SCREEN_WIDTH } = Dimensions.get('screen');
+  const {width: SCREEN_WIDTH} = Dimensions.get('screen');
   const SCREEN_WIDTH_30 = SCREEN_WIDTH / 3;
   const ROTATION_DEG = 60;
   const CARD_MOVEMENT_THRESHOLD = SCREEN_WIDTH / 2;
@@ -67,7 +67,7 @@ const Card = ({
   let deleteCard = 'false';
 
   const panGesture = useAnimatedGestureHandler({
-    onActive: (event) => {
+    onActive: event => {
       if (translateY.value < CARD_MOVEMENT_THRESHOLD) {
         translateY.value = event.translationY;
       }
@@ -83,8 +83,8 @@ const Card = ({
     },
     onEnd: () => {
       console.log('end');
-      translateY.value = withTiming(0, { easing: Easing.linear });
-      translateX.value = withTiming(0, { easing: Easing.linear });
+      translateY.value = withTiming(0, {easing: Easing.linear});
+      translateX.value = withTiming(0, {easing: Easing.linear});
 
       if (
         translateX.value > SCREEN_WIDTH_30 ||
@@ -92,8 +92,8 @@ const Card = ({
       ) {
         translateX.value = withTiming(
           translateX.value > 0 ? SCREEN_WIDTH : -SCREEN_WIDTH,
-          { easing: Easing.linear },
-          (finished) => {
+          {easing: Easing.linear},
+          finished => {
             if (finished) {
               return runOnJS(removeCard)(item.id);
             }
@@ -157,10 +157,9 @@ const Card = ({
       <GestureHandlerRootView>
         <PanGestureHandler onGestureEvent={panGesture}>
           <Animated.View
-            style={[CardStyles.card, animatedStyle, { position: posStyle }]}
-          >
-            <View style={{ justifyContent: 'center' }}>
-              <View style={!item.isread ? { height: 25 } : null}>
+            style={[CardStyles.card, animatedStyle, {position: posStyle}]}>
+            <View style={{justifyContent: 'center'}}>
+              <View style={!item.isread ? {height: 25} : null}>
                 {/* {item.isread && (
                   <Image
                     source={Images.earthIcon}
@@ -178,11 +177,11 @@ const Card = ({
                 <Text style={CardStyles.taskText}>{title}</Text>
               </View>
               <View style={CardStyles.assignedTextContainer}>
-                <Text style={{ fontWeight: 'bold' }}>Assigned By: </Text>
+                <Text style={{fontWeight: 'bold'}}>Assigned By: </Text>
                 {assigned_by === '' ? (
-                  <Text style={{ color: 'gray' }}>Unknown</Text>
+                  <Text style={{color: 'gray'}}>Unknown</Text>
                 ) : (
-                  <Text style={{ color: 'grey' }}>{assigned_by}</Text>
+                  <Text style={{color: 'grey'}}>{assigned_by}</Text>
                 )}
               </View>
             </View>

@@ -6,10 +6,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
 
 type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
@@ -18,7 +18,7 @@ const MembersPage = () => {
   const route = useRoute<MembersPageRouteProp>();
   const [membersData, setMembersData] = useState([]);
   const [filterMemberData, setFilterMemberData] = useState([]);
-  const { selectedMember, setSelectedMember } = route.params;
+  const {selectedMember, setSelectedMember} = route.params;
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorState, setErrorState] = useState<null | string>(null);
@@ -80,13 +80,13 @@ const MembersPage = () => {
         />
         <FlatList
           data={membersData}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <RenderMemberItem
               item={item}
               setSelectedMember={setSelectedMember}
             />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           ListFooterComponent={renderLoader}
         />
       </View>
@@ -97,16 +97,16 @@ const MembersPage = () => {
 export default MembersPage;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 4, backgroundColor: '#F5F5F5' },
+  container: {flex: 1, padding: 4, backgroundColor: '#F5F5F5'},
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'blue',
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
-    textShadowOffset: { width: 2, height: 2 },
+    textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 2,
     textAlign: 'center',
     margin: 2,
   },
-  loaderView: { alignItems: 'center', paddingVertical: 20 },
+  loaderView: {alignItems: 'center', paddingVertical: 20},
 });

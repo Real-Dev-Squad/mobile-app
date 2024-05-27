@@ -1,13 +1,13 @@
 import React from 'react';
-import { Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import {Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import moment from 'moment';
-import { displayContributionType, taskType } from './UserContibution/Type';
-import { useNavigation } from '@react-navigation/native';
+import {displayContributionType, taskType} from './UserContibution/Type';
+import {useNavigation} from '@react-navigation/native';
 type TaskItem = {
   taskId: string;
   isActive: string;
 };
-const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
+const DisplayContribution = ({tasks}: {tasks: taskType}) => {
   const navigation = useNavigation();
 
   const formatTimeAgo = (timestamp: number) => {
@@ -21,12 +21,11 @@ const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
       isActive: item.status !== 'COMPLETED',
     });
   };
-  const renderItem = ({ item }: { item: displayContributionType }) => {
+  const renderItem = ({item}: {item: displayContributionType}) => {
     return (
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigationHandler(item)}
-      >
+        onPress={() => navigationHandler(item)}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>
           Created By: <Text style={styles.createdBy}>{item.createdBy}</Text>
@@ -60,7 +59,7 @@ const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
   return tasks?.length > 0 ? (
     <FlatList
       data={tasks}
-      keyExtractor={(item) => item.id}
+      keyExtractor={item => item.id}
       renderItem={renderItem}
     />
   ) : (

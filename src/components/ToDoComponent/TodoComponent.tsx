@@ -5,13 +5,13 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, {useEffect, useState, useContext, useCallback} from 'react';
 import Card from './Card';
-import { TodoStyles } from './Styles/TodoStyles';
+import {TodoStyles} from './Styles/TodoStyles';
 import Task from './taskType';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { AuthContext } from '../../context/AuthContext';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
+import {AuthContext} from '../../context/AuthContext';
 
 const TodoComponent = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -19,7 +19,7 @@ const TodoComponent = () => {
   const [loader, setLoader] = useState<boolean>(true);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const { loggedInUserData } = useContext(AuthContext);
+  const {loggedInUserData} = useContext(AuthContext);
 
   useEffect(() => {
     if (isFocused) {
@@ -39,14 +39,14 @@ const TodoComponent = () => {
     // setChanged(true);
     const item = tasks.shift() as Task;
     const filteredTasks = tasks.filter(
-      (task) => task.attributes?.id === item.attributes?.id,
+      task => task.attributes?.id === item.attributes?.id,
     );
     setTasks([...filteredTasks, item]);
     // setChanged(false);
   };
 
   const removeCard = (id: any) => {
-    const newArr = tasks.filter((task) => task.id !== id);
+    const newArr = tasks.filter(task => task.id !== id);
     setTasks(newArr);
     setDisabled(false);
   };
@@ -57,16 +57,14 @@ const TodoComponent = () => {
         <Text style={TodoStyles.title}>To Do's</Text>
         <TouchableOpacity
           style={styles.CreateGoalButton}
-          onPress={() => navigation.navigate('CreatingGoals')}
-        >
+          onPress={() => navigation.navigate('CreatingGoals')}>
           <Text
             style={{
               color: 'black',
               elevation: 10,
               paddingHorizontal: 6,
               paddingVertical: 6,
-            }}
-          >
+            }}>
             Add
           </Text>
         </TouchableOpacity>
@@ -74,13 +72,13 @@ const TodoComponent = () => {
       {loader ? (
         <ActivityIndicator size="large" />
       ) : (
-        <View style={{ paddingVertical: 35 }}>
+        <View style={{paddingVertical: 35}}>
           {tasks?.length === 0 ? (
             <Text style={TodoStyles.taskNotFound}>No tasks found</Text>
           ) : (
             tasks
-              ?.map((task) => {
-                const { title, assigned_by } = task?.attributes;
+              ?.map(task => {
+                const {title, assigned_by} = task?.attributes;
                 return (
                   <Card
                     posStyle={

@@ -1,5 +1,5 @@
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
 import Strings from '../../i18n/en';
 import OOOForm from '../../components/OOO/OOOForm';
 
@@ -10,13 +10,13 @@ const HomeScreen2 = (): JSX.Element => {
   const [description, setDescription] = useState<string>('');
 
   const handleButtonPress = () => {
-    setIsFormVisible((prev) => !prev);
+    setIsFormVisible(prev => !prev);
   };
 
   const handleFormSubmit = () => {
     // patch api call (it should give loading , failed, error and success messages)
     console.log(fromDate, toDate, description); // was giving lint issues, after api call please remove this log
-    setIsFormVisible((prev) => !prev);
+    setIsFormVisible(prev => !prev);
   };
 
   return (
@@ -26,8 +26,7 @@ const HomeScreen2 = (): JSX.Element => {
 
       <TouchableOpacity
         onPress={handleButtonPress}
-        style={styles.StatusButtonContainer}
-      >
+        style={styles.StatusButtonContainer}>
         <Text style={styles.StatusButtonText}>
           {Strings.UPDATE_STATUS_TO_OOO}
         </Text>

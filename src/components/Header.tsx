@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Image, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
+import {View, Image, StyleSheet, SafeAreaView, StatusBar} from 'react-native';
 import Colors from '../constants/colors/Colors';
 import Images from '../constants/images/Image';
 
 const Header = () => {
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.Primary_Color }}>
+    <SafeAreaView style={{backgroundColor: Colors.Primary_Color}}>
       <View style={styles.container}>
         <Image source={Images.rdsLogo} style={styles.logo} />
         <StatusBar barStyle={'light-content'} />

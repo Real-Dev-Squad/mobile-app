@@ -1,7 +1,7 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Images from '../../constants/images/Image';
-import { GoalScreenHeaderStyle } from './GoalScreenHeaderStyle';
+import {GoalScreenHeaderStyle} from './GoalScreenHeaderStyle';
 
 export type GoalScreenHeaderProps = {
   title: String;
@@ -17,8 +17,7 @@ function GoalScreenHeader(props: GoalScreenHeaderProps) {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => props.onPress()}
-          testID="arrowBtn"
-        >
+          testID="arrowBtn">
           <Image
             source={Images.arrowIcon}
             style={

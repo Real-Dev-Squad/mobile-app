@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { scale } from '../../../utils/utils';
+import {StyleSheet} from 'react-native';
+import {scale} from '../../../utils/utils';
 
 export const TodoStyles = StyleSheet.create({
   container: {

@@ -1,23 +1,23 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import { Image, Text, Platform } from 'react-native';
+import {Image, Text, Platform} from 'react-native';
 import Colors from '../../constants/colors/Colors';
 import Fonts from '../../constants/fonts/TabFont';
 import Images from '../../constants/images/Image';
 import Strings from '../../i18n/en';
-import { TabViewStyle } from './style';
+import {TabViewStyle} from './style';
 import GoalsScreenStack from '../../screens/GoalScreen/GoalScreen';
 import HomeScreenV2 from '../../screens/HomeScreen/HomeScreenV2';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import NotifyScreen from '../../screens/NotifyScreen/NotifyScreen';
-import { AllTaskScreenStack } from '../../screens/Stacks/AllStack';
-import { scale } from '../../utils/utils';
+import {AllTaskScreenStack} from '../../screens/Stacks/AllStack';
+import {scale} from '../../utils/utils';
 
 const tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  const {isProdEnvironment} = useSelector(store => store.localFeatureFlag);
 
   return (
     <NavigationContainer independent>
@@ -30,14 +30,13 @@ const TabNavigation = () => {
             paddingVertical: Platform.OS === 'ios' ? 20 : 0,
             height: scale(55),
           },
-        })}
-      >
+        })}>
         <tab.Screen
           name={Strings.Tab_Home}
           component={HomeScreenV2}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused }) => {
+            tabBarLabel: ({focused}) => {
               return (
                 <Text
                   style={{
@@ -45,13 +44,12 @@ const TabNavigation = () => {
                     color: focused
                       ? Colors.Tab_Active_Color
                       : Colors.Tab_Inactive_Color,
-                  }}
-                >
+                  }}>
                   {Strings.Tab_Home}
                 </Text>
               );
             },
-            tabBarIcon: ({ focused }) => {
+            tabBarIcon: ({focused}) => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
@@ -69,7 +67,7 @@ const TabNavigation = () => {
             options={{
               headerShown: false,
 
-              tabBarLabel: ({ focused }) => {
+              tabBarLabel: ({focused}) => {
                 return (
                   <Text
                     style={{
@@ -77,13 +75,12 @@ const TabNavigation = () => {
                       color: focused
                         ? Colors.Tab_Active_Color
                         : Colors.Tab_Inactive_Color,
-                    }}
-                  >
+                    }}>
                     {Strings.Tab_Goal}
                   </Text>
                 );
               },
-              tabBarIcon: ({ focused }) => {
+              tabBarIcon: ({focused}) => {
                 return (
                   <Image
                     style={TabViewStyle.tab_icon}
@@ -100,7 +97,7 @@ const TabNavigation = () => {
           component={NotifyScreen}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused }) => {
+            tabBarLabel: ({focused}) => {
               return (
                 <Text
                   style={{
@@ -108,13 +105,12 @@ const TabNavigation = () => {
                     color: focused
                       ? Colors.Tab_Active_Color
                       : Colors.Tab_Inactive_Color,
-                  }}
-                >
+                  }}>
                   {Strings.Tab_Notify}
                 </Text>
               );
             },
-            tabBarIcon: ({ focused }) => {
+            tabBarIcon: ({focused}) => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}
@@ -130,7 +126,7 @@ const TabNavigation = () => {
           component={AllTaskScreenStack}
           options={{
             headerShown: false,
-            tabBarLabel: ({ focused }) => {
+            tabBarLabel: ({focused}) => {
               return (
                 <Text
                   style={{
@@ -138,13 +134,12 @@ const TabNavigation = () => {
                     color: focused
                       ? Colors.Tab_Active_Color
                       : Colors.Tab_Inactive_Color,
-                  }}
-                >
+                  }}>
                   {Strings.Tab_Profile}
                 </Text>
               );
             },
-            tabBarIcon: ({ focused }) => {
+            tabBarIcon: ({focused}) => {
               return (
                 <Image
                   style={TabViewStyle.tab_icon}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,8 @@ import {
   PanResponder,
   TouchableOpacity,
 } from 'react-native';
-import { overallTaskProgress } from '../screens/AuthScreen/Util';
-import { AuthContext } from '../context/AuthContext';
+import {overallTaskProgress} from '../screens/AuthScreen/Util';
+import {AuthContext} from '../context/AuthContext';
 import Toast from 'react-native-toast-message';
 import moment from 'moment';
 
@@ -25,7 +25,7 @@ function ProgressBar({
 }) {
   const [progressValue, setProgressValue] = useState(0);
   const progress = useRef(new Animated.Value(0)).current;
-  const { loggedInUserData } = useContext(AuthContext);
+  const {loggedInUserData} = useContext(AuthContext);
   const [progressColor, setProgressColor] = useState('#3498db');
   useEffect(() => {
     setProgressValue(percCompleted);

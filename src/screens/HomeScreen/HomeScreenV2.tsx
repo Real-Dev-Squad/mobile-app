@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Strings from '../../i18n/en';
 import OOOForm from '../../components/OOO/OOOForm';
 import {
@@ -9,7 +9,7 @@ import {
   submitOOOForm,
 } from '../AuthScreen/Util';
 import LoadingScreen from '../../components/LoadingScreen';
-import { AuthContext } from '../../context/AuthContext';
+import {AuthContext} from '../../context/AuthContext';
 import ButtonWidget from '../../components/ButtonWidget';
 
 const HomeScreenV2 = (): JSX.Element => {
@@ -22,7 +22,7 @@ const HomeScreenV2 = (): JSX.Element => {
   const [description, setDescription] = useState<string>('');
   const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { loggedInUserData } = useContext(AuthContext);
+  const {loggedInUserData} = useContext(AuthContext);
 
   useEffect(() => {
     fetchData();
@@ -42,7 +42,7 @@ const HomeScreenV2 = (): JSX.Element => {
       await cancelOoo(loggedInUserData?.token);
       setIsLoading(false);
     } else {
-      setIsFormVisible((prev) => !prev);
+      setIsFormVisible(prev => !prev);
     }
   };
 
@@ -72,7 +72,7 @@ const HomeScreenV2 = (): JSX.Element => {
     <View style={styles.container}>
       <View>
         <Text style={styles.text}>You are {status}</Text>
-        <View style={{ marginTop: 50 }}>
+        <View style={{marginTop: 50}}>
           <ButtonWidget
             title={
               status === 'Ooo'
@@ -81,20 +81,18 @@ const HomeScreenV2 = (): JSX.Element => {
             }
             onPress={handleButtonPress}
             textColor={'#16A334'}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
           />
           {isFormVisible && (
             <Modal
               transparent
               visible={isFormVisible}
               // animationType="slide"
-              onRequestClose={() => setIsFormVisible(false)}
-            >
+              onRequestClose={() => setIsFormVisible(false)}>
               <TouchableOpacity
                 style={styles.modalContainer}
                 activeOpacity={1}
-                onPress={handleBackgroundPress}
-              >
+                onPress={handleBackgroundPress}>
                 <View style={styles.modalContent}>
                   <OOOForm
                     fromDate={fromDate}

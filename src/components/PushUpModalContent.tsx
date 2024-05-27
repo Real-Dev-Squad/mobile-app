@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { profileScreenStyles } from '../screens/ProfileScreen/styles';
-import { calculateISODateFormat } from '../screens/AuthScreen/Util';
+import {Text, View, StyleSheet} from 'react-native';
+import {profileScreenStyles} from '../screens/ProfileScreen/styles';
+import {calculateISODateFormat} from '../screens/AuthScreen/Util';
 
-const PushUpModalContent = ({ task }) => {
+const PushUpModalContent = ({task}) => {
   return (
     <View style={profileScreenStyles.modalContent}>
       <Text style={styles.dateText}>{calculateISODateFormat(task?.date)}</Text>

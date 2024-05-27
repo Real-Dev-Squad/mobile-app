@@ -6,21 +6,20 @@ import {
   Linking,
   Image,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   calculateTimeDifference,
   convertTimestampToReadableDate,
 } from '../../screens/AuthScreen/Util';
 
-const DisplayContribution = ({ tasks }) => {
+const DisplayContribution = ({tasks}) => {
   const [clicked, setClicked] = useState(false);
 
   return (
-    <View style={{ padding: 5 }}>
+    <View style={{padding: 5}}>
       <TouchableOpacity
         onPress={() => setClicked(!clicked)}
-        style={styles.DropDownButton}
-      >
+        style={styles.DropDownButton}>
         <Text style={styles.DropDownTitle}>Active Tasks</Text>
         {clicked ? (
           <Image
@@ -43,8 +42,7 @@ const DisplayContribution = ({ tasks }) => {
                   item.github.issue.html_url
                     ? () => Linking.openURL(item.github.issue.html_url)
                     : null
-                }
-              >
+                }>
                 <Text style={styles.ItemTaskTitle}>{item.title}</Text>
                 <>
                   {item.purpose ? (

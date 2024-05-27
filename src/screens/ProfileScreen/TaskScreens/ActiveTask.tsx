@@ -1,16 +1,16 @@
-import React, { useState, useContext, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import { AuthContext } from '../../../context/AuthContext';
+import React, {useState, useContext, useCallback} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import {AuthContext} from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
 import Loader from '../../../components/Loader';
-import { fetchActiveTasks } from '../../AuthScreen/Util';
+import {fetchActiveTasks} from '../../AuthScreen/Util';
 
 const ActiveScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTasks, setActiveTasks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { loggedInUserData } = useContext(AuthContext);
+  const {loggedInUserData} = useContext(AuthContext);
 
   useFocusEffect(
     useCallback(() => {
@@ -20,7 +20,7 @@ const ActiveScreen = () => {
 
         const tasksRes = await fetchActiveTasks(token);
         const activeTaskRes = tasksRes.filter(
-          (item) => item.status !== 'COMPLETED',
+          item => item.status !== 'COMPLETED',
         );
         setActiveTasks(activeTaskRes);
         setLoading(false);
