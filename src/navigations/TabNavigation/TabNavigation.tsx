@@ -95,35 +95,39 @@ const TabNavigation = () => {
           />
         )}
 
-        <tab.Screen
-          name={Strings.Tab_Notify}
-          component={NotifyScreen}
-          options={{
-            headerShown: false,
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text
-                  style={{
-                    fontSize: Fonts.Tab_Text_Font,
-                    color: focused
-                      ? Colors.Tab_Active_Color
-                      : Colors.Tab_Inactive_Color,
-                  }}
-                >
-                  {Strings.Tab_Notify}
-                </Text>
-              );
-            },
-            tabBarIcon: ({ focused }) => {
-              return (
-                <Image
-                  style={TabViewStyle.tab_icon}
-                  source={focused ? Images.profileIcon : Images.profileIconUnF}
-                />
-              );
-            },
-          }}
-        />
+        {isProdEnvironment && (
+          <tab.Screen
+            name={Strings.Tab_Notify}
+            component={NotifyScreen}
+            options={{
+              headerShown: false,
+              tabBarLabel: ({ focused }) => {
+                return (
+                  <Text
+                    style={{
+                      fontSize: Fonts.Tab_Text_Font,
+                      color: focused
+                        ? Colors.Tab_Active_Color
+                        : Colors.Tab_Inactive_Color,
+                    }}
+                  >
+                    {Strings.Tab_Notify}
+                  </Text>
+                );
+              },
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <Image
+                    style={TabViewStyle.tab_icon}
+                    source={
+                      focused ? Images.profileIcon : Images.profileIconUnF
+                    }
+                  />
+                );
+              },
+            }}
+          />
+        )}
 
         <tab.Screen
           name={Strings.Tab_Profile}
