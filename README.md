@@ -100,7 +100,7 @@ All PRs should have 100% test coverage. Before submitting PRs, run yarn test to 
 
 **Running/Development**
 
-- Start Metro (JavaScript bundler): yarn `react-native start`
+- Start Metro (JavaScript bundler): `yarn react-native start`
 - For Android: `yarn react-native run-android`
 - For iOS: yarn `react-native run-ios`
 
