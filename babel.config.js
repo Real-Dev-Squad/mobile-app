@@ -9,5 +9,7 @@ module.exports = {
         globals: ['__scanQRCodes'],
       },
     ],
+    ['@babel/plugin-transform-private-methods', { loose: true }]
+    
   ],
 };

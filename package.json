@@ -16,6 +16,7 @@
     "build-release": "mkdir -p android/app/src/main/assets && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* && cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
+    "@babel/helper-hoist-variables": "^7.24.7",
     "@react-native-async-storage/async-storage": "^1.15.16",
     "@react-native-community/netinfo": "^5.9.9",
     "@react-native-community/slider": "^4.4.3",
@@ -53,7 +54,7 @@
     "react-native-paper": "^5.11.2",
     "react-native-progress": "^5.0.1",
     "react-native-radio-buttons-group": "^2.2.11",
-    "react-native-reanimated": "^2.2.4",
+    "react-native-reanimated": "^3.9.0-rc.1",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.9.0",
     "react-native-svg": "^14.1.0",
@@ -68,6 +69,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/plugin-transform-private-methods": "^7.24.7",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/eslint-config": "^2.0.0",
