@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 import DisplayContribution from '../../../components/DisplayContribution';
@@ -46,10 +45,4 @@ const All = () => {
     //   </ScrollView>
   );
 };
-const styles = StyleSheet.create({
-  profile: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-  },
-});
 export default All;
