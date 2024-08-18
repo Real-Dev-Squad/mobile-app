@@ -1,20 +1,35 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import NotifyButton from '../../components/Notify/NotifyButton';
 import Colors from '../../constants/colors/Colors';
+import LocalNotification from '../../actions/LocalNotification';
+import RemoteNotification from '../../actions/RemoteNotification';
 
 const NotifyScreen = () => {
-  const onNotifyHandler = () => {
-    console.log('notify');
-  };
+  // const onNotifyHandler = () => {
+  //   console.log('notify');
+  // };
   return (
     <View style={styles.container}>
-      <NotifyButton
-        onPress={onNotifyHandler}
-        title={'Notify'}
-        buttonStyle={{ backgroundColor: Colors.Primary_Color }}
-        textStyle={{ color: 'white' }}
-      />
+      <View
+        style={{
+          backgroundColor: 'red',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          alignContent: 'center',
+        }}
+      >
+        <RemoteNotification />
+        <Text> Push Notification!! </Text>
+
+        <NotifyButton
+          onPress={LocalNotification}
+          title={'Notify'}
+          buttonStyle={{ backgroundColor: Colors.Primary_Color }}
+          textStyle={{ color: 'white' }}
+        />
+      </View>
     </View>
   );
 };

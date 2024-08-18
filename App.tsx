@@ -14,7 +14,6 @@ export const store = compose(applyMiddleware(...middleware))(createStore)(
   reducers,
 );
 sagaMiddleware.run(rootSaga);
-
 const App = () => {
   return (
     <>
