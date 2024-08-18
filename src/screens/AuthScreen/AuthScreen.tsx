@@ -63,9 +63,9 @@ const AuthScreen = () => {
       const token = event.url.split('token=')[1];
       token && updateUserData(token); // store token in redux
     };
-    Linking.addEventListener('url', handleDeepLink);
+    const subscription = Linking.addEventListener('url', handleDeepLink);
     return () => {
-      Linking.removeEventListener('url', handleDeepLink);
+      subscription.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

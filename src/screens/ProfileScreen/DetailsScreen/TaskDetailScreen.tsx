@@ -26,7 +26,7 @@ import Skelton from '../../../components/Skelton';
 const TaskDetailScreen = () => {
   const route = useRoute();
 
-  const { taskId, isActive } = route.params;
+  const { title, taskId, isActive } = route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [progress, setProgress] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +81,7 @@ const TaskDetailScreen = () => {
       <Skelton isLoading={isLoading}>
         <>
           <Text style={profileScreenStyles.titleText}>
-            {allTaskDetail?.taskData.title ?? 'Title is unavailable'}
+            {title ?? 'Title is unavailable'}
           </Text>
           {isActive && (
             <View style={profileScreenStyles.card}>

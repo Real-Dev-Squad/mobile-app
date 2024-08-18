@@ -21,11 +21,7 @@ const All = () => {
         const token = loggedInUserData?.token;
 
         const allTasks = await fetchAllTasks(token);
-        const idToMatch = loggedInUserData?.id;
-        const myActiveTask = allTasks.tasks.filter(
-          (task) => task.assigneeId === idToMatch,
-        );
-        setAllTask(myActiveTask);
+        setAllTask(allTasks);
         setLoading(false);
       })();
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,13 +29,13 @@ const All = () => {
   );
 
   return (
-    <View style={styles.profile}>
+    <>
       {loading ? (
         <Loader />
       ) : (
         <DisplayContribution tasks={allTask} isActive={false} />
       )}
-    </View>
+    </>
     //TODO: to call AllTaskDetailScreen
     // <ScrollView style={{ padding: 10, elevation: 10 }}>
     //   {isProdEnvironment ? (
@@ -52,8 +48,8 @@ const All = () => {
 };
 const styles = StyleSheet.create({
   profile: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 });
 export default All;
