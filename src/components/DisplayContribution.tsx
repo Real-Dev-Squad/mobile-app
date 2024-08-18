@@ -17,6 +17,7 @@ const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
   };
   const navigationHandler = (item: TaskItem) => {
     navigation.navigate('TaskDetail', {
+      title: item.title,
       taskId: item.id,
       isActive: item.status !== 'COMPLETED',
     });
