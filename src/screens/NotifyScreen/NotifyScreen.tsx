@@ -11,25 +11,14 @@ const NotifyScreen = () => {
   // };
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          backgroundColor: 'red',
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          alignContent: 'center',
-        }}
-      >
-        <RemoteNotification />
-        <Text> Push Notification!! </Text>
+      <RemoteNotification />
 
-        <NotifyButton
-          onPress={LocalNotification}
-          title={'Notify'}
-          buttonStyle={{ backgroundColor: Colors.Primary_Color }}
-          textStyle={{ color: 'white' }}
-        />
-      </View>
+      <NotifyButton
+        onPress={LocalNotification}
+        title={'Notify'}
+        buttonStyle={{ backgroundColor: Colors.Primary_Color }}
+        textStyle={{ color: 'white' }}
+      />
     </View>
   );
 };
