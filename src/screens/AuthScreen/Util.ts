@@ -4,6 +4,7 @@ import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
 import moment from 'moment';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
+import { SAVE_FCM_TOKEN } from '../../constants/apiConstant/NotifyApi';
 
 export const getUserData = async (token: string) => {
   try {
@@ -440,5 +441,23 @@ export const overallTaskProgress = async (
     }
   } catch (err) {
     console.error('API error:', err);
+  }
+};
+
+export const postFcmToken = async (fcmToken: string, token: string) => {
+  try {
+    const response = await axios.post(
+      SAVE_FCM_TOKEN,
+      { fcmToken: fcmToken },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Cookie: `rds-session=${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(`API Error: ${error} - ${error}`);
   }
 };
