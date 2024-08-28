@@ -62,7 +62,7 @@ const TabNavigation = () => {
           }}
         />
 
-        {!isProdEnvironment && (
+        {isProdEnvironment && (
           <tab.Screen
             name={Strings.Tab_Goal}
             component={GoalsScreenStack}

@@ -4,7 +4,10 @@ import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
 import moment from 'moment';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
-import { SAVE_FCM_TOKEN } from '../../constants/apiConstant/NotifyApi';
+import {
+  NOTIFY_API,
+  SAVE_FCM_TOKEN,
+} from '../../constants/apiConstant/NotifyApi';
 
 export const getUserData = async (token: string) => {
   try {
@@ -186,8 +189,8 @@ export const getAllUsers = async (token) => {
         cookie: `rds-session=${token}`,
       },
     });
-    if (res?.data?.users) {
-      return res?.data?.users;
+    if (res?.data?.members) {
+      return res?.data?.members;
     } else {
       return 'Something went wrong';
     }
@@ -456,8 +459,36 @@ export const postFcmToken = async (fcmToken: string, token: string) => {
         },
       },
     );
+    console.log('response.data', response.data);
     return response.data;
   } catch (error) {
+    console.log('🚀 ~ postFcmToken ~ error:', error);
+    throw new Error(`API Error: ${error} - ${error}`);
+  }
+};
+
+export const sendNotification = async (
+  title: string,
+  body: string,
+  userId: string,
+  token: string,
+) => {
+  console.log({ title, body, userId });
+  try {
+    const response = await axios.post(
+      NOTIFY_API,
+      { title, body, userId },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Cookie: `rds-session=${token}`,
+        },
+      },
+    );
+    console.log('response.data', response.data);
+    return response.data;
+  } catch (error) {
+    console.log('🚀 ~ error:', error);
     throw new Error(`API Error: ${error} - ${error}`);
   }
 };

@@ -1,9 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useContext } from 'react';
-import NotifyButton from '../../components/Notify/NotifyButton';
-import Colors from '../../constants/colors/Colors';
 import LocalNotification from '../../actions/LocalNotification';
-import RemoteNotification from '../../actions/RemoteNotification';
 import { firebase } from '@react-native-firebase/messaging';
 import { AuthContext } from '../../context/AuthContext';
 import { postFcmToken } from '../AuthScreen/Util';
@@ -25,15 +22,7 @@ const NotifyScreen = () => {
   };
   return (
     <View style={styles.container}>
-      <View>
-        <NotifyForm />
-      </View>
-      <NotifyButton
-        onPress={notifyHandler}
-        title={'Notify'}
-        buttonStyle={{ backgroundColor: Colors.Primary_Color }}
-        textStyle={{ color: 'white' }}
-      />
+      <NotifyForm notifyHandler={notifyHandler} />
     </View>
   );
 };
@@ -41,6 +30,6 @@ const NotifyScreen = () => {
 export default NotifyScreen;
 const styles = StyleSheet.create({
   container: {
-    // padding: 20,
+    padding: 16,
   },
 });
