@@ -149,8 +149,8 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
                       ) : (
                         <View style={styles.defaultImageContainer}>
                           <Text style={styles.defaultImageText}>
-                            {item?.first_name.charAt(0)}{' '}
-                            {item?.last_name.charAt(0)}
+                            {item?.first_name?.charAt(0)}{' '}
+                            {item?.last_name?.charAt(0)}
                           </Text>
                         </View>
                       )}
