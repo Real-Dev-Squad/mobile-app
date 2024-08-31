@@ -1,4 +1,3 @@
-import { LOCAL_URL, PROD_BASE_URL } from './BaseUrl';
-
-export const SAVE_FCM_TOKEN = `${PROD_BASE_URL}/v1/fcm-tokens`;
-export const NOTIFY_API = `${PROD_BASE_URL}/v1/notifications`;
+import Config from 'react-native-config';
+export const SAVE_FCM_TOKEN = `${Config.BASE_URL}/v1/fcm-tokens`;
+export const NOTIFY_API = `${Config.BASE_URL}/v1/notifications`;

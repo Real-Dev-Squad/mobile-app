@@ -1,9 +1,12 @@
 {
   "project_info": {
-    "project_number": "260594870079",
-    "firebase_url": "https://rds-backend-86606-default-rtdb.firebaseio.com",
-    "project_id": "rds-backend-86606",
-    "storage_bucket": "rds-backend-86606.appspot.com"
+    // "project_number": "260594870079",
+    // "firebase_url": "https://rds-backend-86606-default-rtdb.firebaseio.com",
+    // "project_id": "rds-backend-86606",
+    // "storage_bucket": "rds-backend-86606.appspot.com"
+    "project_number": "500338429689",
+    "project_id": "realdevsquad-10012",
+    "storage_bucket": "realdevsquad-10012.appspot.com"
   },
   "client": [
     {
@@ -87,6 +90,35 @@
           "other_platform_oauth_client": [
             {
               "client_id": "260594870079-jk3ak4lbadk26m6hlh16gi1rk4kd7nmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500338429689:android:3466042d6816e27fbcdc28",
+        "android_client_info": {
+          "package_name": "com.rdsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500338429689-bs60eaons6m17p788ka6tkffqthk5arl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCk2qqhDfeEm7_QWehc-r3H6me6_T0C5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500338429689-bs60eaons6m17p788ka6tkffqthk5arl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

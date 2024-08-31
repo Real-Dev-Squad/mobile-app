@@ -8,6 +8,7 @@ import {
   NOTIFY_API,
   SAVE_FCM_TOKEN,
 } from '../../constants/apiConstant/NotifyApi';
+import Config from 'react-native-config';
 
 export const getUserData = async (token: string) => {
   try {
@@ -448,6 +449,7 @@ export const overallTaskProgress = async (
 };
 
 export const postFcmToken = async (fcmToken: string, token: string) => {
+  console.log('token is ', `${Config.RDS_SESSION}=${token}`);
   try {
     const response = await axios.post(
       SAVE_FCM_TOKEN,
@@ -455,7 +457,8 @@ export const postFcmToken = async (fcmToken: string, token: string) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Cookie: `rds-session=${token}`,
+          Cookie:
+            'rds-session-staging=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZG5EcjVJNVB0N0N2bGpSUmttMiIsImlhdCI6MTcyNTEyOTcxNSwiZXhwIjoxNzU2MjMzNzE1fQ.Xknq3-RBz5aKPWnQ6pXypEmSs2M91lr_jnijP4Ih_GW_hrU0GBT3HaHRGXKoLWvKieV086OeKPMbLYbOAD7JWTOfJY1ebXuEUUYTjTI3bO3IyOCWsw_KIswBONebmQCyAqvm9HfvHU9UoPg-30tb1Bec4J3wGp7ciVnKatr6noU',
         },
       },
     );
@@ -481,7 +484,7 @@ export const sendNotification = async (
       {
         headers: {
           'Content-Type': 'application/json',
-          Cookie: `rds-session=${token}`,
+          Cookie: `${Config.RDS_SESSION}${token}`,
         },
       },
     );

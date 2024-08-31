@@ -44,7 +44,6 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
 
   const getFCMToken = async () => {
     const fcmToken_ = await firebase.messaging().getToken();
-    console.log('🚀 ~ getFCMToken ~ fcmToken_:', fcmToken_);
 
     await postFcmToken(fcmToken_, token);
   };
@@ -57,7 +56,6 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
       notifyTo: selectedUser?.id,
     });
     await sendNotification(title, description, selectedUser?.id, token);
-    // LocalNotification();
   };
   useEffect(() => {
     const fetchData = async () => {

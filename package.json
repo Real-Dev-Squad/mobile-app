@@ -42,6 +42,7 @@
     "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-collapsible": "^1.6.1",
     "react-native-collapsible-tab-view": "^6.2.1",
+    "react-native-config": "^1.5.3",
     "react-native-date-picker": "^4.2.13",
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^10.8.0",
