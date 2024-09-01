@@ -184,14 +184,14 @@ export const getUsersStatus = async (token) => {
 
 export const getAllUsers = async (token) => {
   try {
-    const res = await axios.get(HomeApi.GET_ALL_USERS, {
+    const res = await axios.get(HomeApi.GET_ALL_MEMBERS, {
       headers: {
         'Content-type': 'application/json',
         cookie: `rds-session=${token}`,
       },
     });
-    if (res?.data?.members) {
-      return res?.data?.members;
+    if (res?.data?.users) {
+      return res?.data?.users;
     } else {
       return 'Something went wrong';
     }
@@ -438,7 +438,6 @@ export const overallTaskProgress = async (
       options,
     );
     if (res.status === 200) {
-      console.log('Task updated successfully!', res.data);
       return res.data;
     } else {
       throw new Error(`API Error: ${res.status} - ${res.statusText}`);
@@ -457,15 +456,12 @@ export const postFcmToken = async (fcmToken: string, token: string) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Cookie:
-            'rds-session-staging=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZG5EcjVJNVB0N0N2bGpSUmttMiIsImlhdCI6MTcyNTEyOTcxNSwiZXhwIjoxNzU2MjMzNzE1fQ.Xknq3-RBz5aKPWnQ6pXypEmSs2M91lr_jnijP4Ih_GW_hrU0GBT3HaHRGXKoLWvKieV086OeKPMbLYbOAD7JWTOfJY1ebXuEUUYTjTI3bO3IyOCWsw_KIswBONebmQCyAqvm9HfvHU9UoPg-30tb1Bec4J3wGp7ciVnKatr6noU',
+          cookie: `${Config.RDS_SESSION}=${token}`,
         },
       },
     );
-    console.log('response.data', response.data);
     return response.data;
   } catch (error) {
-    console.log('🚀 ~ postFcmToken ~ error:', error);
     throw new Error(`API Error: ${error} - ${error}`);
   }
 };
@@ -484,14 +480,12 @@ export const sendNotification = async (
       {
         headers: {
           'Content-Type': 'application/json',
-          Cookie: `${Config.RDS_SESSION}${token}`,
+          cookie: `${Config.RDS_SESSION}=${token}`,
         },
       },
     );
-    console.log('response.data', response.data);
     return response.data;
   } catch (error) {
-    console.log('🚀 ~ error:', error);
     throw new Error(`API Error: ${error} - ${error}`);
   }
 };

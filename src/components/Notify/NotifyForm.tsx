@@ -44,6 +44,7 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
 
   const getFCMToken = async () => {
     const fcmToken_ = await firebase.messaging().getToken();
+    console.log('🚀 ~ getFCMToken ~ fcmToken_:', fcmToken_);
 
     await postFcmToken(fcmToken_, token);
   };
@@ -102,7 +103,7 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
                   : StyleConfig.colors.darkGrey,
             }}
           >
-            {selectedUser === '' ? 'Select User' : selectedUser?.first_name}
+            {selectedUser === '' ? 'Select User' : selectedUser?.username}
           </Text>
         </TouchableOpacity>
         {isDropDownSelected ? (
@@ -122,6 +123,9 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
                 nestedScrollEnabled
                 data={allUsers?.filter(
                   (item) =>
+                    item?.username
+                      ?.toLowerCase()
+                      .includes(searchQuery.toLowerCase()) ||
                     item?.first_name
                       ?.toLowerCase()
                       .includes(searchQuery.toLowerCase()) ||
@@ -147,13 +151,17 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
                       ) : (
                         <View style={styles.defaultImageContainer}>
                           <Text style={styles.defaultImageText}>
-                            {item?.first_name?.charAt(0)}{' '}
+                            {item?.username
+                              ? item?.username?.charAt(0)
+                              : item?.first_name?.charAt(0)}{' '}
                             {item?.last_name?.charAt(0)}
                           </Text>
                         </View>
                       )}
                       <Text style={styles.userNameDropDown}>
-                        {item?.first_name} {item?.last_name}
+                        {item?.username
+                          ? item?.username
+                          : item?.first_name + item?.last_name}
                       </Text>
                     </TouchableOpacity>
                   );
