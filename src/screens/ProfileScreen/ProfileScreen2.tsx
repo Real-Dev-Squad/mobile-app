@@ -94,12 +94,12 @@ const ProfileScreen2: React.FC = ({ navigation }) => {
   return (
     <Tabs.Container renderHeader={ProfileScreen}>
       <Tabs.Tab name="Active" key="2">
-        <Tabs.ScrollView style={{ flex: 1 }}>
+        <Tabs.ScrollView>
           <ActiveScreen navigation={navigation} />
         </Tabs.ScrollView>
       </Tabs.Tab>
       <Tabs.Tab name="All" key="1">
-        <Tabs.ScrollView style={{ flex: 1 }}>
+        <Tabs.ScrollView>
           <All />
         </Tabs.ScrollView>
       </Tabs.Tab>
