@@ -1,13 +1,10 @@
 import React from 'react';
 import { Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import { displayContributionType, taskType } from './UserContibution/Type';
+import { DisplayContributionDTO } from './UserContibution/types';
 import { useNavigation } from '@react-navigation/native';
-type TaskItem = {
-  taskId: string;
-  isActive: string;
-};
-const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
+import {styles} from "./displayContribution.styles"
+const DisplayContribution = ({ tasks }: { tasks: DisplayContributionDTO[] }) => {
   const navigation = useNavigation();
 
   const formatTimeAgo = (timestamp: number) => {
@@ -15,14 +12,15 @@ const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
     const endDate = moment.unix(timestamp);
     return endDate.from(currentDate);
   };
-  const navigationHandler = (item: TaskItem) => {
+  const navigationHandler = (item: DisplayContributionDTO) => {
+    // @ts-ignore
     navigation.navigate('TaskDetail', {
       title: item.title,
       taskId: item.id,
       isActive: item.status !== 'COMPLETED',
     });
   };
-  const renderItem = ({ item }: { item: displayContributionType }) => {
+  const renderItem = ({ item }: { item: DisplayContributionDTO }) => {
     return (
       <TouchableOpacity
         style={styles.card}
@@ -37,23 +35,15 @@ const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
         </Text>
         <Text style={styles.text}>
           Ends On:{' '}
-          <Text style={styles.endsOn}>{formatTimeAgo(item.endsOn)}</Text>
+          <Text style={styles.endsOn}>{formatTimeAgo(item.endsOn ?? 0)}</Text>
         </Text>
         <Text style={styles.text}>
           Started On:{' '}
-          <Text style={styles.startedOn}>{formatTimeAgo(item.startedOn)}</Text>
+          <Text style={styles.startedOn}>
+            {formatTimeAgo(item.startedOn ?? 0)}
+          </Text>
         </Text>
         <Text style={[styles.text, styles.status]}>Status: {item.status}</Text>
-        {/* {isActive &&
-          (isProdEnvironment ? (
-            <></>
-          ) : (
-            <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
-              <Text style={styles.isActiveButton}>
-                {isCollapsed ? 'isActive' : 'Collapse'}
-              </Text>
-            </TouchableOpacity>
-          ))} */}
       </TouchableOpacity>
     );
   };
@@ -61,7 +51,7 @@ const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
   return tasks?.length > 0 ? (
     <FlatList
       data={tasks}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item, index) => item.id ?? index.toString()}
       renderItem={renderItem}
     />
   ) : (
@@ -69,79 +59,6 @@ const DisplayContribution = ({ tasks }: { tasks: taskType }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  card: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
-    padding: 16,
-    margin: 12,
-    backgroundColor: 'white',
-    elevation: 3,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#1D1283',
-  },
-  text: {
-    fontSize: 16,
-    marginBottom: 6,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  createdBy: {
-    color: 'grey',
-  },
-  assignee: {
-    color: 'grey',
-  },
-  endsOn: {
-    color: 'grey',
-  },
-  startedOn: {
-    color: 'grey',
-  },
-  status: {
-    fontWeight: 'bold',
-    color: '#3498db',
-  },
 
-  isActiveButton: {
-    color: '#3498db',
-    marginTop: 10,
-  },
-
-  isActiveableContent: {
-    paddingBottom: 30,
-  },
-
-  progressBar: {
-    width: '100%',
-    // marginBottom: 16,
-  },
-
-  progressControls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    // marginBottom: 16,
-  },
-
-  button: {
-    fontSize: 20,
-    color: '#3498db',
-  },
-
-  progressText: {
-    fontSize: 18,
-    color: '#333',
-  },
-  emptyView: {
-    color: 'black',
-    marginTop: 20,
-  },
-});
 
 export default DisplayContribution;

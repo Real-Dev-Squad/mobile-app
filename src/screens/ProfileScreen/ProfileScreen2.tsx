@@ -3,7 +3,13 @@ import React, {
   // useCallback,
   useContext,
 } from 'react';
-import { View, TouchableWithoutFeedback, StyleSheet, Text } from 'react-native';
+import {
+  View,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { profileScreenStyles } from './styles';
 import Avatar from '../../components/Avatar';
 import { AuthContext } from '../../context/AuthContext';
@@ -14,7 +20,7 @@ import UserData from './User Data/UserData';
 import EllipseComponent from '../../components/EllipseComponent';
 import ActiveScreen from './TaskScreens/ActiveTask';
 import Modal from 'react-native-modal';
-import { TouchableOpacity } from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileScreen = () => {
@@ -62,13 +68,6 @@ const ProfileScreen = () => {
           />
         </Modal>
       )}
-      {/* <UploadImageModalView
-        closeModal={closeModal}
-        modalVisible={modalVisible}
-        removePicture={removePicture}
-        response={response}
-        setResponse={setResponse}
-      /> */}
       <TouchableWithoutFeedback
         style={profileScreenStyles.mainview}
         onPress={handleDropdown}
