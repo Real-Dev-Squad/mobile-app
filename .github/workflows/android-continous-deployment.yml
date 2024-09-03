@@ -42,7 +42,7 @@ jobs:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
       - name: Download a single artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: app-release.apk
 
