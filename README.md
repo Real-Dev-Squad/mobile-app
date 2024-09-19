@@ -38,12 +38,12 @@ To contribute, make sure you have the following:
 
 - React Native setup
 - Android Studio
-- JDK ( openjdk 11.0.20.1 2023-08-24 )
+- JDK ( openjdk 23 2024-09-17 )
 - Node setup ( use version v16.*, tested on v16.20.2)
 - [Volta](https://docs.volta.sh/guide/getting-started) | [Why Volta?](https://docs.volta.sh/guide/#why-volta)
 - React Native development environment set up
 - Android Studio installed
-- Node.js installed
+- Node.js installed ( Node.js 20.17.0 2024-08-21 )
 - for Node version management: [Volta](https://docs.volta.sh/guide/getting-started) | [Why Volta?](https://docs.volta.sh/guide/#why-volta)
 
 # **NOTE** : Make sure to set up the proper development environment required to run Hello world app in RN and drop a video link in #react-native channel.
