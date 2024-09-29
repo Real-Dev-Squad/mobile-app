@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext } from 'react';
 import LocalNotification from '../../actions/LocalNotification';
 import { firebase } from '@react-native-firebase/messaging';
@@ -22,7 +22,8 @@ const NotifyScreen = () => {
   };
   return (
     <View style={styles.container}>
-      <NotifyForm notifyHandler={notifyHandler} />
+      <Text style={styles.title}>Event Notifications</Text>
+      <NotifyForm />
     </View>
   );
 };
@@ -31,5 +32,17 @@ export default NotifyScreen;
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.Primary_Color,
+    paddingBottom: 10,
   },
 });
