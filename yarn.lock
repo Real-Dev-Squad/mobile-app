@@ -2458,18 +2458,18 @@
   resolved "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.5.0.tgz"
   integrity sha512-pyUvNTvu5IfCI5abzqRfO/dd3A009RC66RXZE6t0gyOwI/j0QDlq9VZRv3rjkpuIvNTnsYj+m5BHlh0DkSYUyA==
 
-"@react-native-firebase/app@^20.4.0":
-  version "20.4.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-20.4.0.tgz#a9c5c12505432d42f7d4a0c4265b8684dc8353fc"
-  integrity sha512-I3YswH5tq0kSezyFwyV0d3J+lnH+N/SdznFZ70Lr671X0YlrbEBb6BK7FzEiwq8rKeIPh+pbgnbYwzj/k9uEnQ==
+"@react-native-firebase/app@20.5.0":
+  version "20.5.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-20.5.0.tgz#9dc2fbc6eee7fb00eefc9f88e404411068befd29"
+  integrity sha512-zW6jc9R8Ikxxo5qXv25No6QxdWOx37D4U0ppKZQoY6CzwGUzqc4oQUU9MclbUcx+H5p+GEzvT1EIGV6JG7/FAg==
   dependencies:
     firebase "10.12.2"
     superstruct "^0.6.2"
 
-"@react-native-firebase/messaging@^20.4.0":
-  version "20.4.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-20.4.0.tgz#4f616bd5df0bf3feffc768968bec763ed2f702eb"
-  integrity sha512-Ju0rQLoJIzur+QQSQ3O2q/7aBnJa9dyT7kY1tt52vRJ38Bm3/W1NKcYPbbfqMV+N6Nelonlxs1/kaQmo/p+/AA==
+"@react-native-firebase/messaging@20.5.0":
+  version "20.5.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-20.5.0.tgz#90eeed62d1a069b4fd56746afcfb33ee2a61ba0f"
+  integrity sha512-S3M9zHJ3zKRH6PuxxjOrV9i0uRO3S5rGYaY3s64BTh4iLEG46UDgJ5uA+WsY+9IsJtSpN4HYDcvnwoxasiEUfw==
 
 "@react-native-masked-view/masked-view@^0.2.6":
   version "0.2.9"
@@ -3018,6 +3018,14 @@
   resolved "https://registry.npmjs.org/@types/hammerjs/-/hammerjs-2.0.41.tgz"
   integrity sha512-ewXv/ceBaJprikMcxCmWU1FKyMAQ2X7a9Gtmzw8fcg2kIePI1crERDM818W+XYrxqdBBOdlf2rm137bU+BltCA==
 
+"@types/hoist-non-react-statics@^3.3.0":
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.5.tgz#dab7867ef789d87e2b4b0003c9d65c49cc44a494"
+  integrity sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+
 "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"
   resolved "https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz"
@@ -3117,6 +3125,16 @@
   integrity sha512-/veu+qzzTKg3H9eUbbB0mKCzqtWbK3W+qL2z2E6h/isSsol2Fzc/praia42dMcaMftD2i/meV+hsPeaPjOy4WA==
   dependencies:
     "@types/react" "^17"
+
+"@types/react-redux@^7.1.33":
+  version "7.1.33"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.33.tgz#53c5564f03f1ded90904e3c90f77e4bd4dc20b15"
+  integrity sha512-NF8m5AjWCkert+fosDsN3hAlHzpjSiXlVy9EgQEmLoBhaNXbmyeGs/aj5dQzKuF+/q+S7JQagorGDW8pJ28Hmg==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.0"
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+    redux "^4.0.0"
 
 "@types/react-test-renderer@^18.0.0":
   version "18.3.0"
@@ -4546,6 +4564,11 @@ dot-case@^3.0.4:
   dependencies:
     no-case "^3.0.4"
     tslib "^2.0.3"
+
+dotenv@^16.4.5:
+  version "16.4.5"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
+  integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -8154,7 +8177,7 @@ redux-saga@^1.2.3:
   dependencies:
     "@redux-saga/core" "^1.2.3"
 
-redux@^4.0.4, redux@^4.2.1:
+redux@^4.0.0, redux@^4.0.4, redux@^4.2.1:
   version "4.2.1"
   resolved "https://registry.npmjs.org/redux/-/redux-4.2.1.tgz"
   integrity sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==
