@@ -42,14 +42,19 @@ const NotifyForm = () => {
   };
 
   const getFCMToken = async () => {
-    const fcmToken_ = await firebase.messaging().getToken();
-    console.log('🚀 ~ getFCMToken ~ fcmToken_:', fcmToken_);
+    const permission = await firebase.messaging().hasPermission();
+    console.log('nfdeobns', permission);
+    if (permission) {
+      const fcmToken_ = await firebase.messaging().getToken();
+      console.log('🚀 ~ getFCMToken ~ fcmToken_:', fcmToken_);
 
-    await postFcmToken(fcmToken_, token);
+      await postFcmToken(fcmToken_, token);
+    } else {
+      await firebase.messaging().requestPermission();
+    }
   };
   const handleButtonPress = async () => {
     // Handle the button press and perform necessary actions (e.g., send notification)
-
     console.log('setSelected User', {
       title,
       description,
@@ -66,7 +71,7 @@ const NotifyForm = () => {
     };
     fetchData();
     getFCMToken();
-  }, [loggedInUserData?.token]);
+  }, []);
 
   return (
     <View style={styles.container}>
