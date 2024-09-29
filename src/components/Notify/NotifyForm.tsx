@@ -1,3 +1,4 @@
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,8 +9,6 @@ import {
   Image,
   Keyboard,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
 import Colors from '../../constants/colors/Colors';
 import StyleConfig from '../../utils/StyleConfig';
 import { scale } from '../../utils/utils';
@@ -21,7 +20,7 @@ import {
 import { AuthContext } from '../../context/AuthContext';
 import { firebase } from '@react-native-firebase/messaging';
 
-const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
+const NotifyForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isDropDownSelected, setIsDropDownSelected] = useState(false);
@@ -58,6 +57,7 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
     });
     await sendNotification(title, description, selectedUser?.id, token);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       const allUser = await getAllUsers(loggedInUserData?.token);
@@ -67,6 +67,7 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
     fetchData();
     getFCMToken();
   }, [loggedInUserData?.token]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Title:</Text>
