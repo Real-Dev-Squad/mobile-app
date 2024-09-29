@@ -20,6 +20,7 @@
     "@babel/helper-hoist-variables": "^7.24.7",
     "@react-native-async-storage/async-storage": "^1.15.16",
     "@react-native-community/netinfo": "^5.9.9",
+    "@react-native-community/push-notification-ios": "^1.11.0",
     "@react-native-community/slider": "^4.4.3",
     "@react-native-firebase/app": "^20.4.0",
     "@react-native-firebase/messaging": "^20.4.0",
