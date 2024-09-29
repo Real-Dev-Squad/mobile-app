@@ -61,6 +61,9 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
+# ignore google-services
+/android/app/google-services.json
+
 
 
 #env
