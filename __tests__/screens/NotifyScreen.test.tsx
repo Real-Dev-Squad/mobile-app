@@ -1,21 +1,21 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import NotifyScreen from '../../src/screens/NotifyScreen/NotifyScreen';
-import NotifyForm from '../../src/components/Notify/NotifyForm';
-import { postFcmToken } from '../../src/screens/AuthScreen/Util';
-import { firebase } from '@react-native-firebase/messaging';
+
+jest.mock('../../src/screens/AuthScreen/Util', () => ({
+  postFcmToken: jest.fn(),
+  sendNotification: jest.fn(),
+  getAllUsers: jest.fn(() => Promise.resolve([])), // Mock getAllUsers with an empty array
+}));
 
 jest.mock('@react-native-firebase/messaging', () => ({
   firebase: {
     messaging: jest.fn(() => ({
       getToken: jest.fn(() => Promise.resolve('mocked-fcm-token')),
-      requestPermission: jest.fn(() => Promise.resolve()),
+      hasPermission: jest.fn(() => Promise.resolve(1)), // Mock permission granted
+      requestPermission: jest.fn(() => Promise.resolve()), // Mock permission request
     })),
   },
-}));
-jest.mock('../../src/screens/AuthScreen/Util', () => ({
-  postFcmToken: jest.fn(),
-  getAllUsers: jest.fn(() => Promise.resolve([])),
 }));
 describe('NotifyScreen', () => {
   it('should render correctly with title and NotifyForm', async () => {

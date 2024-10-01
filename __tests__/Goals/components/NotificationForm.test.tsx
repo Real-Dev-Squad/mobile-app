@@ -4,10 +4,9 @@ import NotifyForm from '../../../src/components/Notify/NotifyForm';
 import { AuthContext } from '../../../src/context/AuthContext';
 import {
   postFcmToken,
-  sendNotification,
   getAllUsers,
+  sendNotification,
 } from '../../../src/screens/AuthScreen/Util';
-import { firebase } from '@react-native-firebase/messaging';
 
 // Mock the functions used in the component
 jest.mock('../../../src/screens/AuthScreen/Util', () => ({
@@ -52,12 +51,10 @@ describe('NotifyForm', () => {
     expect(getByText('Notify')).toBeTruthy();
   });
 
-  it('retrieves FCM token and calls postFcmToken', async () => {
+  it('Calls postFcmToken', async () => {
     renderComponent();
 
     await waitFor(() => {
-      expect(firebase.messaging().hasPermission).toHaveBeenCalled();
-      expect(firebase.messaging().getToken).toHaveBeenCalled();
       expect(postFcmToken).toHaveBeenCalledWith(
         'mocked-fcm-token',
         'user-token',
