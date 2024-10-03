@@ -42,7 +42,6 @@ const googleServicesTemplate = {
   configuration_version: '1',
 };
 
-console.log('🥲🥲🥲🥲🥲', googleServicesTemplate);
 // Write the file to the correct location
 const outputPath = path.join(
   __dirname,

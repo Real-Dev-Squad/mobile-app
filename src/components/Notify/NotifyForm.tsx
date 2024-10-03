@@ -43,10 +43,8 @@ const NotifyForm = () => {
 
   const getFCMToken = async () => {
     const permission = await firebase.messaging().hasPermission();
-    console.log('nfdeobns', permission);
     if (permission) {
       const fcmToken_ = await firebase.messaging().getToken();
-      console.log('🚀 ~ getFCMToken ~ fcmToken_:', fcmToken_);
 
       await postFcmToken(fcmToken_, token);
     } else {
