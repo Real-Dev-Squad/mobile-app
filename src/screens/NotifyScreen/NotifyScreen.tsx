@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import NotifyForm from '../../components/Notify/NotifyForm';
 import Colors from '../../constants/colors/Colors';
+import { scale } from '../../utils/utils';
 
 const NotifyScreen = () => {
 
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: scale(24),
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 20,
