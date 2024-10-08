@@ -1,3 +1,4 @@
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,8 +9,6 @@ import {
   Image,
   Keyboard,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
 import Colors from '../../constants/colors/Colors';
 import StyleConfig from '../../utils/StyleConfig';
 import { scale } from '../../utils/utils';
@@ -21,7 +20,7 @@ import {
 import { AuthContext } from '../../context/AuthContext';
 import { firebase } from '@react-native-firebase/messaging';
 
-const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
+const NotifyForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isDropDownSelected, setIsDropDownSelected] = useState(false);
@@ -43,14 +42,17 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
   };
 
   const getFCMToken = async () => {
-    const fcmToken_ = await firebase.messaging().getToken();
-    console.log('🚀 ~ getFCMToken ~ fcmToken_:', fcmToken_);
+    const permission = await firebase.messaging().hasPermission();
+    if (permission) {
+      const fcmToken_ = await firebase.messaging().getToken();
 
-    await postFcmToken(fcmToken_, token);
+      await postFcmToken(fcmToken_, token);
+    } else {
+      await firebase.messaging().requestPermission();
+    }
   };
   const handleButtonPress = async () => {
     // Handle the button press and perform necessary actions (e.g., send notification)
-
     console.log('setSelected User', {
       title,
       description,
@@ -58,6 +60,7 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
     });
     await sendNotification(title, description, selectedUser?.id, token);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       const allUser = await getAllUsers(loggedInUserData?.token);
@@ -66,7 +69,8 @@ const NotifyForm = ({ notifyHandler }: { notifyHandler: () => void }) => {
     };
     fetchData();
     getFCMToken();
-  }, [loggedInUserData?.token]);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Title:</Text>
