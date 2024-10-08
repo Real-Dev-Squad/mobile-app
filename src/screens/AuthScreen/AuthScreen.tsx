@@ -19,20 +19,16 @@ import { AuthContext } from '../../context/AuthContext';
 import { getUserData, goalsAuth, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
-// import { AuthApisStaging } from '../../constants/apiConstant/AuthApi';
 import { CameraScreen } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import { useSelector } from 'react-redux';
-// import Github from '../../constants/images/Image';
 import Images from '../../constants/images/Image';
 import GithubSvg from '../../../assets/svgs/github_logo.js';
 import WebSvg from '../../../assets/svgs/web';
 
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
   const { setLoggedInUserData, setGoalsData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
@@ -143,11 +139,8 @@ const AuthScreen = () => {
   const qrCodeLogin = async () => {
     const deviceId = await DeviceInfo.getUniqueId();
 
-    // const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
+    const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`;
 
-    const url = isProdEnvironment
-      ? `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
-      : `${AuthApis.QR_AUTH_API_STAGING}?device_id=${deviceId}`;
     try {
       const userInfo = await fetch(url);
       console.log(userInfo, 'user info in rds app auth');
@@ -175,9 +168,8 @@ const AuthScreen = () => {
   const getAuthStatus = async () => {
     const deviceInfo = await DeviceInfo.getDeviceName();
     const deviceId = await DeviceInfo.getUniqueId();
-    const url = isProdEnvironment
-      ? AuthApis.QR_AUTH_API
-      : AuthApis.QR_AUTH_API_STAGING;
+    const url = AuthApis.QR_AUTH_API;
+    console.log('URL', url);
     setLoading(true);
     try {
       const data = await fetch(url, {
@@ -191,6 +183,7 @@ const AuthScreen = () => {
           device_id: deviceId,
         }),
       });
+      console.log('🚀 ~ getAuthStatus ~ data:', data);
 
       if (data.ok) {
         const dataJson = await data.json();
@@ -209,6 +202,7 @@ const AuthScreen = () => {
         ]);
       } else {
         await data.json();
+        console.log('dataa>>>', data.json());
         Toast.show({
           type: 'error',
           text1: 'Something went wrong, please try again',

@@ -1,0 +1,12 @@
+#!usr/bin/env node
+run('node ./src/service/googleServiceTemplate.js');
+
+function run(command) {
+  console.info(`./bin/postInstall scripit running: ${command}`);
+  try {
+    require('child_process').execSync(command, { stdio: 'inherit' });
+  } catch (err) {
+    console.error(`./bin/postInstall failed on command ${command}`);
+    process.exit(err.status);
+  }
+}

@@ -4,6 +4,11 @@ import { HomeApi } from '../../constants/apiConstant/HomeApi';
 import { PermissionsAndroid } from 'react-native';
 import moment from 'moment';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
+import {
+  NOTIFY_API,
+  SAVE_FCM_TOKEN,
+} from '../../constants/apiConstant/NotifyApi';
+import Config from 'react-native-config';
 
 export const getUserData = async (token: string) => {
   try {
@@ -179,7 +184,7 @@ export const getUsersStatus = async (token) => {
 
 export const getAllUsers = async (token) => {
   try {
-    const res = await axios.get(HomeApi.GET_ALL_USERS, {
+    const res = await axios.get(HomeApi.GET_ALL_MEMBERS, {
       headers: {
         'Content-type': 'application/json',
         cookie: `rds-session=${token}`,
@@ -433,12 +438,54 @@ export const overallTaskProgress = async (
       options,
     );
     if (res.status === 200) {
-      console.log('Task updated successfully!', res.data);
       return res.data;
     } else {
       throw new Error(`API Error: ${res.status} - ${res.statusText}`);
     }
   } catch (err) {
     console.error('API error:', err);
+  }
+};
+
+export const postFcmToken = async (fcmToken: string, token: string) => {
+  console.log('token is ', `${Config.RDS_SESSION}=${token}`);
+  try {
+    const response = await axios.post(
+      SAVE_FCM_TOKEN,
+      { fcmToken: fcmToken },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          cookie: `${Config.RDS_SESSION}=${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(`API Error: ${error} - ${error}`);
+  }
+};
+
+export const sendNotification = async (
+  title: string,
+  body: string,
+  userId: string,
+  token: string,
+) => {
+  console.log({ title, body, userId });
+  try {
+    const response = await axios.post(
+      NOTIFY_API,
+      { title, body, userId },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          cookie: `${Config.RDS_SESSION}=${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(`API Error: ${error} - ${error}`);
   }
 };

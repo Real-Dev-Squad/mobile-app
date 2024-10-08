@@ -1,20 +1,15 @@
-import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import NotifyButton from '../../components/Notify/NotifyButton';
+import { StyleSheet, Text, View } from 'react-native';
+import NotifyForm from '../../components/Notify/NotifyForm';
 import Colors from '../../constants/colors/Colors';
+import { scale } from '../../utils/utils';
 
 const NotifyScreen = () => {
-  const onNotifyHandler = () => {
-    console.log('notify');
-  };
+
   return (
     <View style={styles.container}>
-      <NotifyButton
-        onPress={onNotifyHandler}
-        title={'Notify'}
-        buttonStyle={{ backgroundColor: Colors.Primary_Color }}
-        textStyle={{ color: 'white' }}
-      />
+      <Text style={styles.title}>Event Notifications</Text>
+      <NotifyForm />
     </View>
   );
 };
@@ -22,6 +17,18 @@ const NotifyScreen = () => {
 export default NotifyScreen;
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 16,
+  },
+  title: {
+    fontSize: scale(24),
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.Primary_Color,
+    paddingBottom: 10,
   },
 });
