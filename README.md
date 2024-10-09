@@ -63,13 +63,13 @@ For detailed setup instructions, refer to [React Native environment setup guide]
 
 ![alt text](image.png)
 
-- After starting the server like above.
-- Open Android studio for Android simulator.
-- Alternatively you can connect a physical device with usb.
-- Tap `a` or `i` that creates a build for your `android` or `IOS` that bundles and shows the app on simulator or physical device.
-- If the above commands fail, try building the Android app from Android Studio and the iOS app from Xcode.
-- If you need assistance, reach out on the mobile-app-react-native channel on Discord.
-- Happy contributing!
+- Start the server as shown above by `yarn start` command.
+- Open Android Studio to launch the Android simulator, or alternatively, connect a physical device via USB.
+- Press `a` for Android or `i` for iOS to initiate a build that deploys the app to the simulator or connected device.
+- If the commands do not work as expected, try building the Android app using Android Studio and the iOS app using Xcode.
+- For further assistance, reach out on the `#mobile-app-react-native` channel on Discord.
+
+Happy contributing! 😊
 
 ## Contribution Guide
 
