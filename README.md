@@ -1,14 +1,17 @@
 ## Real Dev Squad Mobile App
 
 Welcome to the repository of our mobile app, which mirrors all the features of our web applications.
+
 ## Tech Stack
 
-   * React Native
-   * TypeScript
-   * StyleSheet
+- React Native
+- TypeScript
+- StyleSheet
+
 ## About the Project
 
 This project serves as the Real Dev Squad cross-platform mobile app, built using React Native.
+
 ## First Phase
 
 - Github Authentication ✅ (we did it via webview, requirement has changed to browser login from github)
@@ -21,6 +24,7 @@ This project serves as the Real Dev Squad cross-platform mobile app, built using
 - API integration in Profile Screen ✅
 
 ## Second Phase
+
 - Three Screens - Home , Goals and Profile ✅
 - Home screen Features ✅
 - Goals site Tab
@@ -30,16 +34,14 @@ Feel free to download our RDS app by clicking on ➡️ [RDS App](https://drive.
 
 **Note** : Please delete the previous RDS app build if you have.
 
-
 ## Prerequisites
-
 
 To contribute, make sure you have the following:
 
 - React Native setup
 - Android Studio
-- JDK ( openjdk 11.0.20.1 2023-08-24 )
-- Node setup ( use version v16.*, tested on v16.20.2)
+- JDK ( openjdk "17.0.12" 2024-07-16 )
+- Node setup ( use version above v18.8*, tested on v20.18*)
 - [Volta](https://docs.volta.sh/guide/getting-started) | [Why Volta?](https://docs.volta.sh/guide/#why-volta)
 - React Native development environment set up
 - Android Studio installed
@@ -48,7 +50,7 @@ To contribute, make sure you have the following:
 
 # **NOTE** : Make sure to set up the proper development environment required to run Hello world app in RN and drop a video link in #react-native channel.
 
-For detailed setup instructions,  refer to [React Native environment setup guide](https://reactnative.dev/docs/environment-setup).
+For detailed setup instructions, refer to [React Native environment setup guide](https://reactnative.dev/docs/environment-setup).
 
 ### Local App setup
 
@@ -56,6 +58,18 @@ For detailed setup instructions,  refer to [React Native environment setup guide
 - Clone the mobile app repository: git clone https://github.com/Real-Dev-Squad/mobile-app.git
 - Run the command: `yarn`
 - Start contributing!
+
+### Simulator / Physical device running setup
+
+![alt text](image.png)
+
+- After starting the server like above.
+- Open Android studio for Android simulator.
+- Alternatively you can connect a physical device with usb.
+- Tap `a` or `i` that creates a build for your `android` or `IOS` that bundles and shows the app on simulator or physical device.
+- If the above commands fail, try building the Android app from Android Studio and the iOS app from Xcode.
+- If you need assistance, reach out on the mobile-app-react-native channel on Discord.
+- Happy contributing!
 
 ## Contribution Guide
 
@@ -69,7 +83,6 @@ To contribute to our project:
 - Push your code to your branch.
 - If you need assistance, reach out on the mobile-app-react-native channel on Discord.
 
-
 ## Git commands for local setup
 
 ```
@@ -80,8 +93,8 @@ cd mobile-app
 yarn
 ```
 
-
 ## Git commands to commit your code:
+
 ```
 git checkout -b 'your-PR-name'
 
@@ -93,15 +106,6 @@ git push origin your-PR-name
 
 ```
 
-
 ## Test-Driven Development (TDD)
 
 All PRs should have 100% test coverage. Before submitting PRs, run yarn test to ensure all tests pass.
-
-**Running/Development**
-
-- Start Metro (JavaScript bundler): `yarn react-native start`
-- For Android: `yarn react-native run-android`
-- For iOS: yarn `react-native run-ios`
-
-If the above commands fail, try building the Android app from Android Studio and the iOS app from Xcode.
