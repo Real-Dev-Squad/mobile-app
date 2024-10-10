@@ -25,14 +25,19 @@ describe('TodoComponent', () => {
   });
 
   test.skip('calls navigationProp.navigate when "Add" button is pressed', async () => {
-    const navigationProp = { navigate: jest.fn() };
+    const navigate = jest.fn();
+    jest
+      .spyOn(require('@react-navigation/native'), 'useNavigation')
+      .mockReturnValue({
+        navigate,
+      });
     const { getByTestId } = render(
       <NavigationContainer>
-        <TodoComponent navigation={navigationProp} />
+        <TodoComponent />
       </NavigationContainer>,
     );
-    const addButton = await getByTestId('addButton');
+    const addButton = getByTestId('addButton');
     fireEvent.press(addButton);
-    expect(navigationProp.navigate).toHaveBeenCalledWith('CreatingGoals');
+    expect(navigate).toHaveBeenCalledWith('CreatingGoals');
   });
 });
