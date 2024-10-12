@@ -82,7 +82,6 @@
     "@types/jest": "^26.0.24",
     "@types/react": "^18.3.11",
     "@types/react-native": "^0.66.34",
-    "@types/react-native-datepicker": "^1.7.1",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.62.0",
