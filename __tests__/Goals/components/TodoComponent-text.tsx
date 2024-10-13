@@ -11,6 +11,10 @@ jest.mock('@react-navigation/native', () => {
 });
 
 describe('TodoComponent', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   test('renders title correctly', () => {
     const { getByText } = render(
       <NavigationContainer>
