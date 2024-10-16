@@ -18,7 +18,7 @@ function ProgressModal() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.viewContainer}>
       <TouchableOpacity onPress={toggleModal}>
         <CircularProgress
           value={progress}
@@ -55,7 +55,7 @@ function ProgressModal() {
             <Card.Content>
               <Paragraph>Slide to update progress:</Paragraph>
               <Slider
-                style={{ width: '80%', alignSelf: 'center' }}
+                style={styles.sliderStyle}
                 value={progress}
                 onValueChange={handleSliderChange}
                 minimumValue={0}
@@ -64,7 +64,7 @@ function ProgressModal() {
               />
               <Paragraph>Current Progress: {progress}%</Paragraph>
             </Card.Content>
-            <Button style={styles.button} onPress={toggleModal}>
+            <Button style={styles.Button} onPress={toggleModal}>
               Close
             </Button>
           </Card>
@@ -75,6 +75,11 @@ function ProgressModal() {
 }
 
 const styles = StyleSheet.create({
+  viewContainer:{
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
   cardContainer: {
     margin: 20,
     padding: 15,
@@ -118,5 +123,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
   },
+  sliderStyle:{ 
+    width: '80%', 
+    alignSelf: 'center' 
+  }
 });
 export default ProgressModal;

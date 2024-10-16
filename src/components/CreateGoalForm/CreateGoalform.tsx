@@ -66,7 +66,7 @@ export default function CreateGoalform() {
 
         <View style={styles.buttoncontainer}>
           <TouchableOpacity style={styles.button}>
-            <Text style={{ color: 'white' }}>Create</Text>
+            <Text style={styles.buttonText}>Create</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -130,4 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonText:{
+    color: 'white'
+  }
 });

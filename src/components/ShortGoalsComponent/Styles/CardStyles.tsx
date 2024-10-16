@@ -48,4 +48,14 @@ export const CardStyles = StyleSheet.create({
     width: 17,
     height: 17,
   },
+  messageCount:{
+    color: 'blue'
+  },
+  dueDate:{
+    color: 'red'
+  },
+  MarkAsDone:{
+    color: 'white', 
+    fontWeight: 'bold'
+  }
 });

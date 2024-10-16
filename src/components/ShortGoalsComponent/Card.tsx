@@ -25,11 +25,11 @@ const Card = ({ item }: any) => {
       <View style={[CardStyles.flex, CardStyles.container]}>
         <View style={CardStyles.flex}>
           <Image source={Images.commentIcon} style={CardStyles.commentIcon} />
-          <Text style={{ color: 'blue' }}>{item.messageCount}</Text>
+          <Text style={CardStyles.messageCount}>{item.messageCount}</Text>
         </View>
-        <Text style={{ color: 'red' }}>Due in {item.dueDate} days</Text>
+        <Text style={CardStyles.dueDate}>Due in {item.dueDate} days</Text>
         <TouchableOpacity style={[CardStyles.doneBtn, CardStyles.flex]}>
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+          <Text style={CardStyles.MarkAsDone}>
             Mark as done
           </Text>
           <Image source={Images.doneIcon} style={CardStyles.doneIcon} />

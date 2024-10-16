@@ -19,17 +19,8 @@ const DatePickerComponent = () => {
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
           customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-              height: 30,
-              border: 'none',
-            },
+            dateIcon: styles.dateIconStyle,
+            dateInput: styles.dateInputStyle,
           }}
           onDateChange={() => {
             setDate(date);
@@ -55,4 +46,15 @@ const styles = StyleSheet.create({
     width: 205,
     marginTop: 2,
   },
+  dateIconStyle:{
+    position: 'absolute',
+    left: 0,
+    top: 4,
+    marginLeft: 0,
+  },
+  dateInputStyle:{
+    marginLeft: 36,
+    height: 30,
+    border: 'none',
+  }
 });
