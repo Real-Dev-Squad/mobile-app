@@ -19,20 +19,25 @@ import { AuthContext } from '../../context/AuthContext';
 import { getUserData, goalsAuth, requestCameraPermission } from './Util';
 import { storeData } from '../../utils/dataStore';
 import AuthApis from '../../constants/apiConstant/AuthApi';
-// import { AuthApisStaging } from '../../constants/apiConstant/AuthApi';
-import { CameraScreen } from 'react-native-camera-kit';
+import { Camera } from 'react-native-camera-kit';
 import CustomModal from '../../components/Modal/CustomModal';
 import LoadingScreen from '../../components/LoadingScreen';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import { useSelector } from 'react-redux';
-// import Github from '../../constants/images/Image';
 import Images from '../../constants/images/Image';
 import GithubSvg from '../../../assets/svgs/github_logo.js';
 import WebSvg from '../../../assets/svgs/web';
 
+type RootState = {
+  localFeatureFlag: {
+    isProdEnvironment: boolean;
+  };
+};
 const baseUrl = AuthApis.GITHUB_AUTH_API;
 const AuthScreen = () => {
-  const { isProdEnvironment } = useSelector((store) => store.localFeatureFlag);
+  const { isProdEnvironment } = useSelector(
+    (store: RootState) => store.localFeatureFlag,
+  );
   const { setLoggedInUserData, setGoalsData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
@@ -45,7 +50,7 @@ const AuthScreen = () => {
     redirectURL: 'https://realdevsquad.com/',
   };
 
-  function buildUrl(url, params) {
+  function buildUrl(url: string, params: { [key: string]: string }) {
     const queryString = Object.keys(params)
       .map((key) => `${key}=${params[key]}`)
       .join('&');
@@ -59,7 +64,7 @@ const AuthScreen = () => {
     Platform.OS !== 'android' || requestCameraPermission();
 
     Linking.getInitialURL();
-    const handleDeepLink = async (event) => {
+    const handleDeepLink = async (event: { url: string }) => {
       const token = event.url.split('token=')[1];
       token && updateUserData(token); // store token in redux
     };
@@ -143,8 +148,6 @@ const AuthScreen = () => {
   const qrCodeLogin = async () => {
     const deviceId = await DeviceInfo.getUniqueId();
 
-    // const url = `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
-
     const url = isProdEnvironment
       ? `${AuthApis.QR_AUTH_API}?device_id=${deviceId}`
       : `${AuthApis.QR_AUTH_API_STAGING}?device_id=${deviceId}`;
@@ -220,7 +223,8 @@ const AuthScreen = () => {
       console.log(err, 'Error QR login');
       Toast.show({
         type: 'error',
-        text1: err,
+        text1:
+          (err as Error).message || 'Something went wrong, please try again',
         position: 'bottom',
         bottomOffset: 80,
       });
@@ -274,30 +278,16 @@ const AuthScreen = () => {
             </Text>
           </View>
         </TouchableOpacity>
-
-        {/* <TouchableOpacity
-          onPress={() => {
-            isProdEnvironment
-              ? dispatch({ type: 'DEV' })
-              : dispatch({ type: 'PROD' });
-          }}
-        >
-          <View style={AuthViewStyle.signInTxtView}>
-            <Text style={AuthViewStyle.signInText}>
-              {isProdEnvironment ? 'Switch to DEV' : 'Switch to Prod'}
-            </Text>
-          </View>
-        </TouchableOpacity> */}
       </View>
       {cameraActive && (
-        <CameraScreen
+        <Camera
           style={StyleSheet.absoluteFill}
           showFrame={true}
           scanBarcode={true}
           onReadCode={handleQRCodeScanned}
           frameColor={'white'}
           laserColor={'white'}
-          hideControls
+          hideControls={true}
         />
       )}
 

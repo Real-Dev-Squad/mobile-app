@@ -3,6 +3,11 @@ export type loggedInUserType = {
   name: string;
   profileUrl: string;
   status: string;
+  twitter_id?: string;
+  linkedin_id?: string;
+  github_id: string;
+  username: string;
+  token: string;
 };
 
 export interface User {
