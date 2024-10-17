@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, StyleSheet, View, Text } from 'react-native';
+import { Modal, View, Text } from 'react-native';
+import { styles } from '../styles/ErrorScreenStyle';
 
 const ErrorScreen = ({ error }: string) => {
   return (
@@ -12,17 +13,3 @@ const ErrorScreen = ({ error }: string) => {
 };
 
 export default ErrorScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    position: 'absolute',
-    zIndex: 1,
-  },
-});

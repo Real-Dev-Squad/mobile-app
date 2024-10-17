@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 import Slider from '@react-native-community/slider';
+import { styles } from './ProgressModalStyle';
 
 function ProgressModal() {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -74,58 +75,4 @@ function ProgressModal() {
   );
 }
 
-const styles = StyleSheet.create({
-  viewContainer:{
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center'
-  },
-  cardContainer: {
-    margin: 20,
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  titleText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#333',
-  },
-  paragraphText: {
-    fontSize: 16,
-    fontWeight: 'normal',
-    color: '#555',
-    marginBottom: 10,
-  },
-  Modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  container: {
-    alignContent: 'center',
-    margin: 37,
-  },
-
-  Button: {
-    marginTop: 20,
-    backgroundColor: '#6a6bcf',
-    padding: 10,
-    borderRadius: 8,
-  },
-  sliderStyle:{ 
-    width: '80%', 
-    alignSelf: 'center' 
-  }
-});
 export default ProgressModal;

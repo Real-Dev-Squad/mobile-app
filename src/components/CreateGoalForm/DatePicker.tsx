@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView View } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import { styles } from './DatePickerStyle';
 
 const DatePickerComponent = () => {
   const [date, setDate] = useState('');
@@ -33,28 +34,4 @@ const DatePickerComponent = () => {
 
 export default DatePickerComponent;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  datePickerStyle: {
-    height: 40,
-    border: '1px solid black',
-    width: 205,
-    marginTop: 2,
-  },
-  dateIconStyle:{
-    position: 'absolute',
-    left: 0,
-    top: 4,
-    marginLeft: 0,
-  },
-  dateInputStyle:{
-    marginLeft: 36,
-    height: 30,
-    border: 'none',
-  }
-});
+

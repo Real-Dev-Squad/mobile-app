@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import RadioGroup from 'react-native-radio-buttons-group';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View} from 'react-native';
+import { styles } from './RadioGroupStyle';
 
 const radioButtonsData = [
   {
@@ -35,11 +36,3 @@ export default function RadioGroupComponent() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 8,
-    margin: 4,
-    fontWeight: 'bold',
-  },
-});

@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
+import { styles } from '../styles/LoaderStyle';
 
 function Loader() {
   // TODO: revert once UI gets fix
@@ -11,25 +12,3 @@ function Loader() {
 }
 
 export default Loader;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    position: 'absolute',
-    zIndex: 1,
-  },
-  loadingContainer: {
-    marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    color: 'black',
-  },
-});

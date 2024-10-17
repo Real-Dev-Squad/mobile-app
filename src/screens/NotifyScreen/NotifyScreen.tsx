@@ -1,7 +1,8 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
 import NotifyButton from '../../components/Notify/NotifyButton';
 import Colors from '../../constants/colors/Colors';
+import { styles } from './NotifyScreenStyle';
 
 const NotifyScreen = () => {
   const onNotifyHandler = () => {
@@ -20,8 +21,3 @@ const NotifyScreen = () => {
 };
 
 export default NotifyScreen;
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-});

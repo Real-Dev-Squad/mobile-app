@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   View,
   FlatList,
@@ -11,6 +10,7 @@ import SearchBar from '../../components/SearchBar';
 import RenderMemberItem from '../../components/ToDoComponent/RenderMemberItem';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import GoalsApi from '../../constants/apiConstant/GoalsApi';
+import { styles } from './MembersPageStyle';
 
 type MembersPageRouteProp = RouteProp<RootStackParamList, "Member's page">;
 
@@ -95,18 +95,3 @@ const MembersPage = () => {
 };
 
 export default MembersPage;
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 4, backgroundColor: '#F5F5F5' },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'blue',
-    textShadowColor: 'rgba(0, 0, 0, 0.5)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 2,
-    textAlign: 'center',
-    margin: 2,
-  },
-  loaderView: { alignItems: 'center', paddingVertical: 20 },
-});

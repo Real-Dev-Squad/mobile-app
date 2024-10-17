@@ -1,6 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { NotifyType } from './NotifyType';
+import { styles } from './NotifyButtonStyle';
 
 const NotifyButton = ({
   onPress,
@@ -14,18 +15,5 @@ const NotifyButton = ({
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#3498db',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  text: {
-    color: 'white',
-    fontSize: 16,
-  },
-});
 
 export default NotifyButton;
