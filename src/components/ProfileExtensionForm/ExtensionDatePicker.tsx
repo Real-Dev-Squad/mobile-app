@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, ScrollView } from 'react-native';
 import DatePicker from 'react-native-date-picker';
+import { styles } from './ExtensionDatePickerStyle';
 
 type DatePickerProps = {
   title: string;
@@ -38,28 +39,5 @@ const DeadLineDatePicker = (props: DatePickerProps) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonStyle: {
-    width: '100%',
-    height: 50,
-    elevation: 5,
-    borderRadius: 10,
-    borderWidth: 1,
-    backgroundColor: 'white',
-    alignSelf: 'center',
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  buttonTextStyle: {
-    fontWeight: '600',
-    color: 'black',
-    justifyContent: 'center',
-  },
-});
 
 export default DeadLineDatePicker;

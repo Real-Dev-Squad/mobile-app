@@ -4,9 +4,9 @@ import {
   TextInput,
   Picker,
   Button,
-  StyleSheet,
 } from 'react-native';
 import React, { useState } from 'react';
+import { styles } from './NotifyFormStyle';
 
 const NotifyForm = () => {
   const [title, setTitle] = useState('');
@@ -51,23 +51,5 @@ const NotifyForm = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
-  },
-});
 
 export default NotifyForm;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import * as Progress from 'react-native-progress';
+import { styles } from '../styles/CustomProgressBarStyle';
 
 const CustomProgressBar = ({
   progress,
@@ -13,7 +14,7 @@ const CustomProgressBar = ({
 }) => {
   return (
     <View>
-      <Text style={{ color: 'black', margin: 10 }}>{text}</Text>
+      <Text style={styles.text}>{text}</Text>
       <Progress.Bar
         progress={progress}
         color={color}

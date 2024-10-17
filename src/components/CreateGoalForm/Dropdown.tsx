@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { SelectCountry } from 'react-native-element-dropdown';
 import Searchbar from './SearchBar';
 import Radio from './RadioGroup';
+import { styles } from './DropdownStyle';
 
 const local_data = [
   {
@@ -61,26 +62,3 @@ const SelectCountryScreen: React.FC<Props> = (_props) => {
 };
 
 export default SelectCountryScreen;
-
-const styles = StyleSheet.create({
-  dropdown: {
-    margin: 10,
-    height: 30,
-    width: 205,
-    backgroundColor: '#ecf0f1',
-    fontSize: 12,
-    paddingHorizontal: 8,
-    border: '1px solid black',
-  },
-
-  placeholderStyle: {
-    fontSize: 12,
-  },
-  selectedTextStyle: {
-    fontSize: 15,
-    marginLeft: 8,
-  },
-  formchild: {
-    marginTop: 5,
-  },
-});

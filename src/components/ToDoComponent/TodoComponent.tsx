@@ -60,12 +60,7 @@ const TodoComponent = () => {
           onPress={() => navigation.navigate('CreatingGoals')}
         >
           <Text
-            style={{
-              color: 'black',
-              elevation: 10,
-              paddingHorizontal: 6,
-              paddingVertical: 6,
-            }}
+            style={styles.addText}
           >
             Add
           </Text>
@@ -123,6 +118,12 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
+  addText:{
+    color: 'black',
+    elevation: 10,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+  }
 });
 
 export default TodoComponent;
