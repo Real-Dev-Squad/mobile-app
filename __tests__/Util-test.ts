@@ -109,7 +109,7 @@ describe('updateStatus util', () => {
   });
 });
 
-describe.skip('updateMarkYourSelfAs_ util', () => {
+describe('updateMarkYourSelfAs_ util', () => {
   test('pass arg undefined receive throw error', async () => {
     mockedAxios.patch.mockRejectedValue(
       // eslint-disable-next-line quotes
