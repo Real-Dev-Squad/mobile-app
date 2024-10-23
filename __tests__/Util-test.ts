@@ -31,11 +31,26 @@ describe('getUserData util', () => {
   };
 
   test('when token passed is invalid, axios call returns with 401', async () => {
-    mockedAxios.get.mockRejectedValue('401: Unauthorized');
+    const errorResponse = {
+      response: {
+        status: 401,
+        data: {
+          message: 'Unauthenticated User',
+        },
+      },
+    };
+    mockedAxios.get.mockRejectedValue(errorResponse);
     try {
       await getUserData(invalidToken);
     } catch (err) {
-      expect(err).toEqual('401: Unauthorized');
+      expect(err).toEqual({
+        response: {
+          status: 401,
+          data: {
+            message: 'Unauthenticated User',
+          },
+        },
+      });
     }
   });
 
